@@ -5,13 +5,15 @@ import Router from 'next/router';
 import { fetchWrapper } from 'helpers';
 
 const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
+const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 
 
 function login(username, password) {
-    return fetchWrapper.post(`${baseUrl}/authenticate`, { username, password })
+    // return fetchWrapper.post(`/api/account`, { username, password })
+    console.log("baseUrl ", baseUrl);
+    return fetchWrapper.post(`${baseUrl}api/login`, { username, password })
         .then(user => {
             // publish user to subscribers and store in local storage to stay logged in between page refreshes
             userSubject.next(user);
