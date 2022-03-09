@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
+import {accountService } from 'services';
+
+
 const login = () => {
     const router = useRouter();
 
@@ -18,7 +21,11 @@ const login = () => {
     const { errors } = formState;
 
     function onSubmit({ username, password }) {
-        console.log(username);
+        return accountService.login(username, password)
+        .then((res) => {
+            console.log(res);
+        })
+        .catch(err => console.log(err));
     }
     return (
         <div className="col-md-6 offset-md-3 mt-5">
