@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 
 import { accountService } from 'services';
-
+import axios from 'axios';
 const { publicRuntimeConfig } = getConfig();
 
 
@@ -15,13 +15,15 @@ function get(url) {
 }
 
 function post(url, body) {
+    console.log(body);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeader(url) },
         credentials: 'include',
         body: JSON.stringify(body)
     };
-    return fetch(url, requestOptions).then(handleResponse);
+    console.log(requestOptions);
+    return fetch(url, requestOptions)
 }
 
 function put(url, body) {

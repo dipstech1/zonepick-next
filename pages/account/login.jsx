@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import {accountService } from 'services';
+import { fetchWrapper } from 'helpers';
 
 
 const login = () => {
@@ -26,6 +27,9 @@ const login = () => {
             console.log(res);
         })
         .catch(err => console.log(err));
+        // fetchWrapper.post(`/api/account`, { username, password }).then((res) => {
+        //     console.log("LOGIN ", res);
+        // }).catch(err => console.log(err))
     }
     return (
         <div className="col-md-6 offset-md-3 mt-5">

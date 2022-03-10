@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
+    "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "next": "12.1.0",
     "react": "17.0.2",
