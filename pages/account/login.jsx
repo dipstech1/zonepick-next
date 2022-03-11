@@ -10,7 +10,6 @@ import axios from 'axios';
 
 const login = () => {
     const router = useRouter();
-
     // form validation rules 
     const validationSchema = Yup.object().shape({
         username: Yup.string().required('Username is required'),
@@ -24,16 +23,26 @@ const login = () => {
 
     async function onSubmit({ username, password }) {
 
-        fetchWrapper.post(`/api/account`, JSON.stringify({ username, password })).then(async(res) => {
-             let data = await res.json();
-            console.log(data);
-        }).catch(err => console.log(err))
-    //    let loginData = await fetch("/api/account",{
-    //         method:"POST",
-    //         body:JSON.stringify({ username, password })
-    //     })
-    //   let data = await loginData.json();
-    //   console.log(data);
+        // const res = await signIn('credentials', {
+        //     redirect: false,
+        //     email: username,
+        //     password: password,
+        //     callbackUrl: `${window.location.origin}`,
+        //   });
+
+        //   console.log("res ", res)
+
+        // fetchWrapper.post(`/api/account`, JSON.stringify({ username, password })).then(async(res) => {
+        //      let data = await res.json();
+        //     console.log(data);
+        //     localStorage.setItem("token". data.token)
+        // }).catch(err => console.log(err))
+       let loginData = await fetch("/api/account",{
+            method:"POST",
+            body:JSON.stringify({ username, password })
+        })
+      let data = await loginData.json();
+      console.log(data);
         
     }
     return (
