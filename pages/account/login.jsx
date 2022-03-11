@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 
 import {accountService } from 'services';
 import { fetchWrapper } from 'helpers';
+import axios from 'axios';
 
 
 const login = () => {
@@ -21,15 +22,19 @@ const login = () => {
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
-    function onSubmit({ username, password }) {
-        return accountService.login(username, password)
-        .then((res) => {
-            console.log(res);
-        })
-        .catch(err => console.log(err));
-        // fetchWrapper.post(`/api/account`, { username, password }).then((res) => {
-        //     console.log("LOGIN ", res);
-        // }).catch(err => console.log(err))
+    async function onSubmit({ username, password }) {
+
+        fetchWrapper.post(`/api/account`, JSON.stringify({ username, password })).then(async(res) => {
+             let data = await res.json();
+            console.log(data);
+        }).catch(err => console.log(err))
+    //    let loginData = await fetch("/api/account",{
+    //         method:"POST",
+    //         body:JSON.stringify({ username, password })
+    //     })
+    //   let data = await loginData.json();
+    //   console.log(data);
+        
     }
     return (
         <div className="col-md-6 offset-md-3 mt-5">
