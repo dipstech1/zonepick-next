@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getDataFromLocalstorage } from "utils/storage.util";
 
 const authPage = (WrappedComponent) => {
   return (props) => {
@@ -7,7 +8,7 @@ const authPage = (WrappedComponent) => {
     const [verified, setVerified] = useState(false);
 
     useEffect(async () => {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = getDataFromLocalstorage('token')
       if (!accessToken) {
         Router.replace("/account/login");
       } else {

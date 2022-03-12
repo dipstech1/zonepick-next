@@ -1,16 +1,31 @@
-html,
-body {
-  padding: 0;
+ul {
+  list-style-type: none;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 7px;
+  overflow: hidden;
+  background-color: #FF6B34;
+  display: flex;
+  justify-content: center;
 }
 
-a {
-  color: inherit;
+ul li{
+  float: left;
+}
+
+ul li > a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+
+
+li a:hover:not(.active) {
+  color: #FFF;
+  border-bottom: #fff solid 1px;
+}
+
+.active {
 }

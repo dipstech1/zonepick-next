@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import {accountService } from 'services';
 import { fetchWrapper } from 'helpers';
 import axios from 'axios';
+import { setDataLocalStorage } from 'utils/storage.util';
 
 
 const login = () => {
@@ -43,6 +44,8 @@ const login = () => {
         })
       let data = await loginData.json();
       console.log(data);
+      setDataLocalStorage('token', data?.token);
+      router.replace("/dashboard")
         
     }
     return (
