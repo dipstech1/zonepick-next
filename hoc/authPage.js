@@ -13,12 +13,12 @@ const authPage = (WrappedComponent) => {
         Router.replace("/account/login");
       } else {
         // const data = await verifyToken(accessToken);
-        // if (data.verified) {
-        //   setVerified(data.verified);
-        // } else {
-        //   localStorage.removeItem("accessToken");
-        //   Router.replace("/");
-        // }
+        if (accessToken) {
+          setVerified(true);
+        } else {
+          localStorage.removeItem("accessToken");
+          Router.replace("/");
+        }
       }
     }, []);
 
