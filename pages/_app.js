@@ -1,13 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from 'components/Navbar'
-import { RouteGuard,a } from 'hoc/router.guard'
+import { RouteGuard } from 'hoc/router.guard'
+import { useRouter } from 'next/router'
 import { getDataFromLocalstorage } from 'utils/storage.util'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   return (
     <>
-      <Navbar/>
+    {
+      router.pathname.split("/").includes('account') ? null:<Navbar/>
+    }
+      
       <RouteGuard>
          <Component {...pageProps} />
       </RouteGuard>
