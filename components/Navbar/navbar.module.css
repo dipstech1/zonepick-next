@@ -1,4 +1,4 @@
-ul {
+.navUl {
     list-style-type: none;
     margin: 0;
     padding: 7px;
@@ -8,11 +8,11 @@ ul {
     justify-content: center;
   }
   
- ul li{
+ .navUl li{
     float: left;
 }
 
-ul li > a {
+.navUl li > a {
     display: block;
     color: white;
     text-align: center;
