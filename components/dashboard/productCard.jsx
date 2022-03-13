@@ -1,5 +1,5 @@
-import Card from "ui-lib/Card"
 import Image from "next/image"
+import Card from "ui-lib/Cards/Card"
 
 const productCard = ({ productDetails }) => {
     return (

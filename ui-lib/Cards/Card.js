@@ -1,8 +1,8 @@
-
+import style from './card.module.scss'
 const Card = ({children}) => {
     return (
         <>
-            <div class="card" style={{width:"18rem"}}>
+            <div className={`card ${style.cardbox}`} style={{width:"18rem"}}>
                    {children}
             </div>
         </>

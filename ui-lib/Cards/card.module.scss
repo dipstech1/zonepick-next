@@ -1,0 +1,27 @@
+.cardbox{
+    box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.25);
+    border-radius: 10px !important;
+    cursor: pointer;
+    .card-title{
+        font-family: "Raleway";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 29px;
+    }
+
+    .card-product-desc{
+        font-weight: 500;
+        font-size: 15px;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+        color: #7D7777;
+    }
+
+    .card-txt{
+        margin-bottom: 0.75rem;
+        line-height: 15px;
+        .product-name{
+            font-weight: bold;
+        }
+    }
+}
