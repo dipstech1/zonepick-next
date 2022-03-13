@@ -3,7 +3,7 @@ import ProductCard from 'components/dashboard/productCard'
 const Dashboard = () => {
   const arr = [1,2,3,4,5,6,7,8]
   return (
-    <div>
+    <div className="">
        {/* <ul class="nav nav-tabs mt-3">
                 <li class="nav-item mx-1">
                   <span class="nav-link">Test</span>
