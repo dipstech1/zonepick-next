@@ -1,19 +1,21 @@
 import authPage from "hoc/authPage"
 import ProductCard from 'components/dashboard/productCard'
+import style from './dashboard.module.scss'
 const Dashboard = () => {
-  const arr = [1,2,3,4,5,6,7,8]
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8]
   return (
     <div className="">
-       {/* <ul class="nav nav-tabs mt-3">
-                <li class="nav-item mx-1">
-                  <span class="nav-link">Test</span>
-                </li>
-                <li class="nav-item mx-1">
-                  <span class="nav-link">Test2</span>
-                </li>
-                
-              </ul> */}
-        <ProductCard productDetails = {arr}/>
+      <section class={`${style.bgimage}`}>
+        <div class={`${style.h-100}`}>
+          <div class={`${style.h-100}`}>
+            <div class={`${style.imgwrapper} ${style.h-100}`}>
+              <h2>A fresh approach to shopping</h2>
+              <p>Absolutely. Positively. Perfect.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <ProductCard productDetails={arr} />
     </div>
   )
 }

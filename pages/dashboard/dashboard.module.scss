@@ -1,0 +1,44 @@
+.bgimage {
+    width:100%;
+    height:500px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../public/images/dashboard.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    background-attachment: fixed;
+    color:white;
+    text-shadow:2px 2px #333;
+    text-align: center;
+    text-transform: capitalize;
+    h2{
+        font-weight: bold;
+        font-size: 60px;
+    }
+    p{
+        font-size: 30px;
+    }
+
+    .imgwrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center
+      }
+  }
+  
+  
+  .product-list{
+      padding: 20px;
+    .nav-item{
+        cursor: pointer;
+    }
+    
+    .nav-link.active,.type{
+        color: #FE4E0E;
+    }
+    
+    .type{
+        font-weight: 500;
+        font-size: 30px;
+    }
+  }
