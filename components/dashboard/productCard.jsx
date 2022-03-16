@@ -2,6 +2,7 @@ import Image from "next/image"
 import Card from "ui-lib/Cards/Card"
 import style from './productcard.module.scss'
 const productCard = ({ productDetails }) => {
+    console.log("productDetails ", productDetails);
     return (
         <>
             <div class="container-fluid">
@@ -15,13 +16,13 @@ const productCard = ({ productDetails }) => {
                                         <div class={`${style.cardbody} mt-2`}>
                                             <div class={`${style.cardproductdesc}`}>
                                                 <div class="desc card-txt">
-                                                    <span class="product-name">Apple IpHone</span>
+                                                    <span class="product-name">{data.name}</span>
                                                 </div>
                                                 <div class="owner card-txt">
-                                                    From: <span> Maxwell</span>
+                                                    From: <span> {data.seller_details.name}</span>
                                                 </div>
                                                 <div class="location card-txt">
-                                                    <span> Seller </span> | <span> 711101</span>
+                                                    <span> Seller </span> | <span> {data.seller_details.pincode}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -36,5 +37,7 @@ const productCard = ({ productDetails }) => {
         </>
     )
 }
+
+
 
 export default productCard

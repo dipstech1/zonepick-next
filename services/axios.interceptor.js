@@ -7,7 +7,11 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 axios.interceptors.request.use(
     function (config) {
         config.baseURL = baseUrl;
-        // const token = localStorage.getItem('token')
+        if (typeof window !== "undefined") {
+            const token = window.localStorage.getItem('token')
+        config.headers.Authorization =  `Bearer ${token}`;
+          }
+        
         return config;
     },
     function (error) {

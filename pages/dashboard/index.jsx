@@ -1,17 +1,35 @@
 import authPage from "hoc/authPage"
 import ProductCard from 'components/dashboard/productCard'
 import style from './dashboard.module.scss'
-import { useState } from "react";
-const Dashboard = () => {
+import { useState,useEffect} from "react";
+import Axios from "services/axios.interceptor"
+import { getCookie } from 'cookies-next';
+
+const Dashboard = ({data}) => {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8];
+  let [productData,setProductData] = useState([])
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
 
   const tabChange = (i) => {
      tabList.forEach((tab) => {
        tab.isActive = !tab.isActive
      });
-     setTabList([...tabList])
+     setTabList([...tabList]);
+     getProductData()
   }
+
+  useEffect(() => {
+      getProductData()
+  }, []);
+
+  const getProductData = async() => {
+       let activeTab = tabList.find(t => t.isActive);
+       let url = activeTab.title === "BUY" ? "products/purchase" : "products/rent"
+      let d = await Axios.get(url)
+      setProductData(d.data);
+      console.log("productData ", productData);
+  }
+  
 
   return (
     <div className="">
@@ -43,10 +61,26 @@ const Dashboard = () => {
           }
 
         </ul>
-        <ProductCard productDetails={arr} />
+
+        {
+          productData.length ? <ProductCard productDetails={productData} /> : null
+        }
+        
+        
       </div>
     </div>
   )
 }
+
+// export async function getStaticProps(req,res){
+//   console.log("asd1 ", req);
+//   return {
+//       props:{
+          
+//       }
+//   }
+// }
+
+
 
 export default authPage(Dashboard)
