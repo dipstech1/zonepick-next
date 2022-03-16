@@ -7,7 +7,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['thumbs.dreamstime.com'],
+    domains: ['ecom-all-content.s3.ap-south-1.amazonaws.com'],
   },
   publicRuntimeConfig: {
     apiUrl: process.env.NODE_ENV === 'development'

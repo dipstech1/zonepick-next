@@ -8,6 +8,7 @@ import { getCookie } from 'cookies-next';
 const Dashboard = ({data}) => {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8];
   let [productData,setProductData] = useState([])
+  let [loading,setLoading] = useState(false)
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
 
   const tabChange = (i) => {
@@ -23,11 +24,14 @@ const Dashboard = ({data}) => {
   }, []);
 
   const getProductData = async() => {
+    setLoading(true)
        let activeTab = tabList.find(t => t.isActive);
        let url = activeTab.title === "BUY" ? "products/purchase" : "products/rent"
       let d = await Axios.get(url)
       setProductData(d.data);
       console.log("productData ", productData);
+      setLoading(false)
+
   }
   
 
@@ -63,7 +67,7 @@ const Dashboard = ({data}) => {
         </ul>
 
         {
-          productData.length ? <ProductCard productDetails={productData} /> : null
+         !loading && productData.length ? <ProductCard productDetails={productData} /> : <div>Loading...</div>
         }
         
         

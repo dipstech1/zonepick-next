@@ -12,7 +12,8 @@ const productCard = ({ productDetails }) => {
                             return (
                                 <div class="col-md-3 col-sm-12 product-card my-4 mx-2" >
                                     <Card >
-                                        <Image src={'https://thumbs.dreamstime.com/b/dslr-camera-13618571.jpg'} height="200px" width="200px" />
+                                        {/* <Image src={'https://thumbs.dreamstime.com/b/dslr-camera-13618571.jpg'} height="200px" width="200px" /> */}
+                                        <Image src={`${data.arimageurl}`} height="200px" width="200px" />
                                         <div class={`${style.cardbody} mt-2`}>
                                             <div class={`${style.cardproductdesc}`}>
                                                 <div class="desc card-txt">
