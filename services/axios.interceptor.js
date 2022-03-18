@@ -1,16 +1,20 @@
 import axios from 'axios'
 import getConfig from 'next/config';
+import { parse } from 'cookie';
 
 const {publicRuntimeConfig} = getConfig()
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
-axios.interceptors.request.use(
+
+axios.create({withCredentials:true}).interceptors.request.use(
     function (config) {
+        console.log("config ", config)
         config.baseURL = baseUrl;
-        if (typeof window !== "undefined") {
-            const token = window.localStorage.getItem('token')
-        config.headers.Authorization =  `Bearer ${token}`;
-          }
+        config.default
+        // if (typeof window !== "undefined") {
+        //     const token = window.localStorage.getItem('token')
+        //     config.headers.Authorization =  `Bearer ${token}`;
+        //   }
         
         return config;
     },
