@@ -6,15 +6,13 @@ const {publicRuntimeConfig} = getConfig()
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
 
-axios.create({withCredentials:true}).interceptors.request.use(
+axios.interceptors.request.use(
     function (config) {
-        console.log("config ", config)
         config.baseURL = baseUrl;
-        config.default
-        // if (typeof window !== "undefined") {
-        //     const token = window.localStorage.getItem('token')
-        //     config.headers.Authorization =  `Bearer ${token}`;
-        //   }
+        if (typeof window !== "undefined") {
+            const token = window.localStorage.getItem('token')
+            config.headers.Authorization =  `Bearer ${token}`;
+          }
         
         return config;
     },

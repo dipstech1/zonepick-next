@@ -38,10 +38,7 @@ const login = () => {
         //     console.log(data);
         //     localStorage.setItem("token". data.token)
         // }).catch(err => console.log(err))
-       let loginData = await fetch("/api/account",{
-            method:"POST",
-            body:JSON.stringify({ username, password })
-        })
+       let loginData = await fetchWrapper.post(`/api/account`, JSON.stringify({ username, password }))
       let data = await loginData.json();
       console.log(data);
       setDataLocalStorage('token', data?.token);

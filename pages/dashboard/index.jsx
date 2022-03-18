@@ -5,8 +5,8 @@ import { useState,useEffect} from "react";
 import Axios from "services/axios.interceptor"
 import { getCookie } from 'cookies-next';
 
-const Dashboard = ({data}) => {
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8];
+const Dashboard = ({data }) => {
+  console.log("token data  ", data );
   let [productData,setProductData] = useState([])
   let [loading,setLoading] = useState(false)
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
@@ -20,7 +20,9 @@ const Dashboard = ({data}) => {
   }
 
   useEffect(() => {
-      getProductData()
+      // getProductData()
+      setProductData(data);
+
   }, []);
 
   const getProductData = async() => {
@@ -56,7 +58,7 @@ const Dashboard = ({data}) => {
             tabList.map((tab, i) => {
               return (
                 <>
-                  <li className={`${style.navitem} mx-1 `} onClick={()=>tabChange(i)} >
+                  <li className={`${style.navitem} mx-1 `}  key={i} onClick={()=>tabChange(i)} >
                     <span className={`nav-link ${tab.isActive === true ? 'active':''}`}>{tab.title}</span>
                   </li>
                 </>
@@ -76,14 +78,22 @@ const Dashboard = ({data}) => {
   )
 }
 
-// export async function getStaticProps(req,res){
-//   console.log("asd1 ", req);
+// export async function getStaticProps(){
+//   console.log("server getStaticProps token ", ctx);
 //   return {
 //       props:{
           
 //       }
 //   }
 // }
+
+export async function getServerSideProps({ req, res }) {
+    let data = await Axios.get("products/purchase",{
+      headers:{ Authorization: `Bearer ${req.cookies.token}` }
+    })
+   console.log("data asdasd ", data.data);
+  return { props: {data:data.data} };
+}
 
 
 
