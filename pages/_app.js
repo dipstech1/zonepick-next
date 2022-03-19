@@ -4,6 +4,7 @@ import { RouteGuard } from 'hoc/router.guard'
 import { useRouter } from 'next/router'
 import { getDataFromLocalstorage } from 'utils/storage.util'
 import '../styles/globals.css'
+import '../styles/sellerinfo.scss'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

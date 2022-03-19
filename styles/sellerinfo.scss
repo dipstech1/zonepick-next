@@ -1,0 +1,56 @@
+.card{
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    padding: 10px 10px 0px 20px;
+    h2{
+        font-weight: bold;
+    }
+    .card-body{
+        .seller-name-phn{
+            flex-direction: column;
+        }
+    
+        .phn-no{
+            text-decoration-line: underline;
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            color: #FE4E0E;
+            cursor: pointer;
+        }
+
+        .secondary-btn{
+            background: #FFFFFF;
+            border: 1px solid #FE4E0E;
+            box-sizing: border-box;
+            border-radius: 25px;
+            padding: 6px 20px;
+            font-family: "Raleway";
+            color: #FE4E0E;
+        }
+
+        .primary-btn{
+            background: #FE4E0E;
+            border: 1px solid #FE4E0E;
+            border-radius: 18px;
+            color: #fff;
+            width: 100%;
+        }
+    }
+   
+}
+
+.image-gallerty-wrapper{
+    .base-img{
+       background-image:  url('../public/images/other-product.jpg');
+       width: auto;
+       background-repeat: no-repeat;
+    }
+    .other-img{
+        img{
+            width: 98%;
+            background-image:  url('../public/images/other-product.jpg');
+        }
+        // .img-display{
+        //     margin: 2px 2px;
+        // }
+    }
+}

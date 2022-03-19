@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
-import Image from 'next/image'
+import Image from 'next/image';
+import SellerInfo from '/components/seller-info/SellerInfo'
+
 const ProductDetails = () => {
     const router = useRouter();
     console.log(router)
@@ -7,20 +9,21 @@ const ProductDetails = () => {
         <>
             <div class="product-details-wrapper">
                 <section class="row mx-3 mb-5 my-5">
-                    <div class="image-gallerty-wrapper">
-                        <div class="base-img">
-                            <Image src="/public/images/productdetail.jpg" layout='fill'/>
+                   
+                    <div class="col-md-8 col-sm-12">
+                    <div class="image-gallerty-wrapper d-flex flex-column">
+                        {/* <div class="base-img">
+                            <Image src="/public/images/productdetail.jpg" width="300px" height="300px"/>
                         </div>
                         <div class="other-img row my-3">
                             <div class="img-display col-6 com-sm-12">
-                                 <Image src="/public/images/other-product.jpg" layout='fill'/>
+                                 <Image src="/public/images/other-product.jpg" width="100px" height="100px"/>
                             </div>
                             <div class="img-display col-6 com-sm-12">
-                                 <Image src="/public/images/other-product.jpg" layout='fill'/>
+                                 <Image src="/public/images/other-product.jpg" width="100px" height="100px"/>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <div class="col-md-8 col-sm-12">
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <div class="card mb-3" >
@@ -34,6 +37,8 @@ const ProductDetails = () => {
 
                         </div>
                         <div class="mb-4">
+                        <SellerInfo/>
+
                         </div>
                         <div>
                         </div>
