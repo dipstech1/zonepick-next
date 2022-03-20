@@ -12,8 +12,8 @@ const ProductDetails = () => {
                    
                     <div class="col-md-8 col-sm-12">
                     <div class="image-gallerty-wrapper d-flex flex-column">
-                        {/* <div class="base-img">
-                            <Image src="/public/images/productdetail.jpg" width="300px" height="300px"/>
+                        <div class="base-img">
+                            <Image src="/public/images/productdetail.jpg" width="80%" height="300px"/>
                         </div>
                         <div class="other-img row my-3">
                             <div class="img-display col-6 com-sm-12">
@@ -22,7 +22,7 @@ const ProductDetails = () => {
                             <div class="img-display col-6 com-sm-12">
                                  <Image src="/public/images/other-product.jpg" width="100px" height="100px"/>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
