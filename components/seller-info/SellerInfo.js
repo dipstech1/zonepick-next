@@ -1,4 +1,5 @@
-const SellerInfo = () => {
+const SellerInfo = ({sellerData}) => {
+  console.log("sellerData ", sellerData);
   return (
     <>
         <div class="seller-car-wrapper">
@@ -12,8 +13,8 @@ const SellerInfo = () => {
                 </div>
                 <div class="mx-2">
                     <div class="d-flex seller-name-phn flex-column">
-                        <div>Souradip Panja</div>
-                        <div class="phn-no" >View phone number</div>
+                        <div>{sellerData?.name}</div>
+                        <div class="phn-no" >{sellerData?.phone}</div>
                     </div>
                   
                 </div>
