@@ -1,18 +1,14 @@
-.navUl {
-    list-style-type: none;
-    margin: 0;
-    padding: 7px;
-    overflow: hidden;
-    background-color: #FF6B34;
-    display: flex;
-    justify-content: center;
-  }
-  
- .navUl li{
-    float: left;
+.navbg {
+  background-color: #FF6B34;
+
 }
 
-.navUl li > a {
+.navlinkcolor{
+  color: #FFF !important;
+  cursor: pointer;
+}
+
+.navbar-nav  a {
     display: block;
     color: white;
     text-align: center;
