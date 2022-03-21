@@ -88,6 +88,17 @@ const Dashboard = ({data }) => {
 // }
 
 export async function getServerSideProps({ req, res }) {
+
+  if(!req.cookies.token){
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/account/login",
+      },
+      props:{},
+    };
+  }
+
     let data = await Axios.get("products/purchase",{
       headers:{ Authorization: `Bearer ${req.cookies.token}` }
     })
