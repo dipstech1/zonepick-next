@@ -42,6 +42,7 @@ const login = () => {
       let data = await loginData.json();
       console.log(data);
       setDataLocalStorage('token', data?.token);
+      setDataLocalStorage('userid', data?.userid);
       router.replace("/dashboard")
         
     }

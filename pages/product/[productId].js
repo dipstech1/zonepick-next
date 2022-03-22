@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image';
 import SellerInfo from '/components/seller-info/SellerInfo'
 import Axios from "services/axios.interceptor"
+import { getDataFromLocalstorage } from 'utils/storage.util';
+import axiosInterceptor from 'services/axios.interceptor';
 
 const ProductDetails = ({ productData }) => {
     let [productDetails, setProductDetails] = useState({});
@@ -10,6 +12,20 @@ const ProductDetails = ({ productData }) => {
         console.log("productData eff ", productData[0])
         setProductDetails(productData[0])
     }, [])
+
+    const addToCart = () => {
+        let {productId,purpose,_id,name} = productDetails;
+        let userid = getDataFromLocalstorage('userid');
+        axiosInterceptor.post('cart', {
+            userid,
+            productId,
+            _id,
+            "quantity": 1,
+            purpose
+        }).then((res => {
+            console.log("added to cart");
+        })).catch(err => console.log(err))
+    }
 
     return (
         <>
@@ -37,7 +53,7 @@ const ProductDetails = ({ productData }) => {
                                 <h3 class="det">{productDetails.name}</h3>
                                 <div class="det">Rs. {productDetails.price}</div>
                                 <div class="action-btn text-center mt-3">
-                                    <button class="primary-btn">Add to cart</button>
+                                    <button class="primary-btn" onClick={addToCart}>Add to cart</button>
                                 </div>
                             </div>
 
