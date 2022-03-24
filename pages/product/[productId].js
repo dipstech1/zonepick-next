@@ -4,6 +4,7 @@ import SellerInfo from '/components/seller-info/SellerInfo'
 import Axios from "services/axios.interceptor"
 import { getDataFromLocalstorage } from 'utils/storage.util';
 import axiosInterceptor from 'services/axios.interceptor';
+import { toast } from 'react-toastify';
 
 const ProductDetails = ({ productData }) => {
     let [productDetails, setProductDetails] = useState({});
@@ -23,6 +24,7 @@ const ProductDetails = ({ productData }) => {
             "quantity": 1,
             purpose
         }).then((res => {
+            toast.success("Product added to cart")
             console.log("added to cart");
         })).catch(err => console.log(err))
     }

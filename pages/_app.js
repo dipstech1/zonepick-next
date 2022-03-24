@@ -6,19 +6,25 @@ import { getDataFromLocalstorage } from 'utils/storage.util'
 import '../styles/globals.css'
 import '../styles/sellerinfo.scss';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   return (
     <>
-    {
-      router.pathname.split("/").includes('account') ? null:<Navbar/>
-    }
-      
+
+      {
+        router.pathname.split("/").includes('account') ? null : <Navbar />
+      }
+
       <RouteGuard>
-         <Component {...pageProps} />
+         <ToastContainer position='top-center'/>
+          <Component {...pageProps} />
       </RouteGuard>
+
     </>
   )
 }
