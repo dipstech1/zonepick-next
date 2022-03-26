@@ -20,6 +20,11 @@ const Navbar = () => {
                             <li class="nav-item">
                                 <a className={`${styles.navlinkcolor} nav-link`} >Profile</a>
                             </li>
+                            <li class="nav-item">
+                                <Link href='/cart'>
+                                    <a className={`${styles.navlinkcolor} nav-link`} >Cart</a>
+                                </Link>
+                            </li>
                             
                         </ul>
                     </div>

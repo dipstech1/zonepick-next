@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CartItems = ({ data = [] }) => {
+const CartItems = ({ data = [], removeFromCart }) => {
     console.log("daya ", data)
 
     const itemData = (itemList = []) => {
@@ -32,7 +32,7 @@ const CartItems = ({ data = [] }) => {
                                 </td>
                                 <td class="text-right">
                                     {/* <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light mr-2" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> */}
-                                    <button href="" class="btn btn-light" > Remove</button>
+                                    <button href="" class="btn btn-light" onClick={(e) => removeFromCart(itm?.productId,i)}> Remove</button>
                                 </td>
                             </tr>
                         )

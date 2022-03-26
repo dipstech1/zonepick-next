@@ -2,6 +2,7 @@ import authPage from 'hoc/authPage';
 import { useState, useEffect } from 'react'
 import axiosInterceptor from 'services/axios.interceptor';
 import { getDataFromLocalstorage } from 'utils/storage.util';
+import { toast } from 'react-toastify';
 
 import CartItems from '../../components/Cart/CartItems'
 
@@ -17,14 +18,34 @@ function Cart() {
     const getCartItems = async () => {
         let items = await axiosInterceptor.get(`cart/${userId}`);
         if (items && items.data.purchasables) {
-            let totalPr = 0
-            items.data.purchasables.forEach((item) => {
-                totalPr += item?.price
-            })
-            setTotalPrice(totalPr)
-            setPurchaseData(items.data.purchasables)
+            setCartItemData(items.data.purchasables);
+            setTotalPriceData(items.data.purchasables)
         }
 
+    }
+
+    const setCartItemData = (items) => {
+        setPurchaseData([...items])
+    }
+
+    const setTotalPriceData = (itemData) => {
+        let totalPr = 0
+        itemData.forEach((item) => {
+                totalPr += item?.price
+            })
+         setTotalPrice(totalPr)
+    }
+
+    const removeFromCart = async(itemId, itemIndex) => {
+        console.log(itemIndex, purchasableData);
+        axiosInterceptor.delete(`cart/${userId}/${itemId}`)
+            .then(res => {
+                toast.success("Item deleted from cart");
+                purchasableData.splice(itemIndex,1);
+                setCartItemData(purchasableData);
+                setTotalPriceData(purchasableData)
+
+            }).catch((err) => console.log(err))
     }
 
     return (
@@ -42,7 +63,7 @@ function Cart() {
                         <main class="col-md-9">
                             <div class="card">
 
-                                <CartItems data={purchasableData} />
+                                <CartItems data={purchasableData} removeFromCart={removeFromCart} />
 
                                 <div class="card-body border-top">
                                     <button href="#" class="btn btn-primary float-md-right" > Make Purchase <i class="fa fa-chevron-right"></i> </button>
