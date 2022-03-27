@@ -48,6 +48,13 @@ function Cart() {
             }).catch((err) => console.log(err))
     }
 
+    const purchase = async() => {
+        axiosInterceptor.post(`ptransaction`,{ purchasables : purchasableData,userid:userId})
+            .then(res => {
+                toast.success("Transaction completed");
+            }).catch((err) => console.log(err))
+    }
+
     return (
         <>
             <section class="section-pagetop bg">
@@ -66,7 +73,7 @@ function Cart() {
                                 <CartItems data={purchasableData} removeFromCart={removeFromCart} />
 
                                 <div class="card-body border-top">
-                                    <button href="#" class="btn btn-primary float-md-right" > Make Purchase <i class="fa fa-chevron-right"></i> </button>
+                                    <button  class="btn btn-primary float-md-right" onClick={purchase} > Make Purchase <i class="fa fa-chevron-right"></i> </button>
                                     <a href="#" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
                                 </div>
                             </div>
