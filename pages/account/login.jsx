@@ -85,12 +85,15 @@ const login = () => {
                     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="username"{...register('username')}/>
                     <label for="floatingInput">Email ID or Phone Number</label>
                   </div>
+                  <div className="invalid-feedback">{errors.username?.message}</div>
                   <div class="form-floating position-relative">
                     <input type="password" class="form-control pe-5" id="floatingPassword" placeholder="123456"  name="password"  {...register('password')} />
                     <label for="floatingPassword">Password</label>
                     <a href="javascript:void(0);"><i class="fas fa-eye-slash"></i></a>
                   </div>
-                  <button class="btn btn-log">Login</button>
+                  <button class="btn btn-log">Login
+                  {formState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                  </button>
                   <img src="/img/or.svg" class="w-100"/>
                   <button class="btn btn-logG"><img src="/img/google_icon.svg"/>Login with Google</button>
                   <p class="text-center pt-2">Have not met us before? <a href="register.html">Register</a></p>
