@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+@media only screen and (max-width: 1366px) {
+   
+}
+@media only screen and (max-width:1920px) {
+   
+}
+
+@media (max-width: 320px) {
+}
+
+@media (max-width: 360px) {
+}
+
+@media (max-width: 480px) {
+  
+}
+
+@media (max-width: 640px) {
+   .log_text h5 span {
+      font-size: 15px;
+  }
+  .log_text h5 {
+      font-size: 24px;
+      font-weight: 600;
+   }
+}
+
+@media (max-width: 768px) {
+   .pro_Count{
+      width: calc(100% - 150px);
+   }
+   .pro_Count p{
+      font-size: 12px;
+      font-weight: 500;
+      color: #000;
+   }
+   .res_none{
+      display: none;
+   }
+   .res_width{
+      width: 170px !important;
+      flex: inherit !important;
+      border: 1px solid #dfdfdf !important;
+      height: 40px !important;
+      padding: 0 10px !important;
+      font-size: 14px;
+      border-radius: 26px !important;
+   }
+   .resinput{
+      justify-content: space-between;
+      margin-top: 25px;
+      align-items: center;
+   }
+   .resinput .btn-outline-warning{
+      padding: 5px;
+      width: 100px;
+      border-radius: 15px !important;
+      height: 32px;
+      background: #ff6b34 !important;
+      color: #fff !important;
+   }
+   .ex_filter{
+      padding: 0;
+   }
+   .leftpart{
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 58vh;
+      left: 0;
+      background: #fff;
+      padding: 25px;
+      top: 42%;
+      overflow: hidden;
+      overflow-y: auto;
+   }
+   .flt_scroll{
+      height: auto;
+   }
+   .res_padding{
+      padding: 0;
+   }
+}
+@media (max-width: 860px) {
+   
+   .logo-bg {
+      background-size: cover;
+   }
+   .sign-bg .navbar-brand{
+      margin-bottom: 20px;
+   }
+   .navbar-collapse {
+      background: #FF6B34;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 100%;
+  }
+  .navbar-light .navbar-toggler {
+      color: #fff;
+      border-color: transparent;
+      padding: 0px 8px;
+      background: #FF6B34;
+   }
+   .navbar-toggler:focus {
+      box-shadow: none;
+  }
+   .navbar-light .navbar-toggler-icon {
+      width: 34px;
+  }
+  .fixed .navbar-nav .nav-link {
+      color: #fff;
+   }
+   .dropdown-menu[data-bs-popper] {
+      left: auto;
+      right: 0;
+   }
+   .banner {
+      background-size: cover;
+      height: auto;
+  }
+   .banner_text {
+      padding: 32% 15px 56px 15px;
+      height: auto;
+  }
+  .banner_text h2 {
+      color: #fff;
+      font-size: 36px;
+      font-weight: 700;
+   }
+  .navbar-toggler-icon {
+      border-color: rgb(255,102,203);
+   }
+   .network_wrapper .card{
+      padding: 0;
+   }
+   .inner_fSelect .form-select {
+      height: 45px !important;
+      border: 1px solid #dfdfdf;
+      border-radius: 25px;
+      padding: 0 15px !important;
+  }
+  .stepwizard{
+   width: 100%;
+   padding: 0;
+  }
+  .stepwizard-row:before {
+      width: 63%;
+      left: 53px;
+   }
+   .stepwizard p {
+      line-height: 14px;
+      left: 11px;
+      font-size: 12px;
+  }
+  .login_form {
+      padding: 25px 15px !important;
+      background: #fff;
+   }
+   .login{
+      padding:15px 15px 0 15px;
+      background: #f3f3f3 url(../img/wave.svg) no-repeat bottom right;
+      background-size: 100%;
+      min-height: 100vh;
+   }
+   .register{
+      padding:15px 15px 0 15px;
+      background: #f3f3f3 url(../img/wave.svg) no-repeat bottom right;
+      background-size: 100%;
+      min-height: 100vh;
+   }
+   .ed_img i {
+      right: 30%;
+  }
+  .us_pic{
+   text-align: center;
+  }
+  .usName{
+   text-align: center;
+   margin-top: 25px;
+   padding: 0;
+  }
+  .usName p{
+   display: flex;
+   justify-content: space-around;
+   margin: 5px 0;
+   align-items: center;
+  }
+  .jobp_def{
+     width: 100%;
+  }
+  footer{
+   padding: 50px 0 30px 0;
+  }
+  .product_Tab .nav-item{
+     width: 50%;
+     margin: 20px 0;
+     text-align: center;
+  }
+}
+@media (max-width: 1366px) {
+   .login_form{
+      padding: 40px 80px 0 80px;
+    }
+}
