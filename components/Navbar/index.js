@@ -14,18 +14,20 @@ const Navbar = () => {
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <Link href='/dashboard'>
-                                   <a  className={`${styles.navlinkcolor} nav-link`} >Home</a>
+                                    <a className={`${styles.navlinkcolor} nav-link`} >Home</a>
                                 </Link>
                             </li>
                             <li class="nav-item">
-                                <a className={`${styles.navlinkcolor} nav-link`} >Profile</a>
+                                <Link href='/profile'>
+                                    <a className={`${styles.navlinkcolor} nav-link`} >Profile</a>
+                                </Link>
                             </li>
                             <li class="nav-item">
                                 <Link href='/cart'>
                                     <a className={`${styles.navlinkcolor} nav-link`} >Cart</a>
                                 </Link>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>

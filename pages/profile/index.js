@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import FileUploadS3 from '../../helpers/fileuploader'
 const Profile = () => {
 
     const onSelectFile = (event) => {
@@ -31,6 +32,10 @@ const Profile = () => {
             let file = event.target.files[0];
             let filePath = 'images/' + Math.random() * 10000000000000000 + '_' + file.name;
             console.log(file, filePath);
+
+            FileUploadS3.uploadFile(file)
+                .then(res => toast.success("Profile picture uploaded successfully"))
+                .catch(err => console.log(err))
 
 
         }
