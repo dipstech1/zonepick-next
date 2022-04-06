@@ -7,6 +7,7 @@ import {accountService } from 'services';
 import { fetchWrapper } from 'helpers';
 import axios from 'axios';
 import { setDataLocalStorage } from 'utils/storage.util';
+import axiosInterceptor from 'services/axios.interceptor';
 
 
 const login = () => {
@@ -41,6 +42,8 @@ const login = () => {
        let loginData = await fetchWrapper.post(`/api/account`, JSON.stringify({ username, password }))
       let data = await loginData.json();
       console.log(data);
+      // let data = await axiosInterceptor.post("api/login",{email:username,password})
+      // console.log(data);
       setDataLocalStorage('token', data?.token);
       setDataLocalStorage('userid', data?.userid);
       router.replace("/dashboard")

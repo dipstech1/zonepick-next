@@ -31,23 +31,176 @@ const ProductDetails = ({ productData }) => {
 
     return (
         <>
-            <div class="product-details-wrapper">
+
+<section class="py-3 py-lg-4">
+      <div class="container">
+      
+
+        <div class="row m-0 row m-0 mt-4 mt-lg-5 shadow-sm pb-3">
+          <p class="text-dark mb-3"><b>Advertisement ID: 0000000000</b></p>
+          <div class="col-12 col-lg-8">
+            <div class="owl-carousel productimg-slider owl-theme">
+                <div class="item">
+                  <img src="/img/product_img.png" />
+                </div>
+                <div class="item">
+                  <img src="/img/product_img.png" />
+                </div>
+                <div class="item">
+                  <img src="/img/product_img.png" />
+                </div>
+                <div class="item">
+                  <img src="/img/product_img.png" />
+                </div>
+            </div>
+          </div>
+          <SellerInfo/>
+        </div>
+
+
+        <div class="row m-0 mt-4 mt-lg-4 shadow-sm pb-3">
+          <div class="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <img src="/img/clip.png" />
+          </div>
+          <div class="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <img src="/img/clip.png" />
+          </div>
+          <div class="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <img src="/img/clip.png" />
+          </div>
+        </div>
+
+
+        <div class="row m-0 mt-4 mt-lg-4">
+          <div class="card border-0 shadow-sm p-3">
+            <h6>Details</h6>
+            <div class="brand_details">
+              <p>Brand: <span>Mi</span></p>
+              <p>Price: <span>INR 20,000</span></p>
+              <p>Iphone 11 without face id health 87</p>
+              <p>Iphone 11 </p>
+              <p>Face id not working </p>
+              <p> 64gb </p>
+              <p>87health </p>
+              <p> With box</p>
+            </div>
+          </div>
+        </div>
+
+        {/* <div class="row m-0 mt-4 mt-lg-4">
+          <h6>Related Ads</h6>
+          <div class="owl-carousel Popular-slider owl-theme">
+            <div class="item">
+              <div class="card border-0 shadow">
+                <div class="position-relative">
+                  <img src="/img/item_1.png" class="card-img-top" alt="..." />
+                  <a href="">
+                    <div class="like">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Price: INR <span>30,000</span></h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="user_name mt-3">
+                    <p>Amit Shah</p>
+                    <p><small>Ramrajatala</small> | <small>July, 2021</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card border-0 shadow">
+                <div class="position-relative">
+                  <img src="/img/item_1.png" class="card-img-top" alt="..." />
+                  <a href="">
+                    <div class="like">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Price: INR <span>30,000</span></h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="user_name mt-3">
+                    <p>Amit Shah</p>
+                    <p><small>Ramrajatala</small> | <small>July, 2021</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card border-0 shadow">
+                <div class="position-relative">
+                  <img src="/img/item_1.png" class="card-img-top" alt="..." />
+                  <a href="">
+                    <div class="like">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Price: INR <span>30,000</span></h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="user_name mt-3">
+                    <p>Amit Shah</p>
+                    <p><small>Ramrajatala</small> | <small>July, 2021</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card border-0 shadow">
+                <div class="position-relative">
+                  <img src="/img/item_1.png" class="card-img-top" alt="..." />
+                  <a href="">
+                    <div class="like">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Price: INR <span>30,000</span></h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="user_name mt-3">
+                    <p>Amit Shah</p>
+                    <p><small>Ramrajatala</small> | <small>July, 2021</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="card border-0 shadow">
+                <div class="position-relative">
+                  <img src="/img/item_1.png" class="card-img-top" alt="..."/>
+                  <a href="">
+                    <div class="like">
+                      <i class="fas fa-heart"></i>
+                    </div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Price: INR <span>30,000</span></h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <div class="user_name mt-3">
+                    <p>Amit Shah</p>
+                    <p><small>Ramrajatala</small> | <small>July, 2021</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> */}
+      </div>
+</section>
+
+
+            {/* <div class="product-details-wrapper">
                 <section class="row mx-3 mb-5 my-5">
 
                     <div class="col-md-8 col-sm-12">
-                        {/* <div class="image-gallerty-wrapper d-flex flex-column">
-                        <div class="base-img">
-                            <Image src="/public/images/productdetail.jpg" width="80%" height="300px"/>
-                        </div>
-                        <div class="other-img row my-3">
-                            <div class="img-display col-6 com-sm-12">
-                                 <Image src="/public/images/other-product.jpg" width="100px" height="100px"/>
-                            </div>
-                            <div class="img-display col-6 com-sm-12">
-                                 <Image src="/public/images/other-product.jpg" width="100px" height="100px"/>
-                            </div>
-                        </div>
-                    </div> */}
+                        
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <div class="card mb-3" >
@@ -119,7 +272,7 @@ const ProductDetails = ({ productData }) => {
 
         </section >
 
-            </div >
+            </div > */}
         </>
     )
 }
@@ -134,6 +287,7 @@ export const getServerSideProps = async (ctx) => {
             productData: productData.data
         }
     }
+   
 }
 
 export default ProductDetails
