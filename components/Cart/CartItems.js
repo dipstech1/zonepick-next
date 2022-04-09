@@ -11,28 +11,28 @@ const CartItems = ({ data = [], removeFromCart }) => {
                         return (
                             <tr>
                                 <td>
-                                    <figure class="itemside">
-                                        <div class="aside"><img src="assets/images/items/1.jpg" class="img-sm" /></div>
-                                        <figcaption class="info">
-                                            <a href="#" class="title text-dark">{itm.name}</a>
-                                            <p class="text-muted small">Country:{itm.origin} <br /> Brand: {itm.brand}</p>
+                                    <figure className="itemside">
+                                        <div className="aside"><img src="assets/images/items/1.jpg" className="img-sm" /></div>
+                                        <figcaption className="info">
+                                            <a href="#" className="title text-dark">{itm.name}</a>
+                                            <p className="text-muted small">Country:{itm.origin} <br /> Brand: {itm.brand}</p>
                                         </figcaption>
                                     </figure>
                                 </td>
                                 <td>
-                                    <select class="form-control">
+                                    <select className="form-control">
                                         <option  >{itm.quantity}</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <div class="price-wrap">
-                                        <var class="price">Rs.{itm.price * itm.quantity}</var>
-                                        <small class="text-muted"> Rs.{itm.price } each </small>
+                                    <div className="price-wrap">
+                                        <var className="price">Rs.{itm.price * itm.quantity}</var>
+                                        <small className="text-muted"> Rs.{itm.price } each </small>
                                     </div>
                                 </td>
-                                <td class="text-right">
-                                    {/* <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light mr-2" data-toggle="tooltip"> <i class="fa fa-heart"></i></a> */}
-                                    <button href="" class="btn btn-light" onClick={(e) => removeFromCart(itm?.productId,i)}> Remove</button>
+                                <td className="text-right">
+                                    {/* <a data-original-title="Save to Wishlist" title="" href="" className="btn btn-light mr-2" data-toggle="tooltip"> <i className="fa fa-heart"></i></a> */}
+                                    <button href="" className="btn btn-light" onClick={(e) => removeFromCart(itm?.productId,i)}> Remove</button>
                                 </td>
                             </tr>
                         )
@@ -45,13 +45,13 @@ const CartItems = ({ data = [], removeFromCart }) => {
 
     return (
         <>
-            <table class="table table-borderless table-shopping-cart">
-                <thead class="text-muted">
-                    <tr class="small text-uppercase">
+            <table className="table table-borderless table-shopping-cart">
+                <thead className="text-muted">
+                    <tr className="small text-uppercase">
                         <th scope="col">Product</th>
                         <th scope="col" width="120">Quantity</th>
                         <th scope="col" width="120">Price</th>
-                        <th scope="col" class="text-right" width="200"> </th>
+                        <th scope="col" className="text-right" width="200"> </th>
                     </tr>
                 </thead>
                 <tbody>

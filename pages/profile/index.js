@@ -42,53 +42,53 @@ const Profile = () => {
     }
     return (
         <>
-            <div class="edit-wrapper">
+            <div className="edit-wrapper">
                 <form novalidate>
-                    <div class="profile-img d-flex justify-content-center">
-                        <label class="hoverable" for="fileInput">
+                    <div className="profile-img d-flex justify-content-center">
+                        <label className="hoverable" for="fileInput">
                             <img src='https://www.w3schools.com/howto/img_avatar.png' />
-                            <div class="hover-text">Choose file</div>
-                            <div class="background"></div>
+                            <div className="hover-text">Choose file</div>
+                            <div className="background"></div>
                         </label>
                         <br />
                         <input id="fileInput" type='file' onChange={onSelectFile}/>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 com-sm-12 my-4">
-                            <div class="form-group">
+                    <div className="row">
+                        <div className="col-md-6 com-sm-12 my-4">
+                            <div className="form-group">
                                 <label for="exampleFormControlInput1">Name</label>
-                                <input type="text" class="form-control" placeholder="John Doe" />
+                                <input type="text" className="form-control" placeholder="John Doe" />
                             </div>
 
                         </div>
-                        <div class="col-md-6 com-sm-12 my-4">
-                            <div class="form-group">
+                        <div className="col-md-6 com-sm-12 my-4">
+                            <div className="form-group">
                                 <label for="exampleFormControlInput1">Phone</label>
-                                <input type="text" class="form-control" placeholder="" />
+                                <input type="text" className="form-control" placeholder="" />
                             </div>
 
                         </div>
-                        <div class="col-md-6 com-sm-12 my-4">
-                            <div class="form-group">
+                        <div className="col-md-6 com-sm-12 my-4">
+                            <div className="form-group">
                                 <label for="exampleFormControlInput1">Pin code</label>
-                                <input type="text" class="form-control" formControlName="pincode" placeholder="" />
+                                <input type="text" className="form-control" formControlName="pincode" placeholder="" />
                             </div>
                         </div>
-                        <div class="col-md-6 com-sm-12 my-4">
-                            <div class="form-group">
+                        <div className="col-md-6 com-sm-12 my-4">
+                            <div className="form-group">
                                 <label for="exampleFormControlInput1">Email address</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1" formControlName="email" placeholder="name@example.com" />
+                                <input type="email" className="form-control" id="exampleFormControlInput1" formControlName="email" placeholder="name@example.com" />
                             </div>
 
                         </div>
 
                     </div>
-                    <div class="button-utility d-flex justify-content-around">
+                    <div className="button-utility d-flex justify-content-around">
                         <div>
-                            <button class="btn btn-danger" >Discard</button>
+                            <button className="btn btn-danger" >Discard</button>
                         </div>
                         <div>
-                            <button class="btn btn-success" >Save</button>
+                            <button className="btn btn-success" >Save</button>
                         </div>
                     </div>
                 </form>

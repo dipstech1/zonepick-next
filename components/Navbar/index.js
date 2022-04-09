@@ -5,62 +5,62 @@ const Navbar = () => {
         <>
            
 
-            <header class="header">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container pe-lg-5">
-            <a href="#" class="navbar-brand">
-               <h6 class="text-white"><b>LOGO</b></h6>
+            <header className="header">
+      <nav className="navbar navbar-expand-lg navbar-light">
+        <div className="container pe-lg-5">
+            <a href="#" className="navbar-brand">
+               <h6 className="text-white"><b>LOGO</b></h6>
             </a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
+            <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <span class="navbar-text loginbtn d-block d-lg-none">
-              <div class="dropdown">
-                <button class="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <span className="navbar-text loginbtn d-block d-lg-none">
+              <div className="dropdown">
+                <button className="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/img/profile_pic.png"/>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="user_profile.html">Profile</a></li>
-                  <li><a class="dropdown-item" href="#">Settings</a></li>
-                  <li><a class="dropdown-item" href="login.html">Log Out</a></li>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a className="dropdown-item" href="user_profile.html">Profile</a></li>
+                  <li><a className="dropdown-item" href="#">Settings</a></li>
+                  <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                 </ul>
               </div>
             </span>
-            <a href="#" class="text-white me-2 d-lg-none"><i class="fas fa-bell"></i></a>
-            <a href="#" class="text-white me-2 d-lg-none"><i class="fas fa-shopping-cart"></i></a>
+            <a href="#" className="text-white me-2 d-lg-none"><i className="fas fa-bell"></i></a>
+            <a href="#" className="text-white me-2 d-lg-none"><i className="fas fa-shopping-cart"></i></a>
 
-            <div class="collapse navbar-collapse align-items-center" id="navbarCollapse">
-              <ul class="navbar-nav m-auto mb-2 mt-0 mb-lg-0">
-                <li class="nav-item">
+            <div className="collapse navbar-collapse align-items-center" id="navbarCollapse">
+              <ul className="navbar-nav m-auto mb-2 mt-0 mb-lg-0">
+                <li className="nav-item">
                   <Link href='/dashboard'>
-                    <a class="nav-link">Home</a>
+                    <a className="nav-link">Home</a>
                   </Link>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Message</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">Message</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="sell_photo.html">Sell</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="sell_photo.html">Sell</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="product_list.html">Lend</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="product_list.html">Lend</a>
                 </li>
               </ul>
-              <div class="navbar-text loginbtn d-none d-lg-flex align-items-center">
+              <div className="navbar-text loginbtn d-none d-lg-flex align-items-center">
                 <span>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div className="dropdown">
+                    <button className="btn dropdown-toggle p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="/img/profile_pic.png"/>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="user_profile.html">Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Settings</a></li>
-                      <li><a class="dropdown-item" href="login.html">Log Out</a></li>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a className="dropdown-item" href="user_profile.html">Profile</a></li>
+                      <li><a className="dropdown-item" href="#">Settings</a></li>
+                      <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                     </ul>
                   </div>
                 </span>
-                <a href="#" class="text-white me-2 d-none d-lg-block"><i class="fas fa-bell"></i></a>
-                <a href="#" class="text-white me-2 d-none d-lg-block"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" className="text-white me-2 d-none d-lg-block"><i className="fas fa-bell"></i></a>
+                <a href="#" className="text-white me-2 d-none d-lg-block"><i className="fas fa-shopping-cart"></i></a>
               </div>
             </div>
         </div>

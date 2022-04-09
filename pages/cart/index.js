@@ -57,64 +57,64 @@ function Cart() {
 
     return (
         <>
-            <section class="section-pagetop bg">
-                <div class="container">
-                    <h2 class="title-page">Shopping cart</h2>
+            <section className="section-pagetop bg">
+                <div className="container">
+                    <h2 className="title-page">Shopping cart</h2>
                 </div>
             </section>
 
-            <section class="section-content padding-y">
-                <div class="container">
+            <section className="section-content padding-y">
+                <div className="container">
 
-                    <div class="row">
-                        <main class="col-md-9">
-                            <div class="card">
+                    <div className="row">
+                        <main className="col-md-9">
+                            <div className="card">
 
                                 <CartItems data={purchasableData} removeFromCart={removeFromCart} />
 
-                                <div class="card-body border-top">
-                                    <button  class="btn btn-primary float-md-right" onClick={purchase} > Make Purchase <i class="fa fa-chevron-right"></i> </button>
-                                    <a href="#" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
+                                <div className="card-body border-top">
+                                    <button  className="btn btn-primary float-md-right" onClick={purchase} > Make Purchase <i className="fa fa-chevron-right"></i> </button>
+                                    <a href="#" className="btn btn-light"> <i className="fa fa-chevron-left"></i> Continue shopping </a>
                                 </div>
                             </div>
 
-                            <div class="alert alert-success mt-3">
-                                <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+                            <div className="alert alert-success mt-3">
+                                <p className="icontext"><i className="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
                             </div>
 
                         </main>
-                        <aside class="col-md-3">
-                            <div class="card mb-3">
-                                <div class="card-body">
+                        <aside className="col-md-3">
+                            <div className="card mb-3">
+                                <div className="card-body">
                                     <form>
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>Have coupon?</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="" placeholder="Coupon code" />
-                                                <span class="input-group-append">
-                                                    <button class="btn btn-primary">Apply</button>
+                                            <div className="input-group">
+                                                <input type="text" className="form-control" name="" placeholder="Coupon code" />
+                                                <span className="input-group-append">
+                                                    <button className="btn btn-primary">Apply</button>
                                                 </span>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-body" >
-                                    <dl class="dlist-align" >
+                            <div className="card">
+                                <div className="card-body" >
+                                    <dl className="dlist-align" >
                                         <dt>Total price:</dt>
-                                        <dd class="text-right">INR {totalPrice}</dd>
+                                        <dd className="text-right">INR {totalPrice}</dd>
                                     </dl>
-                                    <dl class="dlist-align">
+                                    <dl className="dlist-align">
                                         <dt>Discount:</dt>
-                                        <dd class="text-right">INR 658</dd>
+                                        <dd className="text-right">INR 658</dd>
                                     </dl>
-                                    <dl class="dlist-align">
+                                    <dl className="dlist-align">
                                         <dt>Total:</dt>
-                                        <dd class="text-right  h5"><strong>Rs.2000</strong></dd>
+                                        <dd className="text-right  h5"><strong>Rs.2000</strong></dd>
                                     </dl>
                                     <hr />
-                                    <p class="text-center mb-3">
+                                    <p className="text-center mb-3">
                                         <img src="assets/images/misc/payments.png" height="26" />
                                     </p>
 
@@ -126,8 +126,8 @@ function Cart() {
                 </div>
             </section>
 
-            <section class="section-name bg padding-y">
-                <div class="container">
+            <section className="section-name bg padding-y">
+                <div className="container">
                     <h6>Payment and refund policy</h6>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
