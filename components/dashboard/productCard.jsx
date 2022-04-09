@@ -6,7 +6,7 @@ const productCard = ({ productDetails }) => {
     const router = useRouter();
     const goToDetails = (e, data) => {
         e.stopPropagation();
-        router.push(`product/${productDetails.ParentId}`)
+        router.push(`product/${productDetails.ParentId}/${productDetails.recordId}`)
     }
     return (
         <>

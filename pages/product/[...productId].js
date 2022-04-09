@@ -13,10 +13,14 @@ const ProductDetails = ({ productData }) => {
   useEffect(() => {
     (
       async () => {
-        let prodId = router.query.productId;
-        let res = await axiosInterceptor.get(`products/${prodId}`)
+        console.log("router.query ", router.query);
+        if(router.query.productId){
+          let prodId = router.query.productId;
+        let res = await axiosInterceptor.get(`products/${prodId[0]}/${prodId[1]}`)
         console.log("det ", res.data);
         setProductDetails(res.data[0])
+        }
+        
       }
     )()
   }, [])
@@ -26,13 +30,13 @@ const ProductDetails = ({ productData }) => {
   }, [productDetails])
 
   const addToCart = () => {
-    let { productId, purpose, _id, name } = productDetails;
+    let { recordId, purpose, _id, name } = productDetails;
     let userid = getDataFromLocalstorage('userid');
     axiosInterceptor.post('cart', {
       userid,
-      productId,
+      recordId,
       _id,
-      "quantity": 1,
+      "ordered_quantity": 1,
       purpose
     }).then((res => {
       toast.success("Product added to cart")
@@ -48,7 +52,11 @@ const ProductDetails = ({ productData }) => {
 
 
           <div className="row m-0 row m-0 mt-4 mt-lg-5 shadow-sm pb-3">
-            <p className="text-dark mb-3"><b>{productDetails?.product?.name}</b></p>
+            <p className="text-dark mb-3"><b>{productDetails?.product?.name}</b>
+            <button onClick={addToCart} className="btn btn-sm btn-outline-warning" style={{marginLeft:"10px"}}><i className="fas fa-plus"></i> Add to Cart</button>
+
+            </p>
+
             {/* <div className="det">Rs. {productDetails?.price}</div> */}
             <div className="col-12 col-lg-8">
               <div className="owl-carousel productimg-slider owl-theme">
@@ -67,7 +75,7 @@ const ProductDetails = ({ productData }) => {
               </div>
             </div>
             {
-              productDetails && <SellerInfo sellerData={productDetails.seller_details} />
+              productDetails?.product?.name && <SellerInfo sellerData={productDetails.seller_details} />
             }
           </div>
 
