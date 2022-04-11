@@ -20,7 +20,7 @@ const Navbar = () => {
                     <img src="/img/profile_pic.png"/>
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a className="dropdown-item" href="user_profile.html">Profile</a></li>
+                  <li><Link href="profile"><a className="dropdown-item" >Profile</a></Link></li>
                   <li><a className="dropdown-item" href="#">Settings</a></li>
                   <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                 </ul>
@@ -53,7 +53,7 @@ const Navbar = () => {
                         <img src="/img/profile_pic.png"/>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a className="dropdown-item" href="user_profile.html">Profile</a></li>
+                    <li><Link href="profile"><a className="dropdown-item" >Profile</a></Link></li>
                       <li><a className="dropdown-item" href="#">Settings</a></li>
                       <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                     </ul>

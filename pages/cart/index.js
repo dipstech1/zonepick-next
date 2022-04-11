@@ -31,25 +31,25 @@ function Cart() {
     const setTotalPriceData = (itemData) => {
         let totalPr = 0
         itemData.forEach((item) => {
-                totalPr += item?.price
-            })
-         setTotalPrice(totalPr)
+            totalPr += item?.price
+        })
+        setTotalPrice(totalPr)
     }
 
-    const removeFromCart = async(itemId, itemIndex) => {
+    const removeFromCart = async (itemId, itemIndex) => {
         console.log(itemIndex, purchasableData);
         axiosInterceptor.delete(`cart/${userId}/${itemId}`)
             .then(res => {
                 toast.success("Item deleted from cart");
-                purchasableData.splice(itemIndex,1);
+                purchasableData.splice(itemIndex, 1);
                 setCartItemData(purchasableData);
                 setTotalPriceData(purchasableData)
 
             }).catch((err) => console.log(err))
     }
 
-    const purchase = async() => {
-        axiosInterceptor.post(`ptransaction`,{ purchasables : purchasableData,userid:userId})
+    const purchase = async () => {
+        axiosInterceptor.post(`ptransaction`, { purchasables: purchasableData, userid: userId })
             .then(res => {
                 toast.success("Transaction completed");
             }).catch((err) => console.log(err))
@@ -57,7 +57,7 @@ function Cart() {
 
     return (
         <>
-            <section className="section-pagetop bg">
+            {/* <section className="section-pagetop bg">
                 <div className="container">
                     <h2 className="title-page">Shopping cart</h2>
                 </div>
@@ -142,6 +142,41 @@ function Cart() {
                         cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
+                </div>
+            </section> */}
+
+            <section className="py-3 py-lg-4">
+                <div className="container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
