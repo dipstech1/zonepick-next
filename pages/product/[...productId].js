@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image';
 import SellerInfo from '/components/seller-info/SellerInfo'
-import Axios from "services/axios.interceptor"
 import { getDataFromLocalstorage } from 'utils/storage.util';
 import axiosInterceptor from 'services/axios.interceptor';
 import { toast } from 'react-toastify';

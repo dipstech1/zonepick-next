@@ -1416,3 +1416,258 @@ footer .container{
 .otp_Popup .bg-white{
   border-radius: 10px;
 }
+
+
+/*--------cart_Page-----------*/
+
+.shopping-cart th{
+  font-size: 13px;
+}
+.shopping-cart img{
+  width: 60px;
+  height: 60px;
+  object-fit: scale-down;
+}
+.shopping-cart th, .shopping-cart td{
+  padding: 5px 10px;
+}
+.shopping-cart input{
+  width: 50px;
+  height: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 5px;
+  border: 0;
+  border-bottom: 1px solid #c0c0c0 !important;
+  border-radius: 0;
+}
+.shopping-cart td{
+  font-size: 16px;
+  vertical-align: middle;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.shopping-cart td h6{
+  margin-bottom: 0;
+  font-size: 14px !important;
+  font-weight: 600;
+  line-height: 24px;
+}
+.shopping-cart td:nth-child(2){
+  width: 250px;
+}
+.shopping-cart td:last-child{
+  width: 60px;
+}
+.shopping-cart td button{
+  border: none;
+  background: #ff6b34;
+  font-size: 11px;
+  text-align: center;
+  border-radius: 5px;
+  color: #fff;
+  padding: 3px 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.totals{
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.totals-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #c0c0c0;
+  
+}
+.totals-item label{
+  margin: 0;
+}
+.totals-value{
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 0;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-quantity {
+  width: 72px;
+  display: block;
+  margin: 0;
+}
+
+.shopping-cart input {
+  max-width: 2rem;
+  margin: 0;
+  padding: 0.82rem 0;
+  text-align: center;
+  border-top: 1px solid silver;
+  border-left: 1px solid silver;
+  border-bottom: 1px solid silver !important;
+  font-family: Arial, Helvetica, sans-serif;
+  border-right: 0;
+
+}
+
+.quantity-selectors-container {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+}
+
+.quantity-selectors {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.quantity-selectors button {
+  width: 25px !important;
+  text-align: center !important;
+  padding: 1px 0 !important;
+  margin-bottom: 1px;
+  border-radius: 0 !important;
+  background: #787878 !important;
+}
+
+.quantity-selectors button:first-child {
+  border-bottom: 0;
+}
+
+.quantity-selectors button:hover {
+  cursor: pointer;
+}
+
+.quantity-selectors button[disabled="disabled"] {
+  cursor: not-allowed;
+}
+
+.quantity-selectors button[disabled="disabled"] span {
+  opacity: 0.5;
+}
+
+/*---------order-history-----------*/
+
+.or_dhover{
+  padding: 16px 0;
+  width: 100%;
+  font-size: 14px;
+  overflow: hidden;
+  transition: box-shadow .1s linear;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  box-shadow: 0 0 0 0 rgb(0 0 0 / 15%);
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+.or_dhover:hover {
+  z-index: 1;
+  box-shadow: 0 1px 12px 2px #dbdbdb;
+}
+.or_dhover p{
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.or_dhover small{
+  display: block;
+  font-size: 12px;
+  color: #878787;
+  font-weight: 400;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.or_dhover .fa-circle{
+  font-size: 10px;
+  margin-right: 5px;
+}
+
+.rw_heder{
+  background: #fcf2f0 url(../img/rwbg.jpg) no-repeat center right;
+  background-size: contain;
+  height: 180px;
+  padding: 50px;
+}
+.rw_heder h1{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+}
+.rw_heder h1 span{
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.rew_card{
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.18);
+  display: flex;
+}
+.rew_icon{
+  width: 80px;
+  height: 80px;
+}
+.rew_icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rew_text{
+  width: calc(100% - 80px);
+  padding:0 15px;
+}
+.rew_text h6{
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+}
+.rew_text h6 span{
+  position: absolute;
+  top: -14px;
+  right: -30px;
+  font-size: 11px;
+  font-weight: 400;
+  background: #50cc08;
+  padding: 1px 7px;
+  color: #fff;
+}
+.rew_text p{
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.exp_div{
+  cursor: no-drop;
+}
+.exp_div .rew_card{
+  filter: grayscale(1);
+  opacity: 0.75;
+}
+.exp_div .rew_card .rew_text h6{
+  color:#787878;
+}
+
+.wshlist h6{
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.wshlist h6 span{
+  text-decoration: line-through;
+  color: #bebebe;
+  font-size: 16px;
+  font-weight: 500;
+}

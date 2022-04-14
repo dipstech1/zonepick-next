@@ -83,6 +83,42 @@
    .res_padding{
       padding: 0;
    }
+   .rew_card {
+      padding: 10px;
+      display: block;
+  }
+  .rew_text{
+     padding: 0;
+     width: 100%;
+     margin-top: 12px;
+  }
+  .rew_text h6{
+     font-size: 13px;
+  }
+  .rew_text p {
+   font-size: 12px;
+   line-height: 18px;
+   }
+   .ple_res{
+      padding: 0 5px;
+   }
+   .rew_text h6 span {
+      top: -100px;
+      right: -10px;
+  }
+  .rw_heder {
+      background: #fcf2f0 url(../img/rwbg.jpg) no-repeat bottom right;
+      background-size: 54%;
+      padding: 18px;
+      height: 125px;
+   }
+   .rw_heder h1 {
+      font-size: 24px;
+      width: 65%;
+  }
+  .shopping-cart td:nth-child(2){
+     white-space: nowrap;
+  }
 }
 @media (max-width: 860px) {
    

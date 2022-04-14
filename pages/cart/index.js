@@ -145,40 +145,145 @@ function Cart() {
                 </div>
             </section> */}
 
-            <section className="py-3 py-lg-4">
-                <div className="container">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+<section class="innerbanner"></section>
+            <section class="py-4 py-lg-5">
+                <div class="container">
+                    <div class="row m-0 mb-4 mb-lg-5">
+                        <div class="bredcamp">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb  mb-0">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="row m-0 justify-content-between">
+                        <div class="shopping-cart table-responsive col-12 col-lg-8">
+                            <table class="table table-striped table-sm">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image">
+                                            <img src="./img/banner.png" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6>Lorem ipsum dolor sit amet</h6>
+                                    </td>
+                                    <td><b>12.99</b></td>
+                                    <td>
+                                        <div class="product-quantity">
+                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container" >
+                                                <div class="quantity-selectors">
+                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
+                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <b>25.98</b>
+                                    </td>
+                                    <td>
+                                        <button class="remove-product">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image">
+                                            <img src="./img/item_1.png" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6>Lorem ipsum dolor sit amet</h6>
+                                    </td>
+                                    <td><b>12.99</b></td>
+                                    <td>
+                                        <div class="product-quantity">
+                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container">
+                                                <div class="quantity-selectors">
+                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
+                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <b>25.98</b>
+                                    </td>
+                                    <td>
+                                        <button class="remove-product">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image">
+                                            <img src="./img/banner.png" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6>Lorem ipsum dolor sit amet</h6>
+                                    </td>
+                                    <td><b>12.99</b></td>
+                                    <td>
+                                        <div class="product-quantity">
+                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container">
+                                                <div class="quantity-selectors">
+                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
+                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <b>25.98</b>
+                                    </td>
+                                    <td>
+                                        <button class="remove-product">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-12 col-lg-3 sticky-lg-top">
+                            <div class="totals">
+                                <div class="totals-item">
+                                    <label>Subtotal</label>
+                                    <div class="totals-value" id="cart-subtotal">71.97</div>
+                                </div>
+                                <div class="totals-item">
+                                    <label>Tax (5%)</label>
+                                    <div class="totals-value" id="cart-tax">3.60</div>
+                                </div>
+                                <div class="totals-item">
+                                    <label>Shipping</label>
+                                    <div class="totals-value" id="cart-shipping">15.00</div>
+                                </div>
+                                <div class="totals-item totals-item-total">
+                                    <label>Grand Total</label>
+                                    <div class="totals-value" id="cart-total">90.57</div>
+                                </div>
+                                <button class="btn btn-block btn-log mb-0">Checkout</button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </section>
+
 
         </>
     )

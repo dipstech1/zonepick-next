@@ -1,20 +1,44 @@
+import { useState, useEffect } from 'react'
+import Axios from "services/axios.interceptor"
+import { getDataFromLocalstorage } from "utils/storage.util";
 
 
 const addProduct = () => {
-    return(
-        <section class="pb-4 pb-lg-5 my-3">
-        <div class="container">
-          <div class="row m-0 py-3 justify-content-center">
-            <div class="bredcamp">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb  mb-0">
-                  <li class="breadcrumb-item">Sell</li>
-                </ol>
-              </nav>
-            </div>
+
+  const [productDetails, setProductDetails] = useState({
+    "productName":"",
+    "productDetailsData":"",
+    "productId": "",
+    "product_status": "",
+    "price": "",
+    "purpose": "",
+    "quantity": 0,
+    "seller_details": ""
+  });
+
+  const addProduct = async() => {
+    console.log(productDetails);
+    productDetails.seller_details = getDataFromLocalstorage('userid')
+    productDetails.productId = "959bc070-e85b-4d29-b552-41328402ec63"
+    let added = await Axios.post("products", productDetails);
+
+    console.log("added ", added);
+  } 
+
+  return (
+    <section class="pb-4 pb-lg-5 my-3">
+      <div class="container">
+        <div class="row m-0 py-3 justify-content-center">
+          <div class="bredcamp">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb  mb-0">
+                <li class="breadcrumb-item">Sell</li>
+              </ol>
+            </nav>
           </div>
-          <div class="row m-0">
-            {/* <div class="stepwizard">
+        </div>
+        <div class="row m-0">
+          {/* <div class="stepwizard">
               <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">
                   <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
@@ -30,47 +54,54 @@ const addProduct = () => {
                 </div>
               </div>
             </div> */}
-            <form role="form" id="form">
-              <div class="row setup-content justify-content-center" id="step-1">
-                <div class="col-12 col-lg-7 p-lg-0">
-                    <div class="form-group">
-                      <input type="text" required="required" class="form-control" placeholder="Add Title..."
-                        id="firstName" />
-                    </div>
-                    <div class="form-group">
-                      <textarea rows="7" type="text" required="required" class="form-control"
-                        placeholder="Description"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <select class="form-select" required="required" aria-label="Default select example">
-                        <option selected disabled>Choose Cateogry</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <select class="form-select" required="required" aria-label="Default select example">
-                        <option selected disabled>Pick a sub-category</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <select class="form-select" required="required" aria-label="Default select example">
-                        <option selected disabled>Set a Price</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      <button class="btn btn-primary nextBtn pull-right" type="button">Proceed <i class="fas fa-arrow-right"></i></button>
-                    </div>
+          <form role="form" id="form">
+            <div class="row setup-content justify-content-center" id="step-1">
+              <div class="col-12 col-lg-7 p-lg-0">
+                <div class="form-group">
+                  <input type="text" required="required" class="form-control" placeholder="Product name"
+                    id="firstName" onChange={e =>  setProductDetails({...productDetails, productName:e.target.value})}/>
+                </div>
+                <div class="form-group">
+                  <textarea rows="7" type="text" required="required" class="form-control"
+                    placeholder="Description" onChange={e =>  setProductDetails({...productDetails, productDetailsData:e.target.value})} ></textarea>
+                </div>
+                <div class="form-group">
+                  <select class="form-select" required="required" aria-label="Default select example"  onChange={e =>  setProductDetails({...productDetails,product_status :e.target.value})}>
+                    <option selected disabled>Status</option>
+                    <option value="New">New</option>
+                    <option value="Broken">Broken</option>
+                    <option value="Need repair">Need repair</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select class="form-select" required="required" aria-label="Default select example">
+                    <option selected disabled>Choose Cateogry</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select class="form-select" required="required" aria-label="Default select example"  onChange={e =>  setProductDetails({...productDetails, purpose:e.target.value})}>
+                    <option selected disabled>Purpose</option>
+                    <option value="Purchase">Purchase</option>
+                    <option value="Rent">Rent</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <input type="text" required="required" class="form-control" placeholder="Price"
+                    id="price"  onChange={e =>  setProductDetails({...productDetails, price:+(e.target.value)})}/>
+                </div>
+                <div class="form-group">
+                  <input type="number" required="required" class="form-control" placeholder="Quantity"
+                    id="quantity"  onChange={e =>  setProductDetails({...productDetails, quantity:+(e.target.value)})}/>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button class="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>Add product <i class="fas fa-arrow-right"></i></button>
                 </div>
               </div>
-              {/* <div class="row setup-content justify-content-center" id="step-2">
+            </div>
+            {/* <div class="row setup-content justify-content-center" id="step-2">
                 <div class="col-12 col-lg-7 p-lg-0">
                     <div class="form-group row ms-0 me-0 mb-4">
                       <div class="col-12 p-0">
@@ -149,11 +180,11 @@ const addProduct = () => {
                   </div>
                 </div>
               </div> */}
-            </form>
-          </div>
+          </form>
         </div>
-      </section>
-    )
+      </div>
+    </section>
+  )
 }
 
 export default addProduct
