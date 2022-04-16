@@ -17,9 +17,10 @@ function Cart() {
 
     const getCartItems = async () => {
         let items = await axiosInterceptor.get(`cart/${userId}`);
-        if (items && items.data.purchasables) {
-            setCartItemData(items.data.purchasables);
-            setTotalPriceData(items.data.purchasables)
+        console.log("items ", items);
+        if (items && items.data.data) {
+            setCartItemData(items.data.data);
+            setTotalPriceData(items.data.data)
         }
 
     }
@@ -145,7 +146,7 @@ function Cart() {
                 </div>
             </section> */}
 
-<section class="innerbanner"></section>
+            <section class="innerbanner"></section>
             <section class="py-4 py-lg-5">
                 <div class="container">
                     <div class="row m-0 mb-4 mb-lg-5">
@@ -169,93 +170,42 @@ function Cart() {
                                     <th>Total</th>
                                     <th></th>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="product-image">
-                                            <img src="./img/banner.png" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6>Lorem ipsum dolor sit amet</h6>
-                                    </td>
-                                    <td><b>12.99</b></td>
-                                    <td>
-                                        <div class="product-quantity">
-                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container" >
-                                                <div class="quantity-selectors">
-                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
-                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <b>25.98</b>
-                                    </td>
-                                    <td>
-                                        <button class="remove-product">
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="product-image">
-                                            <img src="./img/item_1.png" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6>Lorem ipsum dolor sit amet</h6>
-                                    </td>
-                                    <td><b>12.99</b></td>
-                                    <td>
-                                        <div class="product-quantity">
-                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container">
-                                                <div class="quantity-selectors">
-                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
-                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <b>25.98</b>
-                                    </td>
-                                    <td>
-                                        <button class="remove-product">
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="product-image">
-                                            <img src="./img/banner.png" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h6>Lorem ipsum dolor sit amet</h6>
-                                    </td>
-                                    <td><b>12.99</b></td>
-                                    <td>
-                                        <div class="product-quantity">
-                                            <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container">
-                                                <div class="quantity-selectors">
-                                                    <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
-                                                    <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <b>25.98</b>
-                                    </td>
-                                    <td>
-                                        <button class="remove-product">
-                                            Remove
-                                        </button>
-                                    </td>
-                                </tr>
+                                {
+                                    purchasableData.length && purchasableData.map((itm, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>
+                                                    <div class="product-image">
+                                                        <img src="./img/banner.png" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h6>{itm?.productId[0]?.purpose}</h6>
+                                                </td>
+                                                <td><b>{itm?.productId[0]?.price}</b></td>
+                                                <td>
+                                                    <div class="product-quantity">
+                                                        <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container" >
+                                                            <div class="quantity-selectors">
+                                                                <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
+                                                                <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <b>{itm?.productId[0]?.price * itm?.ordered_quantity}</b>
+                                                </td>
+                                                <td>
+                                                    <button class="remove-product">
+                                                        Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+
                             </table>
                         </div>
                         <div class="col-12 col-lg-3 sticky-lg-top">
@@ -276,7 +226,7 @@ function Cart() {
                                     <label>Grand Total</label>
                                     <div class="totals-value" id="cart-total">90.57</div>
                                 </div>
-                                <button class="btn btn-block btn-log mb-0">Checkout</button>
+                                <button class="btn btn-block btn-log mb-0" onClick={purchase}>Checkout</button>
                             </div>
 
                         </div>
