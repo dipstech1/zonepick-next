@@ -16,10 +16,18 @@ const addProduct = () => {
     "seller_details": ""
   });
 
+  const [parentProductList, setparentProductList] = useState([])
+
+  useEffect(() => {
+    (async ()=>{
+      let {data} = await Axios.get("products/lookup");
+      setparentProductList([...data])
+    })()
+  },[])
+
   const addProduct = async() => {
     console.log(productDetails);
     productDetails.seller_details = getDataFromLocalstorage('userid')
-    productDetails.productId = "959bc070-e85b-4d29-b552-41328402ec63"
     let added = await Axios.post("products", productDetails);
 
     console.log("added ", added);
@@ -75,10 +83,11 @@ const addProduct = () => {
                 </div>
                 <div class="form-group">
                   <select class="form-select" required="required" aria-label="Default select example">
-                    <option selected disabled>Choose Cateogry</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option selected disabled onChange={e =>  setProductDetails({...productDetails, productId:e.target.value})}>Choose Cateogry</option>
+                    {
+                      parentProductList.length && parentProductList.map((lst,i) => <option key={i} value={lst.productId}>{lst.name}</option>)
+                    }
+                    
                   </select>
                 </div>
                 <div class="form-group">
