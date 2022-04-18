@@ -1,6 +1,10 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import axiosInterceptor from 'services/axios.interceptor';
 
 const Wishlist = () => {
+
+  
+
   return (
     <section class="py-4 py-lg-5">
       <div class="container">
