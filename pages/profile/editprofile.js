@@ -12,6 +12,7 @@ const ProfileDetails = () => {
     address5: "",
     email: "",
     name: "",
+    aboutme:"",
     phone: ""}
     )
 
@@ -20,6 +21,18 @@ const ProfileDetails = () => {
 
     const changePic = () => {
         fileIp.current.click();
+    }
+
+    const updateValue = (e) => {
+        const {name,value} = e.target;
+        setUserData({...userData, [name]:value})
+    }
+
+    const updateProfile = async() => {
+        console.log(userData);
+        userData.phone = +(userData.phone)
+        let res = await axiosInterceptor.patch(`profile/${userid}`, userData);
+        console.log(res)
     }
 
     useEffect(()=>{
@@ -99,31 +112,31 @@ const ProfileDetails = () => {
                             <form class="row m-0 edit_userform">
                                 <div class="col-12 col-lg-6">
                                     <label>Name</label>
-                                    <input type="text" value={userData.name} class="form-control" placeholder="Full name" />
+                                    <input onChange={updateValue} name="name" type="text" value={userData.name} class="form-control" placeholder="Full name" />
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>Phone Number</label>
-                                    <input type="number" value={userData.phone} class="form-control" placeholder="Phone no." />
+                                    <input onChange={updateValue} name="phone" type="number" value={userData.phone} class="form-control" placeholder="Phone no." />
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>Address</label>
-                                    <input type="text" value={userData.address1} class="form-control" placeholder="Address1" />
+                                    <input onChange={updateValue} name='address1' type="text" value={userData.address1} class="form-control" placeholder="Address1" />
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>Address2</label>
-                                    <input type="text" value={userData.address2} class="form-control" placeholder="Address2" />
+                                    <input onChange={updateValue} name='address2' type="text" value={userData.address2} class="form-control" placeholder="Address2" />
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>Addres3</label>
-                                    <input type="text" value={userData.address3} class="form-control" placeholder="Address3" />
+                                    <input onChange={updateValue} name='address3' type="text" value={userData.address3} class="form-control" placeholder="Address3" />
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>About Me</label>
-                                    <textarea type="text" class="form-control h-auto" rows="3" placeholder="About me"></textarea>
+                                    <textarea name='aboutme' type="text" class="form-control h-auto" rows="3" placeholder="About me"></textarea>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label>Email ID</label>
-                                    <input type="email" value={userData.email}  class="form-control" placeholder="abc@gmail.com" />
+                                    <input onChange={updateValue} name='email' type="email" value={userData.email}  class="form-control" placeholder="abc@gmail.com" />
                                 </div>
                                 <div class="col-12 col-lg-5 mt-4">
                                     <p>Connected Account: <a href="javascript:void(0);"><img src="./img/google.svg" width="60px" /></a></p>
@@ -134,7 +147,7 @@ const ProfileDetails = () => {
                                 <div class="col-12 fbutton mt-4">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <button class="btn btn-outline-warning btn-sm ms-lg-4">Discard</button>
-                                        <button class="btn btn-log">Save</button>
+                                        <button type='button' onClick={updateProfile} class="btn btn-log">Save</button>
                                     </div>
                                 </div>
                             </form>

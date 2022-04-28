@@ -1,6 +1,11 @@
+import { useRouter } from "next/router"
 
 const Profile = () => {
+  const router = useRouter();
 
+  const addProduct = () => {
+    router.push('product/addproduct')
+  }
      
     return (
         <>
@@ -36,7 +41,7 @@ const Profile = () => {
                       <div class="text-center">
                         <h5 class="text-black-50">Post Your First Ad!</h5>
                         <img src="./img/jobpost_df.svg" class="jobp_def py-3" />
-                        <a href="javascript:void(0);" class="btn postjob_btn">Post an advirtisement</a>
+                        <a href="javascript:void(0);" class="btn postjob_btn" onClick={addProduct}>Post an advirtisement</a>
                       </div>
                   </div>
                 </div>

@@ -21,6 +21,8 @@ const Navbar = () => {
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><Link href="profile"><a className="dropdown-item" >Profile</a></Link></li>
+                  <li><Link href="wishlist"><a className="dropdown-item" >Wishlist</a></Link></li>
+                  <li><Link href="orderhistory"><a className="dropdown-item" >Wishlist</a></Link></li>
                   <li><a className="dropdown-item" href="#">Settings</a></li>
                   <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                 </ul>
@@ -54,6 +56,8 @@ const Navbar = () => {
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><Link href="profile"><a className="dropdown-item" >Profile</a></Link></li>
+                    <li><Link href="wishlist"><a className="dropdown-item" >Wishlist</a></Link></li>
+                  <li><Link href="orderhistory"><a className="dropdown-item" >Order history</a></Link></li>
                       <li><a className="dropdown-item" href="#">Settings</a></li>
                       <li><a className="dropdown-item" href="login.html">Log Out</a></li>
                     </ul>
