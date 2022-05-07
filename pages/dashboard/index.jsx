@@ -3,10 +3,10 @@ import ProductCard from 'components/dashboard/productCard'
 import { useState, useEffect } from "react";
 import Axios from "services/axios.interceptor"
 import { getCookie } from 'cookies-next';
+let page = 0
 
 const Dashboard = ({ data }) => {
   console.log("token data  ", data);
-  
   let [productData, setProductData] = useState([])
   let [loading, setLoading] = useState(false)
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
@@ -25,12 +25,19 @@ const Dashboard = ({ data }) => {
 
   }, []);
 
+  const getMoreProduct = () => {
+    page += 1;
+    getProductData()
+
+  }
+
   const getProductData = async () => {
     setLoading(true)
     let activeTab = tabList.find(t => t.isActive);
-    let url = activeTab.title === "BUY" ? "products/purchase" : "products/rent"
-    let d = await Axios.get(url)
-    setProductData(d.data.data);
+    let url = activeTab.title === "BUY" ? "products/purchase" : "products/rent";
+    
+    let d = await Axios.get(url,{params:{page}})
+    setProductData([...productData, ...d.data.data]);
     console.log("productData ", d.data.data);
     setLoading(false)
 
@@ -92,7 +99,7 @@ const Dashboard = ({ data }) => {
                     }
 
                   </div>
-                  <div className="col-12 text-center">
+                  <div className="col-12 text-center" onClick={getMoreProduct}>
                     <a href="javascript:void(0);" className="load_more">See More <img src="/img/load_more.svg" width="20px" /></a>
                   </div>
                 </div>
