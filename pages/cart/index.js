@@ -146,22 +146,22 @@ function Cart() {
                 </div>
             </section> */}
 
-            <section class="innerbanner"></section>
-            <section class="py-4 py-lg-5">
-                <div class="container">
-                    <div class="row m-0 mb-4 mb-lg-5">
-                        <div class="bredcamp">
+            <section className="innerbanner"></section>
+            <section className="py-4 py-lg-5">
+                <div className="container">
+                    <div className="row m-0 mb-4 mb-lg-5">
+                        <div className="bredcamp">
                             <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb  mb-0">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                                <ol className="breadcrumb  mb-0">
+                                    <li className="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li className="breadcrumb-item active" aria-current="page">Shopping Cart</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
-                    <div class="row m-0 justify-content-between">
-                        <div class="shopping-cart table-responsive col-12 col-lg-8">
-                            <table class="table table-striped table-sm">
+                    <div className="row m-0 justify-content-between">
+                        <div className="shopping-cart table-responsive col-12 col-lg-8">
+                            <table className="table table-striped table-sm">
                                 <tr>
                                     <th>Image</th>
                                     <th>Product</th>
@@ -175,7 +175,7 @@ function Cart() {
                                         return (
                                             <tr key={i}>
                                                 <td>
-                                                    <div class="product-image">
+                                                    <div className="product-image">
                                                         <img src="./img/banner.png" />
                                                     </div>
                                                 </td>
@@ -184,11 +184,11 @@ function Cart() {
                                                 </td>
                                                 <td><b>{itm?.productId[0]?.price}</b></td>
                                                 <td>
-                                                    <div class="product-quantity">
-                                                        <input data-min="1" data-max="0" type="text" name="quantity" value="1" readonly="true" /><div class="quantity-selectors-container" >
-                                                            <div class="quantity-selectors">
-                                                                <button type="button" class="increment-quantity" aria-label="Add one" data-direction="1"><i class="fas fa-plus"></i></button>
-                                                                <button type="button" class="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i class="fas fa-minus"></i></button>
+                                                    <div className="product-quantity">
+                                                        <input data-min="1" data-max="0" type="text" name="quantity" value="1" readOnly="true" /><div className="quantity-selectors-container" >
+                                                            <div className="quantity-selectors">
+                                                                <button type="button" className="increment-quantity" aria-label="Add one" data-direction="1"><i className="fas fa-plus"></i></button>
+                                                                <button type="button" className="decrement-quantity" aria-label="Subtract one" data-direction="-1" disabled="disabled"><i className="fas fa-minus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -197,7 +197,7 @@ function Cart() {
                                                     <b>{itm?.productId[0]?.price * itm?.ordered_quantity}</b>
                                                 </td>
                                                 <td>
-                                                    <button class="remove-product">
+                                                    <button className="remove-product">
                                                         Remove
                                                     </button>
                                                 </td>
@@ -208,25 +208,25 @@ function Cart() {
 
                             </table>
                         </div>
-                        <div class="col-12 col-lg-3 sticky-lg-top">
-                            <div class="totals">
-                                <div class="totals-item">
+                        <div className="col-12 col-lg-3 sticky-lg-top">
+                            <div className="totals">
+                                <div className="totals-item">
                                     <label>Subtotal</label>
-                                    <div class="totals-value" id="cart-subtotal">71.97</div>
+                                    <div className="totals-value" id="cart-subtotal">71.97</div>
                                 </div>
-                                <div class="totals-item">
+                                <div className="totals-item">
                                     <label>Tax (5%)</label>
-                                    <div class="totals-value" id="cart-tax">3.60</div>
+                                    <div className="totals-value" id="cart-tax">3.60</div>
                                 </div>
-                                <div class="totals-item">
+                                <div className="totals-item">
                                     <label>Shipping</label>
-                                    <div class="totals-value" id="cart-shipping">15.00</div>
+                                    <div className="totals-value" id="cart-shipping">15.00</div>
                                 </div>
-                                <div class="totals-item totals-item-total">
+                                <div className="totals-item totals-item-total">
                                     <label>Grand Total</label>
-                                    <div class="totals-value" id="cart-total">90.57</div>
+                                    <div className="totals-value" id="cart-total">90.57</div>
                                 </div>
-                                <button class="btn btn-block btn-log mb-0" onClick={purchase}>Checkout</button>
+                                <button className="btn btn-block btn-log mb-0" onClick={purchase}>Checkout</button>
                             </div>
 
                         </div>

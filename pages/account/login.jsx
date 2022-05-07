@@ -1,3 +1,4 @@
+import React from 'react'
 import Router, { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +11,7 @@ import { setDataLocalStorage } from 'utils/storage.util';
 import axiosInterceptor from 'services/axios.interceptor';
 
 
-const login = () => {
+const Login = () => {
     const router = useRouter();
     // form validation rules 
     const validationSchema = Yup.object().shape({
@@ -88,12 +89,12 @@ const login = () => {
                 <form className="mt-lg-5 mt-4"  onSubmit={handleSubmit(onSubmit)}>
                   <div className="form-floating">
                     <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" name="username"{...register('username')}/>
-                    <label for="floatingInput">Email ID or Phone Number</label>
+                    <label htmlFor="floatingInput">Email ID or Phone Number</label>
                   </div>
                   <div className="invalid-feedback">{errors.username?.message}</div>
                   <div className="form-floating position-relative">
                     <input type="password" className="form-control pe-5" id="floatingPassword" placeholder="123456"  name="password"  {...register('password')} />
-                    <label for="floatingPassword">Password</label>
+                    <label htmlFor="floatingPassword">Password</label>
                     <a href="javascript:void(0);"><i className="fas fa-eye-slash"></i></a>
                   </div>
                   <button className="btn btn-log">Login
@@ -114,4 +115,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login

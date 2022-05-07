@@ -12,7 +12,7 @@
 		autoplayHoverPause: true,
 		responsiveClass: true,
 		smartSpeed: 2500,
-		navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
+		navText: ["<i className='fas fa-angle-left'></i>", "<i className='fas fa-angle-right'></i>"],
 		responsive:{
 			0:{
 				items:1,
@@ -34,7 +34,7 @@
 		autoplayHoverPause: true,
 		responsiveClass: true,
 		smartSpeed: 2500,
-		navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
+		navText: ["<i className='fas fa-angle-left'></i>", "<i className='fas fa-angle-right'></i>"],
 		responsive:{
 			0:{
 				items:1,
