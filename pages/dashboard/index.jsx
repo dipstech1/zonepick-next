@@ -9,6 +9,7 @@ let page = 0
 const Dashboard = ({ data }) => {
   const userID = getDataFromLocalstorage('userid')
   let [productData, setProductData] = useState([])
+  let [total, setTotal] = useState(0)
   let [loading, setLoading] = useState(false)
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
 
@@ -17,7 +18,9 @@ const Dashboard = ({ data }) => {
       tab.isActive = !tab.isActive
     });
     setTabList([...tabList]);
+    page = 0;
     getProductData()
+
   }
 
   useEffect(() => {
@@ -36,20 +39,27 @@ const Dashboard = ({ data }) => {
     setLoading(true)
     let activeTab = tabList.find(t => t.isActive);
     let url = activeTab.title === "BUY" ? "products/purchase" : "products/rent";
-    
-    let d = await Axios.get(url,{params:{page}})
-    setProductData([...productData, ...d.data.data]);
-    console.log("productData ", d.data.data);
+
+    let d = await Axios.get(url, { params: { page } })
+    console.log("productData ", d.data);
+
+    if(d.data.total){
+      setProductData([...productData, ...d.data.data]);
+      setTotal(d.data.total)
+    }
+    else{
+      setProductData([])
+    }
     setLoading(false)
 
   }
 
-  const addToWishList = async(data) => {
+  const addToWishList = async (data) => {
     data['userid'] = userID;
     let wishlistRes = await Axios.post('wishlist', data);
     console.log(wishlistRes);
 
-    if(wishlistRes.status == 201){
+    if (wishlistRes.status == 201) {
       alert("Item added to wishlist")
     }
   }
@@ -103,19 +113,29 @@ const Dashboard = ({ data }) => {
                       productData.length > 0 && productData.map((product, i) => {
                         return (
                           <div key={i} className="col-12 col-lg-4 mb-3 plr-3">
-                            <ProductCard productDetails={product} addToWishList = {addToWishList}/>
+                            <ProductCard productDetails={product} addToWishList={addToWishList} />
                           </div>
                         )
                       })
                     }
 
                   </div>
-                  <div className="col-12 text-center" onClick={getMoreProduct}>
-                    <a href="javascript:void(0);" className="load_more">See More <img src="/img/load_more.svg" width="20px" /></a>
-                  </div>
+                  {
+                    productData.length && (total > (productData.length)) ? (
+                      <div className="col-12 text-center" onClick={getMoreProduct}>
+                        <a href="javascript:void(0);" className="load_more">See More <img src="/img/load_more.svg" width="20px" /></a>
+                      </div>
+                    ) : null
+                  }
+
                 </div>
                 <div className="tab-pane" id="borrow">
-                  <p className="card-text text-center py-5">No Data</p>
+                  {
+                    productData.length == 0 ? (
+                      <p className="card-text text-center py-5">No Data</p>
+                    ):null
+                  }
+
                 </div>
               </div>
             </div>
