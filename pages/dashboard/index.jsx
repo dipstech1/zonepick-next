@@ -3,10 +3,11 @@ import ProductCard from 'components/dashboard/productCard'
 import { useState, useEffect } from "react";
 import Axios from "services/axios.interceptor"
 import { getCookie } from 'cookies-next';
+import { getDataFromLocalstorage } from "utils/storage.util";
 let page = 0
 
 const Dashboard = ({ data }) => {
-  console.log("token data  ", data);
+  const userID = getDataFromLocalstorage('userid')
   let [productData, setProductData] = useState([])
   let [loading, setLoading] = useState(false)
   const [tabList, setTabList] = useState([{ title: "BUY", isActive: true }, { title: "BORROW", isActive: false }])
@@ -41,6 +42,16 @@ const Dashboard = ({ data }) => {
     console.log("productData ", d.data.data);
     setLoading(false)
 
+  }
+
+  const addToWishList = async(data) => {
+    data['userid'] = userID;
+    let wishlistRes = await Axios.post('wishlist', data);
+    console.log(wishlistRes);
+
+    if(wishlistRes.status == 201){
+      alert("Item added to wishlist")
+    }
   }
 
 
@@ -92,7 +103,7 @@ const Dashboard = ({ data }) => {
                       productData.length > 0 && productData.map((product, i) => {
                         return (
                           <div key={i} className="col-12 col-lg-4 mb-3 plr-3">
-                            <ProductCard productDetails={product}/>
+                            <ProductCard productDetails={product} addToWishList = {addToWishList}/>
                           </div>
                         )
                       })

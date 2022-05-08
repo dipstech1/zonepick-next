@@ -2,22 +2,31 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import Card from "ui-lib/Cards/Card"
 import style from './productcard.module.scss'
-const productCard = ({ productDetails }) => {
+
+const productCard = ({ productDetails,addToWishList }) => {
     const router = useRouter();
     const goToDetails = (e, data) => {
         e.stopPropagation();
         router.push(`product/${productDetails.ParentId}/${productDetails.recordId}`)
     }
+
+    const addToWishlist = (e) => {
+        e.stopPropagation();
+        const body = {
+            recordId: productDetails.recordId,
+        }
+        addToWishList(body)
+    }
     return (
         <>
             <div className="card" onClick={goToDetails}>
-                <div className="position-relative">
+                <div className="position-relative" onClick={addToWishlist}>
                     <img src="/img/item_1.png" className="card-img-top" alt="..." />
-                    <a href="">
+                    <div href="">
                         <div className="like">
                             <i className="fas fa-heart"></i>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <div className="card-body">
                     <h5 className="card-title">Price: INR <span>{productDetails.price}</span></h5>
