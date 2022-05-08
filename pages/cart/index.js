@@ -50,7 +50,7 @@ function Cart() {
     }
 
     const purchase = async () => {
-        axiosInterceptor.post(`ptransaction`, { purchasables: purchasableData, userid: userId })
+        axiosInterceptor.post(`purchase`, { userid: userId })
             .then(res => {
                 toast.success("Transaction completed");
             }).catch((err) => console.log(err))

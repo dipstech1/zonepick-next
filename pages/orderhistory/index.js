@@ -7,18 +7,18 @@ import { getDataFromLocalstorage } from 'utils/storage.util';
 
 const OrderHistory = () => {
   let userId = getDataFromLocalstorage('userid');
-
+  let [orderHistory, setOrderHistory] = useState([])
   useEffect(() => {
     getWishlistItems();
   }, [])
 
   const getWishlistItems = async () => {
-    let items = await axiosInterceptor.post(`purchase/all`,{"userid":userId});
-    console.log("items ", items);
-    // if (items && items.data.data) {
-    //   setCartItemData(items.data.data);
-    //   setTotalPriceData(items.data.data)
-    // }
+    let items = await axiosInterceptor.post(`purchase/all`, { "userid": userId });
+    console.log("items order ", items.data.data);
+    if (items && items.data.data) {
+      setOrderHistory(items.data.data);
+      // setTotalPriceData(items.data.data)
+    }
 
   }
   return (
@@ -57,52 +57,41 @@ const OrderHistory = () => {
             </div>
           </div>
           <div className="col-12 col-lg-9">
-            <a href="javascript:void(0);" className="or_dhover">
-              <div className="row m-0">
-                <div className="col-12 col-lg-2">
-                  <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
-                </div>
-                <div className="col-12 col-lg-4">
-                  <p>
-                    Lorem ipsum dolor sit amet
-                    <small>Color:  Black</small>
-                    <small>Seller: EverythingShop</small>
-                  </p>
-                </div>
-                <div className="col-12 col-lg-2 text-lg-center">
-                  <p>₹ <span>192</span></p>
-                </div>
-                <div className="col-12 col-lg-4">
-                  <p>
-                    <b><i className="fas fa-circle text-success"></i> Delivered on Mar 12</b>
-                    <small>Your item has been delivered</small>
-                  </p>
-                </div>
-              </div>
+            {
+              orderHistory.length > 0 ?
+                orderHistory.map((order, i) => {
+                  return order.transactions.map((lst ,ind) => {
+                    return (
+                      <a href="javascript:void(0);" className="or_dhover" key={ind}>
+                    <div className="row m-0">
+                      <div className="col-12 col-lg-2">
+                        <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
+                      </div>
+                      <div className="col-12 col-lg-4">
+                        <p>
+                          Lorem ipsum dolor sit amet
+                          <small>Color:  Black</small>
+                          <small>Seller: EverythingShop</small>
+                        </p>
+                      </div>
+                      <div className="col-12 col-lg-2 text-lg-center">
+                        <p>₹ <span> {lst?.productId[0]?.price}</span></p>
+                      </div>
+                      <div className="col-12 col-lg-4">
+                        <p>
+                          <b><i className="fas fa-circle text-success"></i> Delivered on Mar 12</b>
+                          <small>Your item has been delivered</small>
+                        </p>
+                      </div>
+                    </div>
             </a>
-            <a href="javascript:void(0);" className="or_dhover">
-              <div className="row m-0">
-                <div className="col-12 col-lg-2">
-                  <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
-                </div>
-                <div className="col-12 col-lg-4">
-                  <p>
-                    Lorem ipsum dolor sit amet
-                    <small>Color:  Black</small>
-                    <small>Seller: EverythingShop</small>
-                  </p>
-                </div>
-                <div className="col-12 col-lg-2 text-lg-center">
-                  <p>₹ <span>192</span></p>
-                </div>
-                <div className="col-12 col-lg-4">
-                  <p>
-                    <b><i className="fas fa-circle text-success"></i> Delivered on Mar 12</b>
-                    <small>Your item has been delivered</small>
-                  </p>
-                </div>
-              </div>
-            </a>
+                    )
+                  } )
+                })
+                  
+                : null
+            }
+            
           </div>
         </div>
       </div>
