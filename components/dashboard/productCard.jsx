@@ -20,10 +20,10 @@ const productCard = ({ productDetails,addToWishList }) => {
     return (
         <>
             <div className="card" onClick={goToDetails}>
-                <div className="position-relative" onClick={addToWishlist}>
+                <div className="position-relative" >
                     <img src="/img/item_1.png" className="card-img-top" alt="..." />
                     <div href="">
-                        <div className="like">
+                        <div className="like" onClick={addToWishlist}>
                             <i className="fas fa-heart"></i>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ const productCard = ({ productDetails,addToWishList }) => {
                     <p className="card-text">{productDetails.purpose}</p>
                     <div className="user_name mt-3">
                         <p>{productDetails.seller_details.name}</p>
-                        <p><small>{productDetails.seller_details.state}</small> | <small>{productDetails.seller_details.pincode}</small></p>
+                        <p><small>{productDetails.seller_details.name}</small> | <small>{productDetails.seller_details.address1}</small></p>
                     </div>
                 </div>
             </div>
