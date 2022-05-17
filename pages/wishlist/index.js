@@ -60,7 +60,7 @@ const Wishlist = () => {
                   </div>
                   <div className="col-12 col-lg-1">
                     <p>
-                      <button className="btn btn-sm" onClick={(e) => removeWishListItem(wishdata?.productId[0].product.productId)}><i className="fas fa-trash text-black-50"></i></button>
+                      <button className="btn btn-sm" onClick={(e) => removeWishListItem(wishdata?.productId[0].wishlistId)}><i className="fas fa-trash text-black-50"></i></button>
                     </p>
                   </div>
                 </div>
