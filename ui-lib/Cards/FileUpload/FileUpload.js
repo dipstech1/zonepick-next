@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import S3 from "react-aws-s3";
 
-const REACT_APP_ACCESS_ID = "AKIATZN2PKEW3HWGL54P";
-const REACT_APP_ACCESS_KEY = "SlV7o7lvDqafjhh+NE1npYppigj7N2kIPgIAlXQw";
+const REACT_APP_ACCESS_ID = "AKIAUIC652DFHFY7QIF2";
+const REACT_APP_ACCESS_KEY = "ge277aUp/MS7ZjsR2WrauO4wJvBhhOAt23Ux1X4o";
 const REACT_APP_BUCKET_NAME = "nodoubtapp";
 // const REACT_APP_DIR_NAME = "XXXXXXXXXXXXX";
 const REACT_APP_REGION = "ap-south-1";
@@ -28,13 +28,13 @@ const FileUpload = () => {
     };
     return (
       <>
-        <form className="upload-steps" onSubmit={handleClick}>
+        <form className="upload-steps" >
           <label>
             Upload file:
             <input type="file" ref={fileInput} />
           </label>
           <br />
-          <button type="submit">Upload</button>
+          <button type="button" onClick={handleClick}>Upload</button>
         </form>
       </>
     );

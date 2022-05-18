@@ -9,6 +9,7 @@ import { fetchWrapper } from 'helpers';
 import axios from 'axios';
 import { setDataLocalStorage } from 'utils/storage.util';
 import axiosInterceptor from 'services/axios.interceptor';
+import FileUpload from 'ui-lib/Cards/FileUpload/FileUpload';
 
 
 const Login = () => {
@@ -100,6 +101,7 @@ const Login = () => {
                   <button className="btn btn-log">Login
                   {formState.isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                   </button>
+                  <FileUpload/>
                   <img src="/img/or.svg" className="w-100"/>
                   <button className="btn btn-logG"><img src="/img/google_icon.svg"/>Login with Google</button>
                   <p className="text-center pt-2">Have not met us before? <a href="register.html">Register</a></p>
