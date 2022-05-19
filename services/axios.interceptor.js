@@ -4,6 +4,8 @@ import getConfig from 'next/config';
 const {publicRuntimeConfig} = getConfig()
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
 
+console.log(baseUrl)
+
 
 axios.interceptors.request.use(
     function (config) {

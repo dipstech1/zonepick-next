@@ -27,16 +27,14 @@ const OrderHistory = () => {
   };
   return (
     <Layout title="Order History">
-      <section id="pageContainer" className="pb-4 pb-lg-5">
-        <div className="container mb-5 py-3">
+      <section className="py-4 py-lg-5">
+        <div className="container">
           <div className="row m-0 mb-4">
             <div className="bredcamp">
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb  mb-0">
                   <li className="breadcrumb-item">
-                    <Link href="/">
-                      <a>Home</a>
-                    </Link>
+                    <a href="#">Home</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Order History
@@ -47,7 +45,7 @@ const OrderHistory = () => {
           </div>
           <div className="row m-0 justify-content-end">
             <div className="col-12 col-lg-3 ex_filter">
-              <div className="input-group position-relative d-none d-md-block">
+              <div className="input-group position-relative">
                 <input
                   type="search"
                   className="form-control w-100 mb-4 pt-0 pb-0"
@@ -59,13 +57,14 @@ const OrderHistory = () => {
             </div>
           </div>
           <div className="row m-0">
-            <div className="col-12 col-lg-3 pb-1">
+            <div className="col-12 col-lg-3">
               <div className="leftpart pe-lg-4 sticky-top" id="filterDiv">
                 {/* <button type="button" className="btn-close btn-close btn-sm ml-auto d-lg-none" disabled aria-label="Close"></button> */}
-                <div className="d-md-none position-relative">
+                <div className="d-lg-none position-relative">
                   <input type="search" className="form-control" placeholder="Search" />
                   {/* <button className="input-group-text res_none"><i className="fas fa-search"></i></button> */}
                 </div>
+
                 <OrderStatus />
 
                 <OrderManufacture />
@@ -76,18 +75,10 @@ const OrderHistory = () => {
                 ? orderHistory.map((order, i) => {
                     return order.transactions.map((lst, ind) => {
                       return (
-                        <a className="or_dhover" key={ind}>
+                        <a style={{cursor: 'pointer'}} className="or_dhover" key={ind}>
                           <div className="row m-0">
                             <div className="col-12 col-lg-2">
-                              <Image
-                                src="/img/item_1.png"
-                                className="mb-3 mb-lg-0"
-                                style={{ maxWidth: '200px !important', maxHeight: '200px !important' }}
-                                width="50px"
-                                height="50px"
-                                alt="image"
-                                layout="responsive"
-                              />
+                              <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                             </div>
                             <div className="col-12 col-lg-4">
                               <p>

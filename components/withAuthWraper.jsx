@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import verifyToken from '../services/verifyToken';
+import {  getCookie } from 'cookies-next';
 
 const withAuthWraper = (WrappedComponent, users = []) => {
   console.log(users);
@@ -28,6 +28,24 @@ const withAuthWraper = (WrappedComponent, users = []) => {
         }
       }
     }, []);
+
+    const verifyToken = () => {
+
+      const accessToken = localStorage.getItem('token');
+  
+      let isLoggedin = false;
+      if (getCookie('Login') && accessToken) {
+          isLoggedin = true;
+      }
+  
+  
+  
+      return {
+          verified: isLoggedin
+      }
+  }
+
+
 
     if (verified) {
       return <WrappedComponent {...props} />;

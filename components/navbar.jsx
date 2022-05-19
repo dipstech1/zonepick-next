@@ -79,12 +79,19 @@ const Navbar = () => {
 
                 <div className="collapse navbar-collapse align-items-center" id="navbarTogglerDemo02"
                      style={{padding: 0.0}}>
-                    <ul className="navbar-nav m-auto mb-2 mb-md-2">
+                    <ul className={["navbar-nav m-auto",loggedIn ? "mb-3 mb-md-3": "mb-5 mb-md-2" ].join(" ")}  >
+                    {!loggedIn?
                         <li className="nav-item">
                             <Link href='/home'><a
                                 className={["nav-link", router.pathname === "/home" ? "active" : ""].join(" ")}
                                 aria-current="page">Home</a></Link>
                         </li>
+                        : <li className="nav-item">
+                        <Link href='/dashboard'><a
+                            className={["nav-link", router.pathname === "/dashboard" ? "active" : ""].join(" ")}
+                            aria-current="page">Dashboard</a></Link>
+                    </li>
+                        }
                         <li className="nav-item">
                             <Link href='/message'><a
                                 className={["nav-link", router.pathname === "/message" ? "active" : ""].join(" ")}
@@ -99,6 +106,16 @@ const Navbar = () => {
                             <Link href='/lend'><a
                                 className={["nav-link", router.pathname === "/lend" ? "active" : ""].join(" ")}
                                 aria-current="page">Lend</a></Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href='/3d-view'><a
+                                className={["nav-link", router.pathname === "/3d-view" ? "active" : ""].join(" ")}
+                                aria-current="page">3d View</a></Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href='/test-payment'><a
+                                className={["nav-link", router.pathname === "/test-payment" ? "active" : ""].join(" ")}
+                                aria-current="page">Payment</a></Link>
                         </li>
                     </ul>
 

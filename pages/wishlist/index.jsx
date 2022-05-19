@@ -1,100 +1,98 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react';
 import axiosInterceptor from '../../services/axios.interceptor';
-import {getDataFromLocalstorage} from '../../utils/storage.util';
+import { getDataFromLocalstorage } from '../../utils/storage.util';
 import { useRouter } from 'next/router';
-import Layout from "../../components/layout";
-import Image from "next/image";
+import Layout from '../../components/layout';
+import Image from 'next/image';
 import withAuthWraper from '../../components/withAuthWraper';
 
 const Wishlist = () => {
+  const router = useRouter();
 
-    const router = useRouter();
+  const [userId, setUserId] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
 
-    const [userId, setUserId] = useState(null)
-    const [wishlist, setWishlist] = useState([]);
+  useEffect(() => {
+    const userId = getDataFromLocalstorage('userid');
+    setUserId(userId);
+    getWishlistItems(userId);
 
-    useEffect(() => {
-        const userId = getDataFromLocalstorage('userid');
-        setUserId(userId);
-        getWishlistItems(userId)
-        
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+  }, [userId]);
 
-   async function getWishlistItems(userId) {
-
-        let getData = await axiosInterceptor.get(`wishlist/${userId}`);
-           // console.log(getData);
-            if (getData.status == 200) {
-                setWishlist(getData.data)
-            }        
+  async function getWishlistItems(userId) {
+    let getData = await axiosInterceptor.get(`wishlist/${userId}`);
+    // console.log(getData);
+    if (getData.status == 200) {
+      setWishlist(getData.data);
     }
+  }
 
-    const removeWishListItem = async (itemId) => {
-        console.log(itemId);
-        let res = await axiosInterceptor.delete(`wishlist/${itemId}`)
-        if (res.status == 200) {
-            alert("Item removed")
-        }
+  const removeWishListItem = async (itemId) => {
+    console.log(itemId);
+    let res = await axiosInterceptor.delete(`wishlist/${itemId}`);
+    if (res.status == 200) {
+      alert('Item removed');
     }
-    return (
-        <Layout title="Wishlist" protectedRoute={true}>
-            <section id='pageContainer' className="pb-4 pb-lg-5">
-                <div className="container py-3">
-                    <div className="row m-0 mb-4">
-                        <div className="bredcamp col-12 col-lg-9">
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb  mb-0">
-                                    <li className="breadcrumb-item"><a >Home</a></li>
-                                    <li className="breadcrumb-item active" aria-current="page">My Wishlist</li>
-                                </ol>
-                            </nav>
+  };
+  return (
+    <Layout title="Wishlist" protectedRoute={true}>
+      <section className="py-4 py-lg-5">
+        <div className="container">
+          <div className="row m-0 mb-4">
+            <div className="bredcamp col-12 col-lg-9">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb  mb-0">
+                  <li className="breadcrumb-item">
+                    <a href="#">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    My Wishlist
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          <div className="row m-0">
+            <div className="col-12 col-lg-9 wshlist">
+              {wishlist.length
+                ? wishlist.map((wishdata, i) => (
+                    <a style={{cursor: 'pointer'}} className="or_dhover" key={i}>
+                      <div className="row m-0">
+                        <div className="col-12 col-lg-2">
+                          <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                         </div>
-                    </div>
-                    <div className="row m-0">
-                        <div className="col-12 col-lg-9 wshlist">
-                            {
-                                wishlist.length ? (
-                                    wishlist.map((wishdata, i) => (
-                                        <a className="or_dhover" key={i}>
-                                            <div className="row m-0 mt-2 mb-2 wishListCard">
-                                                <div className="col-12 col-lg-2 text-center align-self-center" >
-                                                    <div className='div-center'>
-                                                    <Image src="/img/item_1.png" className="mb-3 mb-lg-0"
-                                                           width='64' height='64' alt='image' layout="responsive" sizes="100vw"/>
-                                                </div>
-                                                </div>
-                                                <div className="col-12 col-lg-9 text-center text-lg-start">
-                                                    <div>
-                                                        <small><b
-                                                            className="text-success">{wishdata?.productId[0].product_status}</b>
-                                                        </small>
-                                                        <b>{wishdata?.productId[0].product.name}</b>
-                                                        {/* <small><b className="text-success"><i className="fas fa-star"></i> 4.5</b> (600)</small> */}
-                                                        {/* <h6>₹329 <span className="text-black-50"> ₹500</span></h6> */}
-                                                        <h6>₹{wishdata?.productId[0].price} </h6><br/>
-                                                        
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className="col-12 col-lg-1 align-self-center text-center">
-                                                    <p>
-                                                        <button className="btn btn-sm"
-                                                                onClick={(e) => removeWishListItem(wishdata?.productId[0].product.productId)}>
-                                                            <i className="fas fa-trash text-black-50" style={{fontSize:'1.2rem'}}></i></button>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    ))
-                                ) : null
-                            }
+                        <div className="col-12 col-lg-9">
+                          <div>
+                            <small>
+                              <b className="text-success">{wishdata?.productId[0].product_status}</b>{' '}
+                            </small>
+                            <b>{wishdata?.productId[0].product.name}</b>
+                            {/* <small><b className="text-success"><i className="fas fa-star"></i> 4.5</b> (600)</small> */}
+                            {/* <h6>₹329 <span className="text-black-50"> ₹500</span></h6> */}
+                            <h6>₹{wishdata?.productId[0].price} </h6>
+                          </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </Layout>
-    )
-}
+                        <div className="col-12 col-lg-1">
+                          <p>
+                            <button
+                              className="btn btn-sm"
+                              onClick={(e) => removeWishListItem(wishdata?.productId[0].wishlistId)}
+                            >
+                              <i className="fas fa-trash text-black-50"></i>
+                            </button>
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  ))
+                : null}
+            </div>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
-export default withAuthWraper(Wishlist)
+export default withAuthWraper(Wishlist);

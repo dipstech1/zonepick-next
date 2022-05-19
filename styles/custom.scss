@@ -276,7 +276,7 @@ $theme-colors: ("primary": #1266F1,
 #nav_main {
 
   .navbar {
-    padding: 0 0.5rem 0 0.5rem;
+    padding: 0 0.4rem 0 0.4rem;
   }
 
   .navbar .dropdown-menu {
@@ -292,7 +292,7 @@ $theme-colors: ("primary": #1266F1,
 
   .navbar-fixed-top.scrolled {
     background-color: #ffff !important;
-    transition: background-color 200ms linear;
+    //transition: background-color 200ms linear;
   }
 
 
@@ -367,19 +367,20 @@ $theme-colors: ("primary": #1266F1,
     background-color: #FF6B34 !important;
     color: snow !important;
     transition: background-color 200ms linear;
-    // animation: smoothScroll 1s
+    animation: smoothScroll 1s
   }
 
   .bgx-navbar2 {
     background-color: rgba(0, 0, 0, 0.1) !important;
     color: snow !important;
+    animation: smoothScroll 1s
 
   }
 
   @keyframes smoothScroll {
     0% {
-      -webkit-transform: translateY(-40px);
-      transform: translateY(-40px);
+      -webkit-transform: translateY(0px);
+      transform: translateY(0px);
     }
 
     100% {
@@ -574,16 +575,26 @@ footer {
   align-items: center;
 }
 
+.wishlist2 :hover { 
+  border: 1px solid;
+  border-color: #0091ea;
+
+   // box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important
+
+}
+
 .wishListCard {
   
   .div-center {
     position: relative;
     min-width: 30px !important;
     min-height: 30px !important;
-    max-width: 200px !important;
+    max-width: 300px !important;
     max-height: 200px !important;
     left: 50%;
     transform: translateX(-50%);
   }
+
+  
 
 }

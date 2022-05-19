@@ -32,7 +32,7 @@ const Login = () => {
     setDataLocalStorage('userid', data?.userid);
     setDataLocalStorage('refreshtoken', data?.refreshToken);
     setCookies('Login', 'LoggedIn', { maxAge: 60 * 30 });
-    router.replace('/home');
+    router.replace('/dashboard');
   }
 
   return (
