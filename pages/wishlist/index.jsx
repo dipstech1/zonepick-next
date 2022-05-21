@@ -4,6 +4,7 @@ import { getDataFromLocalstorage } from '../../utils/storage.util';
 import { useRouter } from 'next/router';
 import Layout from '../../components/layout';
 import Image from 'next/image';
+import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
 
 const Wishlist = () => {
@@ -37,14 +38,16 @@ const Wishlist = () => {
   };
   return (
     <Layout title="Wishlist" protectedRoute={true}>
-      <section className="py-4 py-lg-5">
+      <section className="" id="pageContainer">
         <div className="container">
           <div className="row m-0 mb-4">
             <div className="bredcamp col-12 col-lg-9">
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb  mb-0">
                   <li className="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <Link href="/">                      
+                      <a>Home</a>
+                    </Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     My Wishlist
@@ -57,7 +60,7 @@ const Wishlist = () => {
             <div className="col-12 col-lg-9 wshlist">
               {wishlist.length
                 ? wishlist.map((wishdata, i) => (
-                    <a style={{cursor: 'pointer'}} className="or_dhover" key={i}>
+                    <a style={{ cursor: 'pointer' }} className="or_dhover" key={i}>
                       <div className="row m-0">
                         <div className="col-12 col-lg-2">
                           <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />

@@ -1,10 +1,10 @@
+import { removeCookies } from 'cookies-next';
+import Image from 'next/image';
 import Link from 'next/link';
-import Image from 'next/image'
-import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
-import {clearLocalStorage} from '../utils/storage.util';
-import {removeCookies} from 'cookies-next';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import verifyToken from '../services/verifyToken';
+import { clearLocalStorage } from '../utils/storage.util';
 
 const Navbar = () => {
     const router = useRouter();
@@ -74,7 +74,7 @@ const Navbar = () => {
                         </ul>
                     </li>
                     <a  className="nav-link text-white mx-1 mt-1"><i className="fa fa-bell"></i></a>
-                    <a  href='/cart' className="nav-link  text-white mx-1 mt-1"><i className="fa fa-shopping-cart"></i></a> </>) :<> <Link href='/account/login'><a  className="nav-link text-white mx-1 mt-1"><i className="fa fa-right-to-bracket"></i> Login </a></Link></>}
+                    <Link href='/cart'><a  className="nav-link  text-white mx-1 mt-1"><i className="fa fa-shopping-cart"></i></a></Link> </>) :<> <Link href='/account/login'><a  className="nav-link text-white mx-1 mt-1"><i className="fa fa-right-to-bracket"></i> Login </a></Link></>}
                 </div>
 
                 <div className="collapse navbar-collapse align-items-center" id="navbarTogglerDemo02"
@@ -135,7 +135,7 @@ const Navbar = () => {
                             </ul>
                         </li>
                         <a  href='#' className="nav-link text-white mx-1 mt-1"><i className="fa fa-bell"></i></a>
-                        <a  href='/cart' className="nav-link  text-white mx-1 mt-1"><i className="fa fa-shopping-cart"></i></a> </>) :<> <Link href='/account/login'><a  className="nav-link text-white mx-1 mt-1"><i className="fa fa-right-to-bracket"></i> Login </a></Link></>}
+                        <Link href='/cart'><a  className="nav-link  text-white mx-1 mt-1"><i className="fa fa-shopping-cart"></i></a></Link> </>) :<> <Link href='/account/login'><a  className="nav-link text-white mx-1 mt-1"><i className="fa fa-right-to-bracket"></i> Login </a></Link></>}
                     </div>
                    
 

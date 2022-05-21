@@ -1,5 +1,6 @@
-import '../styles/custom.scss'
+import '../styles/custom-bootstrap.scss'
 import '../styles/globals.css'
+import '../styles/style.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from "react";
 import {useRouter} from "next/router";

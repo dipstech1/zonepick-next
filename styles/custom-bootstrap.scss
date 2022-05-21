@@ -305,9 +305,11 @@ $theme-colors: ("primary": #1266F1,
   }
 
   .nav-item .active {
-    // background-color: white;
-    color: #000 !important;
+    //background-color: white;
+    //color: #000 !important;
     // font-weight: bold;
+    color: snow !important;
+    border-bottom: snow 1px solid;
   }
 
   .nav-item a {
@@ -319,8 +321,8 @@ $theme-colors: ("primary": #1266F1,
 
   .nav-item a:hover {
     color: black !important;
-    border-bottom: white;
-    // background-color: white;
+  //  color: snow !important;
+    border-bottom: snow 1px solid;
     transition: all .2s ease-in-out;
   }
 

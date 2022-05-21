@@ -27,14 +27,16 @@ const OrderHistory = () => {
   };
   return (
     <Layout title="Order History">
-      <section className="py-4 py-lg-5">
+      <section id="pageContainer">
         <div className="container">
           <div className="row m-0 mb-4">
             <div className="bredcamp">
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb  mb-0">
                   <li className="breadcrumb-item">
-                    <a href="#">Home</a>
+                    <Link href="/">                      
+                      <a>Home</a>
+                    </Link>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Order History
@@ -75,7 +77,7 @@ const OrderHistory = () => {
                 ? orderHistory.map((order, i) => {
                     return order.transactions.map((lst, ind) => {
                       return (
-                        <a style={{cursor: 'pointer'}} className="or_dhover" key={ind}>
+                        <a style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
                           <div className="row m-0">
                             <div className="col-12 col-lg-2">
                               <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />

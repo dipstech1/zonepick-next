@@ -2,6 +2,7 @@ import Layout from '../../components/layout';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
 
 const Profile = () => {
@@ -37,9 +38,9 @@ const Profile = () => {
                 <div className="col-12">
                   <h6 style={{ fontWeight: 500, fontSize: 20 }}>
                     {userFullName}{' '}
-                    <a href="edit_profile.html" className="btn btn-outline-warning btn-sm ms-md-4 ms-4">
-                      Edit Profile
-                    </a>
+                    <Link href="/profile/edit-profile">                     
+                      <a className="btn btn-outline-warning btn-sm ms-md-4 ms-4"> Edit Profile </a>
+                    </Link>
                   </h6>
                 </div>
               </div>
@@ -59,7 +60,7 @@ const Profile = () => {
               <div className="row">
                 <div className="col-12 container2">
                   <span style={{ top: '10px' }}>Connected Account:</span>{' '}
-                  <a >
+                  <a>
                     <Image layout="fixed" src="/img/google.svg" width="50px" height="50px" alt="ss" />
                   </a>
                 </div>
@@ -132,4 +133,4 @@ const Profile = () => {
   );
 };
 
-export default withAuthWraper(Profile,['admin','super-admin']);
+export default withAuthWraper(Profile, ['admin', 'super-admin', 'user']);
