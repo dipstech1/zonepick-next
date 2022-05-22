@@ -1,11 +1,16 @@
 import Layout from '../../components/layout';
 import Image from 'next/image';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
+import { useRef, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import axiosInterceptor from '../../services/axios.interceptor';
+import { getDataFromLocalstorage } from '../../utils/storage.util';
 
 const Profile = () => {
+  const [userId, setUserId] = useState(null);
+
   let [profileImage, setProfileImage] = useState('/img/profile_pic.png');
   let [userFullName, setUserFullName] = useState('Jessy');
   let [follwers, setFollwers] = useState(100);
@@ -13,6 +18,32 @@ const Profile = () => {
   let [userRating, setUserRating] = useState(8.2);
 
   const router = useRouter();
+
+  const [userData, setUserData] = useState({
+    address1: '',
+    address2: '',
+    address3: '',
+    address4: '',
+    address5: '',
+    email: '',
+    name: '',
+    aboutme: '',
+    phone: '',
+    userId: ''
+  });
+
+  useEffect(() => {
+    const userId = getDataFromLocalstorage('userid');
+    setUserId(userId);
+  //  getUserData(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  const getUserData = async (userId) => {
+    let res = await axiosInterceptor.get(`profile/${userId}`);
+   // console.log(res);
+    setUserData({ ...res.data[0] });
+  };
 
   const addProduct = () => {
     router.push('product/addproduct');
@@ -38,7 +69,7 @@ const Profile = () => {
                 <div className="col-12">
                   <h6 style={{ fontWeight: 500, fontSize: 20 }}>
                     {userFullName}{' '}
-                    <Link href="/profile/edit-profile">                     
+                    <Link href="/profile/edit-profile">
                       <a className="btn btn-outline-warning btn-sm ms-md-4 ms-4"> Edit Profile </a>
                     </Link>
                   </h6>

@@ -1,66 +1,106 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Layout from '../../components/layout';
 import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import FileUploadS3 from '../../helpers/fileuploader'
 const EditProfile = () => {
   const router = useRouter();
+
+  const fileIp = useRef();
+
   const [userId, setUserId] = useState(null);
 
-  const [EditProfile, setEditProfile] = useState({
-    fullName: 'Jessy',
-    phoneNo: '1234567890',
-    email: 'jessy@emetacomm.com',
-    aboutMe: 'Admin emetacomm.com',
-    profilePic: '/img/profile_pic.png',
+  const [userData, setUserData] = useState({
+    address1: '',
+    address2: '',
+    address3: '',
+    address4: '',
+    address5: '',
+    email: '',
+    name: '',
+    aboutme: '',
+    phone: '',
     userId: ''
   });
 
   const [errorFiled, setErrorFiled] = useState({
-    fullName: false,
-    phoneNo: false,
+    name: false,
+    phone: false,
     email: false,
-    aboutMe: false
+    aboutme: false
   });
 
   useEffect(() => {
     const userId = getDataFromLocalstorage('userid');
     setUserId(userId);
+    getUserData(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const updateProfile = async () => {
-
-    EditProfile.userId = userId;
-
-
-    console.log(EditProfile);
-
-    const errorFlag = Object.keys(errorFiled).every((k) => errorFiled[k] === false)
-
-    console.log(errorFlag)
-
-    if (!errorFlag) {
-      alert('Fill all fields')
-    }
-
-    /* 
-    let updated = await Axios.post('updateProfile', EditProfile);
-    */
+  const getUserData = async (userId) => {
+    let res = await axiosInterceptor.get(`profile/${userId}`);
+    console.log(res);
+    setUserData({ ...res.data[0] });
   };
 
- const countLetter = (string) => {  
-    var count = {};
-    string.split('').forEach(function(s) {
-       count[s] ? count[s]++ : count[s] = 1;
-    });
-    return Object.keys(count).length;
-  }
+  const updateProfile = async () => {
+    userData.phone = +userData.phone;
 
+    console.log(userData);
+    let res = await axiosInterceptor.patch(`profile/${userId}`, userData);
+    console.log(res);
+  };
 
+  const updateValue = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const changePic = () => {
+    fileIp.current.click();
+  };
+
+  const onSelectFile = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      const max_size = 20971520;
+      const allowed_types = ['image/png', 'image/jpeg'];
+      console.log(event.target.files[0]);
+
+      if (event.target.files[0].size > max_size) {
+        toast.error('Maximum size allowed is ' + max_size / 1000 + 'Mb', 'Max size exceeded');
+
+        return false;
+      }
+
+      if (!allowed_types.includes(event.target.files[0].type)) {
+        toast.error('Only Images are allowed ( JPG | PNG )', 'Type error');
+        return false;
+      }
+
+      // reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      // reader.onload = (event) => { // called once readAsDataURL is completed
+      //   this.url = event?.target?.result;
+      //   console.log(this.url);
+      //   let blobImg = this.DataURIToBlob(this.url);
+      //   console.log("BLOB", blobImg);
+      // }
+
+      let file = event.target.files[0];
+      let filePath = 'images/' + Math.random() * 10000000000000000 + '_' + file.name;
+      console.log(file, filePath);
+
+     /* FileUploadS3.uploadFile(file)
+        .then((res) => toast.success('Profile picture uploaded successfully'))
+        .catch((err) => console.log(err));*/
+    }
+  };
 
   return (
     <Layout title="Edit Profile Page">
@@ -84,18 +124,19 @@ const EditProfile = () => {
                     Edit Profile
                   </li>
                 </ol>
+                <input type="file" hidden ref={fileIp} onChange={onSelectFile} />
               </nav>
             </div>
           </div>
 
           <div className="row m-0 py-3 justify-content-center">
             <div className="col-12 col-lg-2 us_pic text-center py-3 py-lg-5 position-relative">
-              <img src={EditProfile.profilePic} className="m-auto mr-lg-auto" alt="" />
+              <img src="/img/profile_pic.png" className="m-auto mr-lg-auto" alt="" />
               <div className="ed_img dropdown">
                 <i className="fas fa-pen dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" onClick={changePic}>
                       Change Profile Photo
                     </a>
                   </li>
@@ -114,159 +155,79 @@ const EditProfile = () => {
               <form className="row m-0 edit_userform needs-validation" id="form1" noValidate>
                 <div className="col-12 col-lg-6">
                   <label>Name</label>
-                  <input type="text" className="form-control tooltipstered" placeholder="Full name" required={true}
-                  value={EditProfile.fullName}
-                  onChange={(e) =>{
-
-                    if (e.target.value === '') {
-                      setErrorFiled({
-                        ...errorFiled,
-                        fullName: true
-                      })
-                      
-                    } else {
-                      setErrorFiled({
-                        ...errorFiled,
-                        fullName: false
-                      }) 
-                    }
-
-                    setEditProfile({
-                      ...EditProfile,
-                      fullName: e.target.value
-                    })
-
-                    
-                    }
-                  }                  
+                  <input
+                    onChange={updateValue}
+                    name="name"
+                    type="text"
+                    value={userData.name}
+                    className="form-control"
+                    placeholder="Full name"
                   />
-                  { errorFiled.fullName ?
-                  <div className="invalid-feedback" >
-                      <div>
-                        Name is required
-                      </div>
-                    </div> : null
-                  }
                 </div>
                 <div className="col-12 col-lg-6">
                   <label>Phone Number</label>
-                  <input type="text" maxLength={10} minLength={10} className="form-control tooltipstered" placeholder="Phone no." required={true}
-                  value={EditProfile.phoneNo}
-                  onChange={(e) =>{
-
-                    const re = /^[0-9\b]+$/;    
-
-                   const phoneLengh = countLetter(e.target.value)
-
-                    if (e.target.value === '') {
-                      setErrorFiled({
-                        ...errorFiled,
-                        phoneNo: true
-                      })
-                      
-                    } else {
-                      setErrorFiled({
-                        ...errorFiled,
-                        phoneNo: false
-                      }) 
-                    }
-
-                    if (e.target.value === '' || re.test(e.target.value)) {
-                      setEditProfile({
-                        ...EditProfile,
-                        phoneNo: e.target.value
-                      })
-                   }
-                    
-                   }
-                  }  
+                  <input
+                    onChange={updateValue}
+                    name="phone"
+                    type="number"
+                    value={userData.phone}
+                    className="form-control"
+                    placeholder="Phone no."
                   />
-
-                { errorFiled.phoneNo ?
-                  <div className="invalid-feedback" >
-                      <div>
-                        Phone No. is required
-                      </div>
-                    </div> : null
-                  }
-
+                </div>
+                <div className="col-12 col-lg-6">
+                  <label>Address</label>
+                  <input
+                    onChange={updateValue}
+                    name="address1"
+                    type="text"
+                    value={userData.address1}
+                    className="form-control"
+                    placeholder="Address1"
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <label>Address2</label>
+                  <input
+                    onChange={updateValue}
+                    name="address2"
+                    type="text"
+                    value={userData.address2}
+                    className="form-control"
+                    placeholder="Address2"
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <label>Addres3</label>
+                  <input
+                    onChange={updateValue}
+                    name="address3"
+                    type="text"
+                    value={userData.address3}
+                    className="form-control"
+                    placeholder="Address3"
+                  />
                 </div>
                 <div className="col-12 col-lg-6">
                   <label>About Me</label>
-                  <textarea  type="text"   className="form-control h-auto"  rows="3" placeholder="About" required={true}
-                  value={EditProfile.aboutMe}
-                  onChange={(e) =>{
-
-                    if (e.target.value === '') {
-                      setErrorFiled({
-                        ...errorFiled,
-                        aboutMe: true
-                      })
-                      
-                    } else {
-                      setErrorFiled({
-                        ...errorFiled,
-                        aboutMe: false
-                      }) 
-                    }
-
-
-                    setEditProfile({
-                      ...EditProfile,
-                      aboutMe: e.target.value
-                    })
-                    }
-                  }
-                  >
-
-                  </textarea>
-
-                  { errorFiled.aboutMe ?
-                  <div className="invalid-feedback" >
-                      <div>
-                        About Me is required
-                      </div>
-                    </div> : null
-                  }
-
-
+                  <textarea
+                    name="aboutme"
+                    type="text"
+                    className="form-control h-auto"
+                    rows="3"
+                    placeholder="About me"
+                  ></textarea>
                 </div>
                 <div className="col-12 col-lg-6">
                   <label>Email ID</label>
-                  <input type="email" className="form-control tooltipstered" placeholder="abc@gmail.com"  required={true}
-                  
-                  value={EditProfile.email}
-                    onChange={(e) =>{
-
-                      if (e.target.value === '') {
-                        setErrorFiled({
-                          ...errorFiled,
-                          email: true
-                        })
-                        
-                      } else {
-                        setErrorFiled({
-                          ...errorFiled,
-                          email: false
-                        }) 
-                      }
-
-
-                        setEditProfile({
-                          ...EditProfile,
-                          email: e.target.value
-                        })
-                      }
-                    }
-
+                  <input
+                    onChange={updateValue}
+                    name="email"
+                    type="email"
+                    value={userData.email}
+                    className="form-control"
+                    placeholder="abc@gmail.com"
                   />
-                  { errorFiled.email ?
-                  <div className="invalid-feedback" >
-                      <div>
-                        Email is required
-                      </div>
-                    </div> : null
-                  }
                 </div>
                 <div className="col-12 col-lg-5 mt-4">
                   <p>
