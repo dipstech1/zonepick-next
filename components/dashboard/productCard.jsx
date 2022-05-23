@@ -29,6 +29,7 @@ const productCard = ({ productDetails,addToWishList }) => {
                     </div>
                 </div>
                 <div className="card-body">
+                <h5 className="card-title"> <span>{productDetails.product.name}</span></h5>
                     <h5 className="card-title">Price: INR <span>{productDetails.price}</span></h5>
                     <p className="card-text">{productDetails.purpose}</p>
                     <div className="user_name mt-3">

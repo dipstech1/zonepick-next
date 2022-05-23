@@ -59,7 +59,7 @@ const Dashboard = ({ data }) => {
     let wishlistRes = await Axios.post('wishlist', data);
     console.log(wishlistRes);
 
-    if (wishlistRes.status == 201) {
+    if (wishlistRes.data.response.status == 201) {
       alert("Item added to wishlist")
     }
   }
