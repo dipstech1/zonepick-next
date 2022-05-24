@@ -4,9 +4,12 @@ import OrderManufacture from '/components/order-history/orderManufacturer';
 import { useState, useEffect } from 'react'
 import axiosInterceptor from 'services/axios.interceptor';
 import { getDataFromLocalstorage } from 'utils/storage.util';
+import { useRouter } from "next/router"
 
 const OrderHistory = () => {
   let userId = getDataFromLocalstorage('userid');
+  const router = useRouter();
+
   let [orderHistory, setOrderHistory] = useState([])
   useEffect(() => {
     getWishlistItems();
@@ -19,8 +22,13 @@ const OrderHistory = () => {
       setOrderHistory(items.data.data);
       // setTotalPriceData(items.data.data)
     }
-
   }
+
+  const goToProductDetails = (wishdata) => {
+    console.log("wishdata ", wishdata);
+    router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
+
+ }
   return (
     <section className="py-4 py-lg-5">
       <div className="container">
@@ -63,13 +71,13 @@ const OrderHistory = () => {
                   return order.transactions.map((lst ,ind) => {
                     return (
                       <a href="javascript:void(0);" className="or_dhover" key={ind}>
-                    <div className="row m-0">
+                    <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
                       <div className="col-12 col-lg-2">
                         <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                       </div>
                       <div className="col-12 col-lg-4">
                         <p>
-                          Lorem ipsum dolor sit amet
+                        {lst?.productId[0].product.name}
                           <small>Color:  Black</small>
                           <small>Seller: EverythingShop</small>
                         </p>

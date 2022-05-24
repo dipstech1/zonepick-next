@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import axiosInterceptor from 'services/axios.interceptor';
 import { getDataFromLocalstorage } from 'utils/storage.util';
+import { useRouter } from "next/router"
 
 const Wishlist = () => {
+  const router = useRouter();
   const userId = getDataFromLocalstorage('userid')
   const [wishlist, setWishlist] = useState([]);
 
@@ -33,6 +35,12 @@ const Wishlist = () => {
       getWishlistItem()
     }
   }
+
+  const goToProductDetails = (wishdata) => {
+     console.log("wishdata ", wishdata);
+     router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
+
+  }
   
 
   return (
@@ -55,7 +63,7 @@ const Wishlist = () => {
               wishlist.length ? (
                wishlist.map((wishdata,i) => (
                 <a href="javascript:void(0);" className="or_dhover" key={i}>
-                <div className="row m-0">
+                <div className="row m-0" onClick={(e) => goToProductDetails(wishdata)}>
                   <div className="col-12 col-lg-2">
                     <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                   </div>

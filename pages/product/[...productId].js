@@ -15,7 +15,12 @@ const ProductDetails = ({ productData }) => {
         console.log("router.query ", router.query);
         if(router.query.productId){
           let prodId = router.query.productId;
-        let res = await axiosInterceptor.get(`products/${prodId[0]}/${prodId[1]}`)
+        // let res = await axiosInterceptor.get(`products/${prodId[0]}/${prodId[1]}`)
+        let res = await axiosInterceptor.post(`products/details`,{
+          "productId" : prodId[0],
+          "recordId" : prodId[1],
+          "userid" :  getDataFromLocalstorage('userid')
+        })
         console.log("det ", res.data);
         setProductDetails(res.data[0])
         }
