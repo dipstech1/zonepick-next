@@ -1,5 +1,4 @@
 import Layout from '../../components/layout';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
@@ -55,12 +54,12 @@ const Profile = () => {
         <div className="container py-3">
           <div className="row m-0 py-5 border-bottom profile_container justify-content-center">
             <div className="col-md-3 text-center">
-              <Image
+              <img
                 layout="fixed"
                 className="m-auto mr-lg-auto Profile_img"
                 src={profileImage}
-                width={140}
-                height={140}
+                width='140px'
+                height='140px'
                 alt="Profile Picture"
               />
             </div>
@@ -92,7 +91,7 @@ const Profile = () => {
                 <div className="col-12 container2">
                   <span style={{ top: '10px' }}>Connected Account:</span>{' '}
                   <a>
-                    <Image layout="fixed" src="/img/google.svg" width="50px" height="50px" alt="ss" />
+                    <img layout="fixed" src="/img/google.svg" width="50px" height="50px" alt="ss" />
                   </a>
                 </div>
               </div>
@@ -135,7 +134,7 @@ const Profile = () => {
                 <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <div className="text-center pb-5">
                     <h5 className="text-black-50">Post Your First Ad!</h5>
-                    <Image
+                    <img
                       src="/img/jobpost_df.svg"
                       className="jobp_def py-3"
                       alt="xx"

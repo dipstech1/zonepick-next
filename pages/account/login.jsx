@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setCookies } from 'cookies-next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -86,10 +85,10 @@ const Login = () => {
                     Login
                     {formState.isSubmitting && <span className="spinner-border spinner-border-sm me-1 ms-2"></span>}
                   </button>
-                  <Image src="/img/or.svg" className="w-100" width="500px" height="50px" alt="xx" />
+                  <img src="/img/or.svg" className="w-100" width="500px" height="50px" alt="xx" />
                   <button className="btn btn-logG container3 text-center">
                     <i className="ms-2"></i>
-                    <Image src="/img/google_icon.svg" width="25px" height="25px" alt="xx" />
+                    <img src="/img/google_icon.svg" width="25px" height="25px" alt="xx" />
                     <span className="ms-2">Login with Google</span>
                   </button>
                   <p className="text-center pt-2">
@@ -102,7 +101,7 @@ const Login = () => {
               </div>
             </div>
             <div className="col-12 col-lg-6 login_img p-0 d-none d-lg-block">
-              <Image src="/img/login_bg.png" layout="responsive" alt="x" height="100vh" width="100%" />
+              <img src="/img/login_bg.png" layout="responsive" alt="x" height="100vh" width="100%" />
             </div>
           </div>
         </div>

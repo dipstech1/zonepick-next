@@ -1,5 +1,4 @@
 import { removeCookies } from 'cookies-next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -63,7 +62,7 @@ const Navbar = () => {
                    ( <><li className="dropdown">
                         <a className="nav-link dropdown-toggle"  id="navbarScrollingDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <Image src={ProfileImage} className="img-avatar" alt="avatar" width={32} height={32}/>
+                            <img src={ProfileImage} className="img-avatar" alt="avatar"/>
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                             <li><Link href='/profile'><a className="dropdown-item">Profile</a></Link></li>
@@ -124,7 +123,7 @@ const Navbar = () => {
                     ( <><li className="dropdown">
                             <a className="nav-link dropdown-toggle"  id="navbarScrollingDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                                <Image src={ProfileImage} className="img-avatar" alt="avatar" width={32} height={32}/>
+                                <img src={ProfileImage} className="img-avatar" alt="avatar" />
                             </a>
                             <ul className="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                 <li><Link href='/profile'><a className="dropdown-item">Profile</a></Link></li>

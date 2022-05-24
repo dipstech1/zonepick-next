@@ -3,7 +3,6 @@ import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 import { useRouter } from 'next/router';
 import Layout from '../../components/layout';
-import Image from 'next/image';
 import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
 
@@ -29,13 +28,21 @@ const Wishlist = () => {
     }
   }
 
-  const removeWishListItem = async (itemId) => {
-    console.log(itemId);
-    let res = await axiosInterceptor.delete(`wishlist/${itemId}`);
+  const removeWishListItem = async (item) => {
+    console.log(item);
+    let res = await axiosInterceptor.delete(`wishlist/${item?.wishlistId}`);
     if (res.status == 200) {
-      alert('Item removed');
+      getWishlistItems(userId)
     }
   };
+
+  const goToProductDetails = (wishdata) => {
+    console.log("wishdata ", wishdata);
+    router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
+
+ }
+
+
   return (
     <Layout title="Wishlist" protectedRoute={true}>
       <section className="" id="pageContainer">
@@ -61,7 +68,7 @@ const Wishlist = () => {
               {wishlist.length
                 ? wishlist.map((wishdata, i) => (
                     <a style={{ cursor: 'pointer' }} className="or_dhover" key={i}>
-                      <div className="row m-0">
+                      <div className="row m-0" onClick={(e) => goToProductDetails(wishdata)}>
                         <div className="col-12 col-lg-2">
                           <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                         </div>
@@ -80,7 +87,7 @@ const Wishlist = () => {
                           <p>
                             <button
                               className="btn btn-sm"
-                              onClick={(e) => removeWishListItem(wishdata?.productId[0].wishlistId)}
+                              onClick={(e) => removeWishListItem(wishdata)}
                             >
                               <i className="fas fa-trash text-black-50"></i>
                             </button>

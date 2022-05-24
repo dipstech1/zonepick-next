@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Image from 'next/image';
 
-const ProductCard = ({ productDetails,addToWishList }) => {
+const ProductCard = ({ productDetails, addToWishList }) => {
   const router = useRouter();
 
   const goToDetails = (e, data) => {
@@ -32,6 +31,9 @@ const ProductCard = ({ productDetails,addToWishList }) => {
           </div>
         </div>
         <div className="card-body">
+          <h4 className="card-title">
+            <span>{productDetails.product.name}</span>
+          </h4>
           <h5 className="card-title">
             Price: INR <span>{productDetails.price}</span>
           </h5>

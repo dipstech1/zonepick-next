@@ -299,7 +299,7 @@ $theme-colors: ("primary": #1266F1,
 
   .navbar .dropdown-toggle::after {
     display: inline-block !important;
-    vertical-align: 0.65em !important;
+    vertical-align: 0.2em !important;
     color: snow;
     font-size: 1.3rem;
   }
@@ -332,8 +332,8 @@ $theme-colors: ("primary": #1266F1,
   }
 
   .img-avatar {
-    width: 30px !important;
-    height: 30px !important;
+    width: 38px !important;
+    height: 38px !important;
     border-radius: 50%;
     object-fit: cover;
     background: #efefef;

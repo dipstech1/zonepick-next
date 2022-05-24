@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Layout from '../../components/layout';
@@ -7,8 +6,14 @@ import OrderStatus from '../../components/order-history/orderStatus';
 import withAuthWraper from '../../components/withAuthWraper';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
+import { useRouter } from 'next/router';
 
 const OrderHistory = () => {
+
+  const router = useRouter();
+
+
+
   const [userId, setUserId] = useState(null);
   let [orderHistory, setOrderHistory] = useState([]);
   useEffect(() => {
@@ -25,6 +30,13 @@ const OrderHistory = () => {
       // setTotalPriceData(items.data.data)
     }
   };
+
+  const goToProductDetails = (orderData) => {
+    console.log("orderData ", orderData);
+    router.push(`product/${orderData.productId[0].ParentId}/${orderData.productId[0].recordId}`)
+
+ }
+
   return (
     <Layout title="Order History">
       <section id="pageContainer">
@@ -78,21 +90,19 @@ const OrderHistory = () => {
                     return order.transactions.map((lst, ind) => {
                       return (
                         <a style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
-                          <div className="row m-0">
+                          <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
                             <div className="col-12 col-lg-2">
                               <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                             </div>
                             <div className="col-12 col-lg-4">
                               <p>
-                                Lorem ipsum dolor sit amet
+                              {lst?.productId[0].product.name}
                                 <small>Color: Black</small>
                                 <small>Seller: EverythingShop</small>
                               </p>
                             </div>
                             <div className="col-12 col-lg-2 text-lg-center">
-                              <p>
-                                ₹ <span> {lst?.productId[0]?.price}</span>
-                              </p>
+                             <p>₹ <span> {lst?.productId[0]?.price}</span></p>
                             </div>
                             <div className="col-12 col-lg-4">
                               <p>
