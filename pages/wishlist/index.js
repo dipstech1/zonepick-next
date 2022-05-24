@@ -7,20 +7,30 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(()=>{
-    (async()=>{
-      let getData = await axiosInterceptor.get(`wishlist/${userId}`);
-      console.log(getData);
-      if(getData.status == 200){
-        setWishlist(getData.data)
-      }
-    })()
+    // (async()=>{
+    //   let getData = await axiosInterceptor.get(`wishlist/${userId}`);
+    //   console.log(getData);
+    //   if(getData.status == 200){
+    //     setWishlist(getData.data)
+    //   }
+    // })()
+    getWishlistItem()
   },[]);
 
-  const removeWishListItem = async(itemId) => {
-    console.log(itemId);
-    let res = await axiosInterceptor.delete(`wishlist/${itemId}`)
+  const getWishlistItem = async() => {
+    let getData = await axiosInterceptor.get(`wishlist/${userId}`);
+    console.log(getData);
+    if(getData.status == 200){
+      setWishlist(getData.data)
+    }
+  }
+
+  const removeWishListItem = async(item) => {
+    console.log(item);
+    let res = await axiosInterceptor.delete(`wishlist/${item?.wishlistId}`)
     if(res.status == 200){
-      alert("Item removed")
+      alert("Item removed");
+      getWishlistItem()
     }
   }
   
@@ -60,7 +70,7 @@ const Wishlist = () => {
                   </div>
                   <div className="col-12 col-lg-1">
                     <p>
-                      <button className="btn btn-sm" onClick={(e) => removeWishListItem(wishdata?.productId[0].wishlistId)}><i className="fas fa-trash text-black-50"></i></button>
+                      <button className="btn btn-sm" onClick={(e) => removeWishListItem(wishdata)}><i className="fas fa-trash text-black-50"></i></button>
                     </p>
                   </div>
                 </div>
