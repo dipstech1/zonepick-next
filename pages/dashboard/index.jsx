@@ -95,8 +95,8 @@ const Dashboard = ({ data }) => {
           <div className="container">
             <div className="row m-0">
               <div className="col-12 col-lg-2 p-0 inner_fSelect">
-                <select className="form-select" aria-label="Default select example">
-                  <option selected>Recommendations</option>
+                <select className="form-select" aria-label="Default select example" defaultValue="">
+                  <option value="">Recommendations</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
                   <option value="3">Three</option>
@@ -137,7 +137,7 @@ const Dashboard = ({ data }) => {
                     </div>
                     {productData.length && total > productData.length ? (
                       <div className="col-12 text-center" onClick={getMoreProduct}>
-                        <a href="javascript:void(0);" className="load_more">
+                        <a style={{cursor:'pointer'}} className="load_more">
                           See More <img src="/img/load_more.svg" width="20px" />
                         </a>
                       </div>

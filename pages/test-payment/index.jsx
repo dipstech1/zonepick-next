@@ -1,6 +1,7 @@
 import PaymentButton from '../../components/payment-button/paymentButton';
 import Layout from '../../components/layout';
 import { toast } from 'react-toastify';
+import CryptoPaymentButton from '../../components/payment-button/cryptoPayment';
 const Sell = () => {
  
  
@@ -29,10 +30,15 @@ const Sell = () => {
   return (
     <Layout title="Payment Page">
 
-      <div style={{marginTop:'150px', marginBottom:'300px'}} className="d-flex align-items-center justify-content-center">
+      <div style={{marginTop:'150px', marginBottom:'20px'}} className="d-flex align-items-center justify-content-center">
                
          <PaymentButton userData={userData} paymentResponse={onPayClick}></PaymentButton>
-      </div>      
+      </div>     
+
+      <div style={{marginTop:'20px', marginBottom:'300px'}} className="d-flex align-items-center justify-content-center">
+               
+         <CryptoPaymentButton userData={userData} paymentResponse={onPayClick} buttonText='Crypto Payment' btnClass='btn-success'> </CryptoPaymentButton>
+      </div>  
     </Layout>  
   );
 };

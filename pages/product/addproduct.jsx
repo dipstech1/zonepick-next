@@ -24,11 +24,16 @@ const AddProduct = () => {
     const [parentProductList, setparentProductList] = useState([])
 
     useEffect(() => {
-        (async () => {
-            let {data} = await Axios.get("products/lookup");
-            setparentProductList([...data])
-        })()
+      window.scrollTo(0, 0) 
+      getparentProductList()
+        
     }, [])
+
+
+    const getparentProductList = async()=> {
+      let {data} = await Axios.get("products/lookup");
+      setparentProductList([...data])
+    }
 
     const addProduct = async () => {
         console.log(productDetails);

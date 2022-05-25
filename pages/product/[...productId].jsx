@@ -11,7 +11,7 @@ const ProductDetails = ({ productData }) => {
     (async () => {
       console.log('router.query ', router.query);
       if (router.query.productId) {
-       /* let prodId = router.query.productId;
+        /* let prodId = router.query.productId;
         let res = await axiosInterceptor.get(`products/${prodId[0]}/${prodId[1]}`);
         console.log('det ', res.data);
         setProductDetails(res.data[0]);*/
@@ -21,6 +21,10 @@ const ProductDetails = ({ productData }) => {
   }, []);
 
   useEffect(() => {
+
+    window.scrollTo(0, 0) 
+  
+
     console.log('productDetails ', productDetails);
   }, [productDetails]);
 
@@ -44,7 +48,7 @@ const ProductDetails = ({ productData }) => {
 
   return (
     <Layout title="Product Details">
-      <section className="py-3 py-lg-4">
+      <section id='pageContainer'>
         <div className="container">
           <div className="row m-0 row m-0 mt-4 mt-lg-5 shadow-sm pb-3">
             <p className="text-dark mb-3">
@@ -56,19 +60,32 @@ const ProductDetails = ({ productData }) => {
 
             {/* <div className="det">Rs. {productDetails?.price}</div> */}
             <div className="col-12 col-lg-8">
-              <div className="owl-carousel productimg-slider owl-theme">
-                <div className="item">
-                  <img src="/img/product_img.png" />
+              <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-indicators">
+                  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>                  
                 </div>
-                <div className="item">
-                  <img src="/img/product_img.png" />
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <img src="/img/product_img.png" />
+                  </div>
+                  <div className="carousel-item">
+                    <img src="/img/product_img2.png" />
+                  </div>
+                  <div className="carousel-item">
+                    <img src="/img/product_img3.jpg" />
+                  </div>                  
                 </div>
-                <div className="item">
-                  <img src="/img/product_img.png" />
-                </div>
-                <div className="item">
-                  <img src="/img/product_img.png" />
-                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+
               </div>
             </div>
             {productDetails?.product?.name && <SellerInfo sellerData={productDetails.seller_details} />}
