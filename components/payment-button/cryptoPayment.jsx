@@ -67,13 +67,13 @@ const CryptoPaymentButton = ({ buttonText = 'Pay with Crypto', userData,btnClass
           }else{
             //! If transaction fails
             toast.error('Error occurred during communication with server');
-            paymentResponse({status: 'Failed', data: 'error'});
+            paymentResponse({status: 'Failed', error: 'error'});
           }
 
 
       } catch (error) {
         console.log(error);
-        paymentResponse({status: 'Failed', data: error});
+        paymentResponse({status: 'Failed', error: error});
         toast.error('Error occurred during communication with server');
       }      
     }
