@@ -22,7 +22,7 @@ const ProductDetails = ({ productData }) => {
           "userid" :  getDataFromLocalstorage('userid')
         })
         console.log("det ", res.data);
-        setProductDetails(res.data[0])
+        setProductDetails(res.data)
         }
         
       }
@@ -101,14 +101,10 @@ const ProductDetails = ({ productData }) => {
             <div className="card border-0 shadow-sm p-3">
               <h6>Details</h6>
               <div className="brand_details">
-                <p>Brand: <span>Mi</span></p>
-                <p>Price: <span>INR 20,000</span></p>
-                <p>Iphone 11 without face id health 87</p>
-                <p>Iphone 11 </p>
-                <p>Face id not working </p>
-                <p> 64gb </p>
-                <p>87health </p>
-                <p> With box</p>
+                {
+                  productDetails?.product?.specifications?.map((data,i) => <p><span key={data.id}>{data.spec}</span></p>)
+                }
+               
               </div>
             </div>
           </div>
