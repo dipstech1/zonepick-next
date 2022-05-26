@@ -78,7 +78,7 @@ const Cart = () => {
     console.log(responseData)
 
     if (responseData.status ==='success') {
-     // purchase();
+      purchase();
      console.log('c')
     } else {
       toast.error(responseData.error.code)
@@ -86,12 +86,12 @@ const Cart = () => {
   };
 
   const purchase = async () => {
-    /* axiosInterceptor
+     axiosInterceptor
       .post(`purchase`, { userid: userId })
       .then((res) => {
         toast.success('Transaction completed');
       })
-      .catch((err) => console.log(err));*/
+      .catch((err) => console.log(err));
   };
 
   const changeQuantity = (item = [], type) => {
