@@ -24,6 +24,9 @@ const Layout = ({
             <meta charSet="utf-8" />
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+            <meta name="description" content="e commerce" />
+            <meta name="keywords" content="Sell, Lend, Photo Sell, Prouct sell, Buy , Rent" />
+            <meta name="author" content="John Doe" />
           </Head>
           {showNav === true ? (
             <header>

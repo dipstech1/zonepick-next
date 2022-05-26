@@ -33,7 +33,7 @@ const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) =>
       },
       modal: {
         ondismiss: function () {
-            paymentResponse({error: {code: 'Payment Modal Closed'}});
+            paymentResponse({status: 'Failed', error: {code: 'Payment Modal Closed'}});
         }
       }
     };
@@ -41,8 +41,7 @@ const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) =>
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
     paymentObject.on('payment.failed', function (response) {
-       paymentResponse({status: 'Failed', data: response.error});
-      
+       paymentResponse({status: 'Failed', error: response.error ,data: response.error});      
     });
   };
 
@@ -63,7 +62,7 @@ const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) =>
   };
 
   return (
-    <div>
+    <div style={{display:'inline-block'}}>
       <button className="btn btn-sm btn-primary" onClick={makePayment}>
         {buttonText}
       </button>

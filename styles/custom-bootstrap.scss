@@ -600,3 +600,11 @@ footer {
   
 
 }
+
+.modal-backdrop {
+  z-index: 100000 !important;
+}
+
+.modal {
+  z-index: 100001 !important;
+}

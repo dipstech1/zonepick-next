@@ -80,7 +80,7 @@ const CryptoPaymentButton = ({ buttonText = 'Pay with Crypto', userData,btnClass
 
 
     return (
-        <div>
+        <div style={{display:'inline-block'}}>
           <button className={["btn btn-sm ",btnClass].join(" ")} onClick={makePayment}>
             {buttonText}
           </button>

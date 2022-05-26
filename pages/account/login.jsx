@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setCookies } from 'cookies-next';
 import Head from 'next/head';
@@ -8,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { setDataLocalStorage } from '../../utils/storage.util';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const router = useRouter();
@@ -24,14 +26,20 @@ const Login = () => {
   const { errors } = formState;
 
   async function onSubmit({ username, password }) {
-    let d = await axiosInterceptor.post('api/login', { email: username, password });
-    let data = d.data;
-    // console.log("data", data);
-    setDataLocalStorage('token', data?.accessToken);
-    setDataLocalStorage('userid', data?.userid);
-    setDataLocalStorage('refreshtoken', data?.refreshToken);
-    setCookies('Login', 'LoggedIn', { maxAge: 60 * 30 });
-    router.replace('/dashboard');
+    try {
+      let d = await axiosInterceptor.post('api/login', { email: username, password });
+      let data = d.data;
+      setDataLocalStorage('token', data?.accessToken);
+      setDataLocalStorage('userid', data?.userid);
+      setDataLocalStorage('refreshtoken', data?.refreshToken);
+      setCookies('Login', 'LoggedIn', { maxAge: 60 * 30 });
+      toast.success('Login Successful');
+      router.replace('/dashboard');
+
+      //  console.log('data', data);
+    } catch (error) {
+      toast.error('Credentials incorrect');
+    }
   }
 
   return (

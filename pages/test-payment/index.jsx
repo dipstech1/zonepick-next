@@ -21,10 +21,7 @@ const Sell = () => {
 
     if (responseData.error) {
       toast.error(responseData.error.code)
-    }
-
-
-    
+    }    
   };
 
   return (

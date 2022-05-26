@@ -94,7 +94,7 @@ const Dashboard = ({ data }) => {
         <section className="py-3 py-lg-5">
           <div className="container">
             <div className="row m-0">
-              <div className="col-12 col-lg-2 p-0 inner_fSelect">
+              <div className="col-12 col-lg-3 p-0 inner_fSelect">
                 <select className="form-select" aria-label="Default select example" defaultValue="">
                   <option value="">Recommendations</option>
                   <option value="1">One</option>
