@@ -4,31 +4,53 @@ import SellerInfo from '../../components/seller-info/SellerInfo';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 import axiosInterceptor from '../../services/axios.interceptor';
 import Layout from '../../components/layout';
+import { toast } from 'react-toastify';
 const ProductDetails = ({ productData }) => {
   let [productDetails, setProductDetails] = useState({});
   const router = useRouter();
-  useEffect(() => {
-    (async () => {
-      console.log('router.query ', router.query);
-      if (router.query.productId) {
-        /* let prodId = router.query.productId;
-        let res = await axiosInterceptor.get(`products/${prodId[0]}/${prodId[1]}`);
-        console.log('det ', res.data);
-        setProductDetails(res.data[0]);*/
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+  let [productInfo, setProductInfo] = useState({});
 
   useEffect(() => {
 
-    window.scrollTo(0, 0) 
-  
+   // console.log('router.query ', router.query);
+
+    window.scrollTo(0, 0) ;
+    window.scrollTo(0, 0) ;
+
+    if (router.query.productId) {
+      getProductDetails(router.query.productId);
+    } 
 
     console.log('productDetails ', productDetails);
-  }, [productDetails]);
 
-  const addToCart = () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const getProductDetails = async (prodId) => {
+
+    const userId = getDataFromLocalstorage('userid');
+
+    const productData = {
+      productId: prodId[0],
+      recordId: prodId[1],
+      userid: userId
+
+    }
+
+   // const productData = {"productId":"959bc070-e85b-4d29-b552-41328402ec63","recordId":"70e58997-7b26-4ecf-ade2-67e18932d297","userid":"a95eace5-2d17-4723-bfc7-95f88a5752ff"}
+
+    let res = await axiosInterceptor.post(`products/details`,productData);
+   // console.log('det ', res.data);
+    setProductDetails(res.data);
+
+   // setProductInfo(res.data[0])
+
+  }
+
+  const addToCart = (data) => {
+
     let { recordId, purpose, _id, name } = productDetails;
     let userid = getDataFromLocalstorage('userid');
     axiosInterceptor
@@ -53,7 +75,7 @@ const ProductDetails = ({ productData }) => {
           <div className="row m-0 row m-0 mt-4 mt-lg-5 shadow-sm pb-3">
             <p className="text-dark mb-3">
               <b>{productDetails?.product?.name}</b>
-              <button onClick={addToCart} className="btn btn-sm btn-outline-warning" style={{ marginLeft: '10px' }}>
+              <button onClick={()=>addToCart(productDetails)} className="btn btn-sm btn-outline-warning" style={{ marginLeft: '10px' }}>
                 <i className="fas fa-plus"></i> Add to Cart
               </button>
             </p>
@@ -71,10 +93,10 @@ const ProductDetails = ({ productData }) => {
                     <img src="/img/product_img.png" />
                   </div>
                   <div className="carousel-item">
-                    <img src="/img/product_img2.png" />
+                    <img src="/img/product_img.png" />
                   </div>
                   <div className="carousel-item">
-                    <img src="/img/product_img3.jpg" />
+                    <img src="/img/product_img.png" />
                   </div>                  
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
@@ -92,13 +114,13 @@ const ProductDetails = ({ productData }) => {
           </div>
 
           <div className="row m-0 mt-4 mt-lg-4 shadow-sm pb-3">
-            <div className="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <div className="col-6 col-lg-3 mb-2 ms-1 me-1 mb-lg-0 mb_clip">
               <img src="/img/clip.png" />
             </div>
-            <div className="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <div className="col-6 col-lg-3 mb-2 mb-lg-0 ms-1 me-1 mb_clip">
               <img src="/img/clip.png" />
             </div>
-            <div className="col-6 col-lg-3 mb-2 mb-lg-0 mb_clip">
+            <div className="col-6 col-lg-3 mb-2 mb-lg-0 ms-1 me-1 mb_clip">
               <img src="/img/clip.png" />
             </div>
           </div>

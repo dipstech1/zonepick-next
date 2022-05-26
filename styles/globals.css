@@ -1,9 +1,10 @@
 :root {
     scroll-behavior: smooth;
+    font-family: 'Raleway', sans-serif;
 }
 
 html,
-body{
+body {
     font-family: 'Raleway Regular', sans-serif ;
 }
 
@@ -46,6 +47,32 @@ a {
 
     display: block;
 }
+
+
+/******************************* */
+
+.user_follow .img-fluid{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 18px;
+  }
+  .f_user_name{
+    width: calc(100% - 40px);
+  }
+  .f_user_name p a{
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: underline !important;
+  }
+  .u_dat .btn-log{
+    font-size: 10px;
+    margin: 0 0 10px 0;
+  }
+
+
+
 
 
   /********** */

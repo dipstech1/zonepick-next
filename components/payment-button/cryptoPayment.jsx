@@ -42,7 +42,7 @@ const CryptoPaymentButton = ({ buttonText = 'Pay with Crypto', userData,btnClass
       inrToEth = data.data.ETH;
 
       let  address = receiverAddress;
-      let amount = 1000;
+      let amount = 0.5;
       let payableEther = inrToEth * amount;
 
       console.log(payableEther);
@@ -62,23 +62,20 @@ const CryptoPaymentButton = ({ buttonText = 'Pay with Crypto', userData,btnClass
           })
           if(response.transactionHash){
             //! If transaction is successful
+            paymentResponse({status: 'Failed', data: response});
             toast.success(`Payment Successfully! The transaction hash is : ${response.transactionHash}`);
           }else{
             //! If transaction fails
             toast.error('Error occurred during communication with server');
+            paymentResponse({status: 'Failed', data: 'error'});
           }
 
 
       } catch (error) {
         console.log(error);
+        paymentResponse({status: 'Failed', data: error});
         toast.error('Error occurred during communication with server');
-      }
-
-      
-      
-      
-
-      paymentResponse({status: 'Failed', data: 'xxx'});
+      }      
     }
 
 

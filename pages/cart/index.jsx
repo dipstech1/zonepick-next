@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
@@ -7,21 +8,15 @@ import withAuthWraper from '../../components/withAuthWraper';
 
 function Cart() {
   let [userId, SetUserId] = useState();
-  // let userId = getDataFromLocalstorage('userid');
-
-  const [triggerdata, setTriggerData] = useState(false);
-
+ 
   let [purchasableData, setPurchaseData] = useState([]);
   let [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
-    if (triggerdata) {
-      console.log('');
-    } else {
-      SetUserId(getDataFromLocalstorage('userid'));
-      const uId = getDataFromLocalstorage('userid');
-      getCartItems(uId);
-    }
-  }, [triggerdata]);
+    SetUserId(getDataFromLocalstorage('userid'));
+    const uId = getDataFromLocalstorage('userid');
+    getCartItems(uId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getCartItems = async (userId) => {
     let items = await axiosInterceptor.get(`cart/${userId}`);
@@ -33,33 +28,40 @@ function Cart() {
   };
 
   const setCartItemData = (items = []) => {
-    let productId = [];
-    productId.push({ purpose: 'Iphone', price: 75000 });
-    items.push({ id: 1, ordered_quantity: 2, productId });
-    productId = [];
-    productId.push({ purpose: 'Redme', price: 5000 });
-    items.push({ id: 2, ordered_quantity: 1, productId });
 
+    console.log(items)
+   
     setPurchaseData([...items]);
   };
 
   const setTotalPriceData = (itemData) => {
     let totalPr = 0;
     itemData.forEach((item) => {
-      totalPr += item?.price;
+      totalPr += item?.productId[0]?.price * item?.ordered_quantity ;
     });
     setTotalPrice(totalPr);
+
+    console.log(itemData)
+    
   };
 
   const removeFromCart = async (itemId, itemIndex) => {
-    console.log(itemIndex, purchasableData);
+   // console.log(itemIndex, purchasableData);
+
+   console.log(itemId);
     axiosInterceptor
-      .delete(`cart/${userId}/${itemId}`)
+      .delete(`cart/${itemId}`)
       .then((res) => {
-        toast.success('Item deleted from cart');
-        purchasableData.splice(itemIndex, 1);
-        setCartItemData(purchasableData);
-        setTotalPriceData(purchasableData);
+
+        if (res.data.acknowledge) {
+          toast.success('Item deleted from cart');
+          purchasableData.splice(itemIndex, 1);
+          setCartItemData(purchasableData);
+          setTotalPriceData(purchasableData);
+        }  else {
+          toast.error('Item unable to remove from cart');
+        }              
+        
       })
       .catch((err) => console.log(err));
   };
@@ -74,20 +76,17 @@ function Cart() {
   };
 
   const changeQuantity = (item = [], type) => {
-    
-    const data = purchasableData ;
+    const data = purchasableData;
 
     if (type === 'increment') {
-      const val = item.ordered_quantity + 1;    
+      const val = item.ordered_quantity + 1;
       data.map((e) => {
         if (e.id === item.id) {
           e.ordered_quantity = val;
         }
         return e;
       });
-      
     } else {
-      
       let val = item.ordered_quantity - 1;
 
       if (val < 1) {
@@ -102,7 +101,8 @@ function Cart() {
       });
     }
 
-    setPurchaseData([...data])
+    setPurchaseData([...data]);
+    setTotalPriceData([...data])
 
     console.log(purchasableData);
   };
@@ -146,7 +146,7 @@ function Cart() {
                           <tr key={i}>
                             <td>
                               <div className="product-image">
-                                <img src="./img/banner.png" />
+                                <img src="./img/banner.png" alt='' />
                               </div>
                             </td>
                             <td>
@@ -181,7 +181,7 @@ function Cart() {
                                         type="button"
                                         className="decrement-quantity"
                                         aria-label="Subtract one"
-                                        data-direction="-1"                                      
+                                        data-direction="-1"
                                         onClick={() => changeQuantity(itm, 'decrement')}
                                       >
                                         <i className="fas fa-minus"></i>
@@ -195,7 +195,7 @@ function Cart() {
                               <b>{itm?.productId[0]?.price * itm?.ordered_quantity}</b>
                             </td>
                             <td>
-                              <button className="remove-product">Remove</button>
+                              <button className="remove-product" onClick={()=>removeFromCart(itm?.productId[0]?.recordId,i)}>Remove</button>
                             </td>
                           </tr>
                         );
@@ -208,13 +208,13 @@ function Cart() {
                   <div className="totals-item">
                     <label>Subtotal</label>
                     <div className="totals-value" id="cart-subtotal">
-                      71.97
+                      {totalPrice}
                     </div>
                   </div>
                   <div className="totals-item">
                     <label>Tax (5%)</label>
                     <div className="totals-value" id="cart-tax">
-                      3.60
+                      {((totalPrice * 3.60)/100)}
                     </div>
                   </div>
                   <div className="totals-item">
@@ -226,7 +226,7 @@ function Cart() {
                   <div className="totals-item totals-item-total">
                     <label>Grand Total</label>
                     <div className="totals-value" id="cart-total">
-                      90.57
+                    {totalPrice + ((totalPrice * 3.60)/100) + 15}
                     </div>
                   </div>
                   <button className="btn btn-block btn-log mb-0" onClick={purchase}>
