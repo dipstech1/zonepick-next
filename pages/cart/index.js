@@ -197,7 +197,7 @@ function Cart() {
                                                     <b>{itm?.productId[0]?.price * itm?.ordered_quantity}</b>
                                                 </td>
                                                 <td>
-                                                    <button className="remove-product">
+                                                    <button className="remove-product" onClick={(e) => removeFromCart(itm?.productId[0]?.ParentId,i)}>
                                                         Remove
                                                     </button>
                                                 </td>
