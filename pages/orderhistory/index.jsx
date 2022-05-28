@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Layout from '../../components/layout';
@@ -90,13 +91,13 @@ const OrderHistory = () => {
                     return order.transactions.map((lst, ind) => {
                       return (
                         <a style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
-                          <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
+                          <div className="row m-0" >
                             <div className="col-12 col-lg-2">
-                              <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
+                              <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt='product Logo' />
                             </div>
                             <div className="col-12 col-lg-4">
                               <p>
-                              {lst?.productId[0].product.name}
+                              <a onClick={(e) => goToProductDetails(lst)}>{lst?.productId[0].product.name}</a>
                                 <small>Color: Black</small>
                                 <small>Seller: EverythingShop</small>
                               </p>

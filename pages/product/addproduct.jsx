@@ -35,6 +35,11 @@ const AddProduct = () => {
       setparentProductList([...data])
     }
 
+    const updateValue = (e) => {
+      const { name, value } = e.target;
+      setProductDetails({ ...productDetails, [name]: value });
+    };
+
     const addProduct = async () => {
         console.log(productDetails);
         productDetails.seller_details = getDataFromLocalstorage('userid')

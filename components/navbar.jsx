@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { removeCookies } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from "next/router";
@@ -51,7 +52,7 @@ const Navbar = () => {
             className={["navbar navbar-expand-md navbar-dark sticky-top", (enableScrollbar === false && router.pathname === "/dashboard") ? "bgx-navbar2" : "bgx-navbar"].join(" ")}
             id='navbar1'>
             <div className="container pe-md-5">
-                <a className="navbar-brand text-white" href="./"><h5 style={{marginBottom: 0}}><b>LOGO</b></h5></a>
+                <a className="navbar-brand text-white" href="./"><h5 style={{marginBottom: 0}}><img src='logo.png' style={{height:'50px',width:'80px'}} alt='logo'></img></h5></a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -100,22 +101,12 @@ const Navbar = () => {
                             <Link href='/sell'><a
                                 className={["nav-link", router.pathname === "/sell" ? "active" : ""].join(" ")}
                                 aria-current="page">Sell</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href='/lend'><a
-                                className={["nav-link", router.pathname === "/lend" ? "active" : ""].join(" ")}
-                                aria-current="page">Lend</a></Link>
-                        </li>
+                        </li>                        
                         <li className="nav-item">
                             <Link href='/3d-view'><a
                                 className={["nav-link", router.pathname === "/3d-view" ? "active" : ""].join(" ")}
                                 aria-current="page">3d View</a></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link href='/test-payment'><a
-                                className={["nav-link", router.pathname === "/test-payment" ? "active" : ""].join(" ")}
-                                aria-current="page">Payment</a></Link>
-                        </li>
+                        </li>                        
                     </ul>
 
                     <div className="nav navbar-text ml-auto d-none d-md-flex">

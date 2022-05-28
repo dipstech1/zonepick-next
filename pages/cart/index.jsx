@@ -306,7 +306,7 @@ const Cart = () => {
                          <PaymentButton userData={userData} paymentResponse={onPayClick} buttonText={'Pay with Razorpay'}></PaymentButton>
                       </span>
                       <span className='ps-1'>
-                      <CryptoPaymentButton userData={userData} paymentResponse={onPayClick} buttonText='Crypto Payment' btnClass='btn-orange-500'> </CryptoPaymentButton>
+                      <CryptoPaymentButton userData={userData} paymentResponse={onPayClick} buttonText={'Pay with Crypto'} btnClass='btn-orange-800'> </CryptoPaymentButton>
                       </span>                       
                     </div>                   
                     
