@@ -667,7 +667,20 @@ footer {
     object-fit: cover;
   }
 
+   .btn-outline-warning{
+    text-align: center;
+    margin: 5px;
+    font-weight: 600;
+  }
+  .btn-outline-warning i{
+    font-size: 18px;
+  }
 
+
+}
+
+.btn-outline-orange:hover {
+  color: snow;
 }
 
 .upload-btn-wrapper {
@@ -684,10 +697,25 @@ footer {
   text-align: center;
   padding: 6px 0;
   font-size: 12px;
+  font-weight: bold;
   line-height: 1.428571429;
   border-radius: 15px;
   top: -12px;
   position: relative;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.btn-box {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.428571429;
+  top: -12px;
+  position: relative;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .hide_element {

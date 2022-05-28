@@ -174,6 +174,20 @@ const Sell = () => {
     }
   };
 
+  const createPost = () => {
+
+    console.log(productDetails)
+
+  }
+
+  const verifyMobile = () => {
+
+  }
+
+  const verifyEmail = () => {
+    
+  }
+
   return (
     <Layout title="Sell Page">
       <div id="pageContainer" className="container">
@@ -184,7 +198,7 @@ const Sell = () => {
                 <button
                   type="button"
                   onClick={() => udpdateStep(1)}
-                  className={['btn btn-circle text-white', step === 1 ? 'btn-orange' : 'btn-gray'].join(' ')}
+                  className={['btn text-white', step === 1 ? 'btn-box btn-orange' : 'btn-circle btn-gray'].join(' ')}
                 >
                   1
                 </button>
@@ -194,7 +208,7 @@ const Sell = () => {
                 <button
                   type="button"
                   onClick={() => udpdateStep(2)}
-                  className={['btn btn-circle text-white', step === 2 ? 'btn-orange' : 'btn-gray'].join(' ')}
+                  className={['btn text-white', step === 2 ? 'btn-box btn-orange' : 'btn-circle btn-gray'].join(' ')}
                 >
                   2
                 </button>
@@ -204,7 +218,7 @@ const Sell = () => {
                 <button
                   onClick={() => udpdateStep(3)}
                   type="button"
-                  className={['btn btn-circle text-white', step === 3 ? 'btn-orange' : 'btn-gray'].join(' ')}
+                  className={['btn text-white', step === 3 ? 'btn-box btn-orange' : 'btn-circle btn-gray'].join(' ')}
                 >
                   3
                 </button>
@@ -285,7 +299,7 @@ const Sell = () => {
                     id="subCategory"
                     name="subCategory"
                     onChange={updateValue}
-                    value={productDetails.errors.subCategory}
+                    value={productDetails?.fields['subCategory']}
                   >
                     <option disabled value="">
                       Pick a sub-category
@@ -432,6 +446,43 @@ const Sell = () => {
                 </div>
               </div>
             </div>
+
+            <div className={['row setup-content justify-content-center', step !== 3 ? 'hide_element' : null].join(' ')} id="step-3" >
+              <div className="col-12 col-lg-7 p-lg-0">
+                <p className="mb-4"><b>Review your details</b></p>
+              </div>
+              <div className="col-12 col-lg-7 p-lg-0">
+                <div className="form-group row ms-0 me-0 mb-4 justify-content-center">
+                  <div className="col-7 col-lg-3 us_pic text-center position-relative">
+                    <img src="img/profile_pic.png" className="m-auto mr-lg-auto" alt='' />
+                    <div className="ed_img dropdown">
+                      <i className="fas fa-pen dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                      <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Change Profile Photo</a></li>
+                        <li><a className="dropdown-item" href="#">Remove Profile photo</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <input type="text" required="required" className="form-control" placeholder="Name"
+                    id="firstName" />
+                </div>
+                <div className="mt-4 mb-3">
+                  <p className="text-dark mb-1"><b>Take one step more to verify your account</b></p>
+                  <p className="text-black-50">A verification code will be sent by sms or by email to you</p>
+                </div>
+                <div className="d-lg-flex justify-content-lg-center">
+                  <a style={{cursor:"pointer"}} className="btn btn-outline-orange me-2" onClick={()=>verifyMobile()} ><i className="fas fa-mobile"></i> &nbsp; Verify by Mobile Number</a>
+                  <a style={{cursor:"pointer"}} className="btn btn-outline-orange ms-2" onClick={()=>verifyEmail()}><i className="fas fa-envelope"></i> &nbsp; Verify by Email</a>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <button className="btn btn-primary finish_btn pull-right" type="button" onClick={()=> createPost()}>Post your Ad</button>
+                </div>
+              </div>
+            </div>
+
+
           </form>
         </section>
       </div>
