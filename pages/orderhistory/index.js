@@ -81,9 +81,17 @@ const OrderHistory = () => {
                           <small>Color:  Black</small>
                           <small>Seller: EverythingShop</small>
                         </p>
+                        <StarRatings
+                              starDimension='20px'
+                              rating={3}
+                              starRatedColor="#e74c3c"
+                              numberOfStars={5}
+                              name='rating'
+                            />
                       </div>
                       <div className="col-12 col-lg-2 text-lg-center">
                         <p>₹ <span> {lst?.productId[0]?.price}</span></p>
+                        
                       </div>
                       <div className="col-12 col-lg-4">
                         <p>

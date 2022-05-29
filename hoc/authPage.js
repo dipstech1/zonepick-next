@@ -7,7 +7,7 @@ const authPage = (WrappedComponent) => {
     const Router = useRouter();
     const [verified, setVerified] = useState(false);
 
-    useEffect(async () => {
+    useEffect( () => {
       const accessToken = getDataFromLocalstorage('token')
       if (!accessToken) {
         Router.replace("/account/login");
