@@ -7,18 +7,25 @@ import axiosInterceptor from 'services/axios.interceptor';
 import { getDataFromLocalstorage } from 'utils/storage.util';
 import { useRouter } from "next/router"
 import Link from 'next/link';
+import ModalRoot from 'ui-lib/Modal/ModalRoot';
+import ModalService from 'ui-lib/Modal/ModalService';
+import OrderModal from 'components/order-history/orderModal';
+import OrderDetails from 'components/order-history/orderDetails';
+
 const OrderHistory = () => {
   let userId = getDataFromLocalstorage('userid');
   const router = useRouter();
 
   let [orderHistory, setOrderHistory] = useState([])
+  const [selectedOrder, setSelectedOrder] = useState({})
+
   useEffect(() => {
     getWishlistItems();
   }, [])
 
   const getWishlistItems = async () => {
     let items = await axiosInterceptor.post(`purchase/all`, { "userid": userId });
-    console.log("items order ", items.data.data);
+    // console.log("items order ", items.data.data);
     if (items && items.data.data) {
       setOrderHistory(items.data.data);
       // setTotalPriceData(items.data.data)
@@ -30,8 +37,14 @@ const OrderHistory = () => {
     router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
 
   }
+
+  const openOrderModal = (order) => {
+     console.log(order)
+      ModalService.open(OrderModal,{orderdetails:{...order?.productId[0]}})
+  }
   return (
     <section className="py-4 py-lg-5">
+        <ModalRoot/>
       <div className="container">
         <div className="row m-0 mb-4">
           <div className="bredcamp">
@@ -72,7 +85,7 @@ const OrderHistory = () => {
                   return order.transactions.map((lst, ind) => {
                     return (
                       <a href="javascript:void(0);" className="or_dhover" key={ind}>
-                        <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
+                        <div className="row m-0" onClick={(e) => openOrderModal(lst)}>
                           <div className="col-12 col-lg-2">
                             <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
                           </div>
@@ -113,6 +126,10 @@ const OrderHistory = () => {
 
                 : null
             }
+
+            <div style={{display:"none"}}>
+                <OrderDetails details={selectedOrder}/>
+            </div>
 
           </div>
         </div>
