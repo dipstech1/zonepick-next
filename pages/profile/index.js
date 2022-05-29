@@ -9,7 +9,9 @@ const Profile = () => {
 
   const goToProfile = () => {
     router.push('profile/editprofile')
-
+  }
+  const goToRewards = () => {
+    router.push('rewards')
   }
      
     return (
@@ -21,7 +23,10 @@ const Profile = () => {
               <img src="./img/profile_pic.png" className="m-auto mr-lg-auto" />
             </div>
             <div className="col-12 col-lg-10 usName">
-                <h6>Jessy <a  className="btn btn-outline-warning btn-sm ms-lg-4" onClick={goToProfile}>Edit Profile</a></h6>
+                <h6>Jessy 
+                  <a  className="btn btn-outline-warning btn-sm ms-lg-4" onClick={goToProfile}>Edit Profile</a>
+                  <a  className="btn btn-outline-warning btn-sm ms-lg-4" onClick={goToRewards}>Rewards</a>
+                  </h6>
                 <p className="text-dark">100 Followers<span className="ms-lg-4">50 Following</span></p>
                 <span className="rat">8.2<small><i className="fas fa-star"></i></small></span>
                 <p>Connected Account: <a href="javascript:void(0);"><img src="./img/google.svg" width="60px" /></a></p>

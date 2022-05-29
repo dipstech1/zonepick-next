@@ -1,11 +1,12 @@
 import OrderStatus from '/components/order-history/orderStatus';
 import OrderManufacture from '/components/order-history/orderManufacturer';
+import StarRatings from 'react-star-ratings';
 
 import { useState, useEffect } from 'react'
 import axiosInterceptor from 'services/axios.interceptor';
 import { getDataFromLocalstorage } from 'utils/storage.util';
 import { useRouter } from "next/router"
-
+import Link from 'next/link';
 const OrderHistory = () => {
   let userId = getDataFromLocalstorage('userid');
   const router = useRouter();
@@ -28,7 +29,7 @@ const OrderHistory = () => {
     console.log("wishdata ", wishdata);
     router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
 
- }
+  }
   return (
     <section className="py-4 py-lg-5">
       <div className="container">
@@ -68,46 +69,51 @@ const OrderHistory = () => {
             {
               orderHistory.length > 0 ?
                 orderHistory.map((order, i) => {
-                  return order.transactions.map((lst ,ind) => {
+                  return order.transactions.map((lst, ind) => {
                     return (
                       <a href="javascript:void(0);" className="or_dhover" key={ind}>
-                    <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
-                      <div className="col-12 col-lg-2">
-                        <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
-                      </div>
-                      <div className="col-12 col-lg-4">
-                        <p>
-                        {lst?.productId[0].product.name}
-                          <small>Color:  Black</small>
-                          <small>Seller: EverythingShop</small>
-                        </p>
-                        <StarRatings
-                              starDimension='20px'
+                        <div className="row m-0" onClick={(e) => goToProductDetails(lst)}>
+                          <div className="col-12 col-lg-2">
+                            <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
+                          </div>
+                          <div className="col-12 col-lg-4">
+                            <p>
+                              <Link href={`product/${lst?.productId[0].ParentId}/${lst?.productId[0].recordId}`}>
+                                <a>
+                                  {lst?.productId[0].product.name}
+
+                                </a>
+                              </Link>
+                              <small>Color:  Black</small>
+                              <small>Seller: EverythingShop</small>
+                            </p>
+                            <StarRatings
+                              starDimension='15px'
                               rating={3}
                               starRatedColor="#e74c3c"
                               numberOfStars={5}
                               name='rating'
                             />
-                      </div>
-                      <div className="col-12 col-lg-2 text-lg-center">
-                        <p>₹ <span> {lst?.productId[0]?.price}</span></p>
-                        
-                      </div>
-                      <div className="col-12 col-lg-4">
-                        <p>
-                          <b><i className="fas fa-circle text-success"></i> Delivered on Mar 12</b>
-                          <small>Your item has been delivered</small>
-                        </p>
-                      </div>
-                    </div>
-            </a>
+                          </div>
+                          <div className="col-12 col-lg-2 text-lg-center">
+                            <p>₹ <span> {lst?.productId[0]?.price}</span></p>
+
+                          </div>
+                          <div className="col-12 col-lg-4">
+                            <p>
+                              <b><i className="fas fa-circle text-success"></i> Delivered on Mar 12</b>
+                              <small>Your item has been delivered</small>
+                            </p>
+                          </div>
+                        </div>
+                      </a>
                     )
-                  } )
+                  })
                 })
-                  
+
                 : null
             }
-            
+
           </div>
         </div>
       </div>
