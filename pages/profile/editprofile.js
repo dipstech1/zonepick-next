@@ -1,6 +1,7 @@
 import {useRef, useEffect, useState} from 'react'
 import { toast } from 'react-toastify';
 import axiosInterceptor from 'services/axios.interceptor';
+import ImageUploader from 'ui-lib/ImageUploader/ImageUploader';
 import { getDataFromLocalstorage } from 'utils/storage.util';
 import FileUploadS3 from '../../helpers/fileuploader'
 const ProfileDetails = () => {
@@ -150,11 +151,13 @@ const ProfileDetails = () => {
                                         <button type='button' onClick={updateProfile} className="btn btn-log">Save</button>
                                     </div>
                                 </div>
+                                
                             </form>
                         </div>
                     </div>
                 </div>
             </section>
+            <ImageUploader />
         </>
     )
 }
