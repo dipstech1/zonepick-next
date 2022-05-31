@@ -50,7 +50,7 @@ const Cart = () => {
 
     console.log(itemId);
     axiosInterceptor
-      .delete(`cart/${itemId}`)
+      .delete(`cart/${userId}/${itemId}`)
       .then((res) => {
         if (res.data.acknowledge) {
           toast.success('Item deleted from cart');

@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
+
   }, []);
 
   

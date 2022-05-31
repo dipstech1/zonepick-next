@@ -4,13 +4,6 @@ import ModelViewFBX from '../../components/modelViewFBX';
 import ModelViewOBJ from '../../components/modelViewOBJ';
 import Layout from '../../components/layout';
 
-
-
-function Model() {
-    const gltf = useGLTF('/glb/shoe.glb')
-    return (<primitive object={gltf.scene} />)
-}
-
 export default function Home() {
     const ref = useRef()
     return (

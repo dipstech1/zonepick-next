@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
 import Layout from '../../components/layout';
+import Link from 'next/link';
 const Sell = () => {
   const [step, setStep] = useState(1);
   const [stepOne, setStepOne] = useState(false);
@@ -191,7 +192,22 @@ const Sell = () => {
   return (
     <Layout title="Sell Page">
       <div id="pageContainer" className="container">
-        <section className="pb-4 pb-lg-5">
+      <div className="bredcamp col-12 col-lg-9 pb-4">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb  mb-0">
+                  <li className="breadcrumb-item">
+                    <Link href="/">                      
+                      <a>Home</a>
+                    </Link>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    Sell
+                  </li>
+                </ol>
+              </nav>
+            </div>
+
+        <section className="pt-4 pb-4 pb-lg-5">
           <div className="stepwizard">
             <div className="stepwizard-row">
               <div className="stepwizard-step">

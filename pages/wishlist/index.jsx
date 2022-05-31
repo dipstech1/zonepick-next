@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
@@ -5,6 +6,7 @@ import { useRouter } from 'next/router';
 import Layout from '../../components/layout';
 import Link from 'next/link';
 import withAuthWraper from '../../components/withAuthWraper';
+import StarRatings from 'react-star-ratings';
 
 const Wishlist = () => {
   const router = useRouter();
@@ -32,16 +34,14 @@ const Wishlist = () => {
     console.log(item);
     let res = await axiosInterceptor.delete(`wishlist/${item?.wishlistId}`);
     if (res.status == 200) {
-      getWishlistItems(userId)
+      getWishlistItems(userId);
     }
   };
 
   const goToProductDetails = (wishdata) => {
-    console.log("wishdata ", wishdata);
-    router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`)
-
- }
-
+    console.log('wishdata ', wishdata);
+    router.push(`product/${wishdata.productId[0].ParentId}/${wishdata.productId[0].recordId}`);
+  };
 
   return (
     <Layout title="Wishlist" protectedRoute={true}>
@@ -52,7 +52,7 @@ const Wishlist = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb  mb-0">
                   <li className="breadcrumb-item">
-                    <Link href="/">                      
+                    <Link href="/">
                       <a>Home</a>
                     </Link>
                   </li>
@@ -70,14 +70,25 @@ const Wishlist = () => {
                     <a style={{ cursor: 'pointer' }} className="or_dhover" key={i}>
                       <div className="row m-0" onClick={(e) => goToProductDetails(wishdata)}>
                         <div className="col-12 col-lg-2">
-                          <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" />
+                          <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="dd" />
                         </div>
-                        <div className="col-12 col-lg-9">
+                        <div className="col-12 col-lg-9 ">
                           <div>
                             <small>
                               <b className="text-success">{wishdata?.productId[0].product_status}</b>{' '}
                             </small>
-                            <b>{wishdata?.productId[0].product.name}</b>
+                            <div className="d-flex justify-content-between">
+                              <b>{wishdata?.productId[0].product.name}</b>
+                              <span>
+                                <StarRatings
+                                  starDimension="16px"
+                                  rating={3}
+                                  starRatedColor="#e74c3c"
+                                  numberOfStars={5}
+                                  name="rating"
+                                />
+                              </span>
+                            </div>
                             {/* <small><b className="text-success"><i className="fas fa-star"></i> 4.5</b> (600)</small> */}
                             {/* <h6>₹329 <span className="text-black-50"> ₹500</span></h6> */}
                             <h6>₹{wishdata?.productId[0].price} </h6>
@@ -85,10 +96,7 @@ const Wishlist = () => {
                         </div>
                         <div className="col-12 col-lg-1">
                           <p>
-                            <button
-                              className="btn btn-sm"
-                              onClick={(e) => removeWishListItem(wishdata)}
-                            >
+                            <button className="btn btn-sm" onClick={(e) => removeWishListItem(wishdata)}>
                               <i className="fas fa-trash text-black-50"></i>
                             </button>
                           </p>

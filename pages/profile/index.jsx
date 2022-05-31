@@ -71,6 +71,9 @@ const Profile = () => {
                     <Link href="/profile/edit-profile">
                       <a className="btn btn-outline-warning btn-sm ms-md-4 ms-4"> Edit Profile </a>
                     </Link>
+                    <Link href="/rewards">
+                      <a className="btn btn-outline-warning btn-sm ms-md-4 ms-4"> Rewards </a>
+                    </Link>                   
                   </h6>
                 </div>
               </div>
@@ -143,7 +146,7 @@ const Profile = () => {
                       layout="fixed"
                     />
                     <p>
-                      <a className="btn postjob_btn" onClick={addProduct}>
+                      <a className="btn postjob_btn" style={{whiteSpace:'nowrap'}} onClick={addProduct}>
                         Post an advirtisement
                       </a>
                     </p>

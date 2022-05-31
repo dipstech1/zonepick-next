@@ -52,7 +52,10 @@ const Navbar = () => {
             className={["navbar navbar-expand-md navbar-dark sticky-top", (enableScrollbar === false && router.pathname === "/dashboard") ? "bgx-navbar2" : "bgx-navbar"].join(" ")}
             id='navbar1'>
             <div className="container pe-md-5">
-                <a className="navbar-brand text-white" href="./"><h5 style={{marginBottom: 0}}><img src='logo.png' style={{height:'50px',width:'80px'}} alt='logo'></img></h5></a>
+                <a className="navbar-brand text-white"><h5 style={{marginBottom: 0}}>
+                    <img src='/logo.png' style={{height:'50px',width:'80px'}} alt='logo'></img>
+                    </h5>
+                </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                         aria-label="Toggle navigation">
