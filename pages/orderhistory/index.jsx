@@ -14,11 +14,8 @@ import OrderModal from '../../components/order-history/orderModal';
 import ModalRoot from '../../ui-lib/Modal/modalRoot';
 import ModalService from '../../ui-lib/Modal/modalService';
 
-
 const OrderHistory = () => {
   const router = useRouter();
-
-  const [show, setShow] = useState(false);
 
   const [userId, setUserId] = useState(null);
   let [orderHistory, setOrderHistory] = useState([]);
@@ -42,16 +39,66 @@ const OrderHistory = () => {
     router.push(`product/${orderData.productId[0].ParentId}/${orderData.productId[0].recordId}`);
   };
 
-  const openOrderModal = (order) => {
-    console.log(order);
-    setShow(true)
+  const openOrderModal = (orderInfo,order) => {
+    console.log(orderInfo.transactionId);
 
-    ModalService.open(OrderModal, { orderdetails: { ...order?.productId[0] } });
+    const orderdetails = {
+      orderDetails: { ...order?.productId[0] },
+      transactionDetails: {transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date}
+    }
+ 
+    ModalService.open(OrderModal, { orderdetails: orderdetails});
+  };
+
+  const convertToDate = (timestamp) => {
+    // Months array
+    var months_arr = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    // Convert timestamp to milliseconds
+    var date = new Date(parseInt(timestamp));
+
+    // Year
+    var year = date.getFullYear();
+
+    // Month
+    var month = months_arr[date.getMonth()];
+
+    //  var month = [date.getMonth() + 1];
+
+    // Day
+    var day = date.getDate();
+
+    // Hours
+    var hours = date.getHours();
+
+    // Minutes
+    var minutes = '0' + date.getMinutes();
+
+    // Seconds
+    var seconds = '0' + date.getSeconds();
+
+    // Display date in MM-dd-yyyy format
+    var fulldate = month + ' ' + day + ' '
+
+    return fulldate;
   };
 
   return (
     <>
-    <ModalRoot/>
+      <ModalRoot />
       <Layout title="Order History">
         <section id="pageContainer">
           <div className="container">
@@ -104,17 +151,17 @@ const OrderHistory = () => {
                       return order.transactions.map((lst, ind) => {
                         return (
                           <div style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
-                            <div className="row m-0" onClick={(e) => openOrderModal(lst)}>
+                            <div className="row m-0" onClick={(e) => openOrderModal(order,lst)}>
                               <div className="col-12 col-lg-2">
                                 <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="product Logo" />
                               </div>
                               <div className="col-12 col-lg-4">
                                 <div>
-                                <Link href={`product/${lst?.productId[0].ParentId}/${lst?.productId[0].recordId}`}>
-                                   <a>{lst?.productId[0].product.name}</a>
-                                   </Link> 
+                                  <Link href={`product/${lst?.productId[0].ParentId}/${lst?.productId[0].recordId}`}>
+                                    <a>{lst?.productId[0].product.name}</a>
+                                  </Link>
                                   <small>Color: Black</small>
-                                  <small>Seller: EverythingShop</small>
+                                  <small>{lst?.productId[0].seller_details.name}</small>
                                   <span style={{ display: 'inline-block' }} className="pt-2">
                                     <StarRatings
                                       starDimension="16px"
@@ -128,16 +175,28 @@ const OrderHistory = () => {
                               </div>
                               <div className="col-12 col-lg-2 text-lg-center">
                                 <p>
-                                  ₹ <span> {lst?.productId[0]?.price}</span>
+                                  <span>
+                                    {' '}
+                                    {lst?.productId[0]?.price?.toLocaleString('en-IN', {
+                                      style: 'currency',
+                                      currency: 'INR'
+                                    })}
+                                  </span>
                                 </p>
                               </div>
                               <div className="col-12 col-lg-4">
-                                <p>
+                              <p>
+                                  <b>
+                                    <i className="fas fa-circle text-success"></i> Ordered on {convertToDate(order.purchase_date)}
+                                  </b>                                  
+                                </p>
+                                { /* <p>
                                   <b>
                                     <i className="fas fa-circle text-success"></i> Delivered on Mar 12
                                   </b>
                                   <small>Your item has been delivered</small>
-                                </p>
+                                </p> */
+                                }
                               </div>
                             </div>
                           </div>
@@ -149,7 +208,7 @@ const OrderHistory = () => {
             </div>
           </div>
         </section>
-      </Layout>     
+      </Layout>
     </>
   );
 };

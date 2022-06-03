@@ -18,6 +18,10 @@ const ModalRoot = () => {
       });  
       setShow(true)
     });
+
+    console.log(modal)
+
+
   }, []);
 
   const handleCloseModal = (e) => {

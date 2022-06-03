@@ -217,7 +217,7 @@ const Cart = () => {
                               <td>
                                 <button
                                   className="remove-product"
-                                  onClick={() => removeFromCart(itm?.productId[0]?.recordId, i)}
+                                  onClick={() => removeFromCart(itm?.id, i)}
                                 >
                                   Remove
                                 </button>
