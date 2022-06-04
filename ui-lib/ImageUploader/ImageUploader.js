@@ -12,7 +12,7 @@ const ImageUploader = ({max,multi}) => {
     setImages(imageList);
   };
   return (
-    <div>
+    <div className="row">
          <ImageUploading
         multiple={multi}
         value={images}
@@ -30,7 +30,7 @@ const ImageUploader = ({max,multi}) => {
           dragProps
         }) => (
           // write your building UI
-          <div className="upload__image-wrapper">
+          <div className="r">
             <button
                className="btn btn-success  pull-right"
               onClick={onImageUpload}
@@ -40,18 +40,22 @@ const ImageUploader = ({max,multi}) => {
             </button>
             &nbsp;
             <button className="btn btn-danger  pull-right" onClick={onImageRemoveAll}>Remove all images</button>
-            {imageList.map((image, index) => (
-              <div className="">
 
-              <div key={index} className="image-item">
-                <img src={image.data_url} alt="" height="50" width="50" />
+            <div className="row my-2">
+            {imageList.map((image, index) => (
+    
+
+              <div key={index} className="col-md-3">
+                <div >
+                   <img src={image.data_url} alt="" height="50" width="50" />
+                </div>
                 <div className="image-item__btn-wrapper">
                   <button className="btn btn-success nextBtn pull-right" onClick={() => onImageUpdate(index)}>Update</button>
                   <button className="btn btn-danger nextBtn pull-right" onClick={() => onImageRemove(index)}>Remove</button>
                 </div>
               </div>
-              </div>
             ))}
+            </div>
           </div>
         )}
       </ImageUploading>

@@ -106,13 +106,15 @@ const AddProduct = () => {
                   <input type="number" required="required" className="form-control" placeholder="Quantity"
                     id="quantity"  onChange={e =>  setProductDetails({...productDetails, quantity:+(e.target.value)})}/>
                 </div>
-                <div className='form-group'>
-                    <ImageUploader max={6} multi />
-                </div>
+                
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>Add product <i className="fas fa-arrow-right"></i></button>
                 </div>
               </div>
+              <div className='my-3'>
+               <ImageUploader max={6} multi />
+              </div>
+
             </div>
             {/* <div className="row setup-content justify-content-center" id="step-2">
                 <div className="col-12 col-lg-7 p-lg-0">
