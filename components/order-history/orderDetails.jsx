@@ -59,19 +59,19 @@ const OrderDetails = (props) => {
     <div>
       <ul className="list-group list-group-flush">
         <li className="list-group-item">
-          <span>Order Id : </span>
+          <b>Order Id : </b>
           <span>{props?.details?.transactionDetails?.transactionId}</span>
         </li>
         <li className="list-group-item">
-          <span>Order Date : </span>
+          <b>Order Date : </b>
           <span>{convertToDate(props?.details?.transactionDetails?.purchase_date)}</span>
         </li>
         <li className="list-group-item">
-          <span>Name : </span>
+          <b>Name : </b>
           <span>{props?.details?.orderDetails?.product?.name}</span>
         </li>
         <li className="list-group-item">
-          <span>Name : </span>
+          <b>Price : </b>
           <span>
             {props?.details?.orderDetails?.price?.toLocaleString('en-IN', {
               style: 'currency',
@@ -80,27 +80,27 @@ const OrderDetails = (props) => {
           </span>
         </li>
         <li className="list-group-item">
-          <span>Brand : </span>
+          <b>Brand : </b>
           <span>{props?.details?.orderDetails?.product?.brand}</span>
         </li>
         <li className="list-group-item">
-          <span>Description : </span>
+          <b>Description : </b>
           <span>{props?.details?.orderDetails?.product?.description}</span>
         </li>
         <li className="list-group-item">
-          <span>Seller Name : </span>
+          <b>Seller Name : </b>
           <span>{props?.details?.orderDetails?.seller_details?.name}</span>
         </li>
         <li className="list-group-item">
-          <span>Seller Address : </span>
+          <b>Seller Address : </b>
           <span>{props?.details?.orderDetails?.seller_details?.address1}</span>
         </li>
         <li className="list-group-item">
-          <span>Seller Email : </span>
+          <b>Seller Email : </b>
           <span>{props?.details?.orderDetails?.seller_details?.email}</span>
         </li>
         <li className="list-group-item">
-          <span>Seller Phone No. : </span>
+          <b>Seller Phone No. : </b>
           <span>{props?.details?.orderDetails?.seller_details?.phone}</span>
         </li>
       </ul>
