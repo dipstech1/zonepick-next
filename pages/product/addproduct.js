@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Axios from "services/axios.interceptor"
+import ImageUploader from 'ui-lib/ImageUploader/ImageUploader';
 import { getDataFromLocalstorage } from "utils/storage.util";
 
 
@@ -104,6 +105,9 @@ const AddProduct = () => {
                 <div className="form-group">
                   <input type="number" required="required" className="form-control" placeholder="Quantity"
                     id="quantity"  onChange={e =>  setProductDetails({...productDetails, quantity:+(e.target.value)})}/>
+                </div>
+                <div className='form-group'>
+                    <ImageUploader max={6} multi />
                 </div>
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>Add product <i className="fas fa-arrow-right"></i></button>
