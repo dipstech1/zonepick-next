@@ -39,20 +39,20 @@ const OrderHistory = () => {
     router.push(`product/${orderData.productId[0].ParentId}/${orderData.productId[0].recordId}`);
   };
 
-  const openOrderModal = (orderInfo,order) => {
+  const openOrderModal = (orderInfo, order) => {
     console.log(orderInfo.transactionId);
 
     const orderdetails = {
       orderDetails: { ...order?.productId[0] },
-      transactionDetails: {transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date}
-    }
- 
-    ModalService.open(OrderModal, { orderdetails: orderdetails});
+      transactionDetails: { transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date }
+    };
+
+    ModalService.open(OrderModal, { orderdetails: orderdetails });
   };
 
   const convertToDate = (timestamp) => {
     // Months array
-    var months_arr = [
+    const months_arr = [
       'January',
       'February',
       'March',
@@ -68,30 +68,68 @@ const OrderHistory = () => {
     ];
 
     // Convert timestamp to milliseconds
-    var date = new Date(parseInt(timestamp));
+    const date = new Date(parseInt(timestamp));
 
     // Year
-    var year = date.getFullYear();
+    const year = date.getFullYear();
 
     // Month
-    var month = months_arr[date.getMonth()];
+    const month = months_arr[date.getMonth()];
 
-    //  var month = [date.getMonth() + 1];
+    //  const month = [date.getMonth() + 1];
 
     // Day
-    var day = date.getDate();
+    const day = date.getDate();
 
     // Hours
-    var hours = date.getHours();
+    const hours = date.getHours();
 
     // Minutes
-    var minutes = '0' + date.getMinutes();
+    const minutes = '0' + date.getMinutes();
 
     // Seconds
-    var seconds = '0' + date.getSeconds();
+    const seconds = '0' + date.getSeconds();
 
     // Display date in MM-dd-yyyy format
-    var fulldate = month + ' ' + day + ' '
+    const fulldate = month + ' ' + day + ' ';
+
+    return fulldate;
+  };
+
+  const delivarytatus = (timestamp) => {
+    const months_arr = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+
+    const today = new Date();
+    const date = new Date(parseInt(timestamp));
+    date.setDate(date.getDate() + 7);
+
+    // Month
+    const month = months_arr[date.getMonth()];
+    const day = date.getDate();
+    // Hours
+    const hours = date.getHours();
+    // Minutes
+    const minutes = '0' + date.getMinutes();
+    // Seconds
+    const seconds = '0' + date.getSeconds();
+    // Display date in MM-dd-yyyy format
+    const fulldate = month + ' ' + day + ' ';
+
+    console.log(fulldate);
 
     return fulldate;
   };
@@ -151,7 +189,7 @@ const OrderHistory = () => {
                       return order.transactions.map((lst, ind) => {
                         return (
                           <div style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
-                            <div className="row m-0" onClick={(e) => openOrderModal(order,lst)}>
+                            <div className="row m-0" onClick={(e) => openOrderModal(order, lst)}>
                               <div className="col-12 col-lg-2">
                                 <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="product Logo" />
                               </div>
@@ -185,18 +223,17 @@ const OrderHistory = () => {
                                 </p>
                               </div>
                               <div className="col-12 col-lg-4">
-                              <p>
+                                <p>
                                   <b>
-                                    <i className="fas fa-circle text-success"></i> Ordered on {convertToDate(order.purchase_date)}
-                                  </b>                                  
-                                </p>
-                                { /* <p>
-                                  <b>
-                                    <i className="fas fa-circle text-success"></i> Delivered on Mar 12
+                                    <i className="fas fa-circle text-success"></i> Ordered on{' '}
+                                    {convertToDate(order.purchase_date)}
                                   </b>
-                                  <small>Your item has been delivered</small>
-                                </p> */
-                                }
+                                </p>
+                                <p>
+                                  <b>
+                                    <i className="fas fa-circle text-success"></i> Delivered on {delivarytatus(order.purchase_date)}
+                                  </b>                                 
+                                </p>
                               </div>
                             </div>
                           </div>

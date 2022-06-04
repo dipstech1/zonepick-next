@@ -29,7 +29,7 @@ const Dashboard = ({ data }) => {
   useEffect(() => {
     SetUserId(getDataFromLocalstorage('userid'));
     getProductData();
-    // setProductData(data);
+    // setProductData(data); 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
