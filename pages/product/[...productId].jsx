@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import SellerInfo from '../../components/seller-info/SellerInfo';
@@ -10,6 +11,8 @@ const ProductDetails = ({ productData }) => {
   const router = useRouter();
 
   let [productInfo, setProductInfo] = useState({});
+
+  let [imgLink, setImgLink]= useState('/house/modern-home.jpg')
 
   useEffect(() => {
     // console.log('router.query ', router.query);
@@ -62,6 +65,15 @@ const ProductDetails = ({ productData }) => {
       .catch((err) => console.log(err));
   };
 
+  const updateImageLink=(e)=> {
+
+    setImgLink(e.target.src)
+    
+    console.log(e.target.src)
+
+
+  }
+
   return (
     <Layout title="Product Details">
       <section id="pageContainer">
@@ -78,7 +90,7 @@ const ProductDetails = ({ productData }) => {
               </button>
             </p>
 
-            {/* <div className="det">Rs. {productDetails?.price}</div> */}
+            {/* <div className="det">Rs. {productDetails?.price}</div> 
             <div className="col-12 col-lg-8">
               <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-indicators">
@@ -124,21 +136,37 @@ const ProductDetails = ({ productData }) => {
                 </button>
               </div>
             </div>
+            */}
+             <div className="col-12 col-lg-8">
+
+               <div className='row ' style={{minHeight:'194px'}}>
+                  <div className='col-12 d-flex content-center text-center'>
+                  <img src={imgLink} alt='img' className='img-fluid' style={{height:450,width:'100%'}}/>
+                  </div>
+               </div>
+
+               <div className='row mt-2'>
+                  <div className='col-12'>
+                    <img src='/house/modern-home.jpg' alt='img' className='p-1' style={{height:80, width:80, cursor:'pointer'}} onClick={updateImageLink}/>
+                    <img src='/house/modern-home-2.jpg' alt='img' className='p-1' style={{height:80, width:80, cursor:'pointer'}} onClick={updateImageLink}/>
+                    <img src='/house/modern-home-3.jpg' alt='img' className='p-1' style={{height:80, width:80, cursor:'pointer'}} onClick={updateImageLink}/>
+                  </div>                  
+               </div>
+
+             </div>
             {productDetails?.product?.name && <SellerInfo sellerData={productDetails.seller_details} />}
           </div>
-
+          {/*
           <div className="row m-0 mt-4 mt-lg-4 shadow-sm pb-3">
-            <div className="col-6 col-lg-3 mb-2 ms-1 me-1 mb-lg-0 mb_clip">
-              <img src="/img/clip.png" />
-            </div>
-            <div className="col-6 col-lg-3 mb-2 mb-lg-0 ms-1 me-1 mb_clip">
-              <img src="/img/clip.png" />
-            </div>
-            <div className="col-6 col-lg-3 mb-2 mb-lg-0 ms-1 me-1 mb_clip">
-              <img src="/img/clip.png" />
-            </div>
-          </div>
 
+            <div className='col-12'>
+
+              <img src='' alt='img'/>
+
+            </div>
+            
+          </div>
+       */}
           <div className="row m-0 mt-4 mt-lg-4">
             <div className="card border-0 shadow-sm p-3">
               <h6>Details:</h6>
