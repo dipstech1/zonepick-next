@@ -34,8 +34,8 @@ const ThreeSixtyView = (props) => {
           <div ref={(ref) => setContainerRef(ref)} style={{ position: 'relative', height: '400px' }} />
         </div>
         <div className="row pt-1">
-          {props.imageInfo.imgSrc.length > 0 &&
-            props.imageInfo.imgSrc.map((itm, i) => {
+          {props.imageInfo?.imgSrc?.length > 0 &&
+            props.imageInfo?.imgSrc?.map((itm, i) => {
               return (
                 <div className="col-1" key={i}>
                   <img className='img-fluid'

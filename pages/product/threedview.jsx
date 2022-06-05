@@ -14,7 +14,7 @@ const ThreeDView = (props) => {
         <button type="button" className="btn-close" onClick={props.close}></button>
       </ModalHeader>
       <ModalBody>       
-        <ModelViewGTLF scale={[20.1,20.1,20.1]} source={props.imageInfo.imgurl}/>
+        <ModelViewGTLF scale={[20.1,20.1,20.1]} source={props?.imageInfo?.imgurl}/>
       </ModalBody>
       <ModalFooter>
       </ModalFooter>
