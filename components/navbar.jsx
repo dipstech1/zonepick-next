@@ -105,11 +105,7 @@ const Navbar = () => {
                                 className={["nav-link", router.pathname === "/sell" ? "active" : ""].join(" ")}
                                 aria-current="page">Sell</a></Link>
                         </li>                        
-                        <li className="nav-item">
-                            <Link href='/3d-view'><a
-                                className={["nav-link", router.pathname === "/3d-view" ? "active" : ""].join(" ")}
-                                aria-current="page">3d View</a></Link>
-                        </li>                        
+                                            
                     </ul>
 
                     <div className="nav navbar-text ml-auto d-none d-md-flex">

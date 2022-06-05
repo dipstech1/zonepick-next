@@ -24,7 +24,7 @@ const ModelViewGTLF = (props) => {
   return (
     <div>
       <Suspense fallback={<Loader />}>
-        <ARCanvas style={{ minHeight: '300px', minWidth: '300px' }}>
+        <ARCanvas style={{ minHeight: '350px', minWidth: '350px' }}>
           <OrbitControls />
           <ambientLight intensity={0.5} />
           <directionalLight intensity={0.5} />
