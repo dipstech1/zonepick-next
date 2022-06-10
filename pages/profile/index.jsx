@@ -38,7 +38,7 @@ const Profile = () => {
     setUserId(userId);
     getUserData(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, []);
 
   const getUserData = async (userId) => {
     let res = await axiosInterceptor.get(`profile/${userId}`);
