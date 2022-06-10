@@ -190,7 +190,6 @@ const AddProduct = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="row mt-2 mb-2">
                     <div className="col-md-6">
                       <div className="form-group">
