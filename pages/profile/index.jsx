@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Layout from '../../components/layout';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -6,15 +7,16 @@ import { useRef, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
+import ProductCard from '../../components/product-card/proudct-card';
 
 const Profile = () => {
   const [userId, setUserId] = useState(null);
 
   let [profileImage, setProfileImage] = useState('/img/profile_pic.png');
-  let [userFullName, setUserFullName] = useState('Jessy');
   let [follwers, setFollwers] = useState(100);
   let [following, setFollowing] = useState(50);
   let [userRating, setUserRating] = useState(8.2);
+  let [productData, setProductData] = useState([]);
 
   const router = useRouter();
 
@@ -34,7 +36,7 @@ const Profile = () => {
   useEffect(() => {
     const userId = getDataFromLocalstorage('userid');
     setUserId(userId);
-  //  getUserData(userId);
+    getUserData(userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
@@ -42,6 +44,9 @@ const Profile = () => {
     let res = await axiosInterceptor.get(`profile/${userId}`);
    // console.log(res);
     setUserData({ ...res.data[0] });
+    setProductData([...res.data[0].products]);
+
+    console.log(...res.data[0].products)
   };
 
   const addProduct = () => {
@@ -67,7 +72,7 @@ const Profile = () => {
               <div className="row">
                 <div className="col-12">
                   <h6 style={{ fontWeight: 500, fontSize: 20 }}>
-                    {userFullName}{' '}
+                    {userData.name}
                     <Link href="/profile/edit-profile">
                       <a className="btn btn-outline-warning btn-sm ms-md-4 ms-4"> Edit Profile </a>
                     </Link>
@@ -136,20 +141,21 @@ const Profile = () => {
               <div className="tab-content" id="myTabContent">
                 <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <div className="text-center pb-5">
-                    <h5 className="text-black-50">Post Your First Ad!</h5>
-                    <img
-                      src="/img/jobpost_df.svg"
-                      className="jobp_def py-3"
-                      alt="xx"
-                      width="800px"
-                      height="600px"
-                      layout="fixed"
-                    />
-                    <p>
-                      <a className="btn postjob_btn" style={{whiteSpace:'nowrap'}} onClick={addProduct}>
-                        Post an advirtisement
-                      </a>
-                    </p>
+                  <div className="row m-0">
+                      {productData.length > 0 &&
+                        productData.map((product, i) => {
+                          return (
+                            <div key={i} className="col-12 col-lg-4 mb-3 plr-3">
+                              <ProductCard productDetails={product} enablewishList={'no'}/>
+                            </div>
+                          );
+                        })}
+                    </div>
+                    <div className='row m-2'>
+                          <div className='col-12'>
+                          <a href="javascript:void(0);" style={{whiteSpace: "nowrap"}} className="btn postjob_btn" onClick={addProduct}>Post an advirtisement</a>
+                          </div>
+                    </div>
                   </div>
                 </div>
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

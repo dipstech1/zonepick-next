@@ -1,76 +1,78 @@
-import {useEffect, useState} from 'react'
-import Axios from "../../services/axios.interceptor"
-import {getDataFromLocalstorage} from "../../utils/storage.util";
-import Layout from "../../components/layout";
+import { useEffect, useState } from 'react';
+import Axios from '../../services/axios.interceptor';
+import { getDataFromLocalstorage } from '../../utils/storage.util';
+import Layout from '../../components/layout';
 import Link from 'next/link';
-import {useRouter} from "next/router";
-
+import { useRouter } from 'next/router';
+import ImageUploader from '../../ui-lib/ImageUploader/ImageUploader';
 
 const AddProduct = () => {
+  const router = useRouter();
 
-    const router = useRouter();
+  const [productDetails, setProductDetails] = useState({
+    productName: '',
+    productDetailsData: '',
+    item_description: 'Test35',
+    productId: '',
+    product_status: '',
+    price: 0,
+    purpose: '',
+    quantity: 0,
+    seller_details: ''
+  });
 
-    const [productDetails, setProductDetails] = useState({
-        "productName": "",
-        "productDetailsData": "",
-        "item_description":"Test35",
-        "productId": "",
-        "product_status": "",
-        "price": 0,
-        "purpose": "",
-        "quantity": 0,
-        "seller_details": ""
-    });
+  const [parentProductList, setparentProductList] = useState([]);
 
-    const [parentProductList, setparentProductList] = useState([])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getparentProductList();
+  }, []);
 
-    useEffect(() => {
-      window.scrollTo(0, 0) 
-      getparentProductList()
-        
-    }, [])
+  const getparentProductList = async () => {
+    let { data } = await Axios.get('products/lookup');
+    setparentProductList([...data]);
+  };
 
-
-    const getparentProductList = async()=> {
-      let {data} = await Axios.get("products/lookup");
-      setparentProductList([...data])
+  const updateValue = (e) => {
+    const { name, value } = e.target;
+    if (name === 'price' || name === 'quantity') {
+      value = parseFloat(value);
     }
+    setProductDetails({ ...productDetails, [name]: value });
+  };
 
-    const updateValue = (e) => {
-      const { name, value } = e.target;
-      if (name==='price' || name==='quantity') {
-        value = parseFloat(value)
-      } 
-      setProductDetails({ ...productDetails, [name]: value });
-    };
+  const addProduct = async () => {
+    productDetails.seller_details = getDataFromLocalstorage('userid');
+    let added = await Axios.post('products', productDetails);
+    router.replace('/dashboard');
+    console.log('added ', added);
 
-    const addProduct = async () => {
-        
-        productDetails.seller_details = getDataFromLocalstorage('userid')
-        let added = await Axios.post("products", productDetails);
-        router.replace('/dashboard');
-        console.log("added ", added);
+    console.log(productDetails);
+  };
 
-       console.log(productDetails)
-    }
-
-    return (
-        <Layout title="Add new Product">
-            <section className="pb-4 pb-lg-5" id='pageContainer'>
-                <div className="container py-3">
-                    <div className="row m-0 justify-content-center">
-                        <div className="bredcamp">
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb  mb-0">
-                                    <li className="breadcrumb-item"><Link href='/'><a>Home</a></Link></li>
-                                    <li className="breadcrumb-item active"><Link href='/sell'>Sell</Link></li>
-                                    <li className="breadcrumb-item active">Add Product</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                    <div className="row m-0">
-                        {/* <div className="stepwizard">
+  return (
+    <Layout title="Add new Product">
+      <section className="pb-4 pb-lg-5" id="pageContainer">
+        <div className="container py-3">
+          <div className="row m-0 justify-content-center">
+            <div className="bredcamp">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb  mb-0">
+                  <li className="breadcrumb-item">
+                    <Link href="/">
+                      <a>Home</a>
+                    </Link>
+                  </li>
+                  <li className="breadcrumb-item active">
+                    <Link href="/sell">Sell</Link>
+                  </li>
+                  <li className="breadcrumb-item active">Add Product</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          <div className="row m-0">
+            {/* <div className="stepwizard">
               <div className="stepwizard-row setup-panel">
                 <div className="stepwizard-step">
                   <a href="#step-1" type="button" className="btn btn-primary btn-circle">1</a>
@@ -86,101 +88,158 @@ const AddProduct = () => {
                 </div>
               </div>
             </div> */}
-                        <form role="form" id="form">
-                            <div className="row setup-content justify-content-center" id="step-1">
+            <form role="form" id="form">
+              <div className="row setup-content justify-content-center" id="step-1">
+                <div className="col-12 col-lg-7 p-lg-0">
+                  <div className="row">
+                    <div className="col-md-12 mb-2">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          required="required"
+                          className="form-control"
+                          placeholder="Product name"
+                          name="productName"
+                          id="productName"
+                          onChange={updateValue}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                                <div className="col-12 col-lg-7 p-lg-0">
-                                    <div className='row'>
-                                        <div className='col-md-12 mb-2'>
-                                            <div className="form-group">
-                                                <input type="text" required="required" className="form-control"
-                                                       placeholder="Product name" name='productName'
-                                                       id="productName"  onChange={updateValue}/>
-                                            </div>
-                                        </div>
-                                    </div>
+                  <div className="row mt-2 mb-2">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <textarea
+                          rows="7"
+                          type="text"
+                          required="required"
+                          className="form-control"
+                          placeholder="Description"
+                          onChange={updateValue}
+                          name="productDetailsData"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
 
-                                    <div className='row mt-2 mb-2'>
-                                        <div className='col-md-12'>
-                                                <div className="form-group">
-                                                     <textarea rows="7" type="text" required="required" className="form-control"
-                                                               placeholder="Description"  onChange={updateValue} name='productDetailsData'></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                  <div className="row mt-2 mb-2">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <select
+                          className="form-select"
+                          required="required"
+                          defaultValue=""
+                          aria-label="Default select example"
+                          name="productId"
+                          onChange={updateValue}
+                        >
+                          <option disabled value="">
+                            {' '}
+                            Choose Category
+                          </option>
+                          {parentProductList.length &&
+                            parentProductList.map((lst, i) => (
+                              <option key={i} value={lst.productId}>
+                                {lst.name}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-                                    <div className='row mt-2 mb-2'>
-                                        <div className='col-md-12'>
-                                            <div className="form-group">
-                                                <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example" name='productId' onChange={updateValue}>
-                                                    <option  disabled   value="" > Choose Category
-                                                    </option>
-                                                    {
-                                                        parentProductList.length && parentProductList.map((lst, i) =>
-                                                            <option key={i} value={lst.productId}>{lst.name}</option>)
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                  <div className="row mt-2 mb-2">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <select
+                          className="form-select"
+                          required="required"
+                          defaultValue=""
+                          aria-label="Default select example"
+                          name="product_status"
+                          onChange={updateValue}
+                        >
+                          <option disabled value="">
+                            Status
+                          </option>
+                          <option value="New">New</option>
+                          <option value="Broken">Broken</option>
+                          <option value="Need repair">Need repair</option>
+                        </select>
+                      </div>
+                    </div>
 
-                                    <div className='row mt-2 mb-2'>
-                                        <div className='col-md-6'>
-                                            <div className="form-group">
-                                                <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example" name='product_status'
-                                                        onChange={updateValue}>
-                                                    <option disabled value="">Status</option>
-                                                    <option value="New">New</option>
-                                                    <option value="Broken">Broken</option>
-                                                    <option value="Need repair">Need repair</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <select
+                          className="form-select"
+                          required="required"
+                          defaultValue=""
+                          aria-label="Default select example"
+                          name="purpose"
+                          id="purpose"
+                          onChange={updateValue}
+                        >
+                          <option value="" disabled>
+                            Purpose
+                          </option>
+                          <option value="Purchase">Purchase</option>
+                          <option value="Rent">Rent</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-                                        <div className='col-md-6'>
-                                            <div className="form-group">
-                                                <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example" name="purpose" id='purpose'
-                                                        onChange={updateValue}>
-                                                    <option value='' disabled>Purpose</option>
-                                                    <option value="Purchase">Purchase</option>
-                                                    <option value="Rent">Rent</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                  <div className="row mt-2 mb-2">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          required="required"
+                          className="form-control"
+                          placeholder="Price"
+                          name="price"
+                          id="price"
+                          onChange={updateValue}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <input
+                          type="number"
+                          required="required"
+                          className="form-control"
+                          placeholder="Quantity"
+                          name="quantity"
+                          id="quantity"
+                          onChange={updateValue}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-                                    <div className='row mt-2 mb-2'>
-                                        <div className='col-md-6'>
-                                            <div className="form-group">
-                                                <input type="text" required="required" className="form-control"
-                                                       placeholder="Price" name="price"
-                                                       id="price"  onChange={updateValue}/>
-                                            </div>
-                                        </div>
-                                        <div className='col-md-6'>
-                                            <div className="form-group">
-                                                <input type="number" required="required" className="form-control"
-                                                       placeholder="Quantity" name="quantity"
-                                                       id="quantity"  onChange={updateValue}/>
-                                            </div>
-                                        </div>
-                                    </div>
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="my-3">
+                        <ImageUploader max={6} multi />
+                      </div>
+                    </div>
+                  </div>
 
-                                    <div className="row" style={{marginTop:'35px'}}>
-                                        <div className="col-12">
-                                            <div className="d-flex justify-content-center">
-                                                <button className="btn btn-primary nextBtn pull-right" type="button"
-                                                        onClick={addProduct}>Add product <i className="fas fa-arrow-right"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* <div className="row setup-content justify-content-center" id="step-2">
+                  <div className="row" style={{ marginTop: '35px' }}>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-center">
+                        <button className="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>
+                          Add product <i className="fas fa-arrow-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="row setup-content justify-content-center" id="step-2">
                 <div className="col-12 col-lg-7 p-lg-0">
                     <div className="form-group row ms-0 me-0 mb-4">
                       <div className="col-12 p-0">
@@ -259,12 +318,12 @@ const AddProduct = () => {
                   </div>
                 </div>
               </div> */}
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </Layout>
-    )
-}
+            </form>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
-export default AddProduct
+export default AddProduct;
