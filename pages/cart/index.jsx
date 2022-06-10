@@ -239,7 +239,7 @@ const Cart = () => {
                     <div className="totals-item">
                       <label>Tax (5%)</label>
                       <div className="totals-value" id="cart-tax">
-                        {(totalPrice * 3.6) / 100}
+                        { totalPrice > 0 ? (totalPrice * 3.6) / 100 : 0}
                       </div>
                     </div>
                     <div className="totals-item">
@@ -251,7 +251,7 @@ const Cart = () => {
                     <div className="totals-item totals-item-total">
                       <label>Grand Total</label>
                       <div className="totals-value" id="cart-total">
-                        {totalPrice + (totalPrice * 3.6) / 100 + 15}
+                        { totalPrice > 0 ? totalPrice + (totalPrice * 3.6) / 100 + 15 : 0}
                       </div>
                     </div>
                     <button className="btn btn-block btn-log mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
