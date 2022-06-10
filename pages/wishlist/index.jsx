@@ -32,11 +32,10 @@ const Wishlist = () => {
 
   const removeWishListItem = async (item) => {
     console.log(item);
-    // let res = await axiosInterceptor.delete(`wishlist/${item?.wishlistId}`);
-    /*  if (res.status == 200) {
-      router.push('dashboard')
-     // getWishlistItems(userId);
-    }*/
+     let res = await axiosInterceptor.delete(`wishlist/${item?.wishlistId}`);
+      if (res.data.acknowledge == true) {
+       getWishlistItems(userId);
+    }
   };
 
   const goToProductDetails = (wishdata) => {
