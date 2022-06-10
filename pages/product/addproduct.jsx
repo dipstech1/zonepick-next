@@ -13,9 +13,10 @@ const AddProduct = () => {
     const [productDetails, setProductDetails] = useState({
         "productName": "",
         "productDetailsData": "",
+        "item_description":"Test35",
         "productId": "",
         "product_status": "",
-        "price": "",
+        "price": 0,
         "purpose": "",
         "quantity": 0,
         "seller_details": ""
@@ -37,15 +38,20 @@ const AddProduct = () => {
 
     const updateValue = (e) => {
       const { name, value } = e.target;
+      if (name==='price' || name==='quantity') {
+        value = parseFloat(value)
+      } 
       setProductDetails({ ...productDetails, [name]: value });
     };
 
     const addProduct = async () => {
-        console.log(productDetails);
+        
         productDetails.seller_details = getDataFromLocalstorage('userid')
         let added = await Axios.post("products", productDetails);
         router.replace('/dashboard');
         console.log("added ", added);
+
+       console.log(productDetails)
     }
 
     return (
@@ -88,11 +94,8 @@ const AddProduct = () => {
                                         <div className='col-md-12 mb-2'>
                                             <div className="form-group">
                                                 <input type="text" required="required" className="form-control"
-                                                       placeholder="Product name"
-                                                       id="firstName" onChange={e => setProductDetails({
-                                                    ...productDetails,
-                                                    productName: e.target.value
-                                                })}/>
+                                                       placeholder="Product name" name='productName'
+                                                       id="productName"  onChange={updateValue}/>
                                             </div>
                                         </div>
                                     </div>
@@ -101,10 +104,7 @@ const AddProduct = () => {
                                         <div className='col-md-12'>
                                                 <div className="form-group">
                                                      <textarea rows="7" type="text" required="required" className="form-control"
-                                                               placeholder="Description" onChange={e => setProductDetails({
-                                                         ...productDetails,
-                                                         productDetailsData: e.target.value
-                                                     })}></textarea>
+                                                               placeholder="Description"  onChange={updateValue} name='productDetailsData'></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -113,9 +113,8 @@ const AddProduct = () => {
                                         <div className='col-md-12'>
                                             <div className="form-group">
                                                 <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example">
-                                                    <option  disabled onChange={e => setProductDetails({
-                                                        ...productDetails, productId: e.target.value })} value="" > Choose Category
+                                                        aria-label="Default select example" name='productId' onChange={updateValue}>
+                                                    <option  disabled   value="" > Choose Category
                                                     </option>
                                                     {
                                                         parentProductList.length && parentProductList.map((lst, i) =>
@@ -130,10 +129,8 @@ const AddProduct = () => {
                                         <div className='col-md-6'>
                                             <div className="form-group">
                                                 <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example"
-                                                        onChange={e => setProductDetails({
-                                                            ...productDetails, product_status: e.target.value
-                                                        })}>
+                                                        aria-label="Default select example" name='product_status'
+                                                        onChange={updateValue}>
                                                     <option disabled value="">Status</option>
                                                     <option value="New">New</option>
                                                     <option value="Broken">Broken</option>
@@ -145,11 +142,8 @@ const AddProduct = () => {
                                         <div className='col-md-6'>
                                             <div className="form-group">
                                                 <select className="form-select" required="required" defaultValue=""
-                                                        aria-label="Default select example"
-                                                        onChange={e => setProductDetails({
-                                                            ...productDetails,
-                                                            purpose: e.target.value
-                                                        })}>
+                                                        aria-label="Default select example" name="purpose" id='purpose'
+                                                        onChange={updateValue}>
                                                     <option value='' disabled>Purpose</option>
                                                     <option value="Purchase">Purchase</option>
                                                     <option value="Rent">Rent</option>
@@ -162,21 +156,15 @@ const AddProduct = () => {
                                         <div className='col-md-6'>
                                             <div className="form-group">
                                                 <input type="text" required="required" className="form-control"
-                                                       placeholder="Price"
-                                                       id="price" onChange={e => setProductDetails({
-                                                    ...productDetails,
-                                                    price: +(e.target.value)
-                                                })}/>
+                                                       placeholder="Price" name="price"
+                                                       id="price"  onChange={updateValue}/>
                                             </div>
                                         </div>
                                         <div className='col-md-6'>
                                             <div className="form-group">
                                                 <input type="number" required="required" className="form-control"
-                                                       placeholder="Quantity"
-                                                       id="quantity" onChange={e => setProductDetails({
-                                                    ...productDetails,
-                                                    quantity: +(e.target.value)
-                                                })}/>
+                                                       placeholder="Quantity" name="quantity"
+                                                       id="quantity"  onChange={updateValue}/>
                                             </div>
                                         </div>
                                     </div>
