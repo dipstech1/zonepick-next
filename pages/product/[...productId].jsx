@@ -89,7 +89,7 @@ const ProductDetails = ({ productData }) => {
 
   const open3DModal = () => {
     const imageInfo = {
-      imgurl: '/glb/shoe.glb'
+      imgurl: '/glb/flat.glb'
     };
 
     const modalClass = 'modal-lg';
@@ -200,7 +200,9 @@ const ProductDetails = ({ productData }) => {
                       </button>
                     </span>
                     <span>
-                      <button className="btn btn-sm btn-pink-800 ms-1" onClick={open3DModal}>3d View</button>
+                      <button className="btn btn-sm btn-pink-800 ms-1" onClick={open3DModal}>
+                        3d View
+                      </button>
                     </span>
                   </div>
                 </div>
