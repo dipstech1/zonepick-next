@@ -129,7 +129,7 @@ const Home = ({ data }) => {
                       {productData.length > 0 &&
                         productData.map((product, i) => {
                           return (
-                            <div key={i} className="col-12 col-lg-4 mb-3 plr-3">
+                            <div key={i} className="col-12 col-lg-3 mb-3 plr-3">
                               <ProductCard productDetails={product} addToWishList={addToWishList} enablewishList={'no'}/>
                             </div>
                           );
