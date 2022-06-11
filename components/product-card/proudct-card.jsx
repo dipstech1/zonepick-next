@@ -24,7 +24,7 @@ const ProductCard = ({ productDetails, addToWishList,enablewishList='yes' }) => 
     <>
       <div className="card" onClick={goToDetails}>
         <div className="position-relative">
-          <img src="/img/item_1.png" className="card-img-top" alt="..." />
+          <img src={"/images/product/" + productDetails.product.images[0].url} className="card-img-top" alt="..." />
          { enablewishList==='yes'? <div href="">
             <div className="like" onClick={addToWishlist}>
               <i className="fas fa-heart"></i>
