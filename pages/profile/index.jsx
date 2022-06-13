@@ -153,7 +153,7 @@ const Profile = () => {
                     </div>
                     <div className='row m-2'>
                           <div className='col-12'>
-                          <a href="javascript:void(0);" style={{whiteSpace: "nowrap"}} className="btn postjob_btn" onClick={addProduct}>Post an advirtisement</a>
+                          <a href="" style={{whiteSpace: "nowrap",cursor:'pointer'}} className="btn postjob_btn" onClick={addProduct}>Post an advirtisement</a>
                           </div>
                     </div>
                   </div>
