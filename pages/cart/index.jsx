@@ -11,6 +11,8 @@ import CryptoPaymentButton from '../../components/payment-button/cryptoPayment';
 const Cart = () => {
   let [userId, SetUserId] = useState();
 
+  let [shippingCharge, SetShippingCharge] = useState(15);
+
   let [purchasableData, setPurchaseData] = useState([]);
   let [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -69,24 +71,22 @@ const Cart = () => {
     email: 'sudipta.sarkar4545@gmail.com',
     contact: '1234567890',
     address: 'KOL',
-    amount: 500,
-
+    amount: 500
   };
 
-
   const onPayClick = (responseData) => {
-    console.log(responseData)
+    console.log(responseData);
 
-    if (responseData.status ==='success') {
+    if (responseData.status === 'success') {
       purchase();
-     console.log('c')
+      console.log('c');
     } else {
-      toast.error(responseData.error.code)
-    }  
+      toast.error(responseData.error.code);
+    }
   };
 
   const purchase = async () => {
-     axiosInterceptor
+    axiosInterceptor
       .post(`purchase`, { userid: userId })
       .then((res) => {
         toast.success('Transaction completed');
@@ -173,7 +173,12 @@ const Cart = () => {
                                 <h6>{itm?.productId[0]?.purpose}</h6>
                               </td>
                               <td>
-                                <b>{itm?.productId[0]?.price}</b>
+                                <b>
+                                  {itm?.productId[0]?.price?.toLocaleString('en-IN', {
+                                    style: 'currency',
+                                    currency: 'INR'
+                                  })}
+                                </b>
                               </td>
                               <td>
                                 {
@@ -212,13 +217,15 @@ const Cart = () => {
                                 }
                               </td>
                               <td>
-                                <b>{itm?.productId[0]?.price * itm?.ordered_quantity}</b>
+                                <b>
+                                  {(itm?.productId[0]?.price * itm?.ordered_quantity).toLocaleString('en-IN', {
+                                    style: 'currency',
+                                    currency: 'INR'
+                                  })}
+                                </b>
                               </td>
                               <td>
-                                <button
-                                  className="remove-product"
-                                  onClick={() => removeFromCart(itm?.id, i)}
-                                >
+                                <button className="remove-product" onClick={() => removeFromCart(itm?.id, i)}>
                                   Remove
                                 </button>
                               </td>
@@ -233,28 +240,44 @@ const Cart = () => {
                     <div className="totals-item">
                       <label>Subtotal</label>
                       <div className="totals-value" id="cart-subtotal">
-                        {totalPrice}
+                        {totalPrice.toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item">
                       <label>Tax (5%)</label>
                       <div className="totals-value" id="cart-tax">
-                        { totalPrice > 0 ? (totalPrice * 3.6) / 100 : 0}
+                        {(totalPrice > 0 ? (totalPrice * 3.6) / 100 : 0).toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item">
                       <label>Shipping</label>
                       <div className="totals-value" id="cart-shipping">
-                        15.00
+                        {shippingCharge.toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item totals-item-total">
                       <label>Grand Total</label>
                       <div className="totals-value" id="cart-total">
-                        { totalPrice > 0 ? totalPrice + (totalPrice * 3.6) / 100 + 15 : 0}
+                        {(totalPrice > 0 ? totalPrice + (totalPrice * 3.6) / 100 + 15 : 0).toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
-                    <button className="btn btn-block btn-log mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button
+                      className="btn btn-block btn-log mb-0"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
                       Checkout
                     </button>
                   </div>
@@ -263,62 +286,90 @@ const Cart = () => {
             </div>
           </section>
         </div>
-      </Layout>      
+      </Layout>
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-md">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Check Out</h5>
+              <h5 className="modal-title" id="exampleModalLabel">
+                Check Out
+              </h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <div className='row'>
-              <div className="col-12 col-lg-12 sticky-lg-top">
+              <div className="row">
+                <div className="col-12 col-lg-12 sticky-lg-top">
                   <div className="totals">
                     <div className="totals-item">
                       <label>Subtotal</label>
                       <div className="totals-value" id="cart-subtotal">
-                        {totalPrice}
+                        {totalPrice.toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item">
                       <label>Tax (5%)</label>
                       <div className="totals-value" id="cart-tax">
-                        {(totalPrice * 3.6) / 100}
+                        {((totalPrice * 3.6) / 100).toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item">
                       <label>Shipping</label>
                       <div className="totals-value" id="cart-shipping">
-                        15.00
+                        {shippingCharge.toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
                     <div className="totals-item totals-item-total">
                       <label>Grand Total</label>
                       <div className="totals-value" id="cart-total">
-                        {totalPrice + (totalPrice * 3.6) / 100 + 15}
+                        {(totalPrice + (totalPrice * 3.6) / 100 + 15).toLocaleString('en-IN', {
+                          style: 'currency',
+                          currency: 'INR'
+                        })}
                       </div>
                     </div>
 
-                    <div className='pt-2 text-center'>
-                      <span className='pe-1'>
-                         <PaymentButton userData={userData} paymentResponse={onPayClick} buttonText={'Pay with Razorpay'}></PaymentButton>
+                    <div className="pt-2 text-center">
+                      <span className="pe-1">
+                        <PaymentButton
+                          userData={userData}
+                          paymentResponse={onPayClick}
+                          buttonText={'Pay with Razorpay'}
+                        ></PaymentButton>
                       </span>
-                      <span className='ps-1'>
-                      <CryptoPaymentButton userData={userData} paymentResponse={onPayClick} buttonText={'Pay with Crypto'} btnClass='btn-orange-800'> </CryptoPaymentButton>
-                      </span>                       
-                    </div>                   
-                    
+                      <span className="ps-1">
+                        <CryptoPaymentButton
+                          userData={userData}
+                          paymentResponse={onPayClick}
+                          buttonText={'Pay with Crypto'}
+                          btnClass="btn-orange-800"
+                        >
+                          {' '}
+                        </CryptoPaymentButton>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>            
+            </div>
           </div>
         </div>
       </div>
-
-
     </>
   );
 };
