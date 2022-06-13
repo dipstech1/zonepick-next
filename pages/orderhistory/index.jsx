@@ -17,16 +17,18 @@ import ModalService from '../../ui-lib/Modal/modalService';
 const OrderHistory = () => {
   const router = useRouter();
 
+  const [span, setSpan] = useState(2);
+
   const [userId, setUserId] = useState(null);
   let [orderHistory, setOrderHistory] = useState([]);
   useEffect(() => {
     const userId = getDataFromLocalstorage('userid');
     setUserId(userId);
-    getOrderedItems(userId);
-  }, []);
+    getOrderedItems(userId,span);
+  }, [span]);
 
-  const getOrderedItems = async (userId) => {
-    let items = await axiosInterceptor.post(`purchase/all`, { userid: userId });
+  const getOrderedItems = async (userId,span) => {
+    let items = await axiosInterceptor.post(`purchase/all`, { userid: userId,span: span });
     console.log('items order ', items.data.data);
     if (items && items.data.data) {
       setOrderHistory(items.data.data);
@@ -134,6 +136,10 @@ const OrderHistory = () => {
     return fulldate;
   };
 
+  const orderStausChanged = (e)=> {
+    setSpan(parseInt(e.value))
+  }
+
   return (
     <>
       <ModalRoot />
@@ -178,7 +184,7 @@ const OrderHistory = () => {
                     {/* <button className="input-group-text res_none"><i className="fas fa-search"></i></button> */}
                   </div>
 
-                  <OrderStatus />
+                  <OrderStatus orderValue={span} orderStausChanged={orderStausChanged} />
 
                   <OrderManufacture />
                 </div>
