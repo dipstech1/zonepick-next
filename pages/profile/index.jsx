@@ -61,8 +61,8 @@ const Profile = () => {
             <div className="col-md-3 text-center">
               <img
                 layout="fixed"
-                className="m-auto mr-lg-auto Profile_img"
-                src={profileImage}
+                className="m-auto mr-lg-auto Profile_img img-avatar"
+                src={"/images/avator/"+userData.profile_image}
                 width='140px'
                 height='140px'
                 alt="Profile Picture"

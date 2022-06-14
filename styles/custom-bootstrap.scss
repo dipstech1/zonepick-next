@@ -443,6 +443,14 @@ footer {
   bottom: 0 !important;
 }
 
+.Profile_img {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
 .profile_container {
   #Profile_img {
     width: 160px !important;

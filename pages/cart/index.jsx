@@ -166,11 +166,11 @@ const Cart = () => {
                             <tr key={i}>
                               <td>
                                 <div className="product-image">
-                                  <img src="./img/banner.png" alt="" />
+                                  <img src={"/images/product/" + itm?.productId[0]?.product?.images[0].url} alt="" />
                                 </div>
                               </td>
                               <td>
-                                <h6>{itm?.productId[0]?.purpose}</h6>
+                                <h6>{itm?.productId[0]?.product?.name}</h6>
                               </td>
                               <td>
                                 <b>

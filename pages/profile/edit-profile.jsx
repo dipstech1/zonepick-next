@@ -131,7 +131,7 @@ const EditProfile = () => {
 
           <div className="row m-0 py-3 justify-content-center">
             <div className="col-12 col-lg-2 us_pic text-center py-3 py-lg-5 position-relative">
-              <img src="/img/profile_pic.png" className="m-auto mr-lg-auto" alt="" />
+              <img src={"/images/avator/"+userData.profile_image} className="m-auto mr-lg-auto" alt="" />
               <div className="ed_img dropdown">
                 <i className="fas fa-pen dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul className="dropdown-menu">
