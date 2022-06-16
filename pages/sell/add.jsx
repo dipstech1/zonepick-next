@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Sell = () => {
   const [step, setStep] = useState(1);
   const [stepOne, setStepOne] = useState(false);
-  const [stepTwo, setStepTwo] = useState(false);
+  const [stepTwo, setStepTwo] = useState(false); 
   const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(() => {
