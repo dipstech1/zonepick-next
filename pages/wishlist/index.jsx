@@ -70,9 +70,9 @@ const Wishlist = () => {
                     <a style={{ cursor: 'pointer' }} className="or_dhover" key={i}>
                       <div className="row m-0">
                         <div className="col-12 col-lg-2" onClick={(e) => goToProductDetails(wishdata)}>
-                          <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="dd" />
+                          <img src={"/images/product/" + wishdata?.productId[0].product.images[0].url} className="w-100 mb-3 mb-lg-0" alt="dd" />
                         </div>
-                        <div className="col-12 col-lg-9 ">
+                        <div className="col-12 col-lg-9 "> 
                           <div>
                             <small>
                               <b className="text-success">{wishdata?.productId[0].product_status}</b>{' '}

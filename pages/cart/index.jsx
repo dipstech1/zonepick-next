@@ -44,7 +44,7 @@ const Cart = () => {
     });
     setTotalPrice(totalPr);
 
-    console.log(itemData);
+    console.log(totalPr);
   };
 
   const removeFromCart = async (itemId, itemIndex) => {
@@ -71,7 +71,7 @@ const Cart = () => {
     email: 'sudipta.sarkar4545@gmail.com',
     contact: '1234567890',
     address: 'KOL',
-    amount: 500
+    amount: (totalPrice + ((totalPrice*5)/100) + 15) * 100
   };
 
   const onPayClick = (responseData) => {
@@ -147,10 +147,11 @@ const Cart = () => {
                 </div>
               </div>
               <div className="row m-0 justify-content-between">
-                <div className="shopping-cart table-responsive col-12 col-lg-8">
+                <div className="shopping-cart table-responsive col-12 col-lg-9">
                   <table className="table table-striped table-sm">
                     <thead>
                       <tr>
+                        <th>SL No.</th>
                         <th>Image</th>
                         <th>Product</th>
                         <th>Price</th>
@@ -164,6 +165,7 @@ const Cart = () => {
                         purchasableData.map((itm, i) => {
                           return (
                             <tr key={i}>
+                              <td>{i+1}</td>
                               <td>
                                 <div className="product-image">
                                   <img src={"/images/product/" + itm?.productId[0]?.product?.images[0].url} alt="" />
@@ -249,7 +251,7 @@ const Cart = () => {
                     <div className="totals-item">
                       <label>Tax (5%)</label>
                       <div className="totals-value" id="cart-tax">
-                        {(totalPrice > 0 ? (totalPrice * 3.6) / 100 : 0).toLocaleString('en-IN', {
+                        {(totalPrice > 0 ? (totalPrice * 5) / 100 : 0).toLocaleString('en-IN', {
                           style: 'currency',
                           currency: 'INR'
                         })}
@@ -267,7 +269,7 @@ const Cart = () => {
                     <div className="totals-item totals-item-total">
                       <label>Grand Total</label>
                       <div className="totals-value" id="cart-total">
-                        {(totalPrice > 0 ? totalPrice + (totalPrice * 3.6) / 100 + 15 : 0).toLocaleString('en-IN', {
+                        {(totalPrice > 0 ? totalPrice + (totalPrice * 5) / 100 + 15 : 0).toLocaleString('en-IN', {
                           style: 'currency',
                           currency: 'INR'
                         })}

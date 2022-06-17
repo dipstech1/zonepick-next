@@ -1,4 +1,4 @@
-
+import Axios from '../../services/axios.interceptor';
 const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) => {
   const makePayment = async () => {
     
@@ -7,13 +7,17 @@ const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) =>
       console.log('Razorpay Failed to load');
       return;
     }
-    const responseData = await fetch('/api/razorpay', { method: 'POST',body: JSON.stringify({amount: userData.amount}) }).then((t) => t.json());
-    console.log(responseData);
+
+    let data = await Axios.post('/utilities/razorpay', {userid: '0', amount: userData.amount});
+    const responseData = data.data
+
+   // const responseData = await fetch('/api/razorpay', { method: 'POST',body: JSON.stringify({amount: userData.amount}) }).then((t) => t.json());
+    
     var options = {
       key: 'rzp_test_7hUvqKUbEBiMqi',
       name: userData.name,
       currency: responseData.currency,
-      amount: responseData.amount,
+      amount: (responseData.amount),
       order_id: responseData.id,
       description: userData.productDescription,
       // image: "img/logo.png",
@@ -37,6 +41,8 @@ const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) =>
         }
       }
     };
+
+    console.log(options);
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
