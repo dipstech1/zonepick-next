@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import StarRatings from 'react-star-ratings';
 
 import OrderModal from '../../components/order-history/orderModal';
+import RatingModal from '../../components/order-history/ratingModal';
 import ModalRoot from '../../ui-lib/Modal/modalRoot';
 import ModalService from '../../ui-lib/Modal/modalService';
 
@@ -50,6 +51,18 @@ const OrderHistory = () => {
     };
 
     ModalService.open(OrderModal, { orderdetails: orderdetails });
+  };
+
+  const openRatingModal = (orderInfo, order) => {
+    console.log(orderInfo.transactionId);
+
+    const orderdetails = {
+      orderDetails: { ...order?.productId[0] },
+      transactionDetails: { transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date },
+      userData: {userId:userId}
+    };
+
+    ModalService.open(RatingModal, { orderdetails: orderdetails },'modal-md');
   };
 
   const convertToDate = (timestamp) => {
@@ -195,29 +208,20 @@ const OrderHistory = () => {
                       return order.transactions.map((lst, ind) => {
                         return (
                           <div style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
-                            <div className="row m-0" onClick={(e) => openOrderModal(order, lst)}>
-                              <div className="col-12 col-lg-2">
+                            <div className="row m-0">
+                              <div className="col-12 col-lg-2" onClick={(e) => openOrderModal(order, lst)}>
                                 <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="product Logo" />
                               </div>
-                              <div className="col-12 col-lg-4">
+                              <div className="col-12 col-lg-4" onClick={(e) => openOrderModal(order, lst)}>
                                 <div>
                                   <Link href={`product/${lst?.productId[0].ParentId}/${lst?.productId[0].recordId}`}>
                                     <a>{lst?.productId[0].product.name}</a>
                                   </Link>
                                   <small>Color: Black</small>
-                                  <small>{lst?.productId[0].seller_details.name}</small>
-                                  <span style={{ display: 'inline-block' }} className="pt-2">
-                                    <StarRatings
-                                      starDimension="16px"
-                                      rating={3}
-                                      starRatedColor="#e74c3c"
-                                      numberOfStars={5}
-                                      name="rating"
-                                    />
-                                  </span>
+                                  <small>{lst?.productId[0].seller_details.name}</small>                                  
                                 </div>
                               </div>
-                              <div className="col-12 col-lg-2 text-lg-center">
+                              <div className="col-12 col-lg-2 text-lg-center" onClick={(e) => openOrderModal(order, lst)}>
                                 <p>
                                   <span>
                                     {' '}
@@ -229,15 +233,20 @@ const OrderHistory = () => {
                                 </p>
                               </div>
                               <div className="col-12 col-lg-4">
-                                <p>
+                                {/*<p>
                                   <b>
                                     <i className="fas fa-circle text-success"></i> Ordered on{' '}
                                     {convertToDate(order.purchase_date)}
                                   </b>
-                                </p>
+                                  </p> */}
                                 <p>
                                   <b>
                                     <i className="fas fa-circle text-success"></i> Delivered on {delivarytatus(order.purchase_date)}
+                                  </b>                                 
+                                </p>
+                                <p onClick={(e) => openRatingModal(order, lst)}>
+                                  <b className='text-primary'>
+                                    <i className="fas fa-star text-primary me-2"></i> Rate & Review Product
                                   </b>                                 
                                 </p>
                               </div>

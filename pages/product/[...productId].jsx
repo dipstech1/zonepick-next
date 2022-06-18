@@ -19,19 +19,20 @@ const ProductDetails = ({ productData }) => {
   let [imgLink, setImgLink] = useState('/house/modern-home.jpg');
 
   useEffect(() => {
-    // console.log('router.query ', router.query);
-
     window.scrollTo(0, 0);
     window.scrollTo(0, 0);
+    
+    if (!router.isReady) { return };
+    
 
     if (router.query.productId) {
       getProductDetails(router.query.productId);
     }
 
-    console.log('productDetails ', productDetails);
+    //console.log('productDetails ', productDetails);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router.isReady, router.query]);
 
   const getProductDetails = async (prodId) => {
     const userId = getDataFromLocalstorage('userid');

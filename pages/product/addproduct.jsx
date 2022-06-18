@@ -5,6 +5,7 @@ import Layout from '../../components/layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ImageUploader from '../../ui-lib/ImageUploader/ImageUploader';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const router = useRouter();
@@ -66,13 +67,22 @@ const AddProduct = () => {
   };
 
   const addProduct = async () => {
-    let product = productDetails.fields
+    let product = productDetails.fields;
     product.seller_details = getDataFromLocalstorage('userid');
-   /* let added = await Axios.post('products', product);
-    router.replace('/dashboard');
-    console.log('added ', added);*/
 
-    console.log(product);
+    try {
+      let added = await Axios.post('products', product);
+
+      if (added.data.acknowledge) {
+        router.replace('/dashboard');
+        toast.success('Product added Successfully');
+      } else {
+        toast.success('Fail');
+      }
+    } catch (error) {
+      console.log(error)
+      toast.success('Fail');
+    }
   };
 
   const stepComplete = async (e) => {
@@ -145,7 +155,6 @@ const AddProduct = () => {
       } else {
         errors['product_status'] = '';
       }
-  
 
       if (fields['purpose'] === '') {
         formIsValid = false;
@@ -153,8 +162,6 @@ const AddProduct = () => {
       } else {
         errors['purpose'] = '';
       }
-
-    
 
       if (fields['price'] === '') {
         formIsValid = false;
@@ -276,7 +283,7 @@ const AddProduct = () => {
                           name="productDetailsData"
                           onChange={updateValue}
                           value={productDetails?.fields['productDetailsData']}
-                          style={{resize:'none'}}
+                          style={{ resize: 'none' }}
                         ></textarea>
                         <div className="invalid-feedback">{productDetails.errors.productDetailsData}</div>
                       </div>
@@ -286,10 +293,10 @@ const AddProduct = () => {
                   <div className="row mt-2 mb-2">
                     <div className="col-md-12">
                       <div className="form-group position-relative">
-                        <select                          
+                        <select
                           required="required"
                           defaultValue=""
-                          aria-label="Default select example"                          
+                          aria-label="Default select example"
                           className={[
                             'form-select',
                             productDetails.errors.productId !== '' && stepOne ? 'is-invalid' : null
@@ -299,7 +306,7 @@ const AddProduct = () => {
                           onChange={updateValue}
                           value={productDetails?.fields['productId']}
                         >
-                          <option disabled value="">                          
+                          <option disabled value="">
                             Choose Category
                           </option>
                           {parentProductList.length &&
@@ -317,10 +324,10 @@ const AddProduct = () => {
                   <div className="row mt-2 mb-2">
                     <div className="col-md-6">
                       <div className="form-group position-relative">
-                        <select                          
+                        <select
                           required="required"
                           defaultValue=""
-                          aria-label="Default select example"  
+                          aria-label="Default select example"
                           className={[
                             'form-select',
                             productDetails.errors.product_status !== '' && stepOne ? 'is-invalid' : null
@@ -343,7 +350,7 @@ const AddProduct = () => {
 
                     <div className="col-md-6">
                       <div className="form-group position-relative">
-                        <select                          
+                        <select
                           required="required"
                           defaultValue=""
                           aria-label="Default select example"
@@ -410,8 +417,6 @@ const AddProduct = () => {
                       Proceed <i className="fas fa-arrow-right"></i>
                     </button>
                   </div>
-
-                 
                 </div>
               </div>
 
@@ -419,42 +424,42 @@ const AddProduct = () => {
                 className={['row setup-content justify-content-center', step !== 2 ? 'hide_element' : null].join(' ')}
                 id="step-2"
               >
-                 <div className="row">
-                    <div>Image: </div>
-                    <div className="col-12">
-                      <div className="my-3">
-                        <ImageUploader max={6} multi />
-                      </div>
+                <div className="row">
+                  <div>Image: </div>
+                  <div className="col-12">
+                    <div className="my-3">
+                      <ImageUploader max={6} multi />
                     </div>
                   </div>
+                </div>
 
-                  <div className="row mt-2">
-                    <div>360&#176; Image: </div>
-                    <div className="col-12">
-                      <div className="my-3">
-                        <ImageUploader max={6} multi />
-                      </div>
+                <div className="row mt-2">
+                  <div>360&#176; Image: </div>
+                  <div className="col-12">
+                    <div className="my-3">
+                      <ImageUploader max={6} multi />
                     </div>
                   </div>
+                </div>
 
-                  <div className="row mt-2">
-                    <div>3d/ Ar Image: </div>
-                    <div className="col-12">
-                      <div className="my-3">
-                        <ImageUploader max={6} multi />
-                      </div>
+                <div className="row mt-2">
+                  <div>3d/ Ar Image: </div>
+                  <div className="col-12">
+                    <div className="my-3">
+                      <ImageUploader max={6} multi />
                     </div>
                   </div>
+                </div>
 
-                  <div className="row" style={{ marginTop: '35px' }}>
-                    <div className="col-12">
-                      <div className="d-flex justify-content-center">
-                        <button className="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>
-                          Add product <i className="fas fa-arrow-right"></i>
-                        </button>
-                      </div>
+                <div className="row" style={{ marginTop: '35px' }}>
+                  <div className="col-12">
+                    <div className="d-flex justify-content-center">
+                      <button className="btn btn-primary nextBtn pull-right" type="button" onClick={addProduct}>
+                        Add product <i className="fas fa-arrow-right"></i>
+                      </button>
                     </div>
                   </div>
+                </div>
               </div>
             </form>
           </div>
