@@ -80,7 +80,7 @@ const RatingModal = (props) => {
           <form role="form" id="form" className="needs-validation" noValidate>
             <div className="row">
               <div className="col-md-6">
-                <div className="d-flex">Product Rating</div>
+                <div className="d-flex">Product Rating:</div>
                 <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-3">
                   <StarRatings
                     starDimension="20px"
@@ -94,7 +94,7 @@ const RatingModal = (props) => {
               </div>
 
               <div className="col-md-6">
-                <div className="d-flex">Delivery Rating</div>
+                <div className="d-flex">Delivery Rating:</div>
                 <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
@@ -108,7 +108,7 @@ const RatingModal = (props) => {
               </div>
 
               <div className="col-md-6">
-                <div className="d-flex">Quality Rating</div>
+                <div className="d-flex">Quality Rating:</div>
                 <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
@@ -122,8 +122,8 @@ const RatingModal = (props) => {
               </div>
 
               <div className="col-md-6">
-                <div className="d-flex">Packaging Rating</div>
-                <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
+                <div className="d-flex">Packaging Rating:</div>
+                <span  style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
@@ -136,7 +136,7 @@ const RatingModal = (props) => {
               </div>
 
               <div className="col-md-6">
-                <div className="d-flex">Seller Rating</div>
+                <div className="d-flex">Seller Rating:</div>
                 <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
@@ -150,7 +150,7 @@ const RatingModal = (props) => {
               </div>
 
               <div className="col-md-6">
-                <div className="d-flex">Communication Rating</div>
+                <div className="d-flex">Communication Rating:</div>
                 <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
