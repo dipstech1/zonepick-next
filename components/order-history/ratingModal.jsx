@@ -72,7 +72,7 @@ const RatingModal = (props) => {
   return (
     <>
       <ModalHeader>
-        <h5 className="modal-title">Order Rating</h5>
+        <h5 className="modal-title">{props?.orderdetails?.orderDetails?.product?.name}</h5>
         <button type="button" className="btn-close" onClick={props.close}></button>
       </ModalHeader>
       <ModalBody>
