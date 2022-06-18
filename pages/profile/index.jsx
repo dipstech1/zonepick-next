@@ -89,9 +89,8 @@ const Profile = () => {
               </div>
               <div className="row mt-3">
                 <div className="col-12">
-                  <span className="rating">
-                    {' '}
-                    {userRating} <i className="fas fa-star text-orange-900 ms-2"></i>
+                  <span className="rating">                    
+                    {userData.avgSellerRating} <i className="fas fa-star text-orange-900 ms-2"></i>
                   </span>
                 </div>
               </div>
