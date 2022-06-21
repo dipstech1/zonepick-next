@@ -158,16 +158,7 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
-              <li className="nav-item">
-                <Link href="/message">
-                  <a
-                    className={['nav-link', router.pathname === '/message' ? 'active' : ''].join(' ')}
-                    aria-current="page"
-                  >
-                    Message
-                  </a>
-                </Link>
-              </li>
+              
               {loggedIn ? (
                 <li className="nav-item">
                   <Link href="/sell">

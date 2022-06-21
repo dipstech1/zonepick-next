@@ -21,9 +21,10 @@ const ProductDetails = ({ productData }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     window.scrollTo(0, 0);
-    
-    if (!router.isReady) { return };
-    
+
+    if (!router.isReady) {
+      return;
+    }
 
     if (router.query.productId) {
       getProductDetails(router.query.productId);
@@ -96,6 +97,68 @@ const ProductDetails = ({ productData }) => {
     const modalClass = 'modal-lg';
 
     ModalService.open(ThreeDView, { imageInfo: imageInfo }, modalClass);
+  };
+
+  const calculateRating=(product)=> {
+
+   const  ProductRating = parseInt(product.ProductRating)
+   const  ProductDeliveryRating = parseInt(product.ProductDeliveryRating)
+   const  ProductQualityRating = parseInt(product.ProductQualityRating)
+   const  ProductPackagingRating = parseInt(product.ProductPackagingRating)
+   const  SellerRating = parseInt(product.SellerRating)
+   const  SellerCommunicationRating = parseInt(product.SellerCommunicationRating)
+
+   const ovarall = (ProductRating+ProductDeliveryRating+ProductQualityRating+ProductPackagingRating+SellerRating+SellerCommunicationRating)/6
+
+   return ovarall.toFixed(1)
+   
+
+  }
+
+  const convertToDate = (timestamp) => {
+    // Months array
+    var months_arr = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    // Convert timestamp to milliseconds
+    var date = new Date(parseInt(timestamp));
+
+    // Year
+    var year = date.getFullYear();
+
+    // Month
+    var month = months_arr[date.getMonth()];
+
+    //  var month = [date.getMonth() + 1];
+
+    // Day
+    var day = date.getDate();
+
+    // Hours
+    var hours = date.getHours();
+
+    // Minutes
+    var minutes = '0' + date.getMinutes();
+
+    // Seconds
+    var seconds = '0' + date.getSeconds();
+
+    // Display date time in MM-dd-yyyy h:m:s format
+    var fulldate = month + ' ' + day + ' ' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return fulldate;
   };
 
   return (
@@ -222,7 +285,7 @@ const ProductDetails = ({ productData }) => {
           </div>
        */}
             <div className="row m-0 mt-4 mt-lg-4">
-              <div className="card border-0 shadow-sm p-3">
+              <div className="card shadow-sm border-0 p-3">
                 <h6>Details:</h6>
                 <div className="brand_details ps-2">
                   <div>Name: {productDetails?.product?.name}</div>
@@ -251,6 +314,29 @@ const ProductDetails = ({ productData }) => {
                         })}
                     </ul>
                   </p>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-3">
+              <div className="col-md-12">
+                <div className="card border-0">
+                  <div className="card-body">
+                    <div className="d-block">Ratings & Reviews</div>
+                    {productDetails?.comments?.map((data, i) => {
+                      return (
+                        <div className="card shadow-sm mt-2 border-0" key={i}>
+                          <div className="card-body">
+                            <span className={["badge rounded-pill",(calculateRating(data))<2?'bg-danger':'bg-primary' ,(calculateRating(data))>4?'bg-success':'bg-primary' ].join(" ")}>{calculateRating(data)}</span>
+                            <div className='d-block mt-2'>{data.remarks}</div>
+                          </div> 
+                          <div className="card-footer border-0">
+                            <small className="text-muted inline-block" style={{fontSize:'10px'}}>{data.reviewerName}</small>
+                            <small className="text-muted inline-block float-end" style={{fontSize:'10px'}}>{convertToDate(data.createdAt)}</small>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>

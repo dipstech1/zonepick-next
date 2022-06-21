@@ -151,12 +151,12 @@ const Cart = () => {
                   <table className="table table-striped table-sm">
                     <thead>
                       <tr>
-                        <th>SL No.</th>
-                        <th>Image</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th style={{width:'40px'}}>SL No.</th>
+                        <th style={{width:'30px'}}>Image</th>
+                        <th >Product</th>
+                        <th style={{width:'30px'}}>Price</th>
+                        <th style={{width:'30px'}}>Quantity</th>
+                        <th style={{width:'30px'}}>Total</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -166,8 +166,8 @@ const Cart = () => {
                           return (
                             <tr key={i}>
                               <td>{i+1}</td>
-                              <td>
-                                <div className="product-image">
+                              <td style={{width:'30px !important'}}>
+                                <div style={{width:'30px'}}>
                                   <img src={"/images/product/" + itm?.productId[0]?.product?.images[0].url} alt="" />
                                 </div>
                               </td>
