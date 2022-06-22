@@ -116,7 +116,17 @@ const ProductDetails = ({ productData }) => {
         SellerCommunicationRating) /
       6;
 
-    return ovarall.toFixed(1);
+      let className = ''
+
+      if (ovarall >=4.0 ) {
+        className ='bg-success'
+      } else if (ovarall >=2.0) {
+        className ='bg-orange'
+      } else if(ovarall >=2.0) {
+        className ='bg-danger'
+      }
+
+      return {className: className , rating: ovarall.toFixed(1)};
   };
 
   const convertToDate = (timestamp) => {
@@ -334,13 +344,11 @@ const ProductDetails = ({ productData }) => {
                               <span
                                 className={[
                                   'badge rounded-pill',
-                                  calculateRating(data) < 2 ? 'bg-danger' : 'bg-primary',
-                                  calculateRating(data) >= 2 ? 'bg-orange' : 'bg-primary',
-                                  calculateRating(data) >= 4 ? 'bg-success' : 'bg-primary'
+                                  calculateRating(data).className
                                 ].join(' ')}
                               >
                                 {' '}
-                                <i className="fa fa-star"></i> {calculateRating(data)}
+                                <i className="fa fa-star"></i> {calculateRating(data).rating}
                               </span>
                               <div className="d-block mt-3">{data.remarks}</div>
                             </div>

@@ -95,9 +95,19 @@ const Wishlist = () => {
 
       const ovarallRating = total / product.length;
 
-      return ovarallRating.toFixed(1);
+      let className = ''
+
+      if (ovarallRating >=4.0 ) {
+        className ='bg-success'
+      } else if (ovarallRating >=2.0) {
+        className ='bg-orange'
+      } else if(ovarallRating >=2.0) {
+        className ='bg-danger'
+      }
+
+      return {className: className , rating: ovarallRating.toFixed(1)};
     } else {
-      return 'NA';
+      return {className: '' , rating: 0};
     }
   };
 
@@ -158,15 +168,12 @@ const Wishlist = () => {
                               <span
                                 className={[
                                   'badge rounded-pill',
-                                  calculateRating(wishdata?.productId[0]?.comments) === 'NA'
-                                    ? 'bg-secondary'
-                                    : 'bg-primary',
-                                  calculateRating(wishdata?.productId[0]?.comments) < 2 ? 'bg-danger' : 'bg-primary',
-                                  calculateRating(wishdata?.productId[0]?.comments) >= 2 ? 'bg-orange' : 'bg-primary',
-                                  calculateRating(wishdata?.productId[0]?.comments) >= 4 ? 'bg-success' : 'bg-primary'
+                                  calculateRating(wishdata?.productId[0]?.comments).className
                                 ].join(' ')}
                               >
-                                <i className="fa fa-star"></i> {calculateRating(wishdata?.productId[0]?.comments)}
+                                <i className="fa fa-star"></i> {
+                                calculateRating(wishdata?.productId[0]?.comments).rating
+                                }
                               </span>
                             </div>
                           </div>
