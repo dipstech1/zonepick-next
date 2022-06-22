@@ -150,11 +150,13 @@ const Profile = () => {
                           );
                         })}
                     </div>
+                    {/*
                     <div className='row m-2'>
                           <div className='col-12'>
                           <a href="" style={{whiteSpace: "nowrap",cursor:'pointer'}} className="btn postjob_btn" onClick={addProduct}>Post an advirtisement</a>
                           </div>
                     </div>
+                      */}
                   </div>
                 </div>
                 <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

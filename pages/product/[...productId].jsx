@@ -99,21 +99,25 @@ const ProductDetails = ({ productData }) => {
     ModalService.open(ThreeDView, { imageInfo: imageInfo }, modalClass);
   };
 
-  const calculateRating=(product)=> {
+  const calculateRating = (product) => {
+    const ProductRating = parseInt(product.ProductRating);
+    const ProductDeliveryRating = parseInt(product.ProductDeliveryRating);
+    const ProductQualityRating = parseInt(product.ProductQualityRating);
+    const ProductPackagingRating = parseInt(product.ProductPackagingRating);
+    const SellerRating = parseInt(product.SellerRating);
+    const SellerCommunicationRating = parseInt(product.SellerCommunicationRating);
 
-   const  ProductRating = parseInt(product.ProductRating)
-   const  ProductDeliveryRating = parseInt(product.ProductDeliveryRating)
-   const  ProductQualityRating = parseInt(product.ProductQualityRating)
-   const  ProductPackagingRating = parseInt(product.ProductPackagingRating)
-   const  SellerRating = parseInt(product.SellerRating)
-   const  SellerCommunicationRating = parseInt(product.SellerCommunicationRating)
+    const ovarall =
+      (ProductRating +
+        ProductDeliveryRating +
+        ProductQualityRating +
+        ProductPackagingRating +
+        SellerRating +
+        SellerCommunicationRating) /
+      6;
 
-   const ovarall = (ProductRating+ProductDeliveryRating+ProductQualityRating+ProductPackagingRating+SellerRating+SellerCommunicationRating)/6
-
-   return ovarall.toFixed(1)
-   
-
-  }
+    return ovarall.toFixed(1);
+  };
 
   const convertToDate = (timestamp) => {
     // Months array
@@ -322,20 +326,38 @@ const ProductDetails = ({ productData }) => {
                 <div className="card border-0">
                   <div className="card-body">
                     <div className="d-block">Ratings & Reviews</div>
-                    {productDetails?.comments?.map((data, i) => {
-                      return (
-                        <div className="card shadow-sm mt-2 border-0" key={i}>
-                          <div className="card-body">
-                            <span className={["badge rounded-pill",(calculateRating(data))<2?'bg-danger':'bg-primary' ,(calculateRating(data))>4?'bg-success':'bg-primary' ].join(" ")}>{calculateRating(data)}</span>
-                            <div className='d-block mt-2'>{data.remarks}</div>
-                          </div> 
-                          <div className="card-footer border-0">
-                            <small className="text-muted inline-block" style={{fontSize:'10px'}}>{data.reviewerName}</small>
-                            <small className="text-muted inline-block float-end" style={{fontSize:'10px'}}>{convertToDate(data.createdAt)}</small>
+                    {productDetails?.comments?.length > 0 ? (
+                      productDetails?.comments?.map((data, i) => {
+                        return (
+                          <div className="card shadow-sm mt-2 border-0" key={i}>
+                            <div className="card-body">
+                              <span
+                                className={[
+                                  'badge rounded-pill',
+                                  calculateRating(data) < 2 ? 'bg-danger' : 'bg-primary',
+                                  calculateRating(data) >= 2 ? 'bg-orange' : 'bg-primary',
+                                  calculateRating(data) >= 4 ? 'bg-success' : 'bg-primary'
+                                ].join(' ')}
+                              >
+                                {' '}
+                                <i className="fa fa-star"></i> {calculateRating(data)}
+                              </span>
+                              <div className="d-block mt-3">{data.remarks}</div>
+                            </div>
+                            <div className="card-footer border-0">
+                              <small className="text-muted inline-block" style={{ fontSize: '10px' }}>
+                                {data.reviewerName}
+                              </small>
+                              <small className="text-muted inline-block float-end" style={{ fontSize: '10px' }}>
+                                {convertToDate(data.createdAt)}
+                              </small>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    ) : (
+                      <div className="d-block mt-3 text-centre small"> No Review Found</div>
+                    )}
                   </div>
                 </div>
               </div>

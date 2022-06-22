@@ -108,14 +108,16 @@ const Navbar = () => {
                     </li>
                   </ul>
                 </li>
-                <a className="nav-link text-white mx-1 mt-1">
-                  <i className="fa fa-bell"></i>
-                </a>
-                <Link href="/cart">
-                  <a className="nav-link  text-white mx-1 mt-1">
-                    <i className="fa fa-shopping-cart"></i>
+                <a className="nav-link text-white mx-1 mt-1 position-relative">
+                    <i className="fa fa-bell"></i>
+                    <span className="position-absolute top-0 badge bg-white text-danger rounded-pill badge-small">3</span>
                   </a>
-                </Link>
+                  <Link href="/cart">
+                    <a className="nav-link  text-white mx-1 mt-1 position-relative">
+                      <i className="fa fa-shopping-cart"></i>
+                      <small className="position-absolute top-0 badge bg-white text-danger rounded-pill badge-small">2</small>
+                    </a>
+                  </Link>
               </>
             ) : (
               <>
@@ -156,7 +158,7 @@ const Navbar = () => {
                     </a>
                   </Link>
                 </li>
-              )}              
+              )}
             </ul>
 
             <div className="nav navbar-text ml-auto d-none d-md-flex">
@@ -210,12 +212,14 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </li>
-                  <a href="#" className="nav-link text-white mx-1 mt-1">
+                  <a className="nav-link text-white mx-1 mt-1 position-relative">
                     <i className="fa fa-bell"></i>
+                    <span className="position-absolute top-0 badge bg-white text-danger rounded-pill badge-small">3</span>
                   </a>
                   <Link href="/cart">
-                    <a className="nav-link  text-white mx-1 mt-1">
+                    <a className="nav-link  text-white mx-1 mt-1 position-relative">
                       <i className="fa fa-shopping-cart"></i>
+                      <small className="position-absolute top-0 badge bg-white text-danger rounded-pill badge-small">2</small>
                     </a>
                   </Link>
                 </>

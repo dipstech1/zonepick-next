@@ -71,7 +71,7 @@ const Cart = () => {
     email: 'sudipta.sarkar4545@gmail.com',
     contact: '1234567890',
     address: 'KOL',
-    amount: (totalPrice + ((totalPrice*5)/100) + 15) * 100
+    amount: (totalPrice + (totalPrice * 5) / 100 + 15) * 100
   };
 
   const onPayClick = (responseData) => {
@@ -126,6 +126,30 @@ const Cart = () => {
     console.log(purchasableData);
   };
 
+  const addToWishList = async (data,itemIndex) => {
+    console.log(data);
+
+    const sendData = {
+      userid: data.userid,
+      recordId: data.productId[0].recordId
+    };
+
+
+    try {
+      let added = await axiosInterceptor.post('wishlist', sendData);
+
+      if (added.data.acknowledge) {
+        removeFromCart(data.id,itemIndex)
+        toast.success('Product added to Wish List Successfully');
+      } else {
+        toast.success('Fail');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.success('Fail');
+    }
+  };
+
   return (
     <>
       <Layout title="Cart">
@@ -151,12 +175,11 @@ const Cart = () => {
                   <table className="table table-striped table-sm">
                     <thead>
                       <tr>
-                        <th style={{width:'40px'}}>SL No.</th>
-                        <th style={{width:'30px'}}>Image</th>
-                        <th >Product</th>
-                        <th style={{width:'30px'}}>Price</th>
-                        <th style={{width:'30px'}}>Quantity</th>
-                        <th style={{width:'30px'}}>Total</th>
+                        <th style={{ maxWidth: '30px !important' }}>Image</th>
+                        <th style={{ minWidth: '300px !important' }}>Product</th>
+                        <th style={{ width: '30px' }}>Price</th>
+                        <th style={{ width: '30px' }}>Quantity</th>
+                        <th style={{ width: '30px' }}>Total</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -165,13 +188,10 @@ const Cart = () => {
                         purchasableData.map((itm, i) => {
                           return (
                             <tr key={i}>
-                              <td>{i+1}</td>
-                              <td style={{width:'30px !important'}}>
-                                <div style={{width:'30px'}}>
-                                  <img src={"/images/product/" + itm?.productId[0]?.product?.images[0].url} alt="" />
-                                </div>
+                              <td style={{ width: '30px !important' }}>
+                                <img src={'/images/product/' + itm?.productId[0]?.product?.images[0].url} alt="" />
                               </td>
-                              <td>
+                              <td style={{ minWidth: '300px !important' }}>
                                 <h6>{itm?.productId[0]?.product?.name}</h6>
                               </td>
                               <td>
@@ -226,9 +246,24 @@ const Cart = () => {
                                   })}
                                 </b>
                               </td>
-                              <td>
-                                <button className="remove-product" onClick={() => removeFromCart(itm?.id, i)}>
-                                  Remove
+                              <td style={{ whiteSpace: 'nowrap' }}>
+                                <button
+                                  className="btn btn-default"
+                                  onClick={() => removeFromCart(itm?.id, i)}
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="left"
+                                  title="Remove from Cart"
+                                >
+                                  <i className="fa fa-trash"></i>
+                                </button>
+                                <button
+                                  className="btn btn-default ms-2"
+                                  onClick={() => addToWishList(itm,i)}
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="left"
+                                  title="Add to Wish List"
+                                >
+                                  <i className="fa fa-heart"></i>
                                 </button>
                               </td>
                             </tr>
