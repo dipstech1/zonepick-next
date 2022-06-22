@@ -115,14 +115,13 @@ const Navbar = () => {
                   <a className="nav-link  text-white mx-1 mt-1">
                     <i className="fa fa-shopping-cart"></i>
                   </a>
-                </Link>{' '}
+                </Link>
               </>
             ) : (
               <>
-                {' '}
                 <Link href="/account/login">
                   <a className="nav-link text-white mx-1 mt-1">
-                    <i className="fa fa-right-to-bracket"></i> Login{' '}
+                    <i className="fa fa-right-to-bracket"></i> Login
                   </a>
                 </Link>
               </>
@@ -157,20 +156,7 @@ const Navbar = () => {
                     </a>
                   </Link>
                 </li>
-              )}
-              
-              {loggedIn ? (
-                <li className="nav-item">
-                  <Link href="/sell">
-                    <a
-                      className={['nav-link', router.pathname === '/sell' ? 'active' : ''].join(' ')}
-                      aria-current="page"
-                    >
-                      Sell
-                    </a>
-                  </Link>
-                </li>
-              ) : null}
+              )}              
             </ul>
 
             <div className="nav navbar-text ml-auto d-none d-md-flex">
@@ -203,6 +189,16 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li>
+                        <Link href="/product/addproduct">
+                          <a className="dropdown-item">Add Product</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/sell">
+                          <a className="dropdown-item">Sell</a>
+                        </Link>
+                      </li>
+                      <li>
                         <Link href="/settings">
                           <a className="dropdown-item">Settings</a>
                         </Link>
@@ -221,14 +217,13 @@ const Navbar = () => {
                     <a className="nav-link  text-white mx-1 mt-1">
                       <i className="fa fa-shopping-cart"></i>
                     </a>
-                  </Link>{' '}
+                  </Link>
                 </>
               ) : (
                 <>
-                  {' '}
                   <Link href="/account/login">
                     <a className="nav-link text-white mx-1 mt-1">
-                      <i className="fa fa-right-to-bracket"></i> Login{' '}
+                      <i className="fa fa-right-to-bracket"></i> Login
                     </a>
                   </Link>
                 </>
