@@ -99,10 +99,10 @@ const Wishlist = () => {
 
       if (ovarallRating >=4.0 ) {
         className ='bg-success'
-      } else if (ovarallRating >=2.0) {
-        className ='bg-orange'
-      } else if(ovarallRating >=2.0) {
-        className ='bg-danger'
+      } else if (ovarallRating >= 2.0) {
+        className = 'bg-primary';
+      } else if (ovarallRating < 2.0) {
+        className = 'bg-danger';
       }
 
       return {className: className , rating: ovarallRating.toFixed(1)};

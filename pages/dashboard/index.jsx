@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import Layout from '../../components/layout';
 import ProductCard from '../../components/product-card/proudct-card';
-import { useState, useEffect } from 'react';
+import withAuthWraper from '../../components/withAuthWraper';
 import Axios from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
-import Layout from '../../components/layout';
-import withAuthWraper from '../../components/withAuthWraper';
 let page = 0;
 
 const Dashboard = ({ data }) => {
@@ -59,13 +61,22 @@ const Dashboard = ({ data }) => {
   const addToWishList = async (data) => {
     data['userid'] = UserId;
     console.log(data);
-    let wishlistRes = await Axios.post('wishlist', data);
-    console.log(wishlistRes);
 
-    if (wishlistRes.status == 201) {
-      alert('Item added to wishlist');
+    try {
+      let response = await Axios.post('wishlist', data);
+
+      if (response.data.acknowledge) {
+        toast.success('Product added to Wish List');
+      } else {
+        toast.error('Fail');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Fail');
     }
   };
+
+  
 
   return (
     <Layout title="Dashboard">
@@ -138,7 +149,7 @@ const Dashboard = ({ data }) => {
                     {productData.length && total > productData.length ? (
                       <div className="col-12 text-center" onClick={getMoreProduct}>
                         <a style={{cursor:'pointer'}} className="load_more">
-                          See More <img src="/img/load_more.svg" width="20px" />
+                          See More <img src="/img/load_more.svg" width="20px" alt='' />
                         </a>
                       </div>
                     ) : null}

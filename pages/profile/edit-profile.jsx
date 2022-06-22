@@ -7,7 +7,7 @@ import axiosInterceptor from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import FileUploadS3 from '../../helpers/fileuploader'
+import FileUploadS3 from '../../helpers/fileuploader';
 const EditProfile = () => {
   const router = useRouter();
 
@@ -52,8 +52,19 @@ const EditProfile = () => {
     userData.phone = +userData.phone;
 
     console.log(userData);
-    let res = await axiosInterceptor.patch(`profile/${userId}`, userData);
-    console.log(res);
+
+    try {
+      let response = await axiosInterceptor.patch(`profile/${userId}`, userData);
+
+      if (response.data.acknowledged) {
+        toast.success('Profile Successfully');
+      } else {
+        toast.success('Fail');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.success('Fail');
+    }
   };
 
   const updateValue = (e) => {
@@ -96,7 +107,7 @@ const EditProfile = () => {
       let filePath = 'images/' + Math.random() * 10000000000000000 + '_' + file.name;
       console.log(file, filePath);
 
-     /* FileUploadS3.uploadFile(file)
+      /* FileUploadS3.uploadFile(file)
         .then((res) => toast.success('Profile picture uploaded successfully'))
         .catch((err) => console.log(err));*/
     }
@@ -131,7 +142,7 @@ const EditProfile = () => {
 
           <div className="row m-0 py-3 justify-content-center">
             <div className="col-12 col-lg-2 us_pic text-center py-3 py-lg-5 position-relative">
-              <img src={"/images/avator/"+userData.profile_image} className="m-auto mr-lg-auto" alt="" />
+              <img src={'/images/avator/' + userData.profile_image} className="m-auto mr-lg-auto" alt="" />
               <div className="ed_img dropdown">
                 <i className="fas fa-pen dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul className="dropdown-menu">

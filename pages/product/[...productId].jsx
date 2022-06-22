@@ -120,10 +120,10 @@ const ProductDetails = ({ productData }) => {
 
       if (ovarall >=4.0 ) {
         className ='bg-success'
-      } else if (ovarall >=2.0) {
-        className ='bg-orange'
-      } else if(ovarall >=2.0) {
-        className ='bg-danger'
+      } else if (ovarallRating >= 2.0) {
+        className = 'bg-primary';
+      } else if (ovarallRating < 2.0) {
+        className = 'bg-danger';
       }
 
       return {className: className , rating: ovarall.toFixed(1)};
