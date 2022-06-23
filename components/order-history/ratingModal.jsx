@@ -5,13 +5,12 @@ import StarRatings from 'react-star-ratings';
 import ModalBody from '../../ui-lib/Modal/modalBody';
 import ModalFooter from '../../ui-lib/Modal/modalFooter';
 import ModalHeader from '../../ui-lib/Modal/modalHeader';
-
 import Axios from '../../services/axios.interceptor';
-
 import { toast } from 'react-toastify';
 
 const RatingModal = (props) => {
   const [ratingDetails, setRatingDetails] = useState({
+    id: 0,
     ProductRating: 0,
     ProductDeliveryRating: 0,
     ProductQualityRating: 0,
@@ -24,13 +23,46 @@ const RatingModal = (props) => {
     seller: ''
   });
 
+  const [status, setStatus] = useState(false);
+
   useEffect(() => {
-    setRatingDetails({
-      ...ratingDetails,
-      reviewerId: props?.orderdetails?.userData?.userId,
-      productRecord: props?.orderdetails?.orderDetails.recordId,
-      seller: props?.orderdetails?.orderDetails?.seller_details.userid
-    });
+    const userId = props?.orderdetails?.userData?.userId;
+
+    let review = [];
+
+    const comments = props?.orderdetails?.orderDetails.comments || [];
+
+    if (comments.length > 0) {
+      review = comments.filter((e) => {
+        return e.reviewerId === userId;
+      });
+    }
+
+    if (review.length > 0) {
+      setRatingDetails({
+        ...ratingDetails,
+        id: review[0].id,
+        ProductRating: parseInt(review[0].ProductRating),
+        ProductDeliveryRating: parseInt(review[0].ProductDeliveryRating),
+        ProductQualityRating: parseInt(review[0].ProductQualityRating),
+        ProductPackagingRating: parseInt(review[0].ProductPackagingRating),
+        SellerRating: parseInt(review[0].SellerRating),
+        SellerCommunicationRating: parseInt(review[0].SellerCommunicationRating),
+        remarks: review[0].remarks,
+        reviewerId: props?.orderdetails?.userData?.userId,
+        productRecord: props?.orderdetails?.orderDetails.recordId,
+        seller: props?.orderdetails?.orderDetails?.seller_details.userid
+      });
+
+      setStatus(true);
+    } else {
+      setRatingDetails({
+        ...ratingDetails,
+        reviewerId: props?.orderdetails?.userData?.userId,
+        productRecord: props?.orderdetails?.orderDetails.recordId,
+        seller: props?.orderdetails?.orderDetails?.seller_details.userid
+      });
+    }
   }, []);
 
   const updateValue = (value, name) => {
@@ -53,16 +85,27 @@ const RatingModal = (props) => {
       seller: ratingDetails.seller
     };
 
-    try {
-      let added = await Axios.post('comment', sendData);
+    console.log(ratingDetails);
 
-      if (added.data.acknowledge) {        
-        props.close()
-        toast.success('Rating added Successfully');
+    let message = '';
+
+    try {
+      let response = '';
+
+      if (status) {
+        response = await Axios.patch('comment/' + ratingDetails.id, sendData);
+        message = 'Rating updated Successfully';
+      } else {
+        response = await Axios.post('comment', sendData);
+        message = 'Rating added Successfully';
+      }
+
+      if (response.data.acknowledge) {
+        props.close();
+        toast.success(message);
       } else {
         toast.success('Fail');
       }
-
     } catch (error) {
       console.log(error);
       toast.success('Fail');
@@ -123,7 +166,7 @@ const RatingModal = (props) => {
 
               <div className="col-md-6">
                 <div className="d-flex">Packaging Rating:</div>
-                <span  style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
+                <span style={{ display: 'inline-block', cursor: 'pointer' }} className="mt-1 mb-1">
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}

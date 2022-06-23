@@ -210,7 +210,7 @@ const OrderHistory = () => {
                           <div style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
                             <div className="row m-0">
                               <div className="col-12 col-lg-2" onClick={(e) => openOrderModal(order, lst)}>
-                                <img src="./img/item_1.png" className="w-100 mb-3 mb-lg-0" alt="product Logo" />
+                                <img src={'/images/product/' + lst?.productId[0]?.product?.images[0].url} className="w-100 mb-3 mb-lg-0" style={{objectFit:'cover'}} alt="product Logo" />
                               </div>
                               <div className="col-12 col-lg-4" onClick={(e) => openOrderModal(order, lst)}>
                                 <div>

@@ -120,9 +120,9 @@ const ProductDetails = ({ productData }) => {
 
       if (ovarall >=4.0 ) {
         className ='bg-success'
-      } else if (ovarallRating >= 2.0) {
+      } else if (ovarall >= 2.0) {
         className = 'bg-primary';
-      } else if (ovarallRating < 2.0) {
+      } else if (ovarall < 2.0) {
         className = 'bg-danger';
       }
 
@@ -175,9 +175,14 @@ const ProductDetails = ({ productData }) => {
     return fulldate;
   };
 
+  const modalClosed=(e)=> {
+
+    console.log(e)
+  }
+
   return (
     <>
-      <ModalRoot />
+      <ModalRoot/>
       <Layout title="Product Details">
         <section id="pageContainer">
           <div className="container">

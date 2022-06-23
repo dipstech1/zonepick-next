@@ -23,9 +23,9 @@ const ModalRoot = () => {
     console.log(modal);
   }, []);
 
-  const handleCloseModal = (e) => {
-    e.preventDefault();
-    //  onClose();
+  const onCloseModal = (e) => {
+    e.stopPropagation();
+   // onCloseModal('e')
   };
 
   const ModalComponent = modal.component ? modal.component : null;
