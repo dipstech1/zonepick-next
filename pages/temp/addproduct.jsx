@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import Layout from '../../components/layout';
 import Link from 'next/link';
-const Sell = () => {
+import withAuthWraper from '../../components/withAuthWraper';
+const AddProduct = () => {
   const [step, setStep] = useState(1);
   const [stepOne, setStepOne] = useState(false);
   const [stepTwo, setStepTwo] = useState(false); 
@@ -149,11 +150,6 @@ const Sell = () => {
 
     if (step == 2) {
       setStepTwo(true);
-      /*if (isValid) {
-        setStep(3);
-        setCurrentStep(3);
-        window.scrollTo(0, 0);
-      }*/
     }
 
     console.log(productDetails);
@@ -181,13 +177,7 @@ const Sell = () => {
 
   }
 
-  const verifyMobile = () => {
 
-  }
-
-  const verifyEmail = () => {
-    
-  }
 
   return (
     <Layout title="Sell Page">
@@ -234,20 +224,7 @@ const Sell = () => {
                   2
                 </button>
                 <p>Photos & location</p>
-              </div>
-              {/*
-              <div className="stepwizard-step">
-                <button
-                  onClick={() => udpdateStep(3)}
-                  type="button"
-                  className={['btn text-white', step === 3 ? 'btn-box btn-orange' : 'btn-circle btn-gray'].join(' ')}
-                >
-                  3
-                </button>
-                <p>Review Details</p>
-              </div>
-              */
-              }
+              </div>              
             </div>
           </div>
 
@@ -271,7 +248,7 @@ const Sell = () => {
                     onChange={updateValue}
                     value={productDetails?.fields['title']}
                   />
-                  <div className="invalid-tooltip">{productDetails.errors.title}</div>
+                  <div className="invalid-feedback">{productDetails.errors.title}</div>
                 </div>
                 <div className="form-group position-relative">
                   <textarea
@@ -288,7 +265,7 @@ const Sell = () => {
                     name="description"
                     value={productDetails?.fields['description']}
                   ></textarea>
-                  <div className="invalid-tooltip">{productDetails.errors.description}</div>
+                  <div className="invalid-feedback">{productDetails.errors.description}</div>
                 </div>
                 <div className="form-group position-relative">
                   <select
@@ -310,7 +287,7 @@ const Sell = () => {
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
-                  <div className="invalid-tooltip">{productDetails.errors.category}</div>
+                  <div className="invalid-feedback">{productDetails.errors.category}</div>
                 </div>
                 <div className="form-group position-relative">
                   <select
@@ -332,7 +309,7 @@ const Sell = () => {
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
-                  <div className="invalid-tooltip">{productDetails.errors.subCategory}</div>
+                  <div className="invalid-feedback">{productDetails.errors.subCategory}</div>
                 </div>
                 <div className="form-group position-relative">
                   <input
@@ -349,7 +326,7 @@ const Sell = () => {
                     onChange={updateValue}
                     value={productDetails?.fields['price']}
                   />
-                  <div className="invalid-tooltip">{productDetails.errors.price}</div>
+                  <div className="invalid-feedback">{productDetails.errors.price}</div>
                 </div>
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
@@ -405,7 +382,7 @@ const Sell = () => {
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
-                  <div className="invalid-tooltip">{productDetails.errors.photoCategory}</div>
+                  <div className="invalid-feedback">{productDetails.errors.photoCategory}</div>
                 </div>
                 <div className=" row ms-0 me-0 ">
                   <div className="col-6 ps-0 pe-2">
@@ -423,7 +400,7 @@ const Sell = () => {
                       onChange={updateValue}
                       value={productDetails?.fields['state']}
                     />
-                    <div className="invalid-tooltip">{productDetails.errors.state}</div>
+                    <div className="invalid-feedback">{productDetails.errors.state}</div>
                     </div>
                     
                   </div>
@@ -442,7 +419,7 @@ const Sell = () => {
                       onChange={updateValue}
                       value={productDetails?.fields['district']}
                     />
-                    <div className="invalid-tooltip">{productDetails.errors.district}</div>
+                    <div className="invalid-feedback">{productDetails.errors.district}</div>
                     </div>
                     
                   </div>
@@ -461,7 +438,7 @@ const Sell = () => {
                     onChange={updateValue}
                     value={productDetails?.fields['pinCode']}
                   />
-                  <div className="invalid-tooltip">{productDetails.errors.pinCode}</div>
+                  <div className="invalid-feedback">{productDetails.errors.pinCode}</div>
                 </div>
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
@@ -514,4 +491,4 @@ const Sell = () => {
   );
 };
 
-export default Sell;
+export default withAuthWraper(AddProduct, ['admin', 'super-admin', 'user']);

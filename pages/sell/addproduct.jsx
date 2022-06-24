@@ -7,12 +7,12 @@ import withAuthWraper from '../../components/withAuthWraper';
 import Axios from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 
-const SellProduct = () => {
+const AddProduct = () => {
   const router = useRouter();
 
   const [productDetails, setProductDetails] = useState({
-    productName: '',
-    productDetailsData: '',
+    productName: 'NA',
+    productDetailsData: 'NA2',
     item_description: 'Test35',
     productId: '',
     product_status: '',
@@ -22,12 +22,12 @@ const SellProduct = () => {
     seller_details: ''
   });
 
-  const [errorFiled, setErrorFiled] = useState({
-    productId: false,
-    product_status: false,
-    price: false,
-    purpose: false,
-    quantity: false
+  const [errors, setErrors] = useState({
+    productId: '',
+    product_status: '',
+    price: '',
+    purpose: '',
+    quantity: ''
   });
 
   const [parentProductList, setparentProductList] = useState([]);
@@ -52,6 +52,9 @@ const SellProduct = () => {
       }
     }
     setProductDetails({ ...productDetails, [name]: value });
+    if (value === '' || value === 0) {
+      setErrors({ ...errors, [name]: 'error' });
+    }
   };
 
   const addProduct = async () => {
@@ -65,34 +68,28 @@ const SellProduct = () => {
         router.replace('/dashboard');
         toast.success('Product added Successfully');
       } else {
-        toast.success('Fail');
+        toast.error('Fail');
       }
     } catch (error) {
       console.log(error);
-      toast.success('Fail');
+      toast.error('Fail');
     }
   };
 
-  const stepComplete = async () => {
-    addProduct();
+  const stepComplete = async (event) => {
+    let product = productDetails;
+    product.seller_details = getDataFromLocalstorage('userid');
 
-    /* const keys = Object.keys(productDetails);
-
-    keys.forEach((e) => {
-      if (productDetails[e] === '' || productDetails[e] === 0) {
-        setErrorFiled((state) => {
-          state[e] = true;
-          return state;
-        });
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
       } else {
-        setErrorFiled((state) => {
-          state[e] = false;
-          return state;
-        });
+         addProduct()
       }
+      form.classList.add('was-validated');
     });
-
-    console.log(errorFiled);*/
   };
 
   return (
@@ -111,12 +108,12 @@ const SellProduct = () => {
                   <li className="breadcrumb-item active">
                     <Link href="/sell">Sell</Link>
                   </li>
-                  <li className="breadcrumb-item active">Sell Product</li>
+                  <li className="breadcrumb-item active">Add Product</li>
                 </ol>
               </nav>
             </div>
           </div>
-          <div className="m-0 mt-2">
+          <div className="m-0 mt-5">
             <form className="needs-validation" noValidate>
               <div className={['row justify-content-center'].join(' ')}>
                 <div className="col-12 col-lg-7 p-lg-0">
@@ -142,7 +139,7 @@ const SellProduct = () => {
                               </option>
                             ))}
                         </select>
-                        {errorFiled.productId ? <div className="invalid-feedback">Product cannot be empty</div> : null}
+                        {errors?.productId !== '' ? <div className="invalid-feedback">AAA</div> : null}
                       </div>
                     </div>
                   </div>
@@ -166,9 +163,7 @@ const SellProduct = () => {
                           <option value="Broken">Broken</option>
                           <option value="Need repair">Need repair</option>
                         </select>
-                        {errorFiled.product_status ? (
-                          <div className="invalid-feedback">Status cannot be empty</div>
-                        ) : null}
+                        <div className="invalid-feedback">{errors?.product_status}</div>
                       </div>
                     </div>
 
@@ -189,7 +184,7 @@ const SellProduct = () => {
                           <option value="Purchase">Purchase</option>
                           <option value="Rent">Rent</option>
                         </select>
-                        {errorFiled.purpose ? <div className="invalid-feedback">Purpose cannot be empty</div> : null}
+                        <div className="invalid-feedback">{errors?.purpose}</div>{' '}
                       </div>
                     </div>
                   </div>
@@ -197,7 +192,7 @@ const SellProduct = () => {
                     <div className="col-md-6">
                       <div className="form-group position-relative">
                         <input
-                          type="text"
+                          type="number"
                           required="required"
                           className={['form-control'].join(' ')}
                           placeholder="Price"
@@ -205,8 +200,9 @@ const SellProduct = () => {
                           name="price"
                           onChange={updateValue}
                           value={productDetails['price']}
+                          min={1}
                         />
-                        {errorFiled.price ? <div className="invalid-feedback">Price cannot be empty</div> : null}
+                        <div className="invalid-feedback">{errors?.price}</div>{' '}
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -220,15 +216,16 @@ const SellProduct = () => {
                           name="quantity"
                           onChange={updateValue}
                           value={productDetails['quantity']}
+                          min={1}
                         />
-                        {errorFiled.quantity ? <div className="invalid-feedback">Quantity cannot be empty</div> : null}
+                        <div className="invalid-feedback">{errors?.quantity}</div>
                       </div>
                     </div>
                   </div>
 
                   <div className="d-flex justify-content-center">
                     <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
-                      Sell Product
+                      Add Product
                     </button>
                   </div>
                 </div>
@@ -241,4 +238,4 @@ const SellProduct = () => {
   );
 };
 
-export default withAuthWraper(SellProduct, ['admin', 'super-admin', 'user']);
+export default withAuthWraper(AddProduct, ['admin', 'super-admin', 'user']);
