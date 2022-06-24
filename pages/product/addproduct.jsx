@@ -443,7 +443,7 @@ const AddProduct = () => {
                             className="custom-file-input"
                             accept={'image/png,image/jpg,image/jpeg'}
                             id="customFile"
-                            multiple={true}
+                            multiple={false}
                             onChange={selectedFile}
                           />
                           <label className="custom-file-label" htmlFor="customFile">
@@ -456,7 +456,12 @@ const AddProduct = () => {
                 </div>
 
                 <div className="row">
-                  {imgsSrc.length && imgsSrc.map((link, i) => <div key={i}><img src={link} alt={'xx'} /></div>)}
+                  {imgsSrc.length &&
+                    imgsSrc.map((link, i) => (
+                      <div key={i} className='col-md-2'>
+                        <img src={link} alt={'xx'} />
+                      </div>
+                    ))}
                 </div>
 
                 <div className="d-flex justify-content-center">
