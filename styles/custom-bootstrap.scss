@@ -754,3 +754,77 @@ footer {
 .badge-small {
   font-size: 0.55em !important;
 }
+
+
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+ // box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12)
+}
+
+/* Bottom left text */
+.bottom-left {
+  font-size: small;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+/* Top left text */
+.top-left {
+  font-size: small;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+/* Top right text */
+.top-right {
+  font-size: small;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Bottom right text */
+.bottom-right {
+  font-size: small;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+/* Centered text */
+.centered {
+  font-size: small;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}

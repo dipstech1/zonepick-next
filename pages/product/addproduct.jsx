@@ -186,24 +186,104 @@ const AddProduct = () => {
 
   let fileName = '';
 
-  const getFile =() => {
-    document.getElementById("upfile").click();
-  }
+  const getFile = () => {
+    document.getElementById('upfile').click();
+  };
 
   const [imgsSrc, setImgsSrc] = useState([]);
 
   const selectedFile = (e) => {
-    for (const file of e.target.files) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setImgsSrc((imgs) => [...imgs, reader.result]);
-      };
-      reader.onerror = () => {
-        console.log(reader.error);
-      };
-    }
+
+    if (imgsSrc.length < 5) {
+      for (const file of e.target.files) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setImgsSrc((imgs) => [...imgs, reader.result]);
+        };
+        reader.onerror = () => {
+          console.log(reader.error);
+        };
+      }
+    } else {
+      toast.error('Only 5 images allowed')
+    }    
   };
+
+  const removeImage = (index) => {
+    var array = [...imgsSrc];     
+    array.splice(index, 1);
+
+    setImgsSrc([...array])
+    
+  };
+
+
+  
+
+  const [imgs360Src, setImgs360Src] = useState([]);
+
+  const get360File = () => {
+    document.getElementById('upfile2').click();
+  };
+
+  const selected360File = (e) => {
+
+    if (imgs360Src.length < 3) {
+      for (const file of e.target.files) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setImgs360Src((imgs) => [...imgs, reader.result]);
+        };
+        reader.onerror = () => {
+          console.log(reader.error);
+        };
+      }
+    } else {
+      toast.error('Only 5 images allowed')
+    }    
+  };
+
+  const remove360Image = (index) => {
+    var array = [...imgs360Src];     
+    array.splice(index, 1);
+    setImgs360Src([...array])    
+  };
+
+
+  const [imgs3dSrc, setImgs3dSrc] = useState([]);
+
+  const get3dFile = () => {
+    document.getElementById('upfile3d').click();
+  };
+
+  const selected3dFile = (e) => {
+
+    if (imgs3dSrc.length < 2) {
+      for (const file of e.target.files) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setImgs3dSrc((imgs) => [...imgs, reader.result]);
+        };
+        reader.onerror = () => {
+          console.log(reader.error);
+        };
+      }
+    } else {
+      toast.error('Only 1 images allowed')
+    }    
+  };
+
+  const remove3dImage = (index) => {
+    var array = [...imgs3dSrc];     
+    array.splice(index, 1);
+    setImgs3dSrc([...array])    
+  };
+
+
+
 
   const createPost = async () => {
     let product = productDetails.fields;
@@ -410,41 +490,140 @@ const AddProduct = () => {
               id="step-2"
             >
               <div className="col-12 col-lg-8 p-lg-0">
-                <div className="form-group row ms-0 me-0 mb-4">
-                  <div className="col-12 p-0 pb-2">
-                    <span style={{ display: 'block', color: '#969090', fontSize: '18px' }}>
-                      Add Photos of your Product
-                    </span>
-                    <span style={{ display: 'block', color: '#969090' }}>
-                      <small>you can add upto 12 photos</small>
-                    </span>
-                  </div>
-                  
-                  {imgsSrc.length >0 &&
-                    imgsSrc.map((link, i) => (
-                      <div key={i} className='col-4 col-lg-2 ps-1 pe-1'>
-                        <img src={link} alt={'xx'} />
+
+              <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <li className="nav-item" role="presentation">
+                  <a className="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Photos</a>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <a className="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">360 Images</a>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <a className="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">3d Images</a>
+                </li>
+              </ul>
+              <div className="tab-content" id="myTabContent">
+                <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                  <div className="form-group row ms-0 me-0 mb-4">
+                    <div className="col-12 p-0 pb-2">
+                      <span style={{ display: 'block', color: '#969090', fontSize: '18px' }}>
+                        Add Photos of your Product
+                      </span>
+                      <span style={{ display: 'block', color: '#969090' }}>
+                        <small>you can add upto 5 photos</small>
+                      </span>
+                    </div>
+
+                    {imgsSrc.length > 0 &&
+                      imgsSrc.map((link, i) => (
+                        <div key={i} className="col-4 col-lg-3 ps-1 pe-1 pt-1 pb-1 image-container">
+                          <img src={link} alt={'xx'} />
+                          <div className="top-right" onClick={(e) => removeImage(i)}>
+                            <i className="fa fa-times"></i>
+                          </div>
+                        </div>
+                      ))}
+                    <div className="col-4 col-lg-2 ps-1 pe-1">
+                      <div>
+                        <button type="button" className="btn" onClick={getFile}>
+                          <img src="/img/browse_ic.svg" alt="" />
+                        </button>
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          accept={'image/png,image/jpg,image/jpeg'}
+                          id="upfile"
+                          multiple={false}
+                          onChange={selectedFile}
+                          hidden={true}
+                        />
                       </div>
-                    ))}
-                  <div className="col-4 col-lg-2 ps-1 pe-1">
-                    <div>
-                      <button type='button' className="btn" onClick={getFile}>
-                        <img src="/img/browse_ic.svg" alt="" />
-                      </button>
-                      <input
-                            type="file"
-                            className="custom-file-input"
-                            accept={'image/png,image/jpg,image/jpeg'}
-                            id="upfile"
-                            multiple={false}
-                            onChange={selectedFile}
-                            hidden={true}
-                          />
+                    </div>
+                  </div>
+
+                </div>
+                <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div className="form-group row ms-0 me-0 mb-4">
+                    <div className="col-12 p-0 pb-2">
+                      <span style={{ display: 'block', color: '#969090', fontSize: '18px' }}>
+                        Add 360 Photos of your Product
+                      </span>
+                      <span style={{ display: 'block', color: '#969090' }}>
+                        <small>you can add upto 3 photos</small>
+                      </span>
+                    </div>
+
+                    {imgs360Src.length > 0 &&
+                      imgs360Src.map((link, i) => (
+                        <div key={i} className="col-4 col-lg-3 ps-1 pe-1 pt-1 pb-1 image-container">
+                          <img src={link} alt={'xx'} />
+                          <div className="top-right" onClick={(e) => remove360Image(i)}>
+                            <i className="fa fa-times"></i>
+                          </div>
+                        </div>
+                      ))}
+                    <div className="col-4 col-lg-2 ps-1 pe-1">
+                      <div>
+                        <button type="button" className="btn" onClick={get360File}>
+                          <img src="/img/browse_ic.svg" alt="" />
+                        </button>
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          accept={'image/png,image/jpg,image/jpeg'}
+                          id="upfile2"
+                          multiple={false}
+                          onChange={selected360File}
+                          hidden={true}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
+                <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div className="form-group row ms-0 me-0 mb-4">
+                    <div className="col-12 p-0 pb-2">
+                      <span style={{ display: 'block', color: '#969090', fontSize: '18px' }}>
+                        Add 3d Photos of your Product
+                      </span>
+                      <span style={{ display: 'block', color: '#969090' }}>
+                        <small>you can add upto 1 photos</small>
+                      </span>
+                    </div>
 
-                               
+                    {imgs3dSrc.length > 0 &&
+                      imgs3dSrc.map((link, i) => (
+                        <div key={i} className="col-4 col-lg-3 ps-1 pe-1 pt-1 pb-1 image-container">
+                          <img src={link} alt={'xx'} />
+                          <div className="top-right" onClick={(e) => remove3dImage(i)}>
+                            <i className="fa fa-times"></i>
+                          </div>
+                        </div>
+                      ))}
+                    <div className="col-4 col-lg-2 ps-1 pe-1">
+                      <div>
+                        <button type="button" className="btn" onClick={get3dFile}>
+                          <img src="/img/browse_ic.svg" alt="" />
+                        </button>
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          accept={'image/png,image/jpg,image/jpeg'}
+                          id="upfile3d"
+                          multiple={false}
+                          onChange={selected3dFile}
+                          hidden={true}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+                
+                
 
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
