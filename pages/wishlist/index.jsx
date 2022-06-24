@@ -100,14 +100,14 @@ const Wishlist = () => {
       if (ovarallRating >=4.0 ) {
         className ='bg-success'
       } else if (ovarallRating >= 2.0) {
-        className = 'bg-primary';
+        className = 'bg-secondary';
       } else if (ovarallRating < 2.0) {
         className = 'bg-danger';
       }
 
       return {className: className , rating: ovarallRating.toFixed(1)};
     } else {
-      return {className: '' , rating: 0};
+      return {className: 'bg-primary' , rating: 'NA'};
     }
   };
 

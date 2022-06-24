@@ -25,11 +25,11 @@ const OrderHistory = () => {
   useEffect(() => {
     const userId = getDataFromLocalstorage('userid');
     setUserId(userId);
-    getOrderedItems(userId,span);
+    getOrderedItems(userId, span);
   }, [span]);
 
-  const getOrderedItems = async (userId,span) => {
-    let items = await axiosInterceptor.post(`purchase/all`, { userid: userId,span: span });
+  const getOrderedItems = async (userId, span) => {
+    let items = await axiosInterceptor.post(`purchase/all`, { userid: userId, span: span });
     console.log('items order ', items.data.data);
     if (items && items.data.data) {
       setOrderHistory(items.data.data);
@@ -59,10 +59,10 @@ const OrderHistory = () => {
     const orderdetails = {
       orderDetails: { ...order?.productId[0] },
       transactionDetails: { transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date },
-      userData: {userId:userId}
+      userData: { userId: userId }
     };
 
-    ModalService.open(RatingModal, { orderdetails: orderdetails },'modal-md');
+    ModalService.open(RatingModal, { orderdetails: orderdetails }, 'modal-md');
   };
 
   const convertToDate = (timestamp) => {
@@ -127,7 +127,6 @@ const OrderHistory = () => {
       'December'
     ];
 
-
     const today = new Date();
     const date = new Date(parseInt(timestamp));
     date.setDate(date.getDate() + 7);
@@ -149,9 +148,51 @@ const OrderHistory = () => {
     return fulldate;
   };
 
-  const orderStausChanged = (e)=> {
-    setSpan(parseInt(e.value))
-  }
+  const orderStausChanged = (e) => {
+    setSpan(parseInt(e.value));
+  };
+
+  const calculateRating = (product) => {
+     if (product.length > 0) {
+      let total = 0;
+
+      for (let i = 0; i < product.length; i++) {
+        const ProductRating = parseInt(product[i].ProductRating) || 0;
+        const ProductDeliveryRating = parseInt(product[i].ProductDeliveryRating) || 0;
+        const ProductQualityRating = parseInt(product[i].ProductQualityRating) || 0;
+        const ProductPackagingRating = parseInt(product[i].ProductPackagingRating) || 0;
+        const SellerRating = parseInt(product[i].SellerRating) || 0;
+        const SellerCommunicationRating = parseInt(product[i].SellerCommunicationRating) || 0;
+
+        const ovarall =
+          (ProductRating +
+            ProductDeliveryRating +
+            ProductQualityRating +
+            ProductPackagingRating +
+            SellerRating +
+            SellerCommunicationRating) /
+          6;
+
+        total = total + ovarall;
+      }
+
+      const ovarallRating = total / product.length;
+
+      let className = '';
+
+      if (ovarallRating >= 4.0) {
+        className = 'bg-success';
+      } else if (ovarallRating >= 2.0) {
+        className = 'bg-secondary';
+      } else if (ovarallRating < 2.0) {
+        className = 'bg-danger';
+      }
+
+      return { className: className, rating: ovarallRating.toFixed(1) };
+    } else {
+      return { className: 'bg-primary', rating: 'NA' };
+    }
+  };
 
   return (
     <>
@@ -210,7 +251,12 @@ const OrderHistory = () => {
                           <div style={{ cursor: 'pointer' }} className="or_dhover" key={ind}>
                             <div className="row m-0">
                               <div className="col-12 col-lg-2" onClick={(e) => openOrderModal(order, lst)}>
-                                <img src={'/images/product/' + lst?.productId[0]?.product?.images[0].url} className="w-100 mb-3 mb-lg-0" style={{objectFit:'cover'}} alt="product Logo" />
+                                <img
+                                  src={'/images/product/' + lst?.productId[0]?.product?.images[0].url}
+                                  className="w-100 mb-3 mb-lg-0"
+                                  style={{ objectFit: 'cover' }}
+                                  alt="product Logo"
+                                />
                               </div>
                               <div className="col-12 col-lg-4" onClick={(e) => openOrderModal(order, lst)}>
                                 <div>
@@ -218,10 +264,24 @@ const OrderHistory = () => {
                                     <a>{lst?.productId[0].product.name}</a>
                                   </Link>
                                   <small>Color: Black</small>
-                                  <small>{lst?.productId[0].seller_details.name}</small>                                  
+                                  <small>{lst?.productId[0].seller_details.name}</small>
+                                </div>
+                                <div>
+                                  <span
+                                    className={[
+                                      'badge rounded-pill',
+                                      calculateRating(lst?.productId[0]?.comments).className
+                                    ].join(' ')}
+                                  >
+                                    <i className="fa fa-star"></i>{' '}
+                                    {calculateRating(lst?.productId[0]?.comments).rating}
+                                  </span>
                                 </div>
                               </div>
-                              <div className="col-12 col-lg-2 text-lg-center" onClick={(e) => openOrderModal(order, lst)}>
+                              <div
+                                className="col-12 col-lg-2 text-lg-center"
+                                onClick={(e) => openOrderModal(order, lst)}
+                              >
                                 <p>
                                   <span>
                                     {' '}
@@ -241,13 +301,14 @@ const OrderHistory = () => {
                                   </p> */}
                                 <p>
                                   <b>
-                                    <i className="fas fa-circle text-success"></i> Delivered on {delivarytatus(order.purchase_date)}
-                                  </b>                                 
+                                    <i className="fas fa-circle text-success"></i> Delivered on{' '}
+                                    {delivarytatus(order.purchase_date)}
+                                  </b>
                                 </p>
                                 <p onClick={(e) => openRatingModal(order, lst)}>
-                                  <b className='text-primary'>
+                                  <b className="text-primary">
                                     <i className="fas fa-star text-primary me-2"></i> Rate & Review Product
-                                  </b>                                 
+                                  </b>
                                 </p>
                               </div>
                             </div>
