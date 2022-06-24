@@ -19,12 +19,12 @@ const AddProduct = () => {
 
   const [productDetails, setProductDetails] = useState({
     fields: {
-      name: 'q',
-      description: 'q',
-      category: '1',
-      subcategory: '2',
-      price: 100,
-      brand: '21',
+      name: '',
+      description: '',
+      category: '',
+      subcategory: '',
+      price: 0,
+      brand: '',
       userid: '',
       arimageurl: '',
       arimagedata: '',
