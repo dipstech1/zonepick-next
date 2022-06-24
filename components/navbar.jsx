@@ -191,8 +191,8 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/product/addproduct">
-                          <a className="dropdown-item">Add Product</a>
+                        <Link href="/sell/sellproduct">
+                          <a className="dropdown-item">Sell Product</a>
                         </Link>
                       </li>
                       <li>

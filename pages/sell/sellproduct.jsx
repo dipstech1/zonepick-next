@@ -3,10 +3,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../components/layout';
+import withAuthWraper from '../../components/withAuthWraper';
 import Axios from '../../services/axios.interceptor';
 import { getDataFromLocalstorage } from '../../utils/storage.util';
 
-const AddProduct = () => {
+const SellProduct = () => {
   const router = useRouter();
 
   const [productDetails, setProductDetails] = useState({
@@ -54,7 +55,7 @@ const AddProduct = () => {
   };
 
   const addProduct = async () => {
-     let product = productDetails;
+    let product = productDetails;
     product.seller_details = getDataFromLocalstorage('userid');
 
     try {
@@ -73,10 +74,9 @@ const AddProduct = () => {
   };
 
   const stepComplete = async () => {
+    addProduct();
 
-    addProduct()
-
-   /* const keys = Object.keys(productDetails);
+    /* const keys = Object.keys(productDetails);
 
     keys.forEach((e) => {
       if (productDetails[e] === '' || productDetails[e] === 0) {
@@ -228,7 +228,7 @@ const AddProduct = () => {
 
                   <div className="d-flex justify-content-center">
                     <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
-                      Add Product
+                      Sell Product
                     </button>
                   </div>
                 </div>
@@ -241,4 +241,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default withAuthWraper(SellProduct, ['admin', 'super-admin', 'user']);
