@@ -186,7 +186,9 @@ const AddProduct = () => {
 
   let fileName = '';
 
-  const [selectedImages, setselectedImages] = useState([]);
+  const getFile =() => {
+    document.getElementById("upfile").click();
+  }
 
   const [imgsSrc, setImgsSrc] = useState([]);
 
@@ -202,8 +204,6 @@ const AddProduct = () => {
       };
     }
   };
-
-  console.log(imgsSrc, imgsSrc.length);
 
   const createPost = async () => {
     let product = productDetails.fields;
@@ -419,50 +419,32 @@ const AddProduct = () => {
                       <small>you can add upto 12 photos</small>
                     </span>
                   </div>
-                  <div className="col-4 col-lg-2 ps-1 pe-1">
-                    <img src="/img/clip.png" alt="" />
-                  </div>
-                  <div className="col-4 col-lg-2 ps-1 pe-1">
-                    <div>
-                      <button className="btn">
-                        <img src="/img/browse_ic.svg" alt="" />
-                      </button>
-                      <input type="file" name="myfile" hidden={true} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row pt-2">
-                  <div className="col-12">
-                    <div className="form-group">
-                      <label htmlFor="FileType">Select a File:</label>
-                      <div>
-                        <div className="custom-file">
-                          <input
-                            type="file"
-                            className="custom-file-input"
-                            accept={'image/png,image/jpg,image/jpeg'}
-                            id="customFile"
-                            multiple={false}
-                            onChange={selectedFile}
-                          />
-                          <label className="custom-file-label" htmlFor="customFile">
-                            {fileName}
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  {imgsSrc.length &&
+                  
+                  {imgsSrc.length >0 &&
                     imgsSrc.map((link, i) => (
-                      <div key={i} className='col-md-2'>
+                      <div key={i} className='col-4 col-lg-2 ps-1 pe-1'>
                         <img src={link} alt={'xx'} />
                       </div>
                     ))}
+                  <div className="col-4 col-lg-2 ps-1 pe-1">
+                    <div>
+                      <button type='button' className="btn" onClick={getFile}>
+                        <img src="/img/browse_ic.svg" alt="" />
+                      </button>
+                      <input
+                            type="file"
+                            className="custom-file-input"
+                            accept={'image/png,image/jpg,image/jpeg'}
+                            id="upfile"
+                            multiple={false}
+                            onChange={selectedFile}
+                            hidden={true}
+                          />
+                    </div>
+                  </div>
                 </div>
+
+                               
 
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-primary nextBtn pull-right" type="button" onClick={stepComplete}>
