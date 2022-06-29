@@ -14,3 +14,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.product-row:hover {
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !important;
+}
+
+
+
+
+
