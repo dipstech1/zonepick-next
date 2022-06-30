@@ -58,7 +58,7 @@ const MyAccountLayout = ({ children, title = "", activeLink = 1, enableBack = fa
                   <li className="nav-item">
                     <Link href={"/account/address"}>
                       <a className={["nav-link", activeLink === 6 ? "active-menu" : null].join(" ")}>
-                        <i className="fa-solid fa-map-location-dot me-2"></i> My Address Book
+                        <i className="fa-solid fa-map-location-dot me-2"></i> Address Book
                       </a>
                     </Link>
                   </li>

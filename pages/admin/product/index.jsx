@@ -11,10 +11,10 @@ import withAuth from "../../../components/withAuth";
 import axios from "../../../services/axios.interceptor";
 import common from "../../../services/commonService";
 
+let page = 0;
+
 const MyProductList = () => {
   const router = useRouter();
-
-  const[page,setPage] = useState(0)
 
   const [userId, setUserId] = useState(null);
   const [productData, setProductData] = useState([]);
@@ -23,14 +23,20 @@ const MyProductList = () => {
     const userId = getCookie("userid");
     setUserId(userId);
     getMyProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getMoreProduct = () => {
+    page += 1;
+    getMyProducts();
+  };
 
   const getMyProducts = async () => {
     try {
-      let resp = await axios.get(`admin/products?page=/${page}`);
+      let resp = await axios.get(`admin/products?page=${page}`);
+      // let resp = await axios.get("admin/products");
       if (resp.data) {
-        setProductData([...resp.data.data]);
+        setProductData([...productData, ...resp.data.data]);
       }
     } catch (error) {
       console.log(error);
@@ -55,13 +61,11 @@ const MyProductList = () => {
       console.log(error)
       toast.error('Fail');
     }*/
-  }; 
+  };
 
-  
   const onbuttonClick = (e) => {
-
-    console.log(productData)
-   // router.push("add");
+    // console.log(productData)
+    router.push("product/add");
   };
 
   return (
@@ -89,73 +93,76 @@ const MyProductList = () => {
               <Col>
                 {productData.length ? (
                   productData.map((data, i) => (
-                    <Row key={i} className="mt-2 mb-3 ">
-                      <Col>
-                        <Card className="product-row">
-                          <Card.Body className="p-0">
-                            <Row>
-                              <Col md={3} lg={2}>
-                                <div className="image-container">
-                                  <img
-                                    src={"/uploads/product/" + data?.images[0].url}
-                                    className="img-responsive-1 w-100"
-                                    alt="dd"
-                                    style={{ cursor: "pointer" }}                                    
-                                  />                                  
-                                </div>
-                              </Col>
-                              <Col md={9} lg={10}>
-                                <div className="p-2">
-                                  <Row>
-                                    <Col xs={10}>
-                                    <b style={{ cursor: "pointer" }}>{data?.name}</b>
-                                    </Col>
-                                    <Col xs={2}>
-                                      <div className="float-end pe-2">
-                                        <span
-                                          onClick={(e) => removeMyProducts(data)}
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="left"
-                                          title="Edit Product"
-                                        >
-                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
+                    <>
+                      <Row key={i} className="mt-2 mb-3 ">
+                        <Col>
+                          <Card className="product-row">
+                            <Card.Body className="p-0">
+                              <Row>
+                                <Col md={3} lg={2}>
+                                  <div className="image-container">
+                                    <img
+                                      src={"/uploads/product/" + data?.images[0].url}
+                                      className="img-responsive-1 w-100"
+                                      alt="dd"
+                                      style={{ cursor: "pointer" }}
+                                    />
+                                  </div>
+                                </Col>
+                                <Col md={9} lg={10}>
+                                  <div className="p-2">
+                                    <Row>
+                                      <Col xs={10}>
+                                        <b style={{ cursor: "pointer" }}>{data?.name}</b>
+                                      </Col>
+                                      <Col xs={2}>
+                                        <div className="float-end pe-2">
+                                          <span
+                                            onClick={(e) => removeMyProducts(data)}
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="left"
+                                            title="Edit Product"
+                                          >
+                                            <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
+                                          </span>
+                                          <span
+                                            onClick={(e) => removeMyProducts(data)}
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="left"
+                                            title="Delete Product"
+                                          >
+                                            <i className="fa fa-trash small" style={{ cursor: "pointer" }}></i>
+                                          </span>
+                                        </div>
+                                      </Col>
+                                    </Row>
+                                    <Row>
+                                      <Col>
+                                        <span className="mt-2 d-block">
+                                          <small>Brand: {data?.brand}</small>
                                         </span>
-                                        <span
-                                          onClick={(e) => removeMyProducts(data)}
-                                          data-bs-toggle="tooltip"
-                                          data-bs-placement="left"
-                                          title="Delete Product"
-                                        >
-                                          <i className="fa fa-trash small" style={{ cursor: "pointer" }}></i>
+                                        <span className="mt-2 d-block">
+                                          <small>Date: {common.DateFromTimeStamp(data?.posted_date)}</small>
                                         </span>
-                                      </div>
-                                    </Col>
-                                  </Row>
-                                  <Row>
-                                    <Col>    
-                                      <span className="mt-2 d-block">
-                                        <small>
-                                         Brand:  {data?.brand}
-                                        </small>
-                                      </span> 
-                                      <span className="mt-2 d-block">
-                                        <small>
-                                         Date:  {common.DateFromTimeStamp(data?.posted_date)}
-                                        </small>
-                                      </span>                                     
-                                    </Col>
-                                  </Row>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    </Row>
+                                      </Col>
+                                    </Row>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                      </Row>
+                    </>
                   ))
                 ) : (
                   <></>
                 )}
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col className="text-center">
+                <Button  onClick={getMoreProduct}>Load More</Button>
               </Col>
             </Row>
           </MyAccountLayout>

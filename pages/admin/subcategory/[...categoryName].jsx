@@ -38,20 +38,21 @@ const SubCategoryPage = () => {
 
   const getSubcategoryItems = async (categoryName) => {
     const sendData = {
-      category: categoryName,
+      category: categoryName.toString(),
     };
-    /*try {
+    try {
       let resp = await axios.post("category", sendData);
       if (resp.data.length > 0) {
-        setSubcategoryList(resp.data);
+        setCategoryId(resp.data[0]["id"]);
+        setSubcategoryList(resp.data[0]?.subcategories);
       }
       console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
-    }*/
+    }
 
-    try {
+   /* try {
       let resp = await axios.get("category/all");
       if (resp.data.length > 0) {
         const data = resp.data;
@@ -68,7 +69,7 @@ const SubCategoryPage = () => {
     } catch (error) {
       console.log(error);
       toast.error("Fail");
-    }
+    }*/
   };
 
   const onDeleteClick = async (item) => {

@@ -56,8 +56,8 @@ const Navbars = () => {
               <Link href="/" passHref>
                 <Nav.Link active={router.pathname === "/" ? true : false}>Home</Nav.Link>
               </Link>
-              <Link href="/categories" passHref>
-              <Nav.Link active={router.pathname === "/categories" ? true : false}>Categories</Nav.Link>
+              <Link href="/category" passHref>
+              <Nav.Link active={router.pathname === "/category" ? true : false}>Category</Nav.Link>
               </Link>
               <Link href="/contact" passHref>
                 <Nav.Link active={router.pathname === "/contact" ? true : false}>Contact Us</Nav.Link>

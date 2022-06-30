@@ -53,11 +53,11 @@ const OrderDetails = () => {
                             <Row>
                               <Col md={12}>
                                 <Row>
-                                  <Col>
+                                  <Col  md={6}>
                                     <b>{orderInfo?.orderDetails?.product.name}</b>
                                   </Col>
-                                  <Col>
-                                    <span className="float-end">
+                                  <Col  md={6}>
+                                    <span className="float-md-end">
                                       <b>Order Date: </b> {common.DateFromTimeStamp(orderInfo?.transactionDetails?.purchase_date)}
                                     </span>
                                   </Col>
@@ -69,12 +69,12 @@ const OrderDetails = () => {
                                 </Row>
 
                                 <Row className="mt-2">
-                                  <Col>
+                                  <Col  md={6}>
                                     <b>Brand : </b>
                                     <span>{orderInfo?.orderDetails?.product?.brand}</span>
                                   </Col>
-                                  <Col>
-                                    <div className="float-end">
+                                  <Col  md={6}>
+                                    <div className="float-md-end">
                                       <b>Price : </b>
                                       <span>
                                         {orderInfo?.orderDetails?.price.toLocaleString("en-IN", {

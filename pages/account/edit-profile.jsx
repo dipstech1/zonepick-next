@@ -40,7 +40,7 @@ const EditProfile = () => {
       address5: "",
       email: "",
       name: "",
-      aboutme: "Not Found in Response",
+      aboutMe: "",
       phone: "",
       userId: "",
     },
@@ -52,7 +52,7 @@ const EditProfile = () => {
         .min(10, "Phone number is not valid")
         .max(10, "Phone number is not valid"),
       email: Yup.string().email("Invalid email address").required("Enter Email Address"),
-      aboutme: Yup.string().required("Enter About Me").min(3, "Must be at least 3 characters"),
+      aboutMe: Yup.string().required("Enter About Me").min(3, "Must be at least 3 characters"),
       address1: Yup.string().required("Enter Address-1").min(1, "Must be at least 1 characters"),
       address2: Yup.string().required("Enter Address-2").min(1, "Must be at least 1 characters"),
       address3: Yup.string().required("Enter Address-3").min(1, "Must be at least 1 characters"),
@@ -88,7 +88,7 @@ const EditProfile = () => {
       //  formik.setFieldValue("address5", resp.data[0].address5);
         formik.setFieldValue("email", resp.data[0].email || '');
         formik.setFieldValue("phone", resp.data[0].phone || '');
-        formik.setFieldValue("aboutme", resp.data[0].aboutme || '');
+        formik.setFieldValue("aboutMe", resp.data[0].aboutMe || '');
       }
 
      // console.log(resp.data);
@@ -264,19 +264,19 @@ const EditProfile = () => {
 
                       <Row>
                         <Col>
-                          <Form.Group className="mb-2 position-relative" controlId="aboutme">
+                          <Form.Group className="mb-2 position-relative" controlId="aboutMe">
                           <Form.Label className="fw-bold">About Me:</Form.Label>
                             <Form.Control
                               as="textarea"
-                              name="aboutme"
+                              name="aboutMe"
                               rows={4}
                               placeholder="About Me"
                               style={{ resize: "none" }}
-                              value={formik.values.aboutme}
+                              value={formik.values.aboutMe}
                               onChange={formik.handleChange}
-                              className={formik.touched.aboutme && formik.errors.aboutme ? "is-invalid" : ""}
+                              className={formik.touched.aboutMe && formik.errors.aboutMe ? "is-invalid" : ""}
                             />
-                            <Form.Control.Feedback type="invalid">{formik.errors.aboutme}</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">{formik.errors.aboutMe}</Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>

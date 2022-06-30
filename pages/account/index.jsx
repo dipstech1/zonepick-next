@@ -27,7 +27,7 @@ const MyAccount = () => {
     address5: "",
     email: "",
     name: "",
-    aboutme: "",
+    aboutMe: "",
     phone: "",
     userId: "",
     avgSellerRating: 0,
@@ -115,7 +115,7 @@ const MyAccount = () => {
                           eventKey="home"
                           title={
                             <span>
-                              <i className="fa fa-address-card me-2" /> Contact{" "}
+                              <i className="fa fa-address-card me-2" /> Contact
                             </span>
                           }
                         >
@@ -146,11 +146,11 @@ const MyAccount = () => {
                           eventKey="profile"
                           title={
                             <span>
-                              <i className="fa fa-user-alt me-2" /> About{" "}
+                              <i className="fa fa-user-alt me-2" /> About Me
                             </span>
                           }
                         >
-                          {userData.aboutme}
+                          {userData.aboutMe}
                         </Tab>
                       </Tabs>
                     </Col>
