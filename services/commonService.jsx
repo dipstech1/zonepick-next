@@ -31,6 +31,39 @@ const DateFromTimeStamp = (timestamp) => {
   return fulldate;
 };
 
+const DateFromTimeStampTime = (timestamp) => {
+  // Months array
+  const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  // Convert timestamp to milliseconds
+  const date = new Date(parseInt(timestamp));
+
+  // Year
+  const year = date.getFullYear();
+
+  // Month
+  const month = months_arr[date.getMonth()];
+
+  //  const month = [date.getMonth() + 1];
+
+  // Day
+  const day = date.getDate();
+
+  // Hours
+  const hours = date.getHours();
+
+  // Minutes
+  const minutes = "0" + date.getMinutes();
+
+  // Seconds
+  const seconds = "0" + date.getSeconds();
+
+  // Display date in MM-dd-yyyy format
+  var fulldate = month + ' ' + day + ', ' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+  return fulldate;
+};
+
 const delivarytatus = (timestamp) => {
   const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -120,6 +153,7 @@ const calculateAvgRating = (product) => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   DateFromTimeStamp: DateFromTimeStamp,
+  DateFromTimeStampTime: DateFromTimeStampTime,
   calculateRating: calculateRating,
   calculateAvgRating: calculateAvgRating,
   delivarytatus: delivarytatus,

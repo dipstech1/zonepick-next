@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { Badge, Breadcrumb, Card, Col, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
+import ImageGallery from "../../components/product/imageGalerry";
 import Layout from "../../components/Layout/layout";
+import Review from "../../components/product/review";
 import SellerInfo from "../../components/seller-info/SellerInfo";
 import WithAuth from "../../components/withAuth";
 import axios from "../../services/axios.interceptor";
@@ -14,10 +16,11 @@ import { productData } from "./data";
 const ProductDetailsPage = () => {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  let [productInfo, setProductInfo] = useState({});
-  let [productDetails, setProductDetails] = useState({});
+  const [productInfo, setProductInfo] = useState({});
+  const [productDetails, setProductDetails] = useState({});
 
-  let [imgLink, setImgLink] = useState("/house/modern-home.jpg");
+  const [isLoaded, setIsLoaded] = useState(false);
+
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -49,6 +52,8 @@ const ProductDetailsPage = () => {
       setProductDetails(productData);
 
       console.log(productData);
+
+      setIsLoaded(true);
 
       // console.log(resp.data);
     } catch (error) {
@@ -107,9 +112,7 @@ const ProductDetailsPage = () => {
       .catch((err) => console.log(err));*/
   };
 
-  const updateImageLink = (e) => {
-    setImgLink(e.target.src);
-  };
+  
 
   return (
     <>
@@ -120,57 +123,104 @@ const ProductDetailsPage = () => {
               <Link href="/" passHref>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
               </Link>
-              
+
               <Breadcrumb.Item active>Product Details</Breadcrumb.Item>
             </Breadcrumb>
-            <Row className="mt-3">
-              <Col>
-                <Card className="shadow-sm">
-                  <Card.Body>
-                    <Row>
+            {isLoaded ? (
+              <>
+                <Row className="mt-3">
+                  <Col>
+                    <Card className="shadow-sm">
+                      <Card.Body>
+                        <Row>
+                          <Col>
+                            <div className="fs-4 fw-bold d-inline-block">
+                              {productDetails?.product?.name}{" "}
+                              
+                            </div>
+                            <sup>
+                                <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"} >{productDetails?.purpose}</Badge>
+                              </sup>
+                            
+                          </Col>
+                        </Row>
+                        <Row className="mt-2">
+                          <Col>
+                            <span className="fs-6 fw-bold">
+                              {(productDetails?.price).toLocaleString("en-IN", {
+                                style: "currency",
+                                currency: "INR",
+                              })}
+                            </span>
+                          </Col>
+                        </Row>
+                        <Row className="mt-2">
+                          <Col>
+                            <StarRatings
+                              starDimension="17px"
+                              rating={calculateRating() | 0}
+                              starRatedColor="#311b92"
+                              numberOfStars={5}
+                              name="usertRating"
+                            />
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col>
+                            <button
+                              onClick={() => addToCart()}
+                              className="btn btn-sm btn-outline-deep-purple-900 ms-1"
+                              style={{ marginLeft: "10px" }}
+                            >
+                              <i className="fas fa-cart-plus me-2"></i> Add to Cart
+                            </button>
+                            <button
+                              onClick={() => addToWishList()}
+                              className="btn btn-sm btn-outline-deep-orange-900 ms-2"
+                              style={{ marginLeft: "10px" }}
+                              disabled={productDetails?.isWishlisted}
+                            >
+                              <i className="fas fa-heart me-2"></i> Add to Wishlist
+                            </button>
+                          </Col>
+                        </Row>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row className="mt-2">
                       <Col>
-                        <span className="fs-4 fw-bold">{productDetails?.product?.name}</span>
-                        <span className="float-end">
-                          <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"}>{productDetails?.purpose}</Badge>
-                        </span>
+                        <Card className="shadow-sm">
+                          <Card.Body></Card.Body>
+                        </Card>
                       </Col>
                     </Row>
+                <Row className="mt-3">
+                  <Col md={8}>
+                    <ImageGallery imageData={productDetails?.product?.images}></ImageGallery>
                     <Row className="mt-2">
                       <Col>
-                        <StarRatings
-                          starDimension="17px"
-                          rating={calculateRating() | 0}
-                          starRatedColor="#311b92"
-                          numberOfStars={5}
-                          name="usertRating"
-                        />
+                        <Card className="shadow-sm">
+                          <Card.Body></Card.Body>
+                        </Card>
                       </Col>
                     </Row>
-                    <Row className="mt-3">
-                      <Col>
-                        <button onClick={() => addToCart()} className="btn btn-sm btn-outline-deep-purple-900 ms-1" style={{ marginLeft: "10px" }}>
-                          <i className="fas fa-cart-plus me-2"></i> Add to Cart
-                        </button>
-                        <button
-                          onClick={() => addToWishList()}
-                          className="btn btn-sm btn-outline-deep-orange-900 ms-2"
-                          style={{ marginLeft: "10px" }}
-                          disabled={productDetails?.isWishlisted}
-                        >
-                          <i className="fas fa-heart me-2"></i> Add to Wishlist
-                        </button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col md={8}></Col>
-              <Col md={4}>
-                <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
-              </Col>
-            </Row>
+                    <Review comments={productDetails?.comments}></Review>
+                  </Col>
+                  <Col md={4}>
+                    <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <Row>
+                <Col>
+                  <div className="d-flex align-items-center justify-content-center" style={{ height: 400 }}>
+                    <h4>Data being Loaded</h4>
+                  </div>
+                </Col>
+              </Row>
+            )}
           </div>
         </Layout>
       </>
