@@ -2,7 +2,7 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Badge, Breadcrumb, Card, Col, Row } from "react-bootstrap";
+import { Badge, Breadcrumb, Card, Col, Row, Tab, Tabs } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
@@ -21,6 +21,7 @@ const ProductDetailsPage = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [showSellerInfo, setShowSellerInfo] = useState(true);
+  const [key, setKey] = useState("About");
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -113,13 +114,11 @@ const ProductDetailsPage = () => {
   };
 
   const onIimageViewTabChanged = (e) => {
-
-   /* if (e !== 'image-1') {
+    /* if (e !== 'image-1') {
       setShowSellerInfo(false)
     } else {
       setShowSellerInfo(true)
     }*/
-
   };
 
   return (
@@ -192,20 +191,40 @@ const ProductDetailsPage = () => {
                     </Card>
                   </Col>
                 </Row>
-                <Row className="mt-2">
-                  <Col>
-                    <Card className="shadow-sm">
-                      <Card.Body></Card.Body>
-                    </Card>
-                  </Col>
-                </Row>
+
                 <Row className="mt-3">
                   <Col md={showSellerInfo === true ? 8 : 12}>
-                    <ImageViewer imageData={productDetails?.product?.images} onIimageViewTabChanged={onIimageViewTabChanged} arImageUrl="/uploads/product/glb/flat.glb"></ImageViewer>
+                    <ImageViewer
+                      imageData={productDetails?.product?.images}
+                      onIimageViewTabChanged={onIimageViewTabChanged}
+                      arImageUrl="/uploads/product/glb/flat.glb"
+                    ></ImageViewer>
                     <Row className="mt-2">
                       <Col>
                         <Card className="shadow-sm">
-                          <Card.Body></Card.Body>
+                          <Card.Body id="editTabs" className="p-0">
+                            <div className="nav-no-curve">
+                              <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)}>
+                                <Tab eventKey="About" title={"About"}>
+                                  <div className="p-2">About</div>
+                                </Tab>
+                                <Tab eventKey="Feature" title={"Feature"}>
+                                  <div className="p-2 ms-3">
+                                    <Row>
+                                      {productDetails?.product?.specifications?.length > 0 &&
+                                        productDetails?.product?.specifications.map((data, i) => {
+                                          return (
+                                            <Col key={i} md={4} className="mb-2">
+                                              <i className="fas fa-dot-circle me-2"></i> {data.spec}
+                                            </Col>
+                                          );
+                                        })}
+                                    </Row>
+                                  </div>
+                                </Tab>
+                              </Tabs>
+                            </div>
+                          </Card.Body>
                         </Card>
                       </Col>
                     </Row>
