@@ -729,17 +729,26 @@ $color-keys: map-keys($theme-colors);
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 8px 0;
     margin-bottom: 5px;
-    max-width: 99% !important;
-    width: max-content !important;
+    // max-width: 99% !important;
+    // width: max-content !important;
     border-color: transparent;
   }
 
   .nav-tabs .nav-link {
     padding: 0.7rem !important;
     border-color: transparent;
-    width: fit-content;
-    min-width: 130px;
+    //   width: fit-content;
+    //  min-width: 130px;
     color: #000;
+  }
+  .nav-no-fills .nav-tabs {
+    width: fit-content !important;
+    min-width: 130px !important;
+  }
+
+  .nav-no-fills .nav-tabs .nav-link {
+    width: fit-content !important;
+    min-width: 130px !important;
   }
 
   .nav-tabs .nav-link.active {

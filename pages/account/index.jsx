@@ -102,7 +102,7 @@ const MyAccount = () => {
                           rating={parseInt(userData?.avgSellerRating) | 0}
                           starRatedColor="#311b92"
                           numberOfStars={5}
-                          name="ProductRating"
+                          name="usertRating"
                         />
                       </div>
                     </Col>
@@ -110,49 +110,51 @@ const MyAccount = () => {
 
                   <Row className="mt-3">
                     <Col xs={12} id={"editTabs"}>
-                      <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
-                        <Tab
-                          eventKey="home"
-                          title={
-                            <span>
-                              <i className="fa fa-address-card me-2" /> Contact
-                            </span>
-                          }
-                        >
-                          <div className="contact mt-2 ms-2">
-                            <div className="d-block">
-                              <i className="fa fa-location-dot me-3"></i> {userData.address1}
-                            </div>
-                            <div className="d-block">
-                              <i className="fa fa-location-dot me-3"></i> {userData.address2}
-                            </div>
-                            <div className="d-block">
-                              <i className="fa fa-location-dot me-3"></i> {userData.address3}
-                            </div>
-                            <div className="d-block">
-                              <i className="fa fa-location-dot me-3"></i> {userData.address4}
-                            </div>
-                            <div className="d-block">
-                              <i className="fa fa-phone me-3"></i> <Link href={"tel:" + userData.phone}>{userData.phone}</Link>
-                            </div>
+                      <div className="nav-no-fills">
+                        <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
+                          <Tab
+                            eventKey="home"
+                            title={
+                              <span>
+                                <i className="fa fa-address-card me-2" /> Contact
+                              </span>
+                            }
+                          >
+                            <div className="contact mt-2 ms-2">
+                              <div className="d-block">
+                                <i className="fa fa-location-dot me-3"></i> {userData.address1}
+                              </div>
+                              <div className="d-block">
+                                <i className="fa fa-location-dot me-3"></i> {userData.address2}
+                              </div>
+                              <div className="d-block">
+                                <i className="fa fa-location-dot me-3"></i> {userData.address3}
+                              </div>
+                              <div className="d-block">
+                                <i className="fa fa-location-dot me-3"></i> {userData.address4}
+                              </div>
+                              <div className="d-block">
+                                <i className="fa fa-phone me-3"></i> <Link href={"tel:" + userData.phone}>{userData.phone}</Link>
+                              </div>
 
-                            <div className="d-block">
-                              <i className="fa fa-envelope me-3"></i>
-                              <Link href={"mailto:info@emetacomm.com"}>{userData.email}</Link>
+                              <div className="d-block">
+                                <i className="fa fa-envelope me-3"></i>
+                                <Link href={"mailto:info@emetacomm.com"}>{userData.email}</Link>
+                              </div>
                             </div>
-                          </div>
-                        </Tab>
-                        <Tab
-                          eventKey="profile"
-                          title={
-                            <span>
-                              <i className="fa fa-user-alt me-2" /> About Me
-                            </span>
-                          }
-                        >
-                          {userData.aboutMe}
-                        </Tab>
-                      </Tabs>
+                          </Tab>
+                          <Tab
+                            eventKey="profile"
+                            title={
+                              <span>
+                                <i className="fa fa-user-alt me-2" /> About Me
+                              </span>
+                            }
+                          >
+                            {userData.aboutMe}
+                          </Tab>
+                        </Tabs>
+                      </div>
                     </Col>
                   </Row>
                 </Col>

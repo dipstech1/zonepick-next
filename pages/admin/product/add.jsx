@@ -238,7 +238,7 @@ const AddProductPage = () => {
                   Photos
                 </li>
                 <li className={step.currentStep === 3 ? "active" : "deactive"} onClick={() => udpdateStep(3)}>
-                  Review
+                  Preview
                 </li>
               </ul>
             </div>
@@ -386,7 +386,7 @@ const AddProductPage = () => {
               {step.currentStep === 2 ? (
                 <Container>
                   <Row>
-                    <Col id={"editTabs"}>
+                    <Col id={"editTabs"} >                      
                       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3 nav-fill">
                         <Tab eventKey="home" title="Product Image">
                           <ImageUploader maxUpload={5} info={"Add Product Photos"} onSelectionChanged={imageLoaded} id={"normal"}></ImageUploader>
@@ -397,7 +397,7 @@ const AddProductPage = () => {
                         <Tab eventKey="contact" title="3d Model">
                           CC
                         </Tab>
-                      </Tabs>
+                      </Tabs>                     
                     </Col>
                   </Row>
                   <Row className="mt-5">
