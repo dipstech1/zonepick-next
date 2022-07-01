@@ -11,13 +11,19 @@ const WithAuth = (Component, users = []) => {
     useEffect(() => {
       const accessToken = getCookie('token');      
       if (!accessToken) {
-        Router.replace('/account/login?returnUrl=' + Router.pathname);
+        if(Router.pathname === '/product/[...productId]'){
+          Router.replace('/account/login?returnUrl=/product');
+        } else {
+          Router.replace('/account/login?returnUrl=' + Router.pathname);
+        }
+        
       } else {        
         const data = verifyToken();        
         if (data.verified) {
           setVerified(data.verified);
         } else {          
           removeCookies('token');
+
           Router.replace('/account/login?returnUrl=' + Router.pathname);
         }
       }

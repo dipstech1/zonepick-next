@@ -98,7 +98,7 @@ const Orders = () => {
                                   <Col md={9} lg={10}>
                                     <div className="p-2">
                                       <Row>
-                                        <Col md={7} style={{ cursor: "pointer" }} onClick={(e) => openOrderDetails(order, data)}>
+                                        <Col md={7} style={{ cursor: "pointer" }}>
                                           <span className="d-inline-bloc" onClick={(e) => goToProductDetails(data)}>
                                             <b style={{ cursor: "pointer" }}>{data?.productId[0]?.product.name}</b>
                                           </span>

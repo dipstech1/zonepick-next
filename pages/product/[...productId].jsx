@@ -6,17 +6,17 @@ import { Badge, Breadcrumb, Card, Col, Row, Tab, Tabs } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
+import ImageViewer from "../../components/product_image/imageViewer";
+import Rating from "../../components/product_review/rating";
 import Review from "../../components/product_review/review";
 import SellerInfo from "../../components/seller-info/SellerInfo";
 import WithAuth from "../../components/withAuth";
 import axios from "../../services/axios.interceptor";
-import { productData } from "./data";
-import ImageViewer from "../../components/product_image/imageViewer";
+import common from "../../services/commonService";
 
 const ProductDetailsPage = () => {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  const [productInfo, setProductInfo] = useState({});
   const [productDetails, setProductDetails] = useState({});
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -38,21 +38,30 @@ const ProductDetailsPage = () => {
   }, [router]);
 
   const getProductDetails = async (prodId, userId) => {
-    /* const productData = {
+    const sendData = {
       productId: prodId[0],
       recordId: prodId[1],
-      userid: userId
-    };*/
+      userid: userId,
+    };
 
     try {
-      /* let resp = await axios.post(`products/details`, productData);
-      if (resp.data.length > 0) {
+      let resp = await axios.post(`products/details`, sendData);
+      if (resp.data) {
+        /*****  Temprary 360Images  ****/
+        const idata = [
+          { id: 4, url: "a-mirror-in-a-room.jpeg", type: "360Image" },
+          { id: 5, url: "bedroom-with-a-large-bed-in-a-room.jpeg", type: "360Image" },
+          { id: 6, url: "large-bed-in-a-room.jpeg", type: "360Image" },
+        ];
+
+        resp.data.product.images = resp.data.product.images.concat(idata);
+
+        // console.log(resp.data.product.images);
+
+        /*****  Temprary 360Images  ****/
+
         setProductDetails(resp.data);
-      }*/
-
-      setProductDetails(productData);
-
-      console.log(productData);
+      }
 
       setIsLoaded(true);
 
@@ -61,25 +70,6 @@ const ProductDetailsPage = () => {
       console.log(error);
       toast.error("Fail");
     }
-  };
-
-  const addToCart = () => {
-    let { recordId, purpose, _id, name } = productDetails;
-    console.log("addToCart");
-    /*let userid = getDataFromLocalstorage('userid');
-    axiosInterceptor
-      .post('cart', {
-        userid,
-        recordId,
-        _id,
-        ordered_quantity: 1,
-        purpose
-      })
-      .then((res) => {
-        toast.success('Product added to cart');
-        console.log('added to cart');
-      })
-      .catch((err) => console.log(err));*/
   };
 
   const calculateRating = () => {
@@ -94,23 +84,48 @@ const ProductDetailsPage = () => {
     return parseInt(ovarallRating);
   };
 
-  const addToWishList = () => {
-    let { recordId, purpose, _id, name } = productDetails;
-    console.log("addToWishList");
-    /*let userid = getDataFromLocalstorage('userid');
-    axiosInterceptor
-      .post('cart', {
-        userid,
-        recordId,
-        _id,
-        ordered_quantity: 1,
-        purpose
-      })
-      .then((res) => {
-        toast.success('Product added to cart');
-        console.log('added to cart');
-      })
-      .catch((err) => console.log(err));*/
+  const addToCart = async () => {
+    let { recordId, purpose, id, name } = productDetails;
+
+    const sendData = {
+      userid: userId,
+      recordId: recordId,
+      ordered_quantity: 1,
+      purpose: purpose,
+    };
+
+    try {
+      let response = await axios.post("cart", sendData);
+
+      if (response.data.acknowledge) {
+        toast.success("Product added to Cart");
+      } else {
+        toast.error("Fail");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
+
+  const addToWishList = async () => {
+    const sendData = {
+      userid: userId,
+      recordId: productDetails?.recordId,
+    };
+
+    try {
+      let response = await axios.post("wishlist", sendData);
+
+      if (response.data.acknowledge) {
+        toast.success("Product added to Wish List");
+      } else {
+        toast.error("Fail");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
   };
 
   const onIimageViewTabChanged = (e) => {
@@ -206,7 +221,65 @@ const ProductDetailsPage = () => {
                             <div className="nav-no-curve">
                               <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)}>
                                 <Tab eventKey="About" title={"About"}>
-                                  <div className="p-2">About</div>
+                                  <div className="p-2 ms-3 text-blue-gray-900">
+                                    <Row className="mb-3">
+                                      <Col>
+                                        <span className="border-bottom border-deep-purple-900 border-2 fs-5">Product Details</span> :-
+                                      </Col>
+                                    </Row>
+
+                                    <Row className="ms-2 mb-2">
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Name :</span> {productDetails?.product?.name}
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Price :</span>{" "}
+                                        {(productDetails?.price).toLocaleString("en-IN", {
+                                          style: "currency",
+                                          currency: "INR",
+                                        })}
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Brand Name :</span> {productDetails?.product?.brand}
+                                      </Col>
+                                    </Row>
+
+                                    <Row className="ms-2 mb-2">
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Condition :</span> {productDetails?.product_status}
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">status :</span> {productDetails?.purpose}
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Available for {productDetails?.purpose} :</span>
+                                        {productDetails?.isAvailable ? "Yes" : "No"}
+                                      </Col>
+                                    </Row>
+
+                                    <Row className="ms-2 mb-2">
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Category :</span> Property
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Subcategory :</span> Flat
+                                      </Col>
+                                      <Col md={4} className="mb-2">
+                                        <span className="fs-6 fw-bold me-1">Posted On :</span>
+                                        {common.DateFromTimeStampTime(productDetails?.product?.posted_date)}
+                                      </Col>
+                                    </Row>
+
+                                    <Row className="mt-5 mb-3">
+                                      <Col>
+                                        <span className="border-bottom border-deep-purple-900 border-2 fs-5">Product Description</span> :-
+                                      </Col>
+                                    </Row>
+
+                                    <Row className="ms-2 mb-2">
+                                      <Col className="mb-2">{productDetails?.item_description}</Col>
+                                    </Row>
+                                  </div>
                                 </Tab>
                                 <Tab eventKey="Feature" title={"Feature"}>
                                   <div className="p-2 ms-3">
@@ -233,6 +306,7 @@ const ProductDetailsPage = () => {
                   {showSellerInfo ? (
                     <Col md={4}>
                       <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
+                      <Rating ProductData={productDetails}></Rating>
                     </Col>
                   ) : null}
                 </Row>

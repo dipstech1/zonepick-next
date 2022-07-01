@@ -146,7 +146,7 @@ const calculateAvgRating = (product) => {
   if ((product.CountOfPeopleVoted > 0)) {
     return { className: className, rating: ovarallRating.toFixed(1), total: product.CountOfPeopleVoted };
   } else {
-    return { className: "bg-primary", rating: "NA", total: product.CountOfPeopleVoted };
+    return { className: "bg-primary", rating: "0", total: product.CountOfPeopleVoted };
   }
 };
 

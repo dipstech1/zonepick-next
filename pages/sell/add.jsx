@@ -36,7 +36,7 @@ const AddAdvtPage = () => {
     initialValues: {
       productName: "NA",
       productDetailsData: "NA2",
-      item_description: "Test35",
+      item_description: "",
       productId: "",
       product_status: "",
       price: "",
@@ -50,6 +50,7 @@ const AddAdvtPage = () => {
       price: Yup.number().required("Enter Price").min(1, "Must be greater than 0"),
       purpose: Yup.string().required("Select a Product Purpose"),
       quantity: Yup.number().required("Enter Quantity").min(1, "Must be greater than 0"),
+      item_description: Yup.string().required("Select a Product Description"),
     }),
     onSubmit: (values) => {
       //  console.log(JSON.stringify(values, null, 2));
@@ -204,6 +205,25 @@ const AddAdvtPage = () => {
                             className={formik.touched.quantity && formik.errors.quantity ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.quantity}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Form.Group className="mb-3 mt-2 position-relative" controlId="item_description">
+                          <Form.Control
+                            as="textarea"
+                            name="item_description"
+                            rows={4}
+                            placeholder="Product Description"
+                            style={{ resize: "none" }}
+                            value={formik.values.item_description}
+                            onChange={formik.handleChange}
+                            className={formik.touched.item_description && formik.errors.item_description ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {formik.errors.item_description}
+                          </Form.Control.Feedback>
                         </Form.Group>
                       </Col>
                     </Row>

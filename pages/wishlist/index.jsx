@@ -24,6 +24,7 @@ const WishList = () => {
   }, []);
 
   const getWishlistItems = async (userId) => {
+    setWishlist([])
     try {
       let resp = await axios.get(`wishlist/${userId}`);
       if (resp.data.length > 0) {

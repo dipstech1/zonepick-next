@@ -13,6 +13,8 @@ const Navbars = () => {
     e.preventDefault();
     removeCookies("Login");
     removeCookies("token");
+    removeCookies("userid"); 
+    removeCookies("refreshtoken");
     router.replace("/account/login?returnUrl=/");
   };
 

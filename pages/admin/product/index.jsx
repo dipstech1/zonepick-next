@@ -19,6 +19,9 @@ const MyProductList = () => {
   const [userId, setUserId] = useState(null);
   const [productData, setProductData] = useState([]);
 
+  let [total, setTotal] = useState(0);
+  let [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const userId = getCookie("userid");
     setUserId(userId);
@@ -33,14 +36,18 @@ const MyProductList = () => {
 
   const getMyProducts = async () => {
     try {
+      setLoading(true);
       let resp = await axios.get(`admin/products?page=${page}`);
       // let resp = await axios.get("admin/products");
       if (resp.data) {
         setProductData([...productData, ...resp.data.data]);
+        setTotal(resp.data.count);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
+      setLoading(false);
     }
   };
 
@@ -93,78 +100,80 @@ const MyProductList = () => {
               <Col>
                 {productData.length ? (
                   productData.map((data, i) => (
-                    <>
-                      <Row key={i} className="mt-2 mb-3 ">
-                        <Col>
-                          <Card className="product-row">
-                            <Card.Body className="p-0">
-                              <Row>
-                                <Col md={3} lg={2}>
-                                  <div className="image-container">
-                                    <img
-                                      src={"/uploads/product/" + data?.images[0].url}
-                                      className="img-responsive-1 w-100"
-                                      alt="dd"
-                                      style={{ cursor: "pointer" }}
-                                    />
-                                  </div>
-                                </Col>
-                                <Col md={9} lg={10}>
-                                  <div className="p-2">
-                                    <Row>
-                                      <Col xs={10}>
-                                        <b style={{ cursor: "pointer" }}>{data?.name}</b>
-                                      </Col>
-                                      <Col xs={2}>
-                                        <div className="float-end pe-2">
-                                          <span
-                                            onClick={(e) => removeMyProducts(data)}
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="left"
-                                            title="Edit Product"
-                                          >
-                                            <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
-                                          </span>
-                                          <span
-                                            onClick={(e) => removeMyProducts(data)}
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="left"
-                                            title="Delete Product"
-                                          >
-                                            <i className="fa fa-trash small" style={{ cursor: "pointer" }}></i>
-                                          </span>
-                                        </div>
-                                      </Col>
-                                    </Row>
-                                    <Row>
-                                      <Col>
-                                        <span className="mt-2 d-block">
-                                          <small>Brand: {data?.brand}</small>
+                    <Row key={i} className="mt-2 mb-3 ">
+                      <Col>
+                        <Card className="product-row">
+                          <Card.Body className="p-0">
+                            <Row>
+                              <Col md={3} lg={2}>
+                                <div className="image-container">
+                                  <img
+                                    src={"/uploads/product/" + data?.images[0].url}
+                                    className="img-responsive-1 w-100"
+                                    alt="dd"
+                                    style={{ cursor: "pointer" }}
+                                  />
+                                </div>
+                              </Col>
+                              <Col md={9} lg={10}>
+                                <div className="p-2">
+                                  <Row>
+                                    <Col xs={10}>
+                                      <b style={{ cursor: "pointer" }}>{data?.name}</b>
+                                    </Col>
+                                    <Col xs={2}>
+                                      <div className="float-end pe-2">
+                                        <span
+                                          onClick={(e) => removeMyProducts(data)}
+                                          data-bs-toggle="tooltip"
+                                          data-bs-placement="left"
+                                          title="Edit Product"
+                                        >
+                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
                                         </span>
-                                        <span className="mt-2 d-block">
-                                          <small>Date: {common.DateFromTimeStamp(data?.posted_date)}</small>
+                                        <span
+                                          onClick={(e) => removeMyProducts(data)}
+                                          data-bs-toggle="tooltip"
+                                          data-bs-placement="left"
+                                          title="Delete Product"
+                                        >
+                                          <i className="fa fa-trash small" style={{ cursor: "pointer" }}></i>
                                         </span>
-                                      </Col>
-                                    </Row>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      </Row>
-                    </>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col>
+                                      <span className="mt-2 d-block">
+                                        <small>Brand: {data?.brand}</small>
+                                      </span>
+                                      <span className="mt-2 d-block">
+                                        <small>Date: {common.DateFromTimeStamp(data?.posted_date)}</small>
+                                      </span>
+                                    </Col>
+                                  </Row>
+                                </div>
+                              </Col>
+                            </Row>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    </Row>
                   ))
                 ) : (
                   <></>
                 )}
               </Col>
             </Row>
-            <Row className="mt-3">
-              <Col className="text-center">
-                <Button  onClick={getMoreProduct}>Load More</Button>
-              </Col>
-            </Row>
+            {total > productData.length ? (
+              <Row className="mt-3">
+                <Col className="text-center">
+                  <Button onClick={getMoreProduct}>
+                    Load More {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
+                  </Button>
+                </Col>
+              </Row>
+            ) : null}
           </MyAccountLayout>
         </div>
       </Layout>
