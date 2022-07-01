@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { Badge, Breadcrumb, Card, Col, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
-import ImageGallery from "../../components/product/imageGalerry";
 import Layout from "../../components/Layout/layout";
-import Review from "../../components/product/review";
+import Review from "../../components/product_review/review";
 import SellerInfo from "../../components/seller-info/SellerInfo";
 import WithAuth from "../../components/withAuth";
 import axios from "../../services/axios.interceptor";
 import { productData } from "./data";
+import ImageViewer from "../../components/product_image/imageViewer";
 
 const ProductDetailsPage = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const ProductDetailsPage = () => {
   const [productDetails, setProductDetails] = useState({});
 
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [showSellerInfo, setShowSellerInfo] = useState(true);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -112,7 +112,15 @@ const ProductDetailsPage = () => {
       .catch((err) => console.log(err));*/
   };
 
-  
+  const onIimageViewTabChanged = (e) => {
+
+   /* if (e !== 'image-1') {
+      setShowSellerInfo(false)
+    } else {
+      setShowSellerInfo(true)
+    }*/
+
+  };
 
   return (
     <>
@@ -134,14 +142,10 @@ const ProductDetailsPage = () => {
                       <Card.Body>
                         <Row>
                           <Col>
-                            <div className="fs-4 fw-bold d-inline-block">
-                              {productDetails?.product?.name}{" "}
-                              
-                            </div>
+                            <div className="fs-4 fw-bold d-inline-block">{productDetails?.product?.name} </div>
                             <sup>
-                                <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"} >{productDetails?.purpose}</Badge>
-                              </sup>
-                            
+                              <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"}>{productDetails?.purpose}</Badge>
+                            </sup>
                           </Col>
                         </Row>
                         <Row className="mt-2">
@@ -189,15 +193,15 @@ const ProductDetailsPage = () => {
                   </Col>
                 </Row>
                 <Row className="mt-2">
-                      <Col>
-                        <Card className="shadow-sm">
-                          <Card.Body></Card.Body>
-                        </Card>
-                      </Col>
-                    </Row>
+                  <Col>
+                    <Card className="shadow-sm">
+                      <Card.Body></Card.Body>
+                    </Card>
+                  </Col>
+                </Row>
                 <Row className="mt-3">
-                  <Col md={8}>
-                    <ImageGallery imageData={productDetails?.product?.images}></ImageGallery>
+                  <Col md={showSellerInfo === true ? 8 : 12}>
+                    <ImageViewer imageData={productDetails?.product?.images} onIimageViewTabChanged={onIimageViewTabChanged} arImageUrl="/uploads/product/glb/flat.glb"></ImageViewer>
                     <Row className="mt-2">
                       <Col>
                         <Card className="shadow-sm">
@@ -207,9 +211,11 @@ const ProductDetailsPage = () => {
                     </Row>
                     <Review comments={productDetails?.comments}></Review>
                   </Col>
-                  <Col md={4}>
-                    <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
-                  </Col>
+                  {showSellerInfo ? (
+                    <Col md={4}>
+                      <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
+                    </Col>
+                  ) : null}
                 </Row>
               </>
             ) : (

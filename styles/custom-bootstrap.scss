@@ -734,6 +734,10 @@ $color-keys: map-keys($theme-colors);
     border-color: transparent;
   }
 
+  .nav-no-curve .nav-tabs {
+    border-radius: 0 0 0 0 !important;
+  }
+
   .nav-tabs .nav-link {
     padding: 0.7rem !important;
     border-color: transparent;

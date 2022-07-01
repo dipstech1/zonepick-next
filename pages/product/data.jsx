@@ -32,6 +32,9 @@ export const productData = {
       { id: 1, url: "modern-home.jpg", type: "normal" },
       { id: 2, url: "flat3.jpg", type: "normal" },
       { id: 3, url: "modern-home-image-2.jpg", type: "normal" },
+      { id: 4, url: "a-mirror-in-a-room.jpeg", type: "360Image" },
+      { id: 5, url: "bedroom-with-a-large-bed-in-a-room.jpeg", type: "360Image" },
+      { id: 6, url: "large-bed-in-a-room.jpeg", type: "360Image" },
     ],
   },
   seller_details: {

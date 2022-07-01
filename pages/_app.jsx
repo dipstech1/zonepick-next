@@ -8,7 +8,9 @@ import GlobalContext from "../services/global-context";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
+    import("@egjs/view360");
     import("bootstrap/dist/js/bootstrap");
+  
   }, []);
   const [state, setState] = useState({
     data: [],
