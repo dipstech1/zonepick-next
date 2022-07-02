@@ -1,7 +1,7 @@
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Col, Row, Tab, Tabs } from "react-bootstrap";
+import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import Layout from "../components/Layout/layout";
 import ProductCard from "../components/productCard /productCard";
 import axios from "../services/axios.interceptor";
@@ -19,17 +19,17 @@ export default function Home() {
   useEffect(() => {
     const userId = getCookie("userid");
     setUserId(userId);
-    getProductData(userId,'BUY');
+    getProductData(userId, "BUY");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getMoreProduct = () => {
     page += 1;
-    getProductData(userId,key);
+    getProductData(userId, key);
   };
 
-  const getProductData = async (userId,key) => {
+  const getProductData = async (userId, key) => {
     setLoading(true);
     setProductData([]);
     let url = "";
@@ -65,41 +65,61 @@ export default function Home() {
 
   const onTabChange = (k) => {
     setKey(k);
-    getProductData(userId,k);
+    getProductData(userId, k);
   };
 
   return (
     <>
       <Layout title="Home">
-        <div id="pageContainer" className="container">
-          <div id={"editTabs"}>
-            <div>
-              <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => onTabChange(k)} className="mb-3">
-                <Tab eventKey="BUY" title={"Buy"}></Tab>
-                <Tab eventKey="Borrow" title={"Borrow"}></Tab>
-              </Tabs>
+        <div className="mb-3">
+          <section className="banner">
+            <div className="container">
+              <div className="row justify-content-center align-items-center">
+                <div className="col-12 col-lg-6 banner_text">
+                  <h2>
+                    A fresh approach to shopping <span>Absolutely. Positively. Perfect.</span>
+                  </h2>
+                  <div className="input-group mt-3 mt-lg-4">
+                    <input type="search" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" />
+                    <span className="input-group-text">
+                      <i className="fas fa-search"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <Row>
-            {productData.length > 0 &&
-              productData.map((product, i) => {
-                return (
-                  <Col key={i} md={3} className="mb-3">
-                    <ProductCard productDetails={product} addToWishList={addToWishList} />
-                  </Col>
-                );
-              })}
-          </Row>
-          {total > productData.length ? (
+          <Container>
+            <div id={"editTabs"}>
+              <div>
+                <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => onTabChange(k)} className="mb-3">
+                  <Tab eventKey="BUY" title={"Buy"}></Tab>
+                  <Tab eventKey="Borrow" title={"Borrow"}></Tab>
+                </Tabs>
+              </div>
+            </div>
+
             <Row>
-              <Col className="text-center">
-                <Button type="button" variant="indigo" onClick={getMoreProduct}>
-                  Load More {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
-                </Button>
-              </Col>
+              {productData.length > 0 &&
+                productData.map((product, i) => {
+                  return (
+                    <Col key={i} md={3} className="mb-3">
+                      <ProductCard productDetails={product} addToWishList={addToWishList} />
+                    </Col>
+                  );
+                })}
             </Row>
-          ) : null}
+            {total > productData.length ? (
+              <Row>
+                <Col className="text-center">
+                  <Button type="button" variant="indigo" onClick={getMoreProduct}>
+                    Load More {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
+                  </Button>
+                </Col>
+              </Row>
+            ) : null}
+          </Container>
         </div>
       </Layout>
     </>

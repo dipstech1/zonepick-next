@@ -110,7 +110,7 @@ const Orders = () => {
                                               })}
                                             </span>
                                           </span>
-                                          <div onClick={(e) => openOrderDetails(data)}>
+                                          <div onClick={(e) => openOrderDetails(order, data)}>
                                             <div>
                                               <span
                                                 className={["badge  badge-small", common.calculateAvgRating(data?.productId[0]).className].join(" ")}

@@ -43,7 +43,7 @@ const OrderDetails = () => {
                       <Row>
                         <Col md={3}>
                           <img
-                            src={"/uploads/product/" + orderInfo?.orderDetails?.product.images[0].url}
+                            src={"/uploads/product/" + orderInfo?.orderDetails?.product?.images[0].url}
                             className="img-responsive-1 w-100"
                             alt="dd"
                           />
@@ -54,7 +54,7 @@ const OrderDetails = () => {
                               <Col md={12}>
                                 <Row>
                                   <Col  md={6}>
-                                    <b>{orderInfo?.orderDetails?.product.name}</b>
+                                    <b>{orderInfo?.orderDetails?.product?.name}</b>
                                   </Col>
                                   <Col  md={6}>
                                     <span className="float-md-end">
@@ -76,12 +76,16 @@ const OrderDetails = () => {
                                   <Col  md={6}>
                                     <div className="float-md-end">
                                       <b>Price : </b>
-                                      <span>
+                                      {
+                                        orderInfo?.orderDetails?.price ?
+                                        <span>
                                         {orderInfo?.orderDetails?.price.toLocaleString("en-IN", {
                                           style: "currency",
                                           currency: "INR",
                                         })}
-                                      </span>
+                                      </span> :null
+                                      }
+                                      
                                     </div>
                                   </Col>
                                 </Row>
