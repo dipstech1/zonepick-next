@@ -148,12 +148,7 @@ const MyProductList = () => {
                                         </span>
                                       </div>
                                       <span className="mt-2 d-inline-block">
-                                        <b>
-                                          {data?.price.toLocaleString("en-IN", {
-                                            style: "currency",
-                                            currency: "INR",
-                                          })}
-                                        </b>
+                                        <b>{common.getCurrencyWithFormat(data?.price)}</b>
                                       </span>
                                     </Col>
                                   </Row>

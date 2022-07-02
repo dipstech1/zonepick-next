@@ -145,7 +145,7 @@ const AddAdvtPage = () => {
                     </Row>
 
                     <Row>
-                      <Col>
+                      <Col md={6}>
                         <Form.Group className="mb-2 position-relative" controlId="product_status">
                           <Form.Label className="fw-bold">Status:</Form.Label>
                           <Select
@@ -160,7 +160,7 @@ const AddAdvtPage = () => {
                           <Form.Control.Feedback type="invalid">{formik.errors.product_status}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
-                      <Col>
+                      <Col md={6}>
                         <Form.Group className="mb-2 position-relative" controlId="purpose">
                           <Form.Label className="fw-bold">Purpose:</Form.Label>
                           <Select

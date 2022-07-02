@@ -1,4 +1,4 @@
-import { getCookie } from "cookies-next";
+import { getCookie, setCookies } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ import common from "../../services/commonService";
 
 const ProductDetailsPage = () => {
   const router = useRouter();
+  const [cartPending, setCartPending] = useState(0);
   const [userId, setUserId] = useState(null);
   const [productDetails, setProductDetails] = useState({});
 
@@ -98,6 +99,13 @@ const ProductDetailsPage = () => {
       let response = await axios.post("cart", sendData);
 
       if (response.data.acknowledge) {
+        let cartCount = parseInt(getCookie("Cart")) || 0;
+        cartCount += 1;
+
+        setCartPending(cartCount);
+
+        setCookies("Cart", cartCount, { maxAge: 60 * 30 });
+
         toast.success("Product added to Cart");
       } else {
         toast.error("Fail");
@@ -139,7 +147,7 @@ const ProductDetailsPage = () => {
   return (
     <>
       <>
-        <Layout title="Product Details">
+        <Layout title="Product Details" cartCount={cartPending}>
           <div id="pageContainer" className="container">
             <Breadcrumb className="m-2">
               <Link href="/" passHref>
@@ -156,7 +164,7 @@ const ProductDetailsPage = () => {
                       <Card.Body>
                         <Row>
                           <Col>
-                            <div className="fs-4 fw-bold d-inline-block">{productDetails?.product?.name} </div>
+                            <div className="fs-4 fw-bold d-inline-block me-2">{productDetails?.product?.name} </div>
                             <sup>
                               <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"}>{productDetails?.purpose}</Badge>
                             </sup>
@@ -164,12 +172,7 @@ const ProductDetailsPage = () => {
                         </Row>
                         <Row className="mt-2">
                           <Col>
-                            <span className="fs-6 fw-bold">
-                              {(productDetails?.price).toLocaleString("en-IN", {
-                                style: "currency",
-                                currency: "INR",
-                              })}
-                            </span>
+                            <span className="fs-6 fw-bold">{common.getCurrencyWithFormat(productDetails?.price)}</span>
                           </Col>
                         </Row>
                         <Row className="mt-2">
@@ -233,11 +236,7 @@ const ProductDetailsPage = () => {
                                         <span className="fs-6 fw-bold me-1">Name :</span> {productDetails?.product?.name}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Price :</span>{" "}
-                                        {(productDetails?.price).toLocaleString("en-IN", {
-                                          style: "currency",
-                                          currency: "INR",
-                                        })}
+                                        <span className="fs-6 fw-bold me-1">Price :</span> {common.getCurrencyWithFormat(productDetails?.price)}
                                       </Col>
                                       <Col md={4} className="mb-2">
                                         <span className="fs-6 fw-bold me-1">Brand Name :</span> {productDetails?.product?.brand}
@@ -259,10 +258,11 @@ const ProductDetailsPage = () => {
 
                                     <Row className="ms-2 mb-2">
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Category :</span> Property
+                                        <span className="fs-6 fw-bold me-1">Category :</span> {productDetails.product?.category?.categoryName}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Subcategory :</span> Flat
+                                        <span className="fs-6 fw-bold me-1">Subcategory :</span>{" "}
+                                        {productDetails.product?.subcategory?.subcategoryName}
                                       </Col>
                                       <Col md={4} className="mb-2">
                                         <span className="fs-6 fw-bold me-1">Posted On :</span>

@@ -24,13 +24,13 @@ const WishList = () => {
   }, []);
 
   const getWishlistItems = async (userId) => {
-    setWishlist([])
+    setWishlist([]);
     try {
       let resp = await axios.get(`wishlist/${userId}`);
       if (resp.data.length > 0) {
         setWishlist(resp.data);
       }
-    //  console.log(resp.data);
+      //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -162,12 +162,7 @@ const WishList = () => {
                                         </span>
                                       </div>
                                       <span className="mt-2 d-inline-block">
-                                        <b>
-                                          {data?.productId[0]?.price.toLocaleString("en-IN", {
-                                            style: "currency",
-                                            currency: "INR",
-                                          })}
-                                        </b>
+                                        <b>{common.getCurrencyWithFormat(data?.productId[0]?.price)}</b>
                                       </span>
                                       <span className="float-end d-inline-block">
                                         <Button

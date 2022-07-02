@@ -104,10 +104,7 @@ const Orders = () => {
                                           </span>
                                           <span className="float-end d-inline-block" onClick={(e) => goToProductDetails(data)}>
                                             <span>
-                                              {data?.productId[0]?.price.toLocaleString("en-IN", {
-                                                style: "currency",
-                                                currency: "INR",
-                                              })}
+                                              {common.getCurrencyWithFormat(data?.productId[0]?.price)}
                                             </span>
                                           </span>
                                           <div onClick={(e) => openOrderDetails(order, data)}>

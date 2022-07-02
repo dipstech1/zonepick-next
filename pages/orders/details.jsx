@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Breadcrumb, Card, Col, Row } from "react-bootstrap";
 import MyAccountLayout from "../../components/Account/myaccount";
@@ -8,14 +9,17 @@ import WithAuth from "../../components/withAuth";
 import common from "../../services/commonService";
 
 const OrderDetails = () => {
+  const router = useRouter();
   const [orderInfo, setOrderInfo] = useState({});
 
   useEffect(() => {
-    setOrderInfo(JSON.parse(sessionStorage.getItem("OrderDetails")));
+    if (sessionStorage.getItem("OrderDetails")) {
+      setOrderInfo(JSON.parse(sessionStorage.getItem("OrderDetails")));
+    } else {
+      router.back();
+    }
 
-    //console.log(JSON.parse(sessionStorage.getItem("OrderDetails")));
-
-    //console.log(orderInfo);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -44,7 +48,7 @@ const OrderDetails = () => {
                         <Col md={3}>
                           <img
                             src={"/uploads/product/" + orderInfo?.orderDetails?.product?.images[0].url}
-                            className="img-responsive-1 w-100"
+                            className="img-responsive-orderhistory "
                             alt="dd"
                           />
                         </Col>
@@ -53,39 +57,32 @@ const OrderDetails = () => {
                             <Row>
                               <Col md={12}>
                                 <Row>
-                                  <Col  md={6}>
-                                    <b>{orderInfo?.orderDetails?.product?.name}</b>
+                                  <Col md={8}>
+                                    <b>Order Id: </b> {orderInfo?.transactionDetails?.transactionId}
                                   </Col>
-                                  <Col  md={6}>
+                                  <Col md={4} className="mt-2">
                                     <span className="float-md-end">
                                       <b>Order Date: </b> {common.DateFromTimeStamp(orderInfo?.transactionDetails?.purchase_date)}
                                     </span>
                                   </Col>
                                 </Row>
                                 <Row className="mt-2">
-                                  <Col md={8}>
-                                    <b>Order Id: </b> {orderInfo?.transactionDetails?.transactionId}
+                                  <Col md={6}>
+                                  <b>Name : </b>  <b>{orderInfo?.orderDetails?.product?.name}</b>
                                   </Col>
                                 </Row>
 
                                 <Row className="mt-2">
-                                  <Col  md={6}>
+                                  <Col md={6} className="mb-2">
                                     <b>Brand : </b>
                                     <span>{orderInfo?.orderDetails?.product?.brand}</span>
                                   </Col>
-                                  <Col  md={6}>
+                                  <Col md={6}>
                                     <div className="float-md-end">
                                       <b>Price : </b>
-                                      {
-                                        orderInfo?.orderDetails?.price ?
-                                        <span>
-                                        {orderInfo?.orderDetails?.price.toLocaleString("en-IN", {
-                                          style: "currency",
-                                          currency: "INR",
-                                        })}
-                                      </span> :null
-                                      }
-                                      
+                                      {orderInfo?.orderDetails?.price ? (
+                                        <span>{common.getCurrencyWithFormat(orderInfo?.orderDetails?.price)}</span>
+                                      ) : null}
                                     </div>
                                   </Col>
                                 </Row>
@@ -109,13 +106,13 @@ const OrderDetails = () => {
                 <Card className="shadow-sm">
                   <Card.Body>
                     <Row>
-                      <Col>
+                      <Col md={4}>
                         <b>Seller Name:</b> {orderInfo?.orderDetails?.seller_details?.name}
                       </Col>
-                      <Col>
+                      <Col md={4}>
                         <b>Phone:</b> {orderInfo?.orderDetails?.seller_details?.phone}
                       </Col>
-                      <Col>
+                      <Col md={4}>
                         <b>Email:</b> {orderInfo?.orderDetails?.seller_details?.email}
                       </Col>
                     </Row>
@@ -137,11 +134,11 @@ const OrderDetails = () => {
                       <Col>
                         <div className="wraper">
                           <ul className="link-container">
-                          <li className="link">
-                              <a >Order Initiated</a>
+                            <li className="link">
+                              <a>Order Initiated</a>
                             </li>
                             <li className="link">
-                              <a >Order Confirmed</a>
+                              <a>Order Confirmed</a>
                             </li>
                             <li className="link">
                               <a>Packed</a>
@@ -153,7 +150,7 @@ const OrderDetails = () => {
                               <a>Out For Delivery</a>
                             </li>
                             <li className="link">
-                              <a >Delivered</a>
+                              <a>Delivered</a>
                             </li>
                           </ul>
                         </div>

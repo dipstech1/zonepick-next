@@ -28,7 +28,7 @@ const ModelViewGTLF = ({ arImageUrl = "", scale=[1.1,1.1,1.1] }) => {
       <Row>
         <Col>
           <Card className="border-0">
-            <Card.Body>
+            <Card.Body style={{height: '350'}}>
               <Row>
                 <Col>
                   <Suspense fallback={<Loader />}>

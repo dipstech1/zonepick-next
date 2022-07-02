@@ -1,16 +1,15 @@
-import Head from 'next/head';
-import { useEffect } from 'react';
-import Footer from './footer';
-import Navbars from './navbar';
+import { getCookie } from "cookies-next";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import Footer from "./footer";
+import Navbars from "./navbar";
 
-const Layout = ({
-  children,
-  title = 'This is the default title',
-  showNav = true,
-  showFooter = true,
-  metaDescription = []
-}) => {
-  useEffect(() => {}, []);
+const Layout = ({ children, title = "This is the default title", showNav = true, cartCount = 0, showFooter = true, metaDescription = [] }) => {
+  const [cartPending, setCartPending] = useState(0);
+
+  useEffect(() => {
+    setCartPending(getCookie("Cart"));
+  }, [cartCount]);
 
   return (
     <>
@@ -30,7 +29,7 @@ const Layout = ({
         </Head>
         {showNav === true ? (
           <header>
-            <Navbars></Navbars>
+            <Navbars cartPending={cartPending}></Navbars>
           </header>
         ) : null}
         <div>{children}</div>

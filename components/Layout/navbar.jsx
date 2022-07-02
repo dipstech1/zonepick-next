@@ -1,25 +1,28 @@
-import { removeCookies } from "cookies-next";
+import { getCookie, removeCookies } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Badge, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import verifyToken from "../../services/verifyToken";
 
-const Navbars = () => {
+const Navbars = ({cartPending=0}) => {
   const router = useRouter();
   let [loggedIn, setLoggedIn] = useState(false);
+  
 
   const logoutClick = (e) => {
     e.preventDefault();
     removeCookies("Login");
     removeCookies("token");
-    removeCookies("userid"); 
+    removeCookies("userid");
     removeCookies("refreshtoken");
+    removeCookies("Cart");
     router.replace("/account/login?returnUrl=/");
   };
 
   useEffect(() => {
     const data = verifyToken();
+    
     setLoggedIn(data.verified);
     console.log("Status:" + loggedIn);
 
@@ -30,7 +33,7 @@ const Navbars = () => {
     <div className="header" id="nav_main">
       <Navbar bg="deep-purple-900" variant="dark" fixed="top" collapseOnSelect expand="md">
         <Container>
-          <Navbar.Brand href="#home">softgem</Navbar.Brand>
+          <Navbar.Brand href="#home">eMetaComm</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Nav className="d-flex d-md-none flex-row">
             <NavDropdown title={<i className="fa fa-user-alt"></i>} id="collasible-nav-dropdown-1" active>
@@ -59,7 +62,7 @@ const Navbars = () => {
                 <Nav.Link active={router.pathname === "/" ? true : false}>Home</Nav.Link>
               </Link>
               <Link href="/category" passHref>
-              <Nav.Link active={router.pathname === "/category" ? true : false}>Category</Nav.Link>
+                <Nav.Link active={router.pathname === "/category" ? true : false}>Category</Nav.Link>
               </Link>
               <Link href="/contact" passHref>
                 <Nav.Link active={router.pathname === "/contact" ? true : false}>Contact Us</Nav.Link>
@@ -100,9 +103,11 @@ const Navbars = () => {
                 <Link href="/cart" passHref>
                   <Nav.Link eventKey={3} href="#memes" className="px-2  position-relative" active>
                     <i className="fa fa-cart-plus"></i>
-                    <Badge bg="success" className="position-absolute top-0 badge bg-white text-deep-purple-900 badge-small">
-                      9
-                    </Badge>
+                    {cartPending ? (
+                      <Badge bg="success" className="position-absolute top-0 badge bg-white text-deep-purple-900 badge-small">
+                        {cartPending}
+                      </Badge>
+                    ) : null}
                   </Nav.Link>
                 </Link>
               </>

@@ -31,13 +31,10 @@ const ProductCard = ({ productDetails, addToWishList }) => {
           </Card.Title>
           <div>
             <div className="d-block mb-1 fw-bold mt-2">
-              {productDetails.price.toLocaleString("en-IN", {
-                style: "currency",
-                currency: "INR",
-              })}
+              {common.getCurrencyWithFormat(productDetails?.price)}              
             </div>
             <div className="d-block  mb-1">
-              <span className="fw-bold">Apartment</span> 
+              <span className="fw-bold">{productDetails.product?.category?.categoryName } [{productDetails.product?.subcategory?.subcategoryName}]</span> 
             </div>
             <div className="d-block  mb-1">
               <span className={["badge ", common.calculateAvgRating(productDetails).className].join(" ")}>

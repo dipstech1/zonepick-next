@@ -1,3 +1,5 @@
+import getConfig from "next/config";
+
 const DateFromTimeStamp = (timestamp) => {
   // Months array
   const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -59,7 +61,7 @@ const DateFromTimeStampTime = (timestamp) => {
   const seconds = "0" + date.getSeconds();
 
   // Display date in MM-dd-yyyy format
-  var fulldate = month + ' ' + day + ', ' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+  var fulldate = month + " " + day + ", " + year + " " + hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
 
   return fulldate;
 };
@@ -141,13 +143,22 @@ const calculateAvgRating = (product) => {
     className = "bg-danger";
   }
 
- // console.log(product.CountOfPeopleVoted)
+  // console.log(product.CountOfPeopleVoted)
 
-  if ((product.CountOfPeopleVoted > 0)) {
+  if (product.CountOfPeopleVoted > 0) {
     return { className: className, rating: ovarallRating.toFixed(1), total: product.CountOfPeopleVoted };
   } else {
     return { className: "bg-primary", rating: "0", total: product.CountOfPeopleVoted };
   }
+};
+
+const getCurrencyWithFormat = (value = 0) => {
+  const { publicRuntimeConfig } = getConfig();
+
+  return value.toLocaleString(publicRuntimeConfig.lang, {
+    style: "currency",
+    currency: publicRuntimeConfig.currency,
+  });
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -157,4 +168,5 @@ export default {
   calculateRating: calculateRating,
   calculateAvgRating: calculateAvgRating,
   delivarytatus: delivarytatus,
+  getCurrencyWithFormat: getCurrencyWithFormat,
 };

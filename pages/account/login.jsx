@@ -53,9 +53,11 @@ export default function Login() {
     //  setDataLocalStorage('userid', data?.userid);
      // setDataLocalStorage('refreshtoken', data?.refreshToken);
       setCookies('token', data?.accessToken, { maxAge: 60 * 30 });
-      setCookies('userid', data?.userid, { maxAge: 60 * 30 });
+      setCookies('userid', data?.profile[0]?.userid, { maxAge: 60 * 30 });
       setCookies('refreshtoken', data?.refreshToken, { maxAge: 60 * 30 });
       setCookies('Login', 'LoggedIn', { maxAge: 60 * 30 });
+      setCookies('Cart', data?.cartPending, { maxAge: 60 * 30 });
+      
       toast.success('Login Successful');
       router.replace(returnUrl);
     } catch (error) {

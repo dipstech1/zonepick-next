@@ -335,6 +335,15 @@ $color-keys: map-keys($theme-colors);
     padding: 5px;
     border-radius: 5px;
   }
+
+  .img-responsive-orderhistory {
+    width: 100%;
+    min-width: 110px;
+    height: auto;
+    min-height: 110px;
+    padding: 5px;
+    border-radius: 5px;
+  }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -348,6 +357,15 @@ $color-keys: map-keys($theme-colors);
     padding: 5px;
     border-radius: 5px;
   }
+
+  .img-responsive-orderhistory {
+    width: 100%;
+    min-width: 110px;
+    height: auto;
+    min-height: 140px;
+    padding: 5px;
+    border-radius: 5px;
+  }
 }
 
 // Large devices (desktops, 992px and up)
@@ -358,6 +376,15 @@ $color-keys: map-keys($theme-colors);
     height: auto;
     max-height: 120px;
     min-height: 120px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .img-responsive-orderhistory {
+    width: 100%;
+    min-width: 110px;
+    height: auto;
+    min-height: 140px;
     padding: 5px;
     border-radius: 5px;
   }
