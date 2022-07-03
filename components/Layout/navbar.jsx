@@ -1,4 +1,4 @@
-import { getCookie, removeCookies } from "cookies-next";
+import { deleteCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -12,11 +12,11 @@ const Navbars = ({cartPending=0}) => {
 
   const logoutClick = (e) => {
     e.preventDefault();
-    removeCookies("Login");
-    removeCookies("token");
-    removeCookies("userid");
-    removeCookies("refreshtoken");
-    removeCookies("Cart");
+    deleteCookie("Login");
+    deleteCookie("token");
+    deleteCookie("userid");
+    deleteCookie("refreshtoken");
+    deleteCookie("Cart");
     router.replace("/account/login?returnUrl=/");
   };
 

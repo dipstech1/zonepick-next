@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { getCookie, removeCookies } from 'cookies-next';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getCookie, removeCookies } from "cookies-next";
 
 const WithAuth = (Component, users = []) => {
   console.log(users);
@@ -9,36 +9,46 @@ const WithAuth = (Component, users = []) => {
     const [verified, setVerified] = useState(false);
 
     useEffect(() => {
-      const accessToken = getCookie('token');      
+      let query = [];
+      if (Router.query["productId"]) {
+        query = Router.query["productId"];
+      }
+
+      const accessToken = getCookie("token");
       if (!accessToken) {
-        if(Router.pathname === '/product/[...productId]'){
-          Router.replace('/account/login?returnUrl=/product');
+        if (Router.pathname === "/product/[...productId]") {
+          const rurl = "/account/login?returnUrl=/product/" + query[0] + "/" + query[1];
+          Router.replace(rurl);
         } else {
-          Router.replace('/account/login?returnUrl=' + Router.pathname);
+          Router.replace("/account/login?returnUrl=" + Router.pathname);
         }
-        
-      } else {        
-        const data = verifyToken();        
+      } else {
+        const data = verifyToken();
         if (data.verified) {
           setVerified(data.verified);
-        } else {          
-          removeCookies('token');
+        } else {
+          removeCookies("token");
 
-          Router.replace('/account/login?returnUrl=' + Router.pathname);
+          if (Router.pathname === "/product/[...productId]") {
+            const rurl = "/account/login?returnUrl=/product/" + query[0] + "/" + query[1];
+            Router.replace(rurl);
+          } else {
+            Router.replace("/account/login?returnUrl=" + Router.pathname);
+          }
         }
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [Router]);
 
     const verifyToken = () => {
-      const accessToken = getCookie('token');
+      const accessToken = getCookie("token");
       let isLoggedin = false;
-      if (getCookie('Login') && accessToken) {
+      if (getCookie("Login") && accessToken) {
         isLoggedin = true;
       }
 
       return {
-        verified: isLoggedin
+        verified: isLoggedin,
       };
     };
 

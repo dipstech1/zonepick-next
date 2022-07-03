@@ -21,6 +21,7 @@ function MyApp({ Component, pageProps }) {
     setState(Object.assign({}, state, data));
   }
 
+
   return (
     <SSRProvider>
       <GlobalContext.Provider value={state}>

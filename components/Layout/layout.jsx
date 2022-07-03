@@ -19,9 +19,10 @@ const Layout = ({ children, title = "This is the default title", showNav = true,
           <meta charSet="utf-8" />
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <meta name="description" content="e commerce" />
+          <meta name="description" content="ecommerce westite , You can buy & sell or Rent Product" />
           <meta name="keywords" content="Sell, Lend, Photo Sell, Prouct sell, Buy , Rent" />
-          <meta name="author" content="John Doe" />
+          <meta name="author" content="Swarup Mukherjee" />
+          <meta http-httpEquiv="refresh" content="86400"></meta>
           {metaDescription.length > 0 &&
             metaDescription.map((itm, i) => {
               return <meta name={itm?.name} content={itm?.content} key={i} />;

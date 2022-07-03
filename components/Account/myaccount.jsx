@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { Button, Card, Col, NavDropdown, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 
-const MyAccountLayout = ({ children, title = "", activeLink = 1, enableBack = false, enableButton = false, iconClass = "fa-pencil", tooltipText='' ,buttoClick }) => {
+const MyAccountLayout = ({
+  children,
+  title = "",
+  activeLink = 1,
+  enableBack = false,
+  enableButton = false,
+  iconClass = "fa-pencil",
+  tooltipText = "",
+  buttoClick,
+}) => {
   const router = useRouter();
 
   const onButtonClick = () => {
-    buttoClick("Yes");
+    if (buttoClick instanceof Function) {
+      buttoClick("Yes");
+    }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -70,7 +78,7 @@ const MyAccountLayout = ({ children, title = "", activeLink = 1, enableBack = fa
                     </Link>
                   </li>
                   <li className="nav-item">
-                  <small className="hr-sect">Admin Section</small>
+                    <small className="hr-sect">Admin Section</small>
                   </li>
                   <li className="nav-item">
                     <Link href={"/admin/category"}>
@@ -109,7 +117,7 @@ const MyAccountLayout = ({ children, title = "", activeLink = 1, enableBack = fa
                     {enableButton ? (
                       <i
                         className={"fa " + iconClass}
-                        style={{ cursor: "pointer", width: '30px'}}
+                        style={{ cursor: "pointer", width: "30px" }}
                         onClick={onButtonClick}
                         data-bs-toggle="tooltip"
                         data-bs-placement="left"
