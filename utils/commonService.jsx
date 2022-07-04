@@ -126,10 +126,10 @@ const calculateRating = (product) => {
 
 const calculateAvgRating = (product) => {
   const total =
-    parseFloat(product.AvgProductDeliveryRating) +
-    parseFloat(product.AvgProductPackagingRating) +
-    parseFloat(product.AvgProductQualityRating) +
-    parseFloat(product.AvgProductRating);
+    parseFloat(product?.AvgProductDeliveryRating || 0) +
+    parseFloat(product?.AvgProductPackagingRating || 0) +
+    parseFloat(product?.AvgProductQualityRating || 0) +
+    parseFloat(product?.AvgProductRating || 0);
 
   const ovarallRating = total / 4;
 
@@ -145,10 +145,10 @@ const calculateAvgRating = (product) => {
 
   // console.log(product.CountOfPeopleVoted)
 
-  if (product.CountOfPeopleVoted > 0) {
+  if (product?.CountOfPeopleVoted > 0) {
     return { className: className, rating: ovarallRating.toFixed(1), total: product.CountOfPeopleVoted };
   } else {
-    return { className: "bg-primary", rating: "0", total: product.CountOfPeopleVoted };
+    return { className: "bg-primary", rating: "0", total: product?.CountOfPeopleVoted };
   }
 };
 

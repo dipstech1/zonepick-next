@@ -22,19 +22,19 @@ const ProductCard = ({ productDetails, addToWishList }) => {
     <>
       <Card onClick={goToDetails} style={{cursor: 'pointer'}} className='product-row shadow-sm'>
         <div className="image-container">
-          <Card.Img variant="top" src={"/uploads/product/" + productDetails.product.images[0].url} style={{ height: "250px", objectFit: "fill" }} />
-          <div className="top-left ">{productDetails.purpose}</div>
+          <Card.Img variant="top" src={"/uploads/product/" + productDetails?.product?.images[0]?.url} style={{ height: "250px", objectFit: "fill" }} />
+          <div className="top-left ">{productDetails?.purpose}</div>
         </div>
         <Card.Body>
           <Card.Title>
-            <span>{productDetails.product.name}</span>
+            <span>{productDetails?.product?.name}</span>
           </Card.Title>
           <div>
             <div className="d-block mb-1 fw-bold mt-2">
               {common.getCurrencyWithFormat(productDetails?.price)}              
             </div>
             <div className="d-block  mb-1">
-              <span className="fw-bold">{productDetails.product?.category?.categoryName } [{productDetails.product?.subcategory?.subcategoryName}]</span> 
+              <span className="fw-bold">{productDetails?.product?.category?.categoryName } [{productDetails?.product?.subcategory?.subcategoryName}]</span> 
             </div>
             <div className="d-block  mb-1">
               <span className={["badge ", common.calculateAvgRating(productDetails).className].join(" ")}>
