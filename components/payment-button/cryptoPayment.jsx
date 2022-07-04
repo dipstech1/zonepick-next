@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import Axios from '../../services/axios.interceptor';
+import Axios from '../../utils/axios.interceptor';
 import { toast } from 'react-toastify';
 const CryptoPaymentButton = ({ buttonText = 'Pay with Crypto', userData,btnClass='btn-primary', paymentResponse }) => {
     

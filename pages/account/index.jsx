@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
-import axios from "../../services/axios.interceptor";
+import axios from "../../utils/axios.interceptor";
 
 const MyAccount = () => {
   const router = useRouter();

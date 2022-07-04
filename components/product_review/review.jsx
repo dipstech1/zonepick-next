@@ -1,6 +1,6 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
-import common from "../../services/commonService";
+import common from "../../utils/commonService";
 const Review = ({ comments = [] }) => {
  // console.log(comments);
 

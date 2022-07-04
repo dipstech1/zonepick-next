@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { Button, Card } from "react-bootstrap";
-import common from "../../services/commonService";
+import common from "../../utils/commonService";
 
 const ProductCard = ({ productDetails, addToWishList }) => {
   const router = useRouter();

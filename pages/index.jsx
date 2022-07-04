@@ -2,9 +2,10 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
+import { toast } from "react-toastify";
 import Layout from "../components/Layout/layout";
 import ProductCard from "../components/productCard /productCard";
-import axios from "../services/axios.interceptor";
+import axios from "../utils/axios.interceptor";
 let page = 0;
 export default function Home() {
   const router = useRouter();
@@ -32,13 +33,9 @@ export default function Home() {
   const getProductData = async (userId, key) => {
     setLoading(true);
     setProductData([]);
-    let url = "";
+    let url = key === "BUY" ? "products/purchase" : "products/rent";
 
-    if (userId) {
-      url = key === "BUY" ? "products/purchase" : "products/rent";
-    } else {
-      url = key === "BUY" ? "products/bypass/purchase" : "products/bypass/rent";
-    }
+  
 
     try {
       let resp = await axios.get(url, { params: { page } });
@@ -64,6 +61,9 @@ export default function Home() {
   };
 
   const onTabChange = (k) => {
+    productData = []
+    page = 0 ;
+    setProductData(productData)
     setKey(k);
     getProductData(userId, k);
   };

@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { setCookies } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import axios from '../../services/axios.interceptor';
+import axios from '../../utils/axios.interceptor';
 import Link from 'next/link';
 export default function Login() {
   const router = useRouter();
@@ -57,6 +57,7 @@ export default function Login() {
       setCookies('refreshtoken', data?.refreshToken, { maxAge: 60 * 30 });
       setCookies('Login', 'LoggedIn', { maxAge: 60 * 30 });
       setCookies('Cart', data?.cartPending, { maxAge: 60 * 30 });
+      setCookies('user_name', data?.profile[0]?.name, { maxAge: 60 * 30 })
       
       toast.success('Login Successful');
       router.replace(returnUrl);

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import MyAccountLayout from "../../../components/Account/myaccount";
 import Layout from "../../../components/Layout/layout";
 import withAuth from "../../../components/withAuth";
-import axios from "../../../services/axios.interceptor";
+import axios from "../../../utils/axios.interceptor";
 let page = 0;
 
 const BrandPage = () => {
@@ -71,10 +71,15 @@ const BrandPage = () => {
       try {
         let res = await axios.delete(`brand/${item.id}`,  {data:sendData});
         if (res.data.acknowledge == true) {
+
+          brandData=[];
+          page =0;
+          getBrands();
+
           //getBrands();
-          brandData.splice(itemIndex, 1);
-          setBrandData(brandData);
-          setTotal(brandData.length)
+         // brandData.splice(itemIndex, 1);
+         // setBrandData(brandData);
+         // setTotal(brandData.length)
           toast.success("Brand Deleted");
         } else {
           toast.warning("Fail");

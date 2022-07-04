@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
-import axios from "../../services/axios.interceptor";
+import axios from "../../utils/axios.interceptor";
 
 const EditProfile = () => {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;

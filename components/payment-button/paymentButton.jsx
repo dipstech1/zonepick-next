@@ -1,4 +1,4 @@
-import Axios from '../../services/axios.interceptor';
+import Axios from '../../utils/axios.interceptor';
 const PaymentButton = ({ buttonText = 'Pay Now', userData, paymentResponse }) => {
   const makePayment = async () => {
     

@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
-import axios from "../../services/axios.interceptor";
-import common from "../../services/commonService";
+import axios from "../../utils/axios.interceptor";
+import common from "../../utils/commonService";
 
 const WishList = () => {
   const router = useRouter();

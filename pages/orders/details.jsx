@@ -6,7 +6,7 @@ import { Breadcrumb, Card, Col, Row } from "react-bootstrap";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import WithAuth from "../../components/withAuth";
-import common from "../../services/commonService";
+import common from "../../utils/commonService";
 
 const OrderDetails = () => {
   const router = useRouter();

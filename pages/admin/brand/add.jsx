@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import MyAccountLayout from "../../../components/Account/myaccount";
 import Layout from "../../../components/Layout/layout";
 import withAuth from "../../../components/withAuth";
-import axios from "../../../services/axios.interceptor";
+import axios from "../../../utils/axios.interceptor";
 
 import { getCookie } from "cookies-next";
 import { useEffect } from "react";

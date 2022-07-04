@@ -9,9 +9,9 @@ import CryptoPaymentButton from "../../components/payment-button/cryptoPayment";
 import PaymentButton from "../../components/payment-button/paymentButton";
 import QuantityChanger from "../../components/quantity";
 import WithAuth from "../../components/withAuth";
-import axios from "../../services/axios.interceptor";
+import axios from "../../utils/axios.interceptor";
 
-import common from "../../services/commonService";
+import common from "../../utils/commonService";
 
 const Cart = () => {
   const [cartPending, setCartPending] = useState(0);

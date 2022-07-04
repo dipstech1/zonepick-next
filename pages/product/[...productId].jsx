@@ -10,9 +10,8 @@ import ImageViewer from "../../components/product_image/imageViewer";
 import Rating from "../../components/product_review/rating";
 import Review from "../../components/product_review/review";
 import SellerInfo from "../../components/seller-info/SellerInfo";
-import WithAuth from "../../components/withAuth";
-import axios from "../../services/axios.interceptor";
-import common from "../../services/commonService";
+import axios from "../../utils/axios.interceptor";
+import common from "../../utils/commonService";
 
 const ProductDetailsPage = () => {
   const router = useRouter();
@@ -95,24 +94,28 @@ const ProductDetailsPage = () => {
       purpose: purpose,
     };
 
-    try {
-      let response = await axios.post("cart", sendData);
+    if (userId) {
+      try {
+        let response = await axios.post("cart", sendData);
 
-      if (response.data.acknowledge) {
-        let cartCount = parseInt(getCookie("Cart")) || 0;
-        cartCount += 1;
+        if (response.data.acknowledge) {
+          let cartCount = parseInt(getCookie("Cart")) || 0;
+          cartCount += 1;
 
-        setCartPending(cartCount);
+          setCartPending(cartCount);
 
-        setCookies("Cart", cartCount, { maxAge: 60 * 30 });
+          setCookies("Cart", cartCount, { maxAge: 60 * 30 });
 
-        toast.success("Product added to Cart");
-      } else {
+          toast.success("Product added to Cart");
+        } else {
+          toast.error("Fail");
+        }
+      } catch (error) {
+        console.log(error);
         toast.error("Fail");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Fail");
+    } else {
+      toast.warning("Please Login to Continue");
     }
   };
 
@@ -122,17 +125,21 @@ const ProductDetailsPage = () => {
       recordId: productDetails?.recordId,
     };
 
-    try {
-      let response = await axios.post("wishlist", sendData);
+    if (userId) {
+      try {
+        let response = await axios.post("wishlist", sendData);
 
-      if (response.data.acknowledge) {
-        toast.success("Product added to Wish List");
-      } else {
+        if (response.data.acknowledge) {
+          toast.success("Product added to Wish List");
+        } else {
+          toast.error("Fail");
+        }
+      } catch (error) {
+        console.log(error);
         toast.error("Fail");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Fail");
+    } else {
+      toast.warning("Please Login to Continue");
     }
   };
 
@@ -327,4 +334,4 @@ const ProductDetailsPage = () => {
   );
 };
 
-export default WithAuth(ProductDetailsPage);
+export default ProductDetailsPage;

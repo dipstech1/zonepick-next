@@ -13,7 +13,7 @@ import MyAccountLayout from "../../../components/Account/myaccount";
 import ImageUploader from "../../../components/image";
 import Layout from "../../../components/Layout/layout";
 import withAuth from "../../../components/withAuth";
-import axios from "../../../services/axios.interceptor";
+import axios from "../../../utils/axios.interceptor";
 
 const AddProductPage = () => {
   const router = useRouter();

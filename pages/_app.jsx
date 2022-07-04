@@ -4,7 +4,7 @@ import "../styles/custom-bootstrap.scss";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import GlobalContext from "../services/global-context";
+import GlobalContext from "../utils/global-context";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
