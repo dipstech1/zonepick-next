@@ -101,6 +101,13 @@ const MyAccountLayout = ({
                       </a>
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link href={"/admin/brand"}>
+                      <a className={["nav-link", activeLink === 11 ? "active-menu" : null].join(" ")}>
+                        <i className="fa-solid fa-building me-2"></i> Brand
+                      </a>
+                    </Link>
+                  </li>
                 </ul>
               </Card.Body>
             </Card>

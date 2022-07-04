@@ -24,6 +24,8 @@ const MyProductList = () => {
 
   useEffect(() => {
     const userId = getCookie("userid");
+    page=0;
+    setProductData([])
     setUserId(userId);
     getMyProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps

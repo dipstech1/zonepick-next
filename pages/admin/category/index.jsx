@@ -102,7 +102,7 @@ const Category = () => {
                   categoryList.map((data, i) => (
                     <Col key={i} md={6} className="mt-2 mb-2">
                       <Card className="shadow-sm">
-                        <Card.Body className="text-center">
+                        <Card.Body>
                           <div className="d-inline-block fs-5" style={{cursor:'pointer'}}  onClick={(e) => onCategoryClick(data)}>{data?.categoryName}</div>
                           <div className="d-inline-block float-end">
                             <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
