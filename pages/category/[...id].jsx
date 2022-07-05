@@ -15,6 +15,7 @@ const CategoryDetailsPage = () => {
   const [CategoryName, setCategoryName] = useState("Category Details");
   const [categoryId, setCategoryId] = useState(null);
   let [productData, setProductData] = useState([]);
+  let [productDataTemp, setProductDataTemp] = useState([]);
   let [total, setTotal] = useState(0);
   let [loading, setLoading] = useState(false);
 
@@ -29,7 +30,6 @@ const CategoryDetailsPage = () => {
     if (router.query["id"]) {
       getProductData(categoryId[0]);
       setCategoryId(categoryId[0]);
-         
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
@@ -43,6 +43,7 @@ const CategoryDetailsPage = () => {
       let resp = await axios.post(`products/category?page=${page}`, sendData);
       if (resp.data.total > 0) {
         setProductData([...productData, ...resp.data.data]);
+        setProductDataTemp([...productDataTemp, ...resp.data.data]);
         setTotal(resp.data.total);
         setCategoryName(resp.data.data[0].category.categoryName);
         getSubcategoryItems(resp.data.data[0].category.categoryName);
@@ -79,6 +80,12 @@ const CategoryDetailsPage = () => {
     }
   };
 
+  const onSubcategoryClick = (item, index) => {
+    //const fileter =
+
+    console.log(item);
+  };
+
   return (
     <>
       <Layout title="Category Details">
@@ -96,10 +103,19 @@ const CategoryDetailsPage = () => {
           <Row className="mb-3 d-flex flex-row flex-nowrap overflow-auto">
             {subcategoryList?.length > 0 &&
               subcategoryList?.map((data, i) => (
-                <Col key={i} xs={4} sm={3} md={2} style={{cursor:'pointer'}}>
-                    <Card className="shadow-sm">
-                        <Card.Body className="p-1 text-center">{data?.subcategoryName}</Card.Body>
-                    </Card>
+                <Col
+                  key={i}
+                  xs={4}
+                  sm={3}
+                  md={2}
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    onSubcategoryClick(data, i);
+                  }}
+                >
+                  <Card className="shadow-sm">
+                    <Card.Body className="p-1 text-center">{data?.subcategoryName}</Card.Body>
+                  </Card>
                 </Col>
               ))}
           </Row>

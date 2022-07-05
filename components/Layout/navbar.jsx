@@ -86,7 +86,7 @@ const Navbars = ({ cartPending = 0 }) => {
           </Navbar.Collapse>
           <Nav className="ml-auto d-md-flex d-none flex-row">
             {!loggedIn ? (
-              <Link href="/wishlist" passHref>
+              <Link href="/account/login" passHref>
                 <Nav.Link eventKey={0} href="#memes" className="px-2" active>
                   Login
                 </Nav.Link>
