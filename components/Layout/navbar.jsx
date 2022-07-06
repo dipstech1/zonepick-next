@@ -81,6 +81,9 @@ const Navbars = ({ cartPending = 0 }) => {
               <Link href="/category" passHref>
                 <Nav.Link active={router.pathname === "/category" ? true : false}>Shop by Category</Nav.Link>
               </Link>
+              <Link href="/sellers" passHref>
+                <Nav.Link active={router.pathname === "/sellers" ? true : false}>Our Sellers</Nav.Link>
+              </Link>
               <Link href="/contact" passHref>
                 <Nav.Link active={router.pathname === "/contact" ? true : false}>Contact Us</Nav.Link>
               </Link>

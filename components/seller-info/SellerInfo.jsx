@@ -20,7 +20,7 @@ const SellerInfo = ({ sellerData }) => {
             <Row>
               <Col xs="12" className="d-flex">
                 <div>
-                  <img src="/img/profile_pic.png" className="img-avatar" alt="..." style={{ width: 70, height: 70 }} />
+                  <img src={"/uploads/avator/" + sellerData.profile_image} className="img-avatar" alt="..." style={{ width: 70, height: 70 }} />
                 </div>
                 <div className="ps-4">
                   <span className="text-dark mb-0 d-block">

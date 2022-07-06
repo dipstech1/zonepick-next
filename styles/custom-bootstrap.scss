@@ -273,6 +273,7 @@ $theme-colors: (
 @import "/node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
 @import "/node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
 
+
 @function colors($value) {
   @return map-get($theme-colors, $value);
 }
@@ -305,6 +306,10 @@ $color-keys: map-keys($theme-colors);
   box-shadow: 3.346px 3.716px 22.5px;
 }
 
+.animate-i i {
+  animation: fadeInLeft 2s;
+}
+
 .profile_img {
   border-radius: 50%;
   width: 120px !important;
@@ -324,6 +329,13 @@ $color-keys: map-keys($theme-colors);
     border-radius: 5px;
     object-fit: cover;
   }
+}
+
+.img-avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 @media (min-width: 576px) {
