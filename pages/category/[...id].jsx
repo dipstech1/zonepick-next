@@ -12,8 +12,12 @@ let page = 0;
 
 const CategoryDetailsPage = () => {
   const router = useRouter();
-  const [CategoryName, setCategoryName] = useState("Category Details");
-  const [categoryId, setCategoryId] = useState(null);
+  const [categoryData, setCategoryData] = useState({
+    categoryName: "",
+    categoryId: 0,
+    subcategoryName: "",
+    subcategoryId: 0,
+  });
   let [productData, setProductData] = useState([]);
   let [productDataTemp, setProductDataTemp] = useState([]);
   let [total, setTotal] = useState(0);
@@ -27,26 +31,56 @@ const CategoryDetailsPage = () => {
     if (!router.isReady) return;
     const categoryId = router.query["id"];
 
-    if (router.query["id"]) {
-      getProductData(categoryId[0]);
-      setCategoryId(categoryId[0]);
+    if (router.query["id"] && router.query["id"].length === 1) {
+      getProductData(categoryId[0], 0);
+      setCategoryData({ ...categoryData, categoryId: parseInt(categoryId[0]) });
     }
+
+    if (router.query["id"] && router.query["id"].length === 2) {
+      getProductData(categoryId[0], categoryId[1]);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  const getProductData = async (categoryId) => {
-    const sendData = {
-      category: categoryId,
-    };
+  const getProductData = async (categoryId, subcategoryId) => {
+    let sendData = {};
+    let apiUrl = "";
+
+    if (subcategoryId === 0) {
+      sendData = {
+        category: categoryId,
+      };
+      apiUrl = "products/category?page=" + page;
+    } else {
+      sendData = {
+        category: categoryId,
+        subcategory: subcategoryId,
+      };
+
+      apiUrl = "products/category-and-subcategory?page=" + page;
+    }
 
     try {
-      let resp = await axios.post(`products/category?page=${page}`, sendData);
+      let resp = await axios.post(apiUrl, sendData);
       if (resp.data.total > 0) {
         setProductData([...productData, ...resp.data.data]);
         setProductDataTemp([...productDataTemp, ...resp.data.data]);
         setTotal(resp.data.total);
-        setCategoryName(resp.data.data[0].category.categoryName);
-        getSubcategoryItems(resp.data.data[0].category.categoryName);
+        if (subcategoryId === 0) {
+          setCategoryData({ ...categoryData, categoryId: resp.data.data[0].category.id, categoryName: resp.data.data[0].category.categoryName, subcategoryId: 0 });
+          getSubcategoryItems(resp.data.data[0].category.categoryName);
+        } else {
+          setCategoryData({
+            ...categoryData,
+            categoryId: resp.data.data[0].category.id,
+            categoryName: resp.data.data[0].category.categoryName,
+            subcategoryId: resp.data.data[0].subcategory.id,
+            subcategoryName: resp.data.data[0].subcategory.subcategoryName,
+          });
+        }
+      } else {
+        setCategoryData({...categoryData,subcategoryId:subcategoryId})
       }
       console.log(resp.data);
     } catch (error) {
@@ -57,7 +91,12 @@ const CategoryDetailsPage = () => {
 
   const getMoreProduct = () => {
     page += 1;
-    getProductData(categoryId);
+    if (categoryData.subcategoryId === 0) {
+      getProductData(categoryData.categoryId, 0);
+    } else {
+      setCategoryData({ ...categoryData, subcategoryId: subcategoryId });
+      getProductData(categoryData.categoryId, categoryData.subcategoryId);
+    }
   };
 
   const goToProductDetails = (data) => {
@@ -80,10 +119,12 @@ const CategoryDetailsPage = () => {
     }
   };
 
-  const onSubcategoryClick = (item, index) => {
-    //const fileter =
+  const onSubcategoryClick = async (item, index) => {
+    console.log(categoryData);
 
-    console.log(item);
+    productData = [];
+    setProductData(productData);
+    router.push("/category/" + categoryData.categoryId + "/" + item.id);
   };
 
   return (
@@ -97,7 +138,16 @@ const CategoryDetailsPage = () => {
             <Link href="/category" passHref>
               <Breadcrumb.Item>Shop by Category</Breadcrumb.Item>
             </Link>
-            <Breadcrumb.Item active>{CategoryName}</Breadcrumb.Item>
+            {categoryData.subcategoryId === 0 ? (
+              <Breadcrumb.Item active>{categoryData.categoryName}</Breadcrumb.Item>
+            ) : (
+              <>
+                <Link href={`/category/${categoryData.categoryId}`} passHref>
+                  <Breadcrumb.Item>{categoryData.categoryName}</Breadcrumb.Item>
+                </Link>
+                <Breadcrumb.Item active>{categoryData.subcategoryName}</Breadcrumb.Item>
+              </>
+            )}
           </Breadcrumb>
 
           <Row className="mb-3 d-flex flex-row flex-nowrap overflow-auto">
@@ -114,7 +164,7 @@ const CategoryDetailsPage = () => {
                   }}
                 >
                   <Card className="shadow-sm">
-                    <Card.Body className="p-1 text-center">{data?.subcategoryName}</Card.Body>
+                    <Card.Body className={["p-1 text-center", data?.id === categoryData.subcategoryId ? "bg-deep-purple-900 text-white":null ].join(" ")}>{data?.subcategoryName}</Card.Body>
                   </Card>
                 </Col>
               ))}
