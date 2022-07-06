@@ -182,4 +182,4 @@ const MyProductList = () => {
     </>
   );
 };
-export default withAuth(MyProductList);
+export default withAuth(MyProductList,['ADMIN']);

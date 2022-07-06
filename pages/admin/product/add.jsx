@@ -500,4 +500,4 @@ const AddProductPage = () => {
     </>
   );
 };
-export default withAuth(AddProductPage);
+export default withAuth(AddProductPage,['ADMIN']);

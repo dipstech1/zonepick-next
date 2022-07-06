@@ -1,3 +1,4 @@
+import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Card, Col, Row } from "react-bootstrap";
@@ -13,6 +14,8 @@ const MyAccountLayout = ({
   buttoClick,
 }) => {
   const router = useRouter();
+
+  const userRole= getCookie('user_role')
 
   const onButtonClick = () => {
     if (buttoClick instanceof Function) {
@@ -77,6 +80,8 @@ const MyAccountLayout = ({
                       </a>
                     </Link>
                   </li>
+                  { userRole === 'ADMIN' ?
+                    <>
                   <li className="nav-item">
                     <small className="hr-sect">Admin Section</small>
                   </li>
@@ -108,6 +113,8 @@ const MyAccountLayout = ({
                       </a>
                     </Link>
                   </li>
+                  </> : null
+                  }
                 </ul>
               </Card.Body>
             </Card>

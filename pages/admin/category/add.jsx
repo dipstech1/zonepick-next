@@ -111,4 +111,4 @@ const AddCategoryPage = () => {
     </>
   );
 };
-export default withAuth(AddCategoryPage);
+export default withAuth(AddCategoryPage,['ADMIN']);

@@ -124,4 +124,4 @@ const Category = () => {
     </>
   );
 };
-export default withAuth(Category);
+export default withAuth(Category,['ADMIN']);

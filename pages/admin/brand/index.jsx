@@ -157,4 +157,4 @@ const BrandPage = () => {
     </>
   );
 };
-export default withAuth(BrandPage);
+export default withAuth(BrandPage,['ADMIN']);

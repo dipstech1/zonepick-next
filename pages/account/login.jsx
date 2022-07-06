@@ -57,6 +57,7 @@ export default function Login() {
       setCookies("Login", "LoggedIn", { maxAge: 60 * 30 });
       setCookies("Cart", data?.cartPending, { maxAge: 60 * 30 });
       setCookies("user_name", data?.profile[0]?.name, { maxAge: 60 * 30 });
+      setCookies("user_role", data?.profile[0]?.roletype, { maxAge: 60 * 30 });
 
       toast.success("Login Successful");
       router.replace(returnUrl);

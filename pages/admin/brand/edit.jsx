@@ -117,4 +117,4 @@ const EditBrandPage = () => {
     </>
   );
 };
-export default withAuth(EditBrandPage);
+export default withAuth(EditBrandPage,['ADMIN']);

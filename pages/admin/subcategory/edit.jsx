@@ -117,4 +117,4 @@ const EditCategoryPage = () => {
     </>
   );
 };
-export default withAuth(EditCategoryPage);
+export default withAuth(EditCategoryPage,['ADMIN']);

@@ -165,4 +165,4 @@ const SubCategoryPage = () => {
     </>
   );
 };
-export default withAuth(SubCategoryPage);
+export default withAuth(SubCategoryPage,['ADMIN']);

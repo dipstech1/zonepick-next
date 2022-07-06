@@ -17,6 +17,8 @@ const Navbars = ({ cartPending = 0 }) => {
     deleteCookie("userid");
     deleteCookie("refreshtoken");
     deleteCookie("Cart");
+    deleteCookie("user_name");
+    deleteCookie("user_role");
     router.replace("/account/login?returnUrl=/");
   };
 

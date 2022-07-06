@@ -29,4 +29,4 @@ const SubCategory = () => {
     </>
   );
 };
-export default withAuth(SubCategory);
+export default withAuth(SubCategory,['ADMIN']);

@@ -68,7 +68,12 @@ const CategoryDetailsPage = () => {
         setProductDataTemp([...productDataTemp, ...resp.data.data]);
         setTotal(resp.data.total);
         if (subcategoryId === 0) {
-          setCategoryData({ ...categoryData, categoryId: resp.data.data[0].category.id, categoryName: resp.data.data[0].category.categoryName, subcategoryId: 0 });
+          setCategoryData({
+            ...categoryData,
+            categoryId: resp.data.data[0].category.id,
+            categoryName: resp.data.data[0].category.categoryName,
+            subcategoryId: 0,
+          });
           getSubcategoryItems(resp.data.data[0].category.categoryName);
         } else {
           setCategoryData({
@@ -80,7 +85,8 @@ const CategoryDetailsPage = () => {
           });
         }
       } else {
-        setCategoryData({...categoryData,subcategoryId:subcategoryId})
+       // setCategoryData({ ...categoryData, subcategoryId: subcategoryId });
+        setTotal(0);
       }
       console.log(resp.data);
     } catch (error) {
@@ -122,6 +128,8 @@ const CategoryDetailsPage = () => {
   const onSubcategoryClick = async (item, index) => {
     console.log(categoryData);
 
+    setCategoryData({ ...categoryData, subcategoryId: item.id, subcategoryName: item.subcategoryName });
+
     productData = [];
     setProductData(productData);
     router.push("/category/" + categoryData.categoryId + "/" + item.id);
@@ -150,7 +158,7 @@ const CategoryDetailsPage = () => {
             )}
           </Breadcrumb>
 
-          <Row className="mb-3 d-flex flex-row flex-nowrap overflow-auto">
+          <Row className="mb-3 d-flex flex-row flex-nowrap overflow-auto text-center">
             {subcategoryList?.length > 0 &&
               subcategoryList?.map((data, i) => (
                 <Col
@@ -164,7 +172,11 @@ const CategoryDetailsPage = () => {
                   }}
                 >
                   <Card className="shadow-sm">
-                    <Card.Body className={["p-1 text-center", data?.id === categoryData.subcategoryId ? "bg-deep-purple-900 text-white":null ].join(" ")}>{data?.subcategoryName}</Card.Body>
+                    <Card.Body
+                      className={["p-1 text-center", data?.id === categoryData.subcategoryId ? "bg-deep-purple-900 text-white" : null].join(" ")}
+                    >
+                      {data?.subcategoryName}
+                    </Card.Body>
                   </Card>
                 </Col>
               ))}
