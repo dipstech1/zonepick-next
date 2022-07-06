@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const path = require("path");
 const nextConfig = {
+  trailingSlash: true,
+  exportTrailingSlash: true,
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
