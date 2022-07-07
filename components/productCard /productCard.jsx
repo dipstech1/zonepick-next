@@ -22,7 +22,7 @@ const ProductCard = ({ productDetails, addToWishList }) => {
     <>
       <Card onClick={goToDetails} style={{cursor: 'pointer'}} className='product-row shadow-sm'>
         <div className="image-container">
-          <Card.Img variant="top" src={"/uploads/product/" + productDetails?.product?.images[0]?.url} style={{ height: "250px", objectFit: "fill" }} />
+          <Card.Img variant="top" src={"/uploads/product/" + productDetails?.product?.images[0]?.url} style={{ height: 250, width: "100%" }} />
           <div className="top-left ">{productDetails?.purpose}</div>
         </div>
         <Card.Body>

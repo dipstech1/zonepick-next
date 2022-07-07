@@ -34,7 +34,7 @@ const Navbars = ({ cartPending = 0 }) => {
   }, []);
 
   return (
-    <div className="header" id="nav_main">
+    <div className="header fixed-top" id="nav_main">
       <Navbar bg="deep-purple-900" variant="dark" fixed="top" collapseOnSelect expand="md">
         <Container>
           <Navbar.Brand href="#home">eMetaComm</Navbar.Brand>
