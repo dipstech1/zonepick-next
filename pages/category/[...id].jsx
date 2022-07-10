@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
-import ProductCard from "../../components/productCard /productCard";
+import ProductCard from "../../components/productCard/productCard";
 import axios from "../../utils/axios.interceptor";
 import common from "../../utils/commonService";
 
