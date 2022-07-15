@@ -349,7 +349,7 @@ const AddProductPage = () => {
                     </Row>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-2 position-relative" controlId="subcategory">
+                        <Form.Group className="mb-2 position-relative" controlId="specifications">
                           <Form.Label className="fw-bold">Specifications:</Form.Label>
                           <CreatableSelect
                             components={components}
@@ -369,7 +369,7 @@ const AddProductPage = () => {
                             placeholder="Type specifications and press enter"
                             value={formik.values.specifications}
                           />
-                          <Form.Control.Feedback type="invalid">{formik.errors.subcategory}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{formik.errors.specifications}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
                     </Row>

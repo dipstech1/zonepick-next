@@ -20,6 +20,7 @@ const ProductCard = ({ productDetails, addToWishList }) => {
 
   return (
     <>
+    { productDetails.product?.name ?
       <Card onClick={goToDetails} style={{cursor: 'pointer'}} className='product-row shadow-sm'>
         <div className="image-container">
           <Card.Img variant="top" src={"/uploads/product/" + productDetails?.product?.images[0]?.url} style={{ height: 250, width: "100%" }} />
@@ -45,12 +46,13 @@ const ProductCard = ({ productDetails, addToWishList }) => {
               </span>
             </div>
             <div className="d-block  mb-1">
-              <span className="fw-bold">Seller :</span> {productDetails.seller_details.name}
+              <span className="fw-bold">Seller :</span> {productDetails?.seller_details?.name}
             </div>
           </div>
           <Card.Text></Card.Text>
         </Card.Body>
-      </Card>
+      </Card> : null
+      }
     </>
   );
 };
