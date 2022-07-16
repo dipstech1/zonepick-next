@@ -1,11 +1,8 @@
 import { getCookie } from "cookies-next";
-
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
-
+import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 import Layout from "../components/Layout/layout";
 import ProductCard from "../components/productCard/productCard";
 import ProductFilter from "../components/productFilter/productFilter";
@@ -27,16 +24,16 @@ export default function Home() {
   useEffect(() => {
     const userId = getCookie("userid");
     setUserId(userId);
-    getProductData(userId, "BUY");
+    getProductData("BUY");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getMoreProduct = () => {
     page += 1;
-    getProductData(userId, key);
+    getProductData(key);
   };
 
-  const getProductData = async (userId, key) => {
+  const getProductData = async (key) => {
     setLoading(true);
     setProductData([]);
     let url = key === "BUY" ? "products/purchase" : "products/rent";
@@ -69,12 +66,14 @@ export default function Home() {
     page = 0;
     setProductData(productData);
     setKey(k);
-    getProductData(userId, k);
+    getProductData(k);
   };
 
   const onSearchProducts = async (sendData) => {
     setLoading(true);
-    setProductData([]);
+    productData = [];
+    page = 0;
+    setProductData(productData);
     setTotal(0);
     let url = "products/filter";
 
@@ -96,8 +95,6 @@ export default function Home() {
 
     setLoading(false);
   };
-
-  
 
   return (
     <>
@@ -136,12 +133,12 @@ export default function Home() {
               <Col md={4}>
                 <Button
                   variant="default"
-                  className="float-end me-2"
+                  className="float-end me-2 mt-2"
                   onClick={(e) => {
                     !showFilter ? setShowFilter(true) : setShowFilter(false);
                   }}
                 >
-                  <i className="fa fa-filter"></i>
+                  <i className="fa fa-filter ms-2"></i> Filter Product
                 </Button>
               </Col>
             </Row>
@@ -149,7 +146,15 @@ export default function Home() {
             <Row>
               <Col xs={12} className="position-relative">
                 <div id="display-search" className={showFilter ? "visible" : null}>
-                  <ProductFilter onSearch={onSearchProducts} onClearSearch={getProductData}></ProductFilter>
+                  <ProductFilter
+                    onSearch={onSearchProducts}
+                    onClearSearch={() => {
+                      productData = [];
+                      page = 0;
+                      setProductData(productData);
+                      getProductData(key);
+                    }}
+                  ></ProductFilter>
                 </div>
               </Col>
             </Row>

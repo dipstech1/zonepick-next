@@ -11,7 +11,7 @@ const components = {
   DropdownIndicator: null,
 };
 
-const ProductFilter = ({ onSearch,onClearSearch }) => {
+const ProductFilter = ({ onSearch, onClearSearch }) => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [subcategoryOptions, setSubcategoryOptions] = useState([]);
 
@@ -19,9 +19,26 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
     initialValues: {
       category: "",
       subcategory: "",
-      optionalField1: [],
+      optionalField1: [
+        {
+          label: 'Amoled',
+          value: 'Amoled',
+          spec: 'Amoled',
+        }
+      ],
       optionalField1Value: "",
-      optionalField2: [],
+      optionalField2: [
+        {
+          label: 'Android',
+          value: 'Android',
+          spec: 'Android',
+        },
+        {
+          label: 'iOS',
+          value: 'iOS',
+          spec: 'iOS',
+        }
+      ],
       optionalField2Value: "",
     },
     validationSchema: Yup.object({
@@ -75,7 +92,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
         }
         setCategoryOptions([...item]);
       }
-      console.log(resp.data);
+     // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -96,7 +113,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
         }
         setSubcategoryOptions([...item]);
       }
-      console.log(resp.data);
+    //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -149,11 +166,9 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
     }
   };
 
-  const onClearClick = ()=> {
-
-    onClearSearch('Y')
-
-  }
+  const onClearClick = () => {
+    onClearSearch("Y");
+  };
 
   return (
     <>
@@ -165,6 +180,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
                 <Form.Group className="mb-2 position-relative" controlId="category">
                   <Form.Label className="fw-bold">Category:</Form.Label>
                   <Select
+                    id="category"
                     menuPlacement="bottom"
                     options={categoryOptions}
                     placeholder="Select Category"
@@ -183,6 +199,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
                 <Form.Group className="mb-2 position-relative" controlId="subcategory">
                   <Form.Label className="fw-bold">Subcategory:</Form.Label>
                   <Select
+                    id="subcategory"
                     menuPlacement="bottom"
                     options={subcategoryOptions}
                     placeholder="Select Subcategory"
@@ -202,6 +219,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
                 <Form.Group className="mb-2 position-relative" controlId="optionalField1">
                   <Form.Label className="fw-bold">optionalField1:</Form.Label>
                   <CreatableSelect
+                    id="optionalField1"
                     components={components}
                     inputValue={formik.values.optionalField1Value}
                     isClearable
@@ -227,6 +245,7 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
                 <Form.Group className="mb-2 position-relative" controlId="optionalField2">
                   <Form.Label className="fw-bold">optionalField2:</Form.Label>
                   <CreatableSelect
+                    id="optionalField2"
                     components={components}
                     inputValue={formik.values.optionalField2Value}
                     isClearable
@@ -251,12 +270,15 @@ const ProductFilter = ({ onSearch,onClearSearch }) => {
 
             <Row className="mt-3">
               <Col xd={12}>
-              <Button variant="danger" className="float-md-end me-2" onClick={onClearClick}>
-                 Clear Search
+                <div className='float-md-end'>
+                <Button variant="danger" className="me-2" onClick={onClearClick}>
+                  Clear Search
                 </Button>
-                <Button variant="deep-purple-900" className="float-md-end me-2" onClick={formik.handleSubmit}>
+                <Button variant="deep-purple-900" className=" me-2" onClick={formik.handleSubmit}>
                   Search Product
                 </Button>
+                </div>
+                
               </Col>
             </Row>
           </Form>

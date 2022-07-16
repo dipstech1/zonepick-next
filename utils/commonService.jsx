@@ -124,7 +124,8 @@ const calculateRating = (product) => {
   }
 };
 
-const calculateAvgRating = (product) => {
+const calculateAvgRating = (product) => { 
+
   const total =
     parseFloat(product?.AvgProductDeliveryRating || 0) +
     parseFloat(product?.AvgProductPackagingRating || 0) +
