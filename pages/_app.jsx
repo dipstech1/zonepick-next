@@ -5,11 +5,13 @@ import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import GlobalContext from "../utils/global-context";
+import 'animate.css';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     import("@egjs/view360");
     import("bootstrap/dist/js/bootstrap");
+    
   
   }, []);
   const [state, setState] = useState({

@@ -2,7 +2,7 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 
 const SellerInfo = ({ sellerData }) => {
- // console.log(sellerData);
+  // console.log(sellerData);
 
   return (
     <Card className="shadow-sm">
@@ -20,7 +20,15 @@ const SellerInfo = ({ sellerData }) => {
             <Row>
               <Col xs="12" className="d-flex">
                 <div>
-                  <img src={"/uploads/avator/" + sellerData.profile_image} className="img-avatar" alt="..." style={{ width: 70, height: 70 }} />
+                  <img
+                    src={"/uploads/avator/" + sellerData.profile_image}
+                    className="img-avatar"
+                    alt="..."
+                    style={{ width: 70, height: 70 }}
+                    onError={(e) => {
+                      e.currentTarget.src = "/uploads/avator/1.jpg";
+                    }}
+                  />
                 </div>
                 <div className="ps-4">
                   <span className="text-dark mb-0 d-block">
@@ -47,12 +55,12 @@ const SellerInfo = ({ sellerData }) => {
             </Row>
 
             <Row className="mt-3">
-              <Col xs={12}  className="d-grid gap-2 ps-3 pe-3 mt-2">
+              <Col xs={12} className="d-grid gap-2 ps-3 pe-3 mt-2">
                 <Button variant="primary" size="sm">
                   <i className="fas fa-phone me-2" aria-hidden="true"></i> Call Seller
                 </Button>
               </Col>
-              <Col xs={12}  className="d-grid gap-2 ps-3 pe-3 mt-2">
+              <Col xs={12} className="d-grid gap-2 ps-3 pe-3 mt-2">
                 <Button variant="indigo" size="sm">
                   <i className="fas fa-comments me-2" aria-hidden="true"></i> Chat with Seller
                 </Button>

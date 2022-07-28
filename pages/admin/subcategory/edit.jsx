@@ -23,7 +23,7 @@ const EditCategoryPage = () => {
       id: "",
     },
     validationSchema: Yup.object({
-      subcategoryName: Yup.string().required("Enter Subcategory Name"),
+      subcategoryName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
       //  console.log(JSON.stringify(values, null, 2));

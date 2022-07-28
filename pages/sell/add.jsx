@@ -36,21 +36,23 @@ const AddAdvtPage = () => {
     initialValues: {
       productName: "NA",
       productDetailsData: "NA2",
-      item_description: "",
+      itemDescription: "",
       productId: "",
-      product_status: "",
+      productStatus: "",
       price: "",
       purpose: "",
       quantity: "",
-      seller_details: "",
+      sellerDetails: "",
+      sellerRewardPercent: ""
     },
     validationSchema: Yup.object({
-      productId: Yup.string().required("Select a Product Name"),
-      product_status: Yup.string().required("Select a Product Status"),
-      price: Yup.number().required("Enter Price").min(1, "Must be greater than 0"),
-      purpose: Yup.string().required("Select a Product Purpose"),
-      quantity: Yup.number().required("Enter Quantity").min(1, "Must be greater than 0"),
-      item_description: Yup.string().required("Select a Product Description"),
+      productId: Yup.string().required("Required"),
+      productStatus: Yup.string().required("Required"),
+      price: Yup.number().required("Required").min(1, "Must be greater than 0"),
+      purpose: Yup.string().required("Required"),
+      quantity: Yup.number().required("Required").min(1, "Must be greater than 0"),
+      itemDescription: Yup.string().required("Required"),
+      sellerRewardPercent: Yup.number().required("Required").min(1, "Must be greater than 0"),
     }),
     onSubmit: (values) => {
       //  console.log(JSON.stringify(values, null, 2));
@@ -87,7 +89,7 @@ const AddAdvtPage = () => {
   const addProduct = async (product) => {
     // let sendData = values
 
-    product.seller_details = getCookie("userid");
+    product.sellerDetails = getCookie("userid");
     console.log(product);
 
     try {
@@ -146,18 +148,18 @@ const AddAdvtPage = () => {
 
                     <Row>
                       <Col md={6}>
-                        <Form.Group className="mb-2 position-relative" controlId="product_status">
+                        <Form.Group className="mb-2 position-relative" controlId="productStatus">
                           <Form.Label className="fw-bold">Status:</Form.Label>
                           <Select
                             options={statusOptions}
                             placeholder="Select Product Status"
-                            defaultValue={formik.values.product_status}
+                            defaultValue={formik.values.productStatus}
                             onChange={(selectedOption) => {
-                              formik.setFieldValue("product_status", selectedOption.value);
+                              formik.setFieldValue("productStatus", selectedOption.value);
                             }}
-                            className={formik.touched.product_status && formik.errors.product_status ? "is-invalid" : ""}
+                            className={formik.touched.productStatus && formik.errors.productStatus ? "is-invalid" : ""}
                           />
-                          <Form.Control.Feedback type="invalid">{formik.errors.product_status}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{formik.errors.productStatus}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
                       <Col md={6}>
@@ -207,22 +209,37 @@ const AddAdvtPage = () => {
                           <Form.Control.Feedback type="invalid">{formik.errors.quantity}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
+                      <Col>
+                        <Form.Group className="mb-2 position-relative" controlId="sellerRewardPercent">
+                          <Form.Label className="fw-bold">Reward Percent:</Form.Label>
+                          <Form.Control
+                            type="number"
+                            name="sellerRewardPercent"
+                            placeholder="Enter Reward Percent"
+                            value={formik.values.sellerRewardPercent}
+                            onChange={formik.handleChange}
+                            maxLength="10"
+                            className={formik.touched.sellerRewardPercent && formik.errors.sellerRewardPercent ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">{formik.errors.sellerRewardPercent}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
                     </Row>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-3 mt-2 position-relative" controlId="item_description">
+                        <Form.Group className="mb-3 mt-2 position-relative" controlId="itemDescription">
                           <Form.Control
                             as="textarea"
-                            name="item_description"
+                            name="itemDescription"
                             rows={4}
                             placeholder="Product Description"
                             style={{ resize: "none" }}
-                            value={formik.values.item_description}
+                            value={formik.values.itemDescription}
                             onChange={formik.handleChange}
-                            className={formik.touched.item_description && formik.errors.item_description ? "is-invalid" : ""}
+                            className={formik.touched.itemDescription&& formik.errors.itemDescription? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">
-                            {formik.errors.item_description}
+                            {formik.errors.itemDescription}
                           </Form.Control.Feedback>
                         </Form.Group>
                       </Col>

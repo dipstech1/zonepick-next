@@ -136,7 +136,7 @@ export default function ContactUs () {
                   </Form.Group>
 
                   <Form.Group controlId="submitButton" className="float-end mt-3">
-                    <Button variant="deep-purple-900" type="submit" size="sm">
+                    <Button variant="deep-purple-900 btn-rounded" type="submit" size="sm">
                       Send Message
                     </Button>
                   </Form.Group>

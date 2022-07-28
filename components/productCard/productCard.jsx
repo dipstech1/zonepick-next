@@ -42,11 +42,11 @@ const ProductCard = ({ productDetails, addToWishList }) => {
                 <i className="fa fa-star"></i> {common.calculateAvgRating(productDetails?.product?.name ? productDetails : productDetails?.items[0]).rating}
               </span>
               <span className="ms-2 text-muted">
-                <small>{productDetails?.product?.name ? productDetails?.CountOfPeopleVoted : productDetails?.items[0]?.CountOfPeopleVoted}</small>
+                <small>({productDetails?.product?.name ? productDetails?.countOfPeopleVoted : productDetails?.items[0]?.countOfPeopleVoted})</small>
               </span>
             </div>
             <div className="d-block  mb-1">
-              <span className="fw-bold">Seller :</span> {productDetails?.product?.name ? productDetails?.seller_details?.name : productDetails?.items[0]?.seller_details?.name }
+              <span className="fw-bold">Seller :</span> {productDetails?.product?.name ? productDetails?.sellerDetails?.name : productDetails?.items[0]?.seller_details?.name }
             </div>
           </div>
           <Card.Text></Card.Text>

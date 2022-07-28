@@ -7,7 +7,7 @@ const QuantityChanger = ({ value,item = [], onChangeQuantity }) => {
 
   useEffect(() => {
     console.log(value);
-    if (value < 10) {
+    if (value < 10) { 
       const a = "0" + value;
       setQuantity(a);
     } else {

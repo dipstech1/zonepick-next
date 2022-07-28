@@ -158,7 +158,7 @@ const WishList = () => {
                                           <i className="fa fa-star"></i> {common.calculateAvgRating(data?.productId[0]).rating}
                                         </span>
                                         <span className="ms-2 text-muted">
-                                          <small>({data?.productId[0]?.CountOfPeopleVoted})</small>
+                                          <small>({data?.productId[0]?.countOfPeopleVoted})</small>
                                         </span>
                                       </div>
                                       <span className="mt-2 d-inline-block">

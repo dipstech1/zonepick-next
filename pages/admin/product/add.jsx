@@ -26,8 +26,18 @@ const AddProductPage = () => {
     DropdownIndicator: null,
   };
 
+  const [brandOptions, setBrandOptions] = useState([]);
+
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [subcategoryOptions, setSubcategoryOptions] = useState([]);
+
+  const [imageData, setImageData] = useState({
+    productImage: [],
+    threeSixtyImage: [],
+    threedImage: []
+  });
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -37,20 +47,27 @@ const AddProductPage = () => {
       subcategory: "",
       price: "",
       brand: "",
+      brandId: "",
       userid: "",
       arimageurl: "",
       arimagedata: "",
       images: [{ url: "phone.png" }, { url: "phonesize.png" }],
       specifications: [],
       specificationsValue: "",
+      productRewardPercent: "",
+      optionalField1: "",
+      optionalField2: "",
+      optionalField3: "",
+      optionalField4: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Enter Product Name").min(2, "Must be at least 2 characters"),
-      brand: Yup.string().required("Enter Brand Name").min(2, "Must be at least 2 characters"),
-      price: Yup.number().required("Enter Price").min(1, "Must be greater than 0"),
-      description: Yup.string().required("Enter Description").min(5, "Must be at least 5 characters"),
-      category: Yup.string().required("Select a Category"),
-      subcategory: Yup.string().required("Select a Subcategory"),
+      name: Yup.string().required("Required").min(2, "Must be at least 2 characters"),
+      brand: Yup.string().required("Required").min(2, "Must be at least 2 characters"),
+      price: Yup.number().required("Required").min(1, "Must be greater than 0"),
+      description: Yup.string().required("Required").min(5, "Must be at least 5 characters"),
+      category: Yup.string().required("Required"),
+      subcategory: Yup.string().required("Required"),
+      productRewardPercent: Yup.number().required("Required").min(0, "Must be 0 Or greater than 0"),
     }),
     onSubmit: (values) => {
       console.log(JSON.stringify(values, null, 2));
@@ -62,8 +79,26 @@ const AddProductPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getBrandtList();
     getCategorytList();
   }, []);
+
+  const getBrandtList = async () => {
+    try {
+      let resp = await axios.get("brand");
+      if (resp.data.data.length > 0) {
+        const item = [];
+        for (let i = 0; i < resp.data.data.length; i++) {
+          item.push({ value: resp.data.data[i].id, label: resp.data.data[i].brandName });
+        }
+        setBrandOptions([...item]);
+      }
+      console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
 
   const getCategorytList = async () => {
     try {
@@ -75,7 +110,7 @@ const AddProductPage = () => {
         }
         setCategoryOptions([...item]);
       }
-      console.log(resp.data);
+      // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -96,7 +131,7 @@ const AddProductPage = () => {
         }
         setSubcategoryOptions([...item]);
       }
-      console.log(resp.data);
+      // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -166,12 +201,25 @@ const AddProductPage = () => {
     return data;
   };
 
+  const getBrandData = () => {
+    const data = brandOptions.filter((e) => {
+      return e.label === formik.values.brand;
+      // return e.value === parseInt(formik.values.brandId);
+    });
+    // console.log(data);
+    return data;
+  };
+
   const onNextClick = () => {
     setStep({ ...step, completeStep: 3, currentStep: 3 });
   };
 
   const imageLoaded = (data) => {
-    console.log(data);
+
+    console.log(data)
+
+    setImageData({imageData, productImage:data})
+   
   };
 
   const image360Loaded = (data) => {
@@ -179,7 +227,11 @@ const AddProductPage = () => {
   };
 
   const onSubmitClick = async () => {
-    let product = {
+
+    console.log(imageData)
+
+
+   /* let product = {
       name: formik.values.name,
       description: formik.values.description,
       category: formik.values.category,
@@ -198,7 +250,7 @@ const AddProductPage = () => {
       let added = await axios.post("admin/create-product-entry", product);
 
       if (added.data.acknowledge) {
-        router.replace('/admin/product');
+        router.replace("/admin/product");
         toast.success("Product added Successfully");
       } else {
         toast.error("Fail");
@@ -206,7 +258,7 @@ const AddProductPage = () => {
     } catch (error) {
       console.log(error);
       toast.error("Fail");
-    }
+    }*/
   };
 
   return (
@@ -229,12 +281,17 @@ const AddProductPage = () => {
             <div className="step-form">
               <ul>
                 <li
-                  className={step.currentStep === 1 || step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"}
+                  className={
+                    step.currentStep === 1 || step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"
+                  }
                   onClick={() => udpdateStep(1)}
                 >
                   Product Details
                 </li>
-                <li className={step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"} onClick={() => udpdateStep(2)}>
+                <li
+                  className={step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"}
+                  onClick={() => udpdateStep(2)}
+                >
                   Photos
                 </li>
                 <li className={step.currentStep === 3 ? "active" : "deactive"} onClick={() => udpdateStep(3)}>
@@ -263,21 +320,24 @@ const AddProductPage = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={8}>
+                      <Col md={6}>
                         <Form.Group className="mb-2 position-relative" controlId="brand">
-                          <Form.Label className="fw-bold">Brand Name:</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="brand"
-                            placeholder="Enter Brand Name"
-                            value={formik.values.brand}
-                            onChange={formik.handleChange}
+                          <Form.Label className="fw-bold">Brand:</Form.Label>
+                          <Select
+                            menuPlacement="bottom"
+                            options={brandOptions}
+                            placeholder="Select Brand"
+                            value={getBrandData()}
+                            onChange={(selectedOption) => {
+                              formik.setFieldValue("brand", selectedOption.label);
+                              formik.setFieldValue("brandId", selectedOption.value);
+                            }}
                             className={formik.touched.brand && formik.errors.brand ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.brand}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
-                      <Col md={4}>
+                      <Col md={3}>
                         <Form.Group className="mb-2 position-relative" controlId="price">
                           <Form.Label className="fw-bold">Price:</Form.Label>
                           <Form.Control
@@ -291,7 +351,28 @@ const AddProductPage = () => {
                           <Form.Control.Feedback type="invalid">{formik.errors.price}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
+                      <Col md={3}>
+                        <Form.Group className="mb-2 position-relative" controlId="productRewardPercent">
+                          <Form.Label className="fw-bold">Reward Percent:</Form.Label>
+                          <Form.Control
+                            type="number"
+                            name="productRewardPercent"
+                            placeholder="Enter Reward Percent"
+                            value={formik.values.productRewardPercent}
+                            onChange={formik.handleChange}
+                            className={
+                              formik.touched.productRewardPercent && formik.errors.productRewardPercent
+                                ? "is-invalid"
+                                : ""
+                            }
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            {formik.errors.productRewardPercent}
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
                     </Row>
+
                     <Row>
                       <Col>
                         <Form.Group className="mb-2 position-relative" controlId="description">
@@ -374,6 +455,70 @@ const AddProductPage = () => {
                       </Col>
                     </Row>
 
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-2 position-relative" controlId="optionalField1">
+                          <Form.Label className="fw-bold">Optional Field-1:</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="optionalField1"
+                            placeholder="Enter Optional Field-1"
+                            value={formik.values.optionalField1}
+                            onChange={formik.handleChange}
+                            className={formik.touched.optionalField1 && formik.errors.optionalField1 ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">{formik.errors.optionalField1}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
+
+                      <Col md={6}>
+                        <Form.Group className="mb-2 position-relative" controlId="optionalField2">
+                          <Form.Label className="fw-bold">Optional Field-2:</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="optionalField2"
+                            placeholder="Enter Optional Field-2"
+                            value={formik.values.optionalField2}
+                            onChange={formik.handleChange}
+                            className={formik.touched.optionalField2 && formik.errors.optionalField2 ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">{formik.errors.optionalField2}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-2 position-relative" controlId="optionalField3">
+                          <Form.Label className="fw-bold">Optional Field-3:</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="optionalField3"
+                            placeholder="Enter Optional Field-3"
+                            value={formik.values.optionalField3}
+                            onChange={formik.handleChange}
+                            className={formik.touched.optionalField3 && formik.errors.optionalField3 ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">{formik.errors.optionalField3}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
+
+                      <Col md={6}>
+                        <Form.Group className="mb-2 position-relative" controlId="optionalField4">
+                          <Form.Label className="fw-bold">Optional Field-4:</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="optionalField4"
+                            placeholder="Enter Optional Field-4"
+                            value={formik.values.optionalField4}
+                            onChange={formik.handleChange}
+                            className={formik.touched.optionalField4 && formik.errors.optionalField4 ? "is-invalid" : ""}
+                          />
+                          <Form.Control.Feedback type="invalid">{formik.errors.optionalField4}</Form.Control.Feedback>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
                     <Form.Group controlId="submitButton" className="float-end mt-3">
                       <Button variant="deep-purple-900" type="submit">
                         Next
@@ -386,18 +531,29 @@ const AddProductPage = () => {
               {step.currentStep === 2 ? (
                 <Container>
                   <Row>
-                    <Col id={"editTabs"} >                      
+                    <Col id={"editTabs"}>
                       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3 nav-fill">
-                        <Tab eventKey="home" title="Product Image">
-                          <ImageUploader maxUpload={5} info={"Add Product Photos"} onSelectionChanged={imageLoaded} id={"normal"}></ImageUploader>
+                        <Tab eventKey="pimage" title="Product Image">
+                          <ImageUploader
+                            maxUpload={5}
+                            info={"Add Product Photos"}
+                            onSelectionChanged={imageLoaded}
+                            id={"normal"} 
+                            imagesList={imageData.productImage}
+                          ></ImageUploader>
                         </Tab>
-                        <Tab eventKey="profile" title={"360  Image"}>
-                          <ImageUploader maxUpload={2} info={"Add 360  Photos"} onSelectionChanged={image360Loaded} id={"img360"}></ImageUploader>
+                        <Tab eventKey="360image" title={"360  Image"}>
+                          <ImageUploader
+                            maxUpload={2}
+                            info={"Add 360  Photos"}
+                            onSelectionChanged={image360Loaded}
+                            id={"img360"}
+                          ></ImageUploader>
                         </Tab>
-                        <Tab eventKey="contact" title="3d Model">
+                        <Tab eventKey="3d" title="3d Model">
                           CC
                         </Tab>
-                      </Tabs>                     
+                      </Tabs>
                     </Col>
                   </Row>
                   <Row className="mt-5">
@@ -445,10 +601,10 @@ const AddProductPage = () => {
                   </Row>
                   <Row>
                     <Col md={6} className="mt-2">
-                      <b>Category:</b> {getCategoryData()[0].label}
+                      <b>Category:</b> {getCategoryData()[0]?.label}
                     </Col>
                     <Col md={6} className="mt-2">
-                      <b>Subcategory:</b> {getSubategoryData()[0].label}
+                      <b>Subcategory:</b> {getSubategoryData()[0]?.label}
                     </Col>
                   </Row>
                   <Row>
@@ -500,4 +656,4 @@ const AddProductPage = () => {
     </>
   );
 };
-export default withAuth(AddProductPage,['ADMIN']);
+export default withAuth(AddProductPage, ["ADMIN"]);

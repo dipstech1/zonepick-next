@@ -1,12 +1,12 @@
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 const Rating = ({
   ProductData = {
-    AvgProductRating: "0.0",
-    AvgProductDeliveryRating: "0.0",
-    AvgProductQualityRating: "0.0",
-    AvgProductPackagingRating: "0.0",
-    CountOfPeopleVoted: "0.0"
+    avgProductRating: "0.0",
+    avgProductDeliveryRating: "0.0",
+    avgProductQualityRating: "0.0",
+    avgProductPackagingRating: "0.0",
+    countOfPeopleVoted: "0.0"
   },
 }) => {
   return (
@@ -16,7 +16,7 @@ const Rating = ({
           <Card className="shadow-sm">
             <Card.Header className="border-bottom-0 bg-transparent">
               <Card.Title className="fs-5">
-                <span className="border-bottom border-deep-purple-900 border-2">Rating ({ProductData.CountOfPeopleVoted})</span>
+                <span className="border-bottom border-deep-purple-900 border-2">Rating ({ProductData.countOfPeopleVoted})</span>
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -24,7 +24,7 @@ const Rating = ({
               <div className="d-flex mb-2 ms-2">
                 <StarRatings
                   starDimension="17px"
-                  rating={parseInt(ProductData?.AvgProductRating) | 0}
+                  rating={parseInt(ProductData?.avgProductRating) | 0}
                   starRatedColor="#311b92"
                   numberOfStars={5}
                   name="usertRating"
@@ -35,7 +35,7 @@ const Rating = ({
               <div className="d-flex mb-2 ms-2">
                 <StarRatings
                   starDimension="17px"
-                  rating={parseInt(ProductData?.AvgProductDeliveryRating) | 0}
+                  rating={parseInt(ProductData?.avgProductDeliveryRating) | 0}
                   starRatedColor="#311b92"
                   numberOfStars={5}
                   name="usertRating"
@@ -46,7 +46,7 @@ const Rating = ({
               <div className="d-flex mb-2 ms-2">
                 <StarRatings
                   starDimension="17px"
-                  rating={parseInt(ProductData?.AvgProductQualityRating) | 0}
+                  rating={parseInt(ProductData?.avgProductQualityRating) | 0}
                   starRatedColor="#311b92"
                   numberOfStars={5}
                   name="usertRating"
@@ -57,7 +57,7 @@ const Rating = ({
               <div className="d-flex mb-2 ms-2">
                 <StarRatings
                   starDimension="17px"
-                  rating={parseInt(ProductData?.AvgProductPackagingRating) | 0}
+                  rating={parseInt(ProductData?.avgProductPackagingRating) | 0}
                   starRatedColor="#311b92"
                   numberOfStars={5}
                   name="usertRating"

@@ -115,11 +115,11 @@ const Orders = () => {
                                                 <i className="fa fa-star"></i> {common.calculateAvgRating(data?.productId[0]).rating}
                                               </span>
                                               <span className="ms-2 text-muted">
-                                                <small>({data?.productId[0]?.CountOfPeopleVoted})</small>
+                                                <small>({data?.productId[0]?.countOfPeopleVoted})</small>
                                               </span>
-                                            </div>
+                                            </div> 
                                             <div className="d-block text-muted">Brand: {data?.productId[0]?.product?.brand}</div>
-                                            <div className="d-block text-muted">Seller: {data?.productId[0]?.seller_details?.name}</div>
+                                            <div className="d-block text-muted">Seller: {data?.productId[0]?.sellerDetails?.name}</div>
                                           </div>
                                         </Col>
                                         <Col md={5}>

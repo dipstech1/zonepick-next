@@ -71,7 +71,7 @@ const SellerProductPage = () => {
                             <i className="fa fa-star"></i> {common.calculateAvgRating(data).rating}
                           </span>
                           <span className="ms-2 text-muted">
-                            <small>({data?.CountOfPeopleVoted})</small>
+                            <small>({data?.countOfPeopleVoted})</small>
                           </span>
                         </div>
                         <div className="d-block  mb-1">

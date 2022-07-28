@@ -76,7 +76,7 @@ const MyAccount = () => {
             {isLoaded ? (
               <Row className="mt-4">
                 <Col md={4} lg={3}>
-                  <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profile_image} alt="Profile Picture" />
+                  <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profileImage} alt="Profile Picture" />
                 </Col>
                 <Col md={8} lg={9}>
                   <Row>

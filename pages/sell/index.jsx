@@ -144,7 +144,7 @@ const MyProductList = () => {
                                           <i className="fa fa-star"></i> {common.calculateAvgRating(data).rating}
                                         </span>
                                         <span className="ms-2 text-muted">
-                                          <small>({data?.CountOfPeopleVoted})</small>
+                                          <small>({data?.countOfPeopleVoted})</small>
                                         </span>
                                       </div>
                                       <span className="mt-2 d-inline-block">

@@ -2,15 +2,15 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import common from "../../utils/commonService";
 const Review = ({ comments = [] }) => {
- // console.log(comments);
+ // console.log(comments); 
 
   const calculateRating = (data) => {
-    const ProductRating = parseInt(data.ProductRating);
-    const ProductDeliveryRating = parseInt(data.ProductDeliveryRating);
-    const ProductQualityRating = parseInt(data.ProductQualityRating);
-    const ProductPackagingRating = parseInt(data.ProductPackagingRating);
-    const SellerRating = parseInt(data.SellerRating);
-    const SellerCommunicationRating = parseInt(data.SellerCommunicationRating);
+    const ProductRating = parseInt(data.productRating);
+    const ProductDeliveryRating = parseInt(data.productDeliveryRating);
+    const ProductQualityRating = parseInt(data.productQualityRating);
+    const ProductPackagingRating = parseInt(data.productPackagingRating);
+    const SellerRating = parseInt(data.sellerRating);
+    const SellerCommunicationRating = parseInt(data.sellerCommunicationRating);
 
     const ovarall =
       (ProductRating + ProductDeliveryRating + ProductQualityRating + ProductPackagingRating + SellerRating + SellerCommunicationRating) / 6;

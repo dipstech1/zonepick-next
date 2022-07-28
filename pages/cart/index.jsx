@@ -63,7 +63,7 @@ const Cart = () => {
   const setTotalPriceData = (itemData) => {
     let totalPr = 0;
     itemData.forEach((item) => {
-      totalPr += item?.productId[0]?.price * item?.ordered_quantity;
+      totalPr += item?.productId[0]?.price * item?.orderedQuantity;
     });
     setTotalPrice(totalPr);
 
@@ -78,7 +78,7 @@ const Cart = () => {
 
     data.map((e) => {
       if (e.id === item.id) {
-        e.ordered_quantity = val;
+        e.orderedQuantity = val;
       }
       return e;
     });
@@ -174,15 +174,15 @@ const Cart = () => {
     const data = purchasableData;
 
     if (type === "increment") {
-      const val = item.ordered_quantity + 1;
+      const val = item.orderedQuantity + 1;
       data.map((e) => {
         if (e.id === item.id) {
-          e.ordered_quantity = val;
+          e.orderedQuantity = val;
         }
         return e;
       });
     } else {
-      let val = item.ordered_quantity - 1;
+      let val = item.orderedQuantity - 1;
 
       if (val < 1) {
         val = 1;
@@ -190,7 +190,7 @@ const Cart = () => {
 
       data.map((e) => {
         if (e.id === item.id) {
-          e.ordered_quantity = val;
+          e.orderedQuantity = val;
         }
         return e;
       });
@@ -247,10 +247,10 @@ const Cart = () => {
                                     <td>{itm?.productId[0]?.product?.name}</td>
                                     <td style={{ width: "135px" }}>{common.getCurrencyWithFormat(itm?.productId[0]?.price)}</td>
                                     <td style={{ width: "95px" }}>
-                                      <QuantityChanger value={itm?.ordered_quantity} item={itm} onChangeQuantity={onChangeQuantity}></QuantityChanger>
+                                      <QuantityChanger value={itm?.orderedQuantity} item={itm} onChangeQuantity={onChangeQuantity}></QuantityChanger>
                                     </td>
                                     <td style={{ width: "135px" }}>
-                                      {common.getCurrencyWithFormat(itm?.productId[0]?.price * itm?.ordered_quantity)}
+                                      {common.getCurrencyWithFormat(itm?.productId[0]?.price * itm?.orderedQuantity)}
                                     </td>
 
                                     <td style={{ whiteSpace: "nowrap", width: "85px" }}>

@@ -3,14 +3,39 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged,id="xv" }) => {
+const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged,id="xv",imagesList= [] }) => {
   const [imgsSrc, setImgsSrc] = useState([]);
   const [imgInfo, setImgInfo] = useState([]);
 
   useEffect(() => {
     onSelectionChanged(imgInfo);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imgsSrc,imgInfo]);
+  }, [imgInfo]);
+
+  useEffect(() => {
+
+    console.log(imagesList)
+
+   
+
+   if (imagesList.length> 0) {
+
+    const items = [];
+
+    const temp = imagesList || []
+
+    temp.forEach(element => {
+
+      items.push(element.fileUrl)
+      
+    });
+    setImgsSrc(items)
+    
+   }
+
+  }, [imagesList]);
+
+
 
   const getFile = () => {
     document.getElementById(`img${id}`).click();
@@ -52,12 +77,17 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged,id="xv" })
             });
 
 
-            setImgsSrc((imgs) => [...imgs, reader.result]);
+           // setImgsSrc((imgs) => [...imgs, reader.result]);
 
-            setImgInfo((imgs) => [...imgs, imageArray])
+            
 
 
           };
+          reader.onloadend=()=> {
+
+            setImgInfo((imgs) => [...imgs, imageArray[imageArray.length-1]])
+
+          }
           reader.onerror = () => {
             console.log(reader.error);
           };
@@ -70,9 +100,11 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged,id="xv" })
 
   const removeImage = (index) => {
     var array = [...imgsSrc];
+    var array2 = [...imgInfo];
     array.splice(index, 1);
-
-    setImgsSrc([...array]);
+    array2.splice(index, 1);
+   // setImgsSrc([...array]);
+   //  setImgInfo(...array2);
   };
 
   return (
@@ -108,7 +140,7 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged,id="xv" })
         {imgsSrc.length > 0 &&
           imgsSrc.map((link, i) => (
             <Col xs={6} lg={4} key={i}>
-              <div className="uploader-container border border-danger">
+              <div className="uploader-container border border-danger mb-2">
                 <div className="pe-1 pt-1 pb-1 image-container">
                   <img src={link} alt={"xx"} className="img-responsive-uploader" />
                   <div className="top-right" onClick={(e) => removeImage(i)}>

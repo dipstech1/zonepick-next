@@ -139,7 +139,7 @@ const EditProfile = () => {
               <div className="py-3 px-5">
                 <Row className="mt-2">
                   <Col className="text-center">
-                    <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profile_image} alt="Profile Picture" />
+                    <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profileImage} alt="Profile Picture" />
                   </Col>
                 </Row>
 

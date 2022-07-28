@@ -66,7 +66,7 @@ const BrandPage = () => {
         id: item.id
       };
 
-      console.log(sendData);      
+    //  console.log(sendData);       
 
       try {
         let res = await axios.delete(`brand/${item.id}`,  {data:sendData});

@@ -23,7 +23,7 @@ const EditBrandPage = () => {
       id: "",
     },
     validationSchema: Yup.object({
-      brandName: Yup.string().required("Enter Brand Name"),
+      brandName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
       //  console.log(JSON.stringify(values, null, 2));

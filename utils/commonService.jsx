@@ -126,11 +126,13 @@ const calculateRating = (product) => {
 
 const calculateAvgRating = (product) => { 
 
+ // console.log(product?.avgProductRating)
+
   const total =
-    parseFloat(product?.AvgProductDeliveryRating || 0) +
-    parseFloat(product?.AvgProductPackagingRating || 0) +
-    parseFloat(product?.AvgProductQualityRating || 0) +
-    parseFloat(product?.AvgProductRating || 0);
+    parseFloat(product?.avgProductDeliveryRating || 0) +
+    parseFloat(product?.avgProductPackagingRating || 0) +
+    parseFloat(product?.avgProductQualityRating || 0) +
+    parseFloat(product?.avgProductRating || 0);
 
   const ovarallRating = total / 4;
 
@@ -144,12 +146,10 @@ const calculateAvgRating = (product) => {
     className = "bg-danger";
   }
 
-  // console.log(product.CountOfPeopleVoted)
-
-  if (product?.CountOfPeopleVoted > 0) {
-    return { className: className, rating: ovarallRating.toFixed(1), total: product.CountOfPeopleVoted };
+  if (product?.countOfPeopleVoted > 0) {
+    return { className: className, rating: ovarallRating.toFixed(1), total: product.countOfPeopleVoted };
   } else {
-    return { className: "bg-primary", rating: "0", total: product?.CountOfPeopleVoted };
+    return { className: "bg-primary", rating: "0", total: product?.countOfPeopleVoted };
   }
 };
 

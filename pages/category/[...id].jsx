@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
-import ProductCard from "../../components/productCard/productCard";
 import axios from "../../utils/axios.interceptor";
 import common from "../../utils/commonService";
 
@@ -85,7 +84,7 @@ const CategoryDetailsPage = () => {
           });
         }
       } else {
-       // setCategoryData({ ...categoryData, subcategoryId: subcategoryId });
+        // setCategoryData({ ...categoryData, subcategoryId: subcategoryId });
         setTotal(0);
       }
       console.log(resp.data);
@@ -173,7 +172,10 @@ const CategoryDetailsPage = () => {
                 >
                   <Card className="shadow-sm">
                     <Card.Body
-                      className={["p-1 text-center", data?.id === categoryData.subcategoryId ? "bg-deep-purple-900 text-white" : null].join(" ")}
+                      className={[
+                        "p-1 text-center",
+                        data?.id === categoryData.subcategoryId ? "bg-deep-purple-900 text-white" : null,
+                      ].join(" ")}
                     >
                       {data?.subcategoryName}
                     </Card.Body>
@@ -187,9 +189,17 @@ const CategoryDetailsPage = () => {
               productData.map((product, i) => {
                 return (
                   <Col key={i} md={3} className="mb-3">
-                    <Card style={{ cursor: "pointer" }} className="product-row shadow-sm" onClick={(e) => goToProductDetails(product)}>
+                    <Card
+                      style={{ cursor: "pointer" }}
+                      className="product-row shadow-sm"
+                      onClick={(e) => goToProductDetails(product)}
+                    >
                       <div className="image-container">
-                        <Card.Img variant="top" src={"/uploads/product/" + product?.images[0]?.url} style={{ height: "250px", objectFit: "fill" }} />
+                        <Card.Img
+                          variant="top"
+                          src={"/uploads/product/" + product?.images[0]?.url}
+                          style={{ height: "250px", objectFit: "fill" }}
+                        />
                         <div className="top-left ">{product?.purpose}</div>
                       </div>
                       <Card.Body>
@@ -197,22 +207,26 @@ const CategoryDetailsPage = () => {
                           <span>{product?.name}</span>
                         </Card.Title>
                         <div>
-                          <div className="d-block mb-1 fw-bold mt-2">{common.getCurrencyWithFormat(product?.items[0]?.price)}</div>
+                          <div className="d-block mb-1 fw-bold mt-2">
+                            {common.getCurrencyWithFormat(product?.items[0]?.price)}
+                          </div>
                           <div className="d-block  mb-1">
                             <span className="fw-bold">
                               {product?.category?.categoryName} [{product?.subcategory?.subcategoryName}]
                             </span>
                           </div>
                           <div className="d-block  mb-1">
-                            <span className={["badge ", common.calculateAvgRating(product?.items[0]).className].join(" ")}>
+                            <span
+                              className={["badge ", common.calculateAvgRating(product?.items[0]).className].join(" ")}
+                            >
                               <i className="fa fa-star"></i> {common.calculateAvgRating(product?.items[0]).rating}
                             </span>
                             <span className="ms-2 text-muted">
-                              <small>({product?.items[0]?.CountOfPeopleVoted})</small>
+                              <small>({product?.items[0]?.countOfPeopleVoted || 0})</small>
                             </span>
                           </div>
                           <div className="d-block  mb-1">
-                            <span className="fw-bold">Seller :</span> {product?.items[0]?.seller_details.name}
+                            <span className="fw-bold">Seller :</span> {product?.items[0]?.sellerDetails?.name || 'NA'}
                           </div>
                         </div>
                       </Card.Body>

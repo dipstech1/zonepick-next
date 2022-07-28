@@ -74,10 +74,10 @@ const ProductDetailsPage = () => {
 
   const calculateRating = () => {
     const total =
-      parseFloat(productDetails.AvgProductDeliveryRating) +
-      parseFloat(productDetails.AvgProductPackagingRating) +
-      parseFloat(productDetails.AvgProductQualityRating) +
-      parseFloat(productDetails.AvgProductRating);
+      parseFloat(productDetails.avgProductDeliveryRating) +
+      parseFloat(productDetails.avgProductPackagingRating) +
+      parseFloat(productDetails.avgProductQualityRating) +
+      parseFloat(productDetails.avgProductRating);
 
     const ovarallRating = total / 4;
 
@@ -90,7 +90,7 @@ const ProductDetailsPage = () => {
     const sendData = {
       userid: userId,
       recordId: recordId,
-      ordered_quantity: 1,
+      orderedQuantity: 1,
       purpose: purpose,
     };
 
@@ -173,7 +173,9 @@ const ProductDetailsPage = () => {
                           <Col>
                             <div className="fs-4 fw-bold d-inline-block me-2">{productDetails?.product?.name} </div>
                             <sup>
-                              <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"}>{productDetails?.purpose}</Badge>
+                              <Badge bg={productDetails?.purpose === "Purchase" ? "primary" : "secondary"}>
+                                {productDetails?.purpose}
+                              </Badge>
                             </sup>
                           </Col>
                         </Row>
@@ -234,41 +236,51 @@ const ProductDetailsPage = () => {
                                   <div className="p-2 ms-3 text-blue-gray-900">
                                     <Row className="mb-3">
                                       <Col>
-                                        <span className="border-bottom border-deep-purple-900 border-2 fs-5">Product Details</span> :-
+                                        <span className="border-bottom border-deep-purple-900 border-2 fs-5">
+                                          Details
+                                        </span>
+                                        :-
                                       </Col>
                                     </Row>
 
                                     <Row className="ms-2 mb-2">
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Name :</span> {productDetails?.product?.name}
+                                        <span className="fs-6 fw-bold me-1">Name :</span>
+                                        {productDetails?.product?.name}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Price :</span> {common.getCurrencyWithFormat(productDetails?.price)}
+                                        <span className="fs-6 fw-bold me-1">Price :</span>
+                                        {common.getCurrencyWithFormat(productDetails?.price)}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Brand Name :</span> {productDetails?.product?.brand}
+                                        <span className="fs-6 fw-bold me-1">Brand Name :</span>
+                                        {productDetails?.product?.brand}
                                       </Col>
                                     </Row>
 
                                     <Row className="ms-2 mb-2">
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Condition :</span> {productDetails?.product_status}
+                                        <span className="fs-6 fw-bold me-1">Condition :</span>
+                                        {productDetails?.productStatus}
                                       </Col>
                                       <Col md={4} className="mb-2">
                                         <span className="fs-6 fw-bold me-1">status :</span> {productDetails?.purpose}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Available for {productDetails?.purpose} :</span>
+                                        <span className="fs-6 fw-bold me-1">
+                                          Available for {productDetails?.purpose} :
+                                        </span>
                                         {productDetails?.isAvailable ? "Yes" : "No"}
                                       </Col>
                                     </Row>
 
                                     <Row className="ms-2 mb-2">
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Category :</span> {productDetails.product?.category?.categoryName}
+                                        <span className="fs-6 fw-bold me-1">Category :</span>
+                                        {productDetails.product?.category?.categoryName}
                                       </Col>
                                       <Col md={4} className="mb-2">
-                                        <span className="fs-6 fw-bold me-1">Subcategory :</span>{" "}
+                                        <span className="fs-6 fw-bold me-1">Subcategory :</span>
                                         {productDetails.product?.subcategory?.subcategoryName}
                                       </Col>
                                       <Col md={4} className="mb-2">
@@ -277,29 +289,42 @@ const ProductDetailsPage = () => {
                                       </Col>
                                     </Row>
 
-                                    <Row className="mt-5 mb-3">
-                                      <Col>
-                                        <span className="border-bottom border-deep-purple-900 border-2 fs-5">Product Description</span> :-
-                                      </Col>
-                                    </Row>
+                                    <div>
+                                      <Row className="mb-3">
+                                        <Col>
+                                          <span className="border-bottom border-deep-purple-900 border-2 fs-5">
+                                            Feature
+                                          </span>
+                                          :-
+                                        </Col>
+                                      </Row>
+                                      <Row className="ms-2">
+                                        {productDetails?.product?.specifications?.length > 0 &&
+                                          productDetails?.product?.specifications.map((data, i) => {
+                                            return (
+                                              <Col key={i} md={4} className="mb-2">
+                                                <i className="fa fa-circle-dot me-2"></i> {data.spec}
+                                              </Col>
+                                            );
+                                          })}
+                                      </Row>
+                                    </div>
 
-                                    <Row className="ms-2 mb-2">
-                                      <Col className="mb-2">{productDetails?.item_description}</Col>
-                                    </Row>
-                                  </div>
-                                </Tab>
-                                <Tab eventKey="Feature" title={"Feature"}>
-                                  <div className="p-2 ms-3">
-                                    <Row>
-                                      {productDetails?.product?.specifications?.length > 0 &&
-                                        productDetails?.product?.specifications.map((data, i) => {
-                                          return (
-                                            <Col key={i} md={4} className="mb-2">
-                                              <i className="fas fa-dot-circle me-2"></i> {data.spec}
-                                            </Col>
-                                          );
-                                        })}
-                                    </Row>
+                                    {
+                                      <>
+                                        <Row className="mt-3 mb-3">
+                                          <Col>
+                                            <span className="border-bottom border-deep-purple-900 border-2 fs-5">
+                                              Description
+                                            </span>
+                                            :-
+                                          </Col>
+                                        </Row>
+                                        <Row className="ms-2 mb-2">
+                                          <Col className="mb-2">{productDetails?.itemDescription}</Col>
+                                        </Row>
+                                      </>
+                                    }
                                   </div>
                                 </Tab>
                               </Tabs>
@@ -312,7 +337,7 @@ const ProductDetailsPage = () => {
                   </Col>
                   {showSellerInfo ? (
                     <Col md={4}>
-                      <SellerInfo sellerData={productDetails?.seller_details}></SellerInfo>
+                      <SellerInfo sellerData={productDetails?.sellerDetails}></SellerInfo>
                       <Rating ProductData={productDetails}></Rating>
                     </Col>
                   ) : null}

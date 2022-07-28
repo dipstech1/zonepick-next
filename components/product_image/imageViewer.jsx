@@ -9,7 +9,7 @@ const ImageViewer = ({ imageData = [], arImageUrl = "", scaleImage=[1.1,1.1,1.1]
 
   useEffect(() => {
     if (onIimageViewTabChanged instanceof Function) {
-      onIimageViewTabChanged(key);
+      onIimageViewTabChanged(key); 
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
