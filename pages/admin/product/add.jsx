@@ -28,10 +28,10 @@ const AddProductPage = () => {
   };
 
   const [AWSCredentials, setAWSCredentials] = useState({
-    AccessKeyID: "AKIAUIC652DFHFY7QIF2",
-    SecretAccessKey: "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",
-    Region: "ap-south-1",
-    BucketName: "ecom-all-content",
+    AccessKeyID: "",
+    SecretAccessKey: "",
+    Region: "",
+    BucketName: "",
   });
 
   const [brandOptions, setBrandOptions] = useState([]);
@@ -47,24 +47,24 @@ const AddProductPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "name",
-      description: "description",
-      category: "2",
+      name: "",
+      description: "",
+      category: "",
       subcategory: "",
-      price: "100",
-      brand: "Microsoft",
-      brandId: "2",
+      price: "",
+      brand: "",
+      brandId: "",
       userid: "",
       arimageurl: "",
       arimagedata: "",
-      images: [{ url: "phone.png" }, { url: "phonesize.png" }],
+      images: [],
       specifications: [],
       specificationsValue: "",
-      productRewardPercent: "20",
-      optionalField1: "A",
-      optionalField2: "B",
-      optionalField3: "C",
-      optionalField4: "D",
+      productRewardPercent: "",
+      optionalField1: "",
+      optionalField2: "",
+      optionalField3: "",
+      optionalField4: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Required").min(2, "Must be at least 2 characters"),
@@ -87,6 +87,7 @@ const AddProductPage = () => {
     window.scrollTo(0, 0);
     getBrandtList();
     getCategorytList();
+    GetAWSCredentials();
   }, []);
 
   const getBrandtList = async () => {
@@ -231,68 +232,72 @@ const AddProductPage = () => {
   };
 
   const onSubmitClick = async () => {
-    const imageList = [];
+    if (imageData.productImage.length > 0) {
+      const imageList = [];
 
-    imageData.productImage.forEach((e) => {
-      imageList.push({
-        fileInfo: e.fileInfo,
-        fileType: "normal",
+      imageData.productImage.forEach((e) => {
+        imageList.push({
+          fileInfo: e.fileInfo,
+          fileType: "normal",
+        });
       });
-    });
 
-    imageData.threeSixtyImage.forEach((e) => {
-      imageList.push({
-        fileInfo: e.fileInfo,
-        fileType: "360Image",
+      imageData.threeSixtyImage.forEach((e) => {
+        imageList.push({
+          fileInfo: e.fileInfo,
+          fileType: "360Image",
+        });
       });
-    });
 
-    const images = [];
+      const images = [];
 
-    for (let i = 0; i < imageList.length; i++) {
-      const file = imageList[i].fileInfo.file;
-      const fileType = imageList[i].fileInfo.file.type.split("/");
-      const fileName = imageList[i].fileInfo.file.name;
+      for (let i = 0; i < imageList.length; i++) {
+        const file = imageList[i].fileInfo.file;
+        const fileType = imageList[i].fileInfo.file.type.split("/");
+        const fileName = imageList[i].fileInfo.file.name;
 
-      const data = await uploadFiles(file, fileType[1], fileName);
+        const data = await uploadFiles(file, fileType[1], fileName);
 
-      if (data.status === "success") {
-        images.push({ url: data.fileName, type: imageList[i].fileType });
+        if (data.status === "success") {
+          images.push({ url: data.fileName, type: imageList[i].fileType });
+        }
       }
-    }
 
-    let product = {
-      name: formik.values.name,
-      description: formik.values.description,
-      category: formik.values.category,
-      subcategory: formik.values.subcategory,
-      price: formik.values.price,
-      brand: formik.values.brand,
-      userid: "",
-      arimageurl: "",
-      arimagedata: "",
-      images: images,
-      specifications: formik.values.specifications,
-      productRewardPercent: parseInt(formik.values.productRewardPercent),
-      optionalField1: formik.values.optionalField1,
-      optionalField2: formik.values.optionalField2,
-      optionalField3: formik.values.optionalField3,
-      optionalField4: formik.values.optionalField4,
-    };
-    product.userid = getCookie("userid");
+      let product = {
+        name: formik.values.name,
+        description: formik.values.description,
+        category: formik.values.category,
+        subcategory: formik.values.subcategory,
+        price: formik.values.price,
+        brand: formik.values.brand,
+        userid: "",
+        arimageurl: "",
+        arimagedata: "",
+        images: images,
+        specifications: formik.values.specifications,
+        productRewardPercent: parseInt(formik.values.productRewardPercent),
+        optionalField1: formik.values.optionalField1,
+        optionalField2: formik.values.optionalField2,
+        optionalField3: formik.values.optionalField3,
+        optionalField4: formik.values.optionalField4,
+      };
+      product.userid = getCookie("userid");
 
-    try {
-      let added = await axios.post("admin/create-product-entry", product);
+      try {
+        let added = await axios.post("admin/create-product-entry", product);
 
-      if (added.data.acknowledge) {
-        router.replace("/admin/product");
-        toast.success("Product added Successfully");
-      } else {
+        if (added.data.acknowledge) {
+          router.replace("/admin/product");
+          toast.success("Product added Successfully");
+        } else {
+          toast.error("Fail");
+        }
+      } catch (error) {
+        console.log(error);
         toast.error("Fail");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Fail");
+    } else {
+      toast.warning("Upload atleast one product Image")
     }
   };
 
@@ -300,34 +305,15 @@ const AddProductPage = () => {
     try {
       let resp = await axios.get("utilities/aws");
 
-      console.log(resp.data);
+      if (resp.data) {
+        setAWSCredentials(resp.data);
+      }
+
+      //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
     }
-  };
-
-  const upload = async (imageList) => {
-    let count = 0;
-
-    console.log(images);
-
-    /* imageList.forEach(async (e) => {
-        const file = e.fileInfo.file;
-        const fileType = e.fileInfo.file.type.split("/");
-        const fileName = e.fileInfo.file.name;
-
-        // console.log(file)
-
-        const data = await uploadFiles(file, fileType[1], fileName);
-
-        if (data.status === "success") {
-          images.push({ url: data.fileName, type: e.fileType });
-          count += 1;
-        }
-      });
-
-       resolve(images)*/
   };
 
   const uploadFiles = async (file, filetype, filename) => {
