@@ -11,10 +11,12 @@ import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
 import axios from "../../utils/axios.interceptor";
+import common from "../../utils/commonService";
 
 const EditProfile = () => {
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-   const router = useRouter()
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [userId, setUserId] = useState(null);
 
@@ -57,11 +59,11 @@ const EditProfile = () => {
       address2: Yup.string().required("Enter Address-2").min(1, "Must be at least 1 characters"),
       address3: Yup.string().required("Enter Address-3").min(1, "Must be at least 1 characters"),
       address4: Yup.string().required("Enter Address-4").min(1, "Must be at least 1 characters"),
-     // address5: Yup.string().required("Enter Address-5").min(1, "Must be at least 10 characters"),
+      // address5: Yup.string().required("Enter Address-5").min(1, "Must be at least 10 characters"),
     }),
     onSubmit: (values) => {
-     // console.log(JSON.stringify(values, null, 2));
-      updateProfile(values)
+      // console.log(JSON.stringify(values, null, 2));
+      updateProfile(values);
     },
   });
 
@@ -80,18 +82,18 @@ const EditProfile = () => {
         setUserData({ ...resp.data[0] });
         setIsLoaded(true);
         formik.setFieldValue("userId", userId);
-        formik.setFieldValue("name", resp.data[0].name || '');
-        formik.setFieldValue("address1", resp.data[0].address1 || '');
-        formik.setFieldValue("address2", resp.data[0].address2 || '');
-        formik.setFieldValue("address3", resp.data[0].address3 || '');
-        formik.setFieldValue("address4", resp.data[0].address4 || '');
-      //  formik.setFieldValue("address5", resp.data[0].address5);
-        formik.setFieldValue("email", resp.data[0].email || '');
-        formik.setFieldValue("phone", resp.data[0].phone || '');
-        formik.setFieldValue("aboutMe", resp.data[0].aboutMe || '');
+        formik.setFieldValue("name", resp.data[0].name || "");
+        formik.setFieldValue("address1", resp.data[0].address1 || "");
+        formik.setFieldValue("address2", resp.data[0].address2 || "");
+        formik.setFieldValue("address3", resp.data[0].address3 || "");
+        formik.setFieldValue("address4", resp.data[0].address4 || "");
+        //  formik.setFieldValue("address5", resp.data[0].address5);
+        formik.setFieldValue("email", resp.data[0].email || "");
+        formik.setFieldValue("phone", resp.data[0].phone || "");
+        formik.setFieldValue("aboutMe", resp.data[0].aboutMe || "");
       }
 
-     // console.log(resp.data);
+      // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -99,21 +101,20 @@ const EditProfile = () => {
   };
 
   const updateProfile = async (user) => {
-
     user.phone = +user.phone;
 
     try {
       let response = await axios.patch(`profile/${userId}`, user);
 
       if (response.data.acknowledged) {
-        toast.success('Profile Successfully Updated');
+        toast.success("Profile Successfully Updated");
         router.back();
       } else {
-        toast.warning('Fail');
+        toast.warning("Fail");
       }
     } catch (error) {
       console.log(error);
-      toast.error('Fail');
+      toast.error("Fail");
     }
   };
 
@@ -139,7 +140,14 @@ const EditProfile = () => {
               <div className="py-3 px-5">
                 <Row className="mt-2">
                   <Col className="text-center">
-                    <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profileImage} alt="Profile Picture" />
+                    <img
+                      className="m-auto mr-lg-auto profile_img"
+                      src={common.avatorUrl + userData.profileImage}
+                      onError={(e) => {
+                        e.currentTarget.src = "/img/avator/no-image-icon.jpg";
+                      }}
+                      alt="Profile Picture"
+                    />
                   </Col>
                 </Row>
 
@@ -149,7 +157,7 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="name">
-                          <Form.Label className="fw-bold">Your Name:</Form.Label>
+                            <Form.Label className="fw-bold">Your Name:</Form.Label>
                             <Form.Control
                               type="text"
                               name="name"
@@ -166,7 +174,7 @@ const EditProfile = () => {
                       <Row>
                         <Col md={6}>
                           <Form.Group className="mb-2 position-relative" controlId="phone">
-                          <Form.Label className="fw-bold">Phone No:</Form.Label>
+                            <Form.Label className="fw-bold">Phone No:</Form.Label>
                             <Form.Control
                               type="phone"
                               name="phone"
@@ -182,7 +190,7 @@ const EditProfile = () => {
 
                         <Col md={6}>
                           <Form.Group className="mb-2 position-relative" controlId="email">
-                          <Form.Label className="fw-bold">Email Address:</Form.Label>
+                            <Form.Label className="fw-bold">Email Address:</Form.Label>
                             <Form.Control
                               type="email"
                               name="email"
@@ -199,7 +207,7 @@ const EditProfile = () => {
                       <Row>
                         <Col md={6}>
                           <Form.Group className="mb-2 position-relative" controlId="address1">
-                          <Form.Label className="fw-bold">Address Line 1:</Form.Label>
+                            <Form.Label className="fw-bold">Address Line 1:</Form.Label>
                             <Form.Control
                               type="text"
                               name="address1"
@@ -214,7 +222,7 @@ const EditProfile = () => {
                         </Col>
                         <Col md={6}>
                           <Form.Group className="mb-2 position-relative" controlId="address2">
-                          <Form.Label className="fw-bold">Address Line 2:</Form.Label>
+                            <Form.Label className="fw-bold">Address Line 2:</Form.Label>
                             <Form.Control
                               type="text"
                               name="address2"
@@ -232,7 +240,7 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="address3">
-                          <Form.Label className="fw-bold">Address Line 3:</Form.Label>
+                            <Form.Label className="fw-bold">Address Line 3:</Form.Label>
                             <Form.Control
                               type="text"
                               name="address3"
@@ -247,7 +255,7 @@ const EditProfile = () => {
                         </Col>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="address4">
-                          <Form.Label className="fw-bold">Address Line 4:</Form.Label>
+                            <Form.Label className="fw-bold">Address Line 4:</Form.Label>
                             <Form.Control
                               type="text"
                               name="address4"
@@ -265,7 +273,7 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="aboutMe">
-                          <Form.Label className="fw-bold">About Me:</Form.Label>
+                            <Form.Label className="fw-bold">About Me:</Form.Label>
                             <Form.Control
                               as="textarea"
                               name="aboutMe"
@@ -281,7 +289,7 @@ const EditProfile = () => {
                         </Col>
                       </Row>
                       <Form.Group controlId="submitButton" className="float-end mt-3">
-                        <Button variant="deep-purple-900" type="submit" style={{width:132}}>
+                        <Button variant="deep-purple-900" type="submit" style={{ width: 132 }}>
                           Save
                         </Button>
                       </Form.Group>
@@ -292,10 +300,6 @@ const EditProfile = () => {
             ) : null}
           </MyAccountLayout>
         </div>
-
-
-
-
       </Layout>
     </>
   );

@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button, Card, Col, Row } from "react-bootstrap";
+import common from "../../utils/commonService";
+
+
 
 const SellerInfo = ({ sellerData }) => {
   // console.log(sellerData);
@@ -21,12 +24,12 @@ const SellerInfo = ({ sellerData }) => {
               <Col xs="12" className="d-flex">
                 <div>
                   <img
-                    src={"/uploads/avator/" + sellerData.profile_image}
+                    src={common.avatorUrl + sellerData.profileImage}
                     className="img-avatar"
                     alt="..."
                     style={{ width: 70, height: 70 }}
                     onError={(e) => {
-                      e.currentTarget.src = "/uploads/avator/1.jpg";
+                      e.currentTarget.src = "/img/avator/no-image-icon.jpg";
                     }}
                   />
                 </div>

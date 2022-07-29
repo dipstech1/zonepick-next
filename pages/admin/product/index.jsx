@@ -110,7 +110,7 @@ const MyProductList = () => {
                               <Col md={3} lg={2}>
                                 <div className="image-container">
                                   <img
-                                    src={"/uploads/product/" + data?.images[0].url}
+                                    src={common.imageUrl + data?.images[0].url}
                                     className="img-responsive-1 w-100"
                                     alt="dd"
                                     style={{ cursor: "pointer" }}

@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
+import common from "../../utils/commonService";
+
+
 const ImageGallery = ({ imageData = [] }) => {
   // console.log(imageLink);
 
@@ -22,7 +25,7 @@ const ImageGallery = ({ imageData = [] }) => {
       setImageLinks(tempData);
 
 
-      setImgLink("/uploads/product/" + imageData[0].url);
+      setImgLink(common.imageUrl + imageData[0].url);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +48,7 @@ const ImageGallery = ({ imageData = [] }) => {
                   return (
                     <img
                       key={i}
-                      src={"/uploads/product/" + data.url}
+                      src={common.imageUrl + data.url}
                       alt="img"
                       className="p-1"
                       style={{ height: 80, width: 80, cursor: "pointer" }}

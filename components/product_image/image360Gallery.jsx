@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, Col, Row } from "react-bootstrap";
 import { PanoViewer } from "@egjs/view360";
+import common from "../../utils/commonService";
 const Image360Gallery = ({ imageData = [] }) => {
   // console.log(imageLink);
 
@@ -20,7 +21,7 @@ const Image360Gallery = ({ imageData = [] }) => {
       setImageLinks(tempData);
 
       if (tempData.length > 0) {
-        setImgLink("/uploads/product/360-image/" + tempData[0].url);
+        setImgLink(common.imageUrl + tempData[0].url);
       }
     }
 
@@ -32,6 +33,7 @@ const Image360Gallery = ({ imageData = [] }) => {
       const panoViewer = new PanoViewer(containerRef, {
       image: imgUrl,
       projectionType: "equirectangular",
+      
     });
   };
 
@@ -54,11 +56,11 @@ const Image360Gallery = ({ imageData = [] }) => {
                   return (
                     <img
                       key={i}
-                      src={"/uploads/product/360-image/" + data.url}
+                      src={common.imageUrl + data.url}
                       alt="img"
                       className="p-1"
                       style={{ height: 80, width: 80, cursor: "pointer" }}
-                      onClick={() => set360Image("/uploads/product/360-image/" + data.url)}
+                      onClick={() => set360Image(common.imageUrl + data.url)}
                     />
                   );
                 })}

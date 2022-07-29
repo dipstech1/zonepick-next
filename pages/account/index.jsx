@@ -10,6 +10,8 @@ import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
 import axios from "../../utils/axios.interceptor";
+import common from "../../utils/commonService";
+
 
 const MyAccount = () => {
   const router = useRouter();
@@ -76,7 +78,9 @@ const MyAccount = () => {
             {isLoaded ? (
               <Row className="mt-4">
                 <Col md={4} lg={3}>
-                  <img className="m-auto mr-lg-auto profile_img" src={"/uploads/avator/" + userData.profileImage} alt="Profile Picture" />
+                  <img className="m-auto mr-lg-auto profile_img" src={common.avatorUrl + userData.profileImage} alt="Profile Picture"  onError={(e) => {
+                      e.currentTarget.src = "/img/avator/no-image-icon.jpg";
+                    }}/>
                 </Col>
                 <Col md={8} lg={9}>
                   <Row>

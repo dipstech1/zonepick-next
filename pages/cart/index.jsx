@@ -239,7 +239,7 @@ const Cart = () => {
                                     <td style={{ verticalAlign: "Middle" }}>{i + 1}</td>
                                     <td style={{ width: "60px !important" }}>
                                       <img
-                                        src={"/uploads/product/" + itm?.productId[0]?.product?.images[0].url}
+                                        src={common.imageUrl + itm?.productId[0]?.product?.images[0].url}
                                         alt=""
                                         className="shopping-cart-image"
                                       />

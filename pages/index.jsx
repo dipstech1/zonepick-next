@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { toast } from "react-toastify";
+import FaecetSearch from "../components/productFilter/FaecetSearch";
 import Layout from "../components/Layout/layout";
 import ProductCard from "../components/productCard/productCard";
 import ProductFilter from "../components/productFilter/productFilter";
@@ -108,7 +109,11 @@ export default function Home() {
                     A fresh approach to shopping <span>Absolutely. Positively. Perfect.</span>
                   </h2>
                   <div className="input-group mt-3 mt-lg-4">
-                    <input type="search" className="form-control" aria-label="Dollar amount (with dot and two decimal places)" />
+                    <input
+                      type="search"
+                      className="form-control"
+                      aria-label="Dollar amount (with dot and two decimal places)"
+                    />
                     <span className="input-group-text">
                       <i className="fas fa-search"></i>
                     </span>
@@ -120,64 +125,83 @@ export default function Home() {
 
           <Container>
             <Row>
-              <Col md={8}>
-                <div id={"editTabs"}>
-                  <div className="nav-no-fills">
-                    <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => onTabChange(k)} className="mb-3">
-                      <Tab eventKey="BUY" title={"Buy"}></Tab>
-                      <Tab eventKey="Borrow" title={"Borrow"}></Tab>
-                    </Tabs>
-                  </div>
-                </div>
-              </Col>
-              <Col md={4}>
-                <Button
-                  variant="default"
-                  className="float-end me-2 mt-2"
-                  onClick={(e) => {
-                    !showFilter ? setShowFilter(true) : setShowFilter(false);
-                  }}
-                >
-                  <i className="fa fa-filter ms-2"></i> Filter Product
-                </Button>
-              </Col>
-            </Row>
+              <Col md={3}>
 
-            <Row>
-              <Col xs={12} className="position-relative">
-                <div id="display-search" className={showFilter ? "visible" : null}>
-                  <ProductFilter
-                    onSearch={onSearchProducts}
-                    onClearSearch={() => {
-                      productData = [];
-                      page = 0;
-                      setProductData(productData);
-                      getProductData(key);
-                    }}
-                  ></ProductFilter>
-                </div>
-              </Col>
-            </Row>
+                <FaecetSearch></FaecetSearch>
 
-            <Row className="ps-2" style={{ minHeight: 400 }}>
-              {productData.length > 0 &&
-                productData.map((product, i) => {
-                  return (
-                    <Col key={i} md={3} className="mb-3">
-                      <ProductCard productDetails={product} addToWishList={addToWishList} />
+
+              </Col>
+
+              <Col>
+                <Row>
+                  <Col md={8}>
+                    <div id={"editTabs"}>
+                      <div className="nav-no-fills">
+                        <Tabs
+                          id="controlled-tab-example"
+                          activeKey={key}
+                          onSelect={(k) => onTabChange(k)}
+                          className="mb-3"
+                        >
+                          <Tab eventKey="BUY" title={"Buy"}></Tab>
+                          <Tab eventKey="Borrow" title={"Borrow"}></Tab>
+                        </Tabs>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col md={4}>
+                    {/*
+                    <Button
+                      variant="default"
+                      className="float-end me-2 mt-2"
+                      onClick={(e) => {
+                        !showFilter ? setShowFilter(true) : setShowFilter(false);
+                      }}
+                    >
+                      <i className="fa fa-filter ms-2"></i> Filter Product
+                    </Button>*/
+                    }
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs={12} className="position-relative">
+                    <div id="display-search" className={showFilter ? "visible" : null}>
+                      <ProductFilter
+                        onSearch={onSearchProducts}
+                        onClearSearch={() => {
+                          productData = [];
+                          page = 0;
+                          setProductData(productData);
+                          getProductData(key);
+                        }}
+                      ></ProductFilter>
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row className="ps-2" style={{ minHeight: 400 }}>
+                  {productData.length > 0 &&
+                    productData.map((product, i) => {
+                      return (
+                        <Col key={i} md={4} className="mb-3">
+                          <ProductCard productDetails={product} addToWishList={addToWishList} />
+                        </Col>
+                      );
+                    })}
+                </Row>
+                {total > productData.length ? (
+                  <Row>
+                    <Col className="text-center">
+                      <Button type="button" variant="indigo" onClick={getMoreProduct}>
+                        Load More{" "}
+                        {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
+                      </Button>
                     </Col>
-                  );
-                })}
+                  </Row>
+                ) : null}
+              </Col>
             </Row>
-            {total > productData.length ? (
-              <Row>
-                <Col className="text-center">
-                  <Button type="button" variant="indigo" onClick={getMoreProduct}>
-                    Load More {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
-                  </Button>
-                </Col>
-              </Row>
-            ) : null}
           </Container>
         </div>
       </Layout>

@@ -7,7 +7,7 @@ import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
 import axios from "../../utils/axios.interceptor";
-
+import common from "../../utils/commonService";
 const SellerPage = () => {
   const router = useRouter();
   const [sellerList, setSellerList] = useState([]);
@@ -55,11 +55,11 @@ const SellerPage = () => {
                           <Col md={5}>
                             <div className="image-container">
                               <img
-                                src={"/uploads/avator/" + data?.profileImage}
+                                src={common.avatorUrl + data?.profileImage}
                                 className="img-responsive-orderhistory w-100"
                                 alt="dd"
                                 onError={(e) => {
-                                  e.currentTarget.src = "/uploads/avator/1.jpg";
+                                  e.currentTarget.src = "/img/avator/no-image-icon.jpg";
                                 }}
                               />
                               <div className={["top-left bg-secondary"].join(" ")}>{data.products.length} Products</div>

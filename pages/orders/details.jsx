@@ -47,7 +47,7 @@ const OrderDetails = () => {
                       <Row>
                         <Col md={3}>
                           <img
-                            src={"/uploads/product/" + orderInfo?.orderDetails?.product?.images[0].url}
+                            src={common.imageUrl + orderInfo?.orderDetails?.product?.images[0].url}
                             className="img-responsive-orderhistory "
                             alt="dd"
                           />

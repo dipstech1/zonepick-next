@@ -828,6 +828,21 @@ $color-keys: map-keys($theme-colors);
   }
 }
 
+
+.search {
+
+  ul {
+    list-style: none;
+    padding-left: 0.5rem !important
+  }
+
+  li {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+  }
+}
+
 .step-form {
   text-align: center !important;
   position: relative !important;

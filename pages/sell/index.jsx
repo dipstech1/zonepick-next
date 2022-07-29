@@ -96,13 +96,18 @@ const MyProductList = () => {
                               <Col md={3} lg={2}>
                                 <div className="image-container">
                                   <img
-                                    src={"/uploads/product/" + data?.product?.images[0].url}
+                                    src={common.imageUrl + data?.product?.images[0].url}
                                     className="img-responsive-1 w-100"
                                     alt="dd"
                                     style={{ cursor: "pointer" }}
                                     onClick={(e) => goToProductDetails(data)}
                                   />
-                                  <div className={["top-left ", data.purpose === "Purchase" ? "bg-primary" : "bg-secondary"].join(" ")}>
+                                  <div
+                                    className={[
+                                      "top-left ",
+                                      data.purpose === "Purchase" ? "bg-primary" : "bg-secondary",
+                                    ].join(" ")}
+                                  >
                                     {data.purpose}
                                   </div>
                                 </div>
@@ -140,7 +145,12 @@ const MyProductList = () => {
                                     <Col>
                                       <b style={{ cursor: "pointer" }}>{data?.product?.name}</b>
                                       <div>
-                                        <span className={["badge  badge-small", common.calculateAvgRating(data).className].join(" ")}>
+                                        <span
+                                          className={[
+                                            "badge  badge-small",
+                                            common.calculateAvgRating(data).className,
+                                          ].join(" ")}
+                                        >
                                           <i className="fa fa-star"></i> {common.calculateAvgRating(data).rating}
                                         </span>
                                         <span className="ms-2 text-muted">

@@ -197,7 +197,7 @@ const CategoryDetailsPage = () => {
                       <div className="image-container">
                         <Card.Img
                           variant="top"
-                          src={"/uploads/product/" + product?.images[0]?.url}
+                          src={common.imageUrl + product?.images[0]?.url}
                           style={{ height: "250px", objectFit: "fill" }}
                         />
                         <div className="top-left ">{product?.purpose}</div>

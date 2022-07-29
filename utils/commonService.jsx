@@ -1,5 +1,9 @@
 import getConfig from "next/config";
 
+const imageUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/images/'
+const avatorUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/avator/'
+const arUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/glb/'
+
 const DateFromTimeStamp = (timestamp) => {
   // Months array
   const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -170,4 +174,7 @@ export default {
   calculateAvgRating: calculateAvgRating,
   delivarytatus: delivarytatus,
   getCurrencyWithFormat: getCurrencyWithFormat,
+  imageUrl: imageUrl,
+  avatorUrl: avatorUrl,
+  arUrl: arUrl
 };
