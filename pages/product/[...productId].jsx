@@ -54,7 +54,7 @@ const ProductDetailsPage = () => {
           { id: 6, url: "large-bed-in-a-room.jpeg", type: "360Image" },
         ];
 
-        resp.data.product.images = resp.data.product.images.concat(idata);
+       // resp.data.product.images = resp.data.product.images.concat(idata);
 
         // console.log(resp.data.product.images);
 

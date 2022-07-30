@@ -2,7 +2,7 @@
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Breadcrumb, Button, Col, Form, Row } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Form, Row, Tab, Tabs } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import MyAccountLayout from "../../../components/Account/myaccount";
@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 
 const EditCategoryPage = () => {
   const router = useRouter();
+
+  const [key, setKey] = useState("home");
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +40,7 @@ const EditCategoryPage = () => {
       const data = JSON.parse(sessionStorage.getItem("subcategory"));
       formik.setFieldValue("subcategoryName", data.subcategoryName);
       formik.setFieldValue("id", data.id);
+      console.log(data);
     } else {
       router.push("/admin/category");
     }
@@ -47,7 +50,7 @@ const EditCategoryPage = () => {
 
   const editSubcategory = async (subcategory) => {
     subcategory.userid = getCookie("userid");
-      console.log(subcategory);
+    //console.log(subcategory);
 
     try {
       let resp = await axios.post("admin/update-subcategory", subcategory);
@@ -80,36 +83,49 @@ const EditCategoryPage = () => {
             </Link>
             <Breadcrumb.Item active>Edit Subcategory</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Edit Subcategory" activeLink={8} enableBack={true}>
-            <div className="py-3 px-5">
-              <Row>
-                <Col>
-                  <Form onSubmit={formik.handleSubmit}>
+          <MyAccountLayout title="Edit Subcategory" activeLink={9} enableBack={true}>
+            <div id={"editTabs"}>
+              <div className="nav-no-fills">
+                <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
+                  <Tab eventKey="home" title={"Details"}>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-2 position-relative" controlId="subcategoryName">
-                          <Form.Label className="fw-bold">Subcategory Name:</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="subcategoryName"
-                            placeholder="Enter Subcategory Name"
-                            value={formik.values.subcategoryName}
-                            onChange={formik.handleChange}
-                            className={formik.touched.subcategoryName && formik.errors.subcategoryName ? "is-invalid" : ""}
-                          />
-                          <Form.Control.Feedback type="invalid">{formik.errors.subcategoryName}</Form.Control.Feedback>
-                        </Form.Group>
+                        <Form onSubmit={formik.handleSubmit}>
+                          <Row>
+                            <Col>
+                              <Form.Group className="mb-2 position-relative" controlId="subcategoryName">
+                                <Form.Label className="fw-bold">Subcategory Name:</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="subcategoryName"
+                                  placeholder="Enter Subcategory Name"
+                                  value={formik.values.subcategoryName}
+                                  onChange={formik.handleChange}
+                                  className={
+                                    formik.touched.subcategoryName && formik.errors.subcategoryName ? "is-invalid" : ""
+                                  }
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {formik.errors.subcategoryName}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                            </Col>
+                          </Row>
+
+                          <Form.Group controlId="submitButton" className="text-center mt-5">
+                            <Button variant="deep-purple-900" type="submit" style={{ width: "120px" }}>
+                              Update
+                            </Button>
+                          </Form.Group>
+                        </Form>
                       </Col>
                     </Row>
-
-                    <Form.Group controlId="submitButton" className="text-center mt-5">
-                      <Button variant="deep-purple-900" type="submit" style={{width:'120px'}}>
-                        Update
-                      </Button>
-                    </Form.Group>
-                  </Form>
-                </Col>
-              </Row>
+                  </Tab>
+                  <Tab eventKey="filter" title={"Filters"}>
+                    BB
+                  </Tab>
+                </Tabs>
+              </div>
             </div>
           </MyAccountLayout>
         </div>
@@ -117,4 +133,4 @@ const EditCategoryPage = () => {
     </>
   );
 };
-export default withAuth(EditCategoryPage,['ADMIN']);
+export default withAuth(EditCategoryPage, ["ADMIN"]);

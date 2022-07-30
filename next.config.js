@@ -11,7 +11,7 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     apiUrl: "https://jkv60g7gzg.execute-api.ap-south-1.amazonaws.com/dev/", // development api
-    currency: "USD",
+    currency: "INR",
     lang: "en-IN",
   },
 };

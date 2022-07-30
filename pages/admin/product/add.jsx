@@ -43,6 +43,7 @@ const AddProductPage = () => {
     productImage: [],
     threeSixtyImage: [],
     threedImage: [],
+    allImage: [],
   });
 
   const formik = useFormik({
@@ -217,13 +218,37 @@ const AddProductPage = () => {
     return data;
   };
 
-  const onNextClick = () => {
-    setStep({ ...step, completeStep: 3, currentStep: 3 });
+  const onNextClick = async () => {
+    if (imageData.productImage.length > 0) {
+      const imageList = [];
+
+      imageData.productImage.forEach((e) => {
+        imageList.push({
+          fileInfo: e.fileInfo,
+          fileType: "normal",
+          fileUrl: e.fileUrl,
+          status: "Pending",
+        });
+      });
+
+      imageData.threeSixtyImage.forEach((e) => {
+        imageList.push({
+          fileInfo: e.fileInfo,
+          fileType: "360Image",
+          fileUrl: e.fileUrl,
+          status: "Pending",
+        });
+      });
+
+      setImageData({ ...imageData, allImage: imageList });
+
+      setStep({ ...step, completeStep: 3, currentStep: 3 });
+    } else {
+      toast.warning("Upload atleast one product Image");
+    }
   };
 
   const imageLoaded = (data) => {
-    console.log(data);
-
     setImageData({ ...imageData, productImage: data });
   };
 
@@ -232,73 +257,59 @@ const AddProductPage = () => {
   };
 
   const onSubmitClick = async () => {
-    if (imageData.productImage.length > 0) {
-      const imageList = [];
+    const images = [];
+    let imageList = [...imageData.allImage];
 
-      imageData.productImage.forEach((e) => {
-        imageList.push({
-          fileInfo: e.fileInfo,
-          fileType: "normal",
-        });
-      });
+    for (let i = 0; i < imageData.allImage.length; i++) {
+      const file = imageData.allImage[i].fileInfo.file;
+      const fileType = imageData.allImage[i].fileInfo.file.type.split("/");
+      const fileName = imageData.allImage[i].fileInfo.file.name;
 
-      imageData.threeSixtyImage.forEach((e) => {
-        imageList.push({
-          fileInfo: e.fileInfo,
-          fileType: "360Image",
-        });
-      });
+      const data = await uploadFiles(file, fileType[1], fileName);
 
-      const images = [];
-
-      for (let i = 0; i < imageList.length; i++) {
-        const file = imageList[i].fileInfo.file;
-        const fileType = imageList[i].fileInfo.file.type.split("/");
-        const fileName = imageList[i].fileInfo.file.name;
-
-        const data = await uploadFiles(file, fileType[1], fileName);
-
-        if (data.status === "success") {
-          images.push({ url: data.fileName, type: imageList[i].fileType });
-        }
+      if (data.status === "success") {
+        images.push({ url: data.fileName, type: imageData.allImage[i].fileType });
+        imageList[i].status = "done";
       }
+      setImageData({ ...imageData, allImage: imageList });
+    }
 
-      let product = {
-        name: formik.values.name,
-        description: formik.values.description,
-        category: formik.values.category,
-        subcategory: formik.values.subcategory,
-        price: formik.values.price,
-        brand: formik.values.brand,
-        userid: "",
-        arimageurl: "",
-        arimagedata: "",
-        images: images,
-        specifications: formik.values.specifications,
-        productRewardPercent: parseInt(formik.values.productRewardPercent),
-        optionalField1: formik.values.optionalField1,
-        optionalField2: formik.values.optionalField2,
-        optionalField3: formik.values.optionalField3,
-        optionalField4: formik.values.optionalField4,
-      };
-      product.userid = getCookie("userid");
+    
 
-      try {
-        let added = await axios.post("admin/create-product-entry", product);
+    let product = {
+      name: formik.values.name,
+      description: formik.values.description,
+      category: formik.values.category,
+      subcategory: formik.values.subcategory,
+      price: formik.values.price,
+      brand: formik.values.brand,
+      userid: "",
+      arimageurl: "",
+      arimagedata: "",
+      images: images,
+      specifications: formik.values.specifications,
+      productRewardPercent: parseInt(formik.values.productRewardPercent),
+      optionalField1: formik.values.optionalField1,
+      optionalField2: formik.values.optionalField2,
+      optionalField3: formik.values.optionalField3,
+      optionalField4: formik.values.optionalField4,
+    };
+    product.userid = getCookie("userid");
 
-        if (added.data.acknowledge) {
-          router.replace("/admin/product");
-          toast.success("Product added Successfully");
-        } else {
-          toast.error("Fail");
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      let added = await axios.post("admin/create-product-entry", product);
+
+      if (added.data.acknowledge) {
+        router.replace("/admin/product");
+        toast.success("Product added Successfully");
+      } else {
         toast.error("Fail");
       }
-    } else {
-      toast.warning("Upload atleast one product Image")
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
     }
+
   };
 
   const GetAWSCredentials = async () => {
@@ -753,6 +764,28 @@ const AddProductPage = () => {
                     <Col md={6} className="mt-2">
                       <b>Optional Field-4:</b> {formik.values.optionalField4}
                     </Col>
+                  </Row>
+
+                  <Row>
+                    <Col md={12} className="mb-2 mt-2 fw-bold">
+                      Product Images:
+                    </Col>
+                    {imageData.allImage.length > 0 &&
+                      imageData.allImage.map((link, i) => (
+                        <Col xs={6} lg={4} key={i}>
+                          <div className="uploader-container border border-danger mb-2">
+                            <div className="pe-1 pt-1 pb-1 image-container">
+                              <img src={link.fileUrl} alt={"xx"} className="img-responsive-uploader" />
+                              <div className="top-left">
+                                <span className="text-uppercase">{link.fileType}</span>
+                              </div>
+                              <div className="bottom-right">
+                                <span className="text-uppercase">{link.status}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </Col>
+                      ))}
                   </Row>
 
                   <Row className="mt-5">

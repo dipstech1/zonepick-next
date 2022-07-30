@@ -27,7 +27,7 @@ const Category = () => {
       if (resp.data.length > 0) {
         setCategoryList(resp.data);
       }
-      console.log(resp.data);
+    //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -44,7 +44,7 @@ const Category = () => {
         categoryName: item.categoryName,
       };
 
-      console.log(sendData);
+    //  console.log(sendData);
 
       try {
         let res = await axios.delete("admin/delete-category",  {data:sendData});
@@ -100,7 +100,7 @@ const Category = () => {
               <Row>
                 {categoryList.length > 0 &&
                   categoryList.map((data, i) => (
-                    <Col key={i} md={6} className="mt-2 mb-2">
+                    <Col key={i} md={12} className="mt-2 mb-2">
                       <Card className="shadow-sm">
                         <Card.Body>
                           <div className="d-inline-block fs-5" style={{cursor:'pointer'}}  onClick={(e) => onCategoryClick(data)}>{data?.categoryName}</div>

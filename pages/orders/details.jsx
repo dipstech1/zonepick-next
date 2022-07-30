@@ -62,7 +62,7 @@ const OrderDetails = () => {
                                   </Col>
                                   <Col md={4} className="mt-2">
                                     <span className="float-md-end">
-                                      <b>Order Date: </b> {common.DateFromTimeStamp(orderInfo?.transactionDetails?.purchase_date)}
+                                      <b>Order Date: </b> {common.DateFromTimeStamp(orderInfo?.transactionDetails?.purchasedAt)}
                                     </span>
                                   </Col>
                                 </Row>
@@ -107,19 +107,19 @@ const OrderDetails = () => {
                   <Card.Body>
                     <Row>
                       <Col md={4}>
-                        <b>Seller Name:</b> {orderInfo?.orderDetails?.seller_details?.name}
+                        <b>Seller Name:</b> {orderInfo?.orderDetails?.sellerDetails?.name}
                       </Col>
                       <Col md={4}>
-                        <b>Phone:</b> {orderInfo?.orderDetails?.seller_details?.phone}
+                        <b>Phone:</b> {orderInfo?.orderDetails?.sellerDetails?.phone}
                       </Col>
                       <Col md={4}>
-                        <b>Email:</b> {orderInfo?.orderDetails?.seller_details?.email}
+                        <b>Email:</b> {orderInfo?.orderDetails?.sellerDetails?.email}
                       </Col>
                     </Row>
 
                     <Row className="mt-2">
                       <Col>
-                        <b>Address:</b> {orderInfo?.orderDetails?.seller_details?.address1}
+                        <b>Address:</b> {orderInfo?.orderDetails?.sellerDetails?.address1}
                       </Col>
                     </Row>
                   </Card.Body>

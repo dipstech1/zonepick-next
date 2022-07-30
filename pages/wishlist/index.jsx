@@ -171,9 +171,9 @@ const WishList = () => {
                                           onClick={(e) => addToCart(data)}
                                           data-bs-toggle="tooltip"
                                           data-bs-placement="left"
-                                          title="Add To Cart"
+                                          title="Move To Cart"
                                         >
-                                          Add To Cart
+                                          Move To Cart
                                         </Button>
                                       </span>
                                     </Col>

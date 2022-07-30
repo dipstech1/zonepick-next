@@ -2,7 +2,7 @@
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Breadcrumb, Button, Col, Form, Row } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Form, Row, Tab, Tabs } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import MyAccountLayout from "../../../components/Account/myaccount";
@@ -12,15 +12,21 @@ import axios from "../../../utils/axios.interceptor";
 
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+import AddFilterPage from "./addFilter";
 
 const AddCategoryPage = () => {
   const router = useRouter();
+  const [key, setKey] = useState("home");
+
+  const [filterList, setFilterList] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   const formik = useFormik({
     initialValues: {
       userid: "",
       id: "",
       subcategoryName: "",
+      filters: []
     },
     validationSchema: Yup.object({
       subcategoryName: Yup.string().required("Required"),
@@ -39,12 +45,12 @@ const AddCategoryPage = () => {
     } else {
       router.push("/admin/category");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addCategory = async (subcategory) => {
     subcategory.userid = getCookie("userid");
-    console.log(subcategory);
+    subcategory.filters = filters;   
 
     try {
       let resp = await axios.post("admin/create-subcategory", subcategory);
@@ -60,6 +66,48 @@ const AddCategoryPage = () => {
       toast.error("Fail");
     }
   };
+
+  const onAddItem = () => {
+    const d = new Date();
+    let value = Object.assign([], filterList);
+
+    value.push({
+      tempId: d.getTime(),
+      filterName: "",
+      options: [],
+    });
+
+    console.log(value)
+
+
+    setFilterList(value);
+  };
+
+  const onSaveItem = (data, index) => {
+    let value = Object.assign([], filterList);
+
+    value[index].filterName = data.filterName;
+    value[index].options = data.options;
+
+    setFilterList(value);
+
+    setFilters(value)
+
+  //  console.log(value);
+  };
+
+  const onDeleteItem = (data)=> {
+
+    let value = Object.assign([], filterList);
+
+    const temp = value.filter((element) => {
+      return element.tempId !== data.tempId;
+    }); 
+
+    setFilterList(temp);
+    setFilters(value)
+   // console.log(data)
+  }
 
   return (
     <>
@@ -80,36 +128,68 @@ const AddCategoryPage = () => {
             </Link>
             <Breadcrumb.Item active>Add Subcategory</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Add Subcategory" activeLink={8} enableBack={true}>
-            <div className="py-3 px-5">
-              <Row>
-                <Col>
-                  <Form onSubmit={formik.handleSubmit}>
+          <MyAccountLayout title="Add Subcategory" activeLink={9} enableBack={true}>
+            <div id={"editTabs"}>
+              <div className="nav-no-fills">
+                <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
+                  <Tab eventKey="home" title={"Details"}>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-2 position-relative" controlId="categoryName">
-                          <Form.Label className="fw-bold">Subcategory Name:</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="subcategoryName"
-                            placeholder="Enter Subcategory Name"
-                            value={formik.values.subcategoryName}
-                            onChange={formik.handleChange}
-                            className={formik.touched.subcategoryName && formik.errors.subcategoryName ? "is-invalid" : ""}
-                          />
-                          <Form.Control.Feedback type="invalid">{formik.errors.subcategoryName}</Form.Control.Feedback>
-                        </Form.Group>
+                        <Form onSubmit={formik.handleSubmit}>
+                          <Row>
+                            <Col>
+                              <Form.Group className="mb-2 position-relative" controlId="categoryName">
+                                <Form.Label className="fw-bold">Subcategory Name:</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="subcategoryName"
+                                  placeholder="Enter Subcategory Name"
+                                  value={formik.values.subcategoryName}
+                                  onChange={formik.handleChange}
+                                  className={
+                                    formik.touched.subcategoryName && formik.errors.subcategoryName ? "is-invalid" : ""
+                                  }
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {formik.errors.subcategoryName}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                            </Col>
+                          </Row>
+
+                          <Form.Group controlId="submitButton" className="text-center mt-5">
+                            <Button variant="deep-purple-900" type="submit" style={{ width: "120px" }}>
+                              Add
+                            </Button>
+                          </Form.Group>
+                        </Form>
                       </Col>
                     </Row>
-
-                    <Form.Group controlId="submitButton" className="text-center mt-5">
-                      <Button variant="deep-purple-900" type="submit" style={{ width: "120px" }}>
-                        Add
+                  </Tab>
+                  <Tab eventKey="filter" title={"Filters"}>
+                    <div className="d-block text-end mb-2">
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        type="button"
+                        onClick={onAddItem}
+                        style={{ fontSize: "0.70rem" }}
+                      >
+                        Add Filter
                       </Button>
-                    </Form.Group>
-                  </Form>
-                </Col>
-              </Row>
+                    </div>
+
+                    {filterList.length > 0 &&
+                      filterList.map((data, i) => {
+                        return (
+                          <div key={i}>
+                            <AddFilterPage info={data} onSaveData={onSaveItem} index={i} onDelete={onDeleteItem}></AddFilterPage>
+                          </div>
+                        );
+                      })}
+                  </Tab>
+                </Tabs>
+              </div>
             </div>
           </MyAccountLayout>
         </div>
@@ -117,4 +197,4 @@ const AddCategoryPage = () => {
     </>
   );
 };
-export default withAuth(AddCategoryPage,['ADMIN']);
+export default withAuth(AddCategoryPage, ["ADMIN"]);

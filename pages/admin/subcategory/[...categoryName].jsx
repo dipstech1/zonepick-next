@@ -21,7 +21,7 @@ const SubCategoryPage = () => {
     if (!router.isReady) return;
     const categoryName = router.query["categoryName"];
 
-    console.log(categoryName);
+  //  console.log(categoryName);
 
     
 
@@ -46,7 +46,7 @@ const SubCategoryPage = () => {
         setCategoryId(resp.data[0]["id"]);
         setSubcategoryList(resp.data[0]?.subcategories);
       }
-      console.log(resp.data);
+     // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -141,7 +141,7 @@ const SubCategoryPage = () => {
               <Row>
                 {subcategoryList?.length > 0 &&
                   subcategoryList?.map((data, i) => (
-                    <Col key={i} md={6} className="mt-2 mb-2">
+                    <Col key={i} md={12} className="mt-2 mb-2">
                       <Card className="shadow-sm">
                         <Card.Body>
                           <div className="d-inline-block fs-5">{data?.subcategoryName}</div>

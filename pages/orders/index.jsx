@@ -42,9 +42,10 @@ const Orders = () => {
   };
 
   const openOrderDetails = (orderInfo, order) => {
+    console.log(orderInfo)
     const orderdetails = {
       orderDetails: { ...order?.productId[0] },
-      transactionDetails: { transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date },
+      transactionDetails: { transactionId: orderInfo.transactionId, purchasedAt: orderInfo.purchasedAt },
     };
 
     sessionStorage.setItem("OrderDetails", JSON.stringify(orderdetails));
@@ -52,9 +53,10 @@ const Orders = () => {
   };
 
   const openRatingPage = (orderInfo, order) => {
+    
     const orderdetails = {
       orderDetails: { ...order?.productId[0] },
-      transactionDetails: { transactionId: orderInfo.transactionId, purchase_date: orderInfo.purchase_date },
+      transactionDetails: { transactionId: orderInfo.transactionId, purchasedAt: orderInfo.purchasedAt },
       userData: { userId: userId },
     };
 
@@ -102,36 +104,54 @@ const Orders = () => {
                                           <span className="d-inline-bloc" onClick={(e) => goToProductDetails(data)}>
                                             <b style={{ cursor: "pointer" }}>{data?.productId[0]?.product.name}</b>
                                           </span>
-                                          <span className="float-end d-inline-block" onClick={(e) => goToProductDetails(data)}>
-                                            <span>
-                                              {common.getCurrencyWithFormat(data?.productId[0]?.price)}
-                                            </span>
+                                          <span
+                                            className="float-end d-inline-block"
+                                            onClick={(e) => goToProductDetails(data)}
+                                          >
+                                            <span>{common.getCurrencyWithFormat(data?.productId[0]?.price)}</span>
                                           </span>
                                           <div onClick={(e) => openOrderDetails(order, data)}>
                                             <div>
                                               <span
-                                                className={["badge  badge-small", common.calculateAvgRating(data?.productId[0]).className].join(" ")}
+                                                className={[
+                                                  "badge  badge-small",
+                                                  common.calculateAvgRating(data?.productId[0]).className,
+                                                ].join(" ")}
                                               >
-                                                <i className="fa fa-star"></i> {common.calculateAvgRating(data?.productId[0]).rating}
+                                                <i className="fa fa-star"></i>{" "}
+                                                {common.calculateAvgRating(data?.productId[0]).rating}
                                               </span>
                                               <span className="ms-2 text-muted">
                                                 <small>({data?.productId[0]?.countOfPeopleVoted})</small>
                                               </span>
-                                            </div> 
-                                            <div className="d-block text-muted">Brand: {data?.productId[0]?.product?.brand}</div>
-                                            <div className="d-block text-muted">Seller: {data?.productId[0]?.sellerDetails?.name}</div>
+                                            </div>
+                                            <div className="d-block text-muted">
+                                              Brand: {data?.productId[0]?.product?.brand}
+                                            </div>
+                                            <div className="d-block text-muted">
+                                              Seller: {data?.productId[0]?.sellerDetails?.name}
+                                            </div>
                                           </div>
                                         </Col>
                                         <Col md={5}>
                                           <div className="d-block mt-1">
                                             <b className="text-deep-purple-800 small">
                                               <i className="fas fa-box text-deep-purple-800 me-2"></i> Ordered On &nbsp;
-                                              {common.DateFromTimeStamp(order.purchase_date)}
+                                              {common.DateFromTimeStamp(order.purchasedAt)}
                                             </b>
                                           </div>
+                                          {/*
+                                            <div className="d-block mt-3 small">
+                                              <b className="text-success">
+                                                <i className="fas fa-circle text-success"></i> Delivered on{" "}
+                                                {common.delivarytatus(order.purchase_date)}
+                                              </b>
+                                            </div>*/}
+
                                           <div className="d-block mt-3 small">
                                             <b className="text-success">
-                                              <i className="fas fa-circle text-success"></i> Delivered on {common.delivarytatus(order.purchase_date)}
+                                              <i className="fas fa-circle text-success"></i> Reward Points:
+                                              <span className="ms-2">{data.productItemReward}</span>
                                             </b>
                                           </div>
                                           <div
@@ -140,7 +160,8 @@ const Orders = () => {
                                             style={{ cursor: "pointer" }}
                                           >
                                             <b className="text-primary">
-                                              <i className="fas fa-star text-primary me-2"></i> Rate &amp; Review Product
+                                              <i className="fas fa-star text-primary me-2"></i> Rate &amp; Review
+                                              Product
                                             </b>
                                           </div>
                                         </Col>

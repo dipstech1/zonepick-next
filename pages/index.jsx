@@ -126,15 +126,12 @@ export default function Home() {
           <Container>
             <Row>
               <Col md={3}>
-
-                <FaecetSearch></FaecetSearch>
-
-
+                <FaecetSearch onSearch={onSearchProducts}></FaecetSearch>
               </Col>
 
               <Col>
                 <Row>
-                  <Col md={8}>
+                  <Col md={12}>
                     <div id={"editTabs"}>
                       <div className="nav-no-fills">
                         <Tabs
@@ -147,35 +144,6 @@ export default function Home() {
                           <Tab eventKey="Borrow" title={"Borrow"}></Tab>
                         </Tabs>
                       </div>
-                    </div>
-                  </Col>
-                  <Col md={4}>
-                    {/*
-                    <Button
-                      variant="default"
-                      className="float-end me-2 mt-2"
-                      onClick={(e) => {
-                        !showFilter ? setShowFilter(true) : setShowFilter(false);
-                      }}
-                    >
-                      <i className="fa fa-filter ms-2"></i> Filter Product
-                    </Button>*/
-                    }
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs={12} className="position-relative">
-                    <div id="display-search" className={showFilter ? "visible" : null}>
-                      <ProductFilter
-                        onSearch={onSearchProducts}
-                        onClearSearch={() => {
-                          productData = [];
-                          page = 0;
-                          setProductData(productData);
-                          getProductData(key);
-                        }}
-                      ></ProductFilter>
                     </div>
                   </Col>
                 </Row>

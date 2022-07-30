@@ -14,13 +14,13 @@ const OrderRating = () => {
   
   const [ratingDetails, setRatingDetails] = useState({
     id: 0,
-    ProductName: '',
-    ProductRating: 0,
-    ProductDeliveryRating: 0,
-    ProductQualityRating: 0,
-    ProductPackagingRating: 0,
-    SellerRating: 0,
-    SellerCommunicationRating: 0,
+    productName: '',
+    productRating: 0,
+    productDeliveryRating: 0,
+    productQualityRating: 0,
+    productPackagingRating: 0,
+    sellerRating: 0,
+    sellerCommunicationRating: 0,
     remarks: '',
     reviewerId: '',
     productRecord: '',
@@ -46,7 +46,7 @@ const OrderRating = () => {
 
     const comments = orderInfo?.orderDetails.comments || [];
 
-  //  console.log(comments)
+   // console.log(comments)
 
     if (comments.length > 0) {
       review = comments.filter((e) => {
@@ -55,29 +55,35 @@ const OrderRating = () => {
     }
 
     if (review.length > 0) {
+
+      console.log(review) 
+
+
+
       setRatingDetails({
         ...ratingDetails,
         id: review[0].id,
-        ProductName: orderInfo?.orderDetails?.product?.name,
-        ProductRating: parseInt(review[0].ProductRating),
-        ProductDeliveryRating: parseInt(review[0].ProductDeliveryRating),
-        ProductQualityRating: parseInt(review[0].ProductQualityRating),
-        ProductPackagingRating: parseInt(review[0].ProductPackagingRating),
-        SellerRating: parseInt(review[0].SellerRating),
-        SellerCommunicationRating: parseInt(review[0].SellerCommunicationRating),
+        productName: orderInfo?.orderDetails?.product?.name,
+        productRating: parseInt(review[0].productRating),
+        productDeliveryRating: parseInt(review[0].productDeliveryRating),
+        productQualityRating: parseInt(review[0].productQualityRating),
+        productPackagingRating: parseInt(review[0].productPackagingRating),
+        sellerRating: parseInt(review[0].sellerRating),
+        sellerCommunicationRating: parseInt(review[0].sellerCommunicationRating),
         remarks: review[0].remarks,
         reviewerId: orderInfo?.userData?.userId,
         productRecord: orderInfo?.orderDetails.recordId,
-        seller: orderInfo?.orderDetails?.seller_details.userid
+        seller: orderInfo?.orderDetails?.sellerDetails.userid
       });
 
       setStatus(true);
     } else {
       setRatingDetails({
         ...ratingDetails,
+        ProductName: orderInfo?.orderDetails?.product?.name,
         reviewerId: orderInfo?.userData?.userId,
         productRecord: orderInfo?.orderDetails.recordId,
-        seller: orderInfo?.orderDetails?.seller_details.userid
+        seller: orderInfo?.orderDetails?.sellerDetails.userid
       });
     }
   }
@@ -90,19 +96,19 @@ const OrderRating = () => {
     e.preventDefault();
 
     const sendData = {
-      ProductRating: ratingDetails.ProductRating.toString(),
-      ProductDeliveryRating: ratingDetails.ProductDeliveryRating.toString(),
-      ProductQualityRating: ratingDetails.ProductQualityRating.toString(),
-      ProductPackagingRating: ratingDetails.ProductPackagingRating.toString(),
-      SellerRating: ratingDetails.SellerRating.toString(),
-      SellerCommunicationRating: ratingDetails.SellerCommunicationRating.toString(),
+      productRating: ratingDetails.productRating.toString(),
+      productDeliveryRating: ratingDetails.productDeliveryRating.toString(),
+      productQualityRating: ratingDetails.productQualityRating.toString(),
+      productPackagingRating: ratingDetails.productPackagingRating.toString(),
+      sellerRating: ratingDetails.sellerRating.toString(),
+      sellerCommunicationRating: ratingDetails.sellerCommunicationRating.toString(),
       remarks: ratingDetails.remarks,
       reviewerId: ratingDetails.reviewerId,
       productRecord: ratingDetails.productRecord,
       seller: ratingDetails.seller
     };
 
-    console.log(ratingDetails);
+    console.log(sendData);
 
     let message = '';
 
@@ -132,7 +138,7 @@ const OrderRating = () => {
 
     return(
         <>
-        <Layout title="Orders" metaDescription={[{ name: "description", content: "Profile Page" }]}>
+        <Layout title="Orders" metaDescription={[{ name: "description", content: "order details Page" }]}>
         <div id="pageContainer" className="container">
           <Breadcrumb className="m-2">
             <Link href="/" passHref>
@@ -146,7 +152,7 @@ const OrderRating = () => {
             </Link>
             <Breadcrumb.Item active>Product Rating &amp; Review</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title={"Product Rating & Review of [" + ratingDetails.ProductName +"]"} activeLink={4} enableBack={true}>
+          <MyAccountLayout title={"Product Rating & Review of [" + ratingDetails.productName +"]"} activeLink={4} enableBack={true}>
 
           <form role="form" id="form" className="needs-validation" noValidate>
             <div className="row">
@@ -156,10 +162,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.ProductRating}
+                    rating={ratingDetails.productRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="ProductRating"
+                    name="productRating"
                   />
                 </span>
               </div>
@@ -170,10 +176,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.ProductDeliveryRating}
+                    rating={ratingDetails.productDeliveryRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="ProductDeliveryRating"
+                    name="productDeliveryRating"
                   />
                 </span>
               </div>
@@ -184,10 +190,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.ProductQualityRating}
+                    rating={ratingDetails.productQualityRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="ProductQualityRating"
+                    name="productQualityRating"
                   />
                 </span>
               </div>
@@ -198,10 +204,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.ProductPackagingRating}
+                    rating={ratingDetails.productPackagingRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="ProductPackagingRating"
+                    name="productPackagingRating"
                   />
                 </span>
               </div>
@@ -212,10 +218,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.SellerRating}
+                    rating={ratingDetails.sellerRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="SellerRating"
+                    name="sellerRating"
                   />
                 </span>
               </div>
@@ -226,10 +232,10 @@ const OrderRating = () => {
                   <StarRatings
                     starDimension="20px"
                     changeRating={updateValue}
-                    rating={ratingDetails.SellerCommunicationRating}
+                    rating={ratingDetails.sellerCommunicationRating}
                     starRatedColor="#e74c3c"
                     numberOfStars={5}
-                    name="SellerCommunicationRating"
+                    name="sellerCommunicationRating"
                   />
                 </span>
               </div>

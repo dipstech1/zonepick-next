@@ -107,7 +107,7 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv"
           <button type="button" className="btn" onClick={getFile}>
             <div className="image-container">
               <img src="/img/browse_ic.svg" alt="" className="img-responsive-uploader" />
-              <div className="centered text-nowrap">Uploda Your Image(s)</div>
+              <div className="centered text-nowrap">Uploadd Your Image(s)</div>
             </div>
           </button>
           <input
