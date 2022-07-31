@@ -369,8 +369,8 @@ $color-keys: map-keys($theme-colors);
     width: 100%;
     min-width: 110px;
     height: auto;
-    max-height: 120px;
-    min-height: 120px;
+    max-height: 250px;
+    min-height: 250px;
     padding: 5px;
     border-radius: 5px;
   }
@@ -389,10 +389,10 @@ $color-keys: map-keys($theme-colors);
 @media (min-width: 992px) {
   .img-responsive-1 {
     width: 100%;
-    min-width: 110px;
+    min-width: 150px;
     height: auto;
-    max-height: 120px;
-    min-height: 120px;
+    max-height: 150px;
+    min-height: 150px;
     padding: 5px;
     border-radius: 5px;
   }

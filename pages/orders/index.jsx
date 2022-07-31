@@ -89,7 +89,7 @@ const Orders = () => {
                             <Card className="product-row">
                               <Card.Body className="p-0">
                                 <Row>
-                                  <Col md={3} lg={2}>
+                                  <Col  lg={3} xl={2}>
                                     <img
                                       src={common.imageUrl + data?.productId[0].product.images[0].url}
                                       className="img-responsive-1 w-100"
@@ -97,10 +97,15 @@ const Orders = () => {
                                       style={{ cursor: "pointer" }}
                                     />
                                   </Col>
-                                  <Col md={9} lg={10}>
+                                  <Col  lg={9} xl={10}>
                                     <div className="p-2">
                                       <Row>
-                                        <Col md={7} style={{ cursor: "pointer" }}>
+                                        <Col md={12} className='mb-2'>
+                                          <b>Order Id: </b> {order.transactionId}
+                                        </Col>
+                                      </Row>
+                                      <Row>
+                                        <Col lg={7} style={{ cursor: "pointer" }}>
                                           <span className="d-inline-bloc" onClick={(e) => goToProductDetails(data)}>
                                             <b style={{ cursor: "pointer" }}>{data?.productId[0]?.product.name}</b>
                                           </span>
@@ -133,7 +138,7 @@ const Orders = () => {
                                             </div>
                                           </div>
                                         </Col>
-                                        <Col md={5}>
+                                        <Col lg={5}>
                                           <div className="d-block mt-1">
                                             <b className="text-deep-purple-800 small">
                                               <i className="fas fa-box text-deep-purple-800 me-2"></i> Ordered On &nbsp;
