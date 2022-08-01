@@ -70,6 +70,40 @@ const DateFromTimeStampTime = (timestamp) => {
   return fulldate;
 };
 
+
+const monthYearTimeStamp = (timestamp) => {
+  // Months array
+  const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  // Convert timestamp to milliseconds
+  const date = new Date(parseInt(timestamp));
+
+  // Year
+  const year = date.getFullYear();
+
+  // Month
+  const month = months_arr[date.getMonth()];
+
+  //  const month = [date.getMonth() + 1];
+
+  // Day
+  const day = date.getDate();
+
+  // Hours
+  const hours = date.getHours();
+
+  // Minutes
+  const minutes = "0" + date.getMinutes();
+
+  // Seconds
+  const seconds = "0" + date.getSeconds();
+
+  // Display date in MM-dd-yyyy format
+  const fulldate =  date.getFullYear() + '-' + month ;
+
+  return fulldate;
+};
+
 const delivarytatus = (timestamp) => {
   const months_arr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -170,6 +204,7 @@ const getCurrencyWithFormat = (value = 0) => {
 export default {
   DateFromTimeStamp: DateFromTimeStamp,
   DateFromTimeStampTime: DateFromTimeStampTime,
+  monthYearTimeStamp:monthYearTimeStamp,
   calculateRating: calculateRating,
   calculateAvgRating: calculateAvgRating,
   delivarytatus: delivarytatus,
