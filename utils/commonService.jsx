@@ -1,8 +1,14 @@
 import getConfig from "next/config";
+/*
+const imageUrl= 'upload_doc/images/'
+const avatorUrl= 'upload_doc/avator/'
+const arUrl= 'upload_doc/glb/'*/
 
-const imageUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/images/'
-const avatorUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/avator/'
-const arUrl= 'https://ecom-all-content.s3.ap-south-1.amazonaws.com/glb/'
+
+const imageUrl= 'https://www.emetacomm.com/upload_doc/images/'
+const avatorUrl= 'https://www.emetacomm.com/upload_doc/avator/'
+const arUrl= 'https://www.emetacomm.com/upload_doc/glb/'
+
 
 const DateFromTimeStamp = (timestamp) => {
   // Months array

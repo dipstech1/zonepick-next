@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Breadcrumb, Button, Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Container, Form, ProgressBar, Row, Tab, Tabs } from "react-bootstrap";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { toast } from "react-toastify";
@@ -15,6 +15,7 @@ import Layout from "../../../components/Layout/layout";
 import withAuth from "../../../components/withAuth";
 import axios from "../../../utils/axios.interceptor";
 import * as S3 from "aws-sdk/clients/s3";
+import ARUploader from "../../../components/arUploader";
 
 const AddProductPage = () => {
   const router = useRouter();
@@ -36,6 +37,9 @@ const AddProductPage = () => {
 
   const [brandOptions, setBrandOptions] = useState([]);
 
+  const [uploadpercent, setUploadpercent] = useState(0);
+  const [uploadCurrent, setUploadCurrent] = useState(0);
+
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [subcategoryOptions, setSubcategoryOptions] = useState([]);
 
@@ -43,6 +47,7 @@ const AddProductPage = () => {
     productImage: [],
     threeSixtyImage: [],
     threedImage: [],
+    ARImage: [],
     allImage: [],
   });
 
@@ -240,6 +245,15 @@ const AddProductPage = () => {
         });
       });
 
+      imageData.ARImage.forEach((e) => {
+        imageList.push({
+          fileInfo: e.fileInfo,
+          fileType: "AR IMAGE",
+          fileUrl: e.fileUrl,
+          status: "Pending",
+        });
+      });
+
       setImageData({ ...imageData, allImage: imageList });
 
       setStep({ ...step, completeStep: 3, currentStep: 3 });
@@ -256,25 +270,42 @@ const AddProductPage = () => {
     setImageData({ ...imageData, threeSixtyImage: data });
   };
 
+  const ARImageLoaded = (data) => {
+    setImageData({ ...imageData, ARImage: data });
+  };
+
   const onSubmitClick = async () => {
     const images = [];
     let imageList = [...imageData.allImage];
+
+    let arimageurl = "";
 
     for (let i = 0; i < imageData.allImage.length; i++) {
       const file = imageData.allImage[i].fileInfo.file;
       const fileType = imageData.allImage[i].fileInfo.file.type.split("/");
       const fileName = imageData.allImage[i].fileInfo.file.name;
 
-      const data = await uploadFiles(file, fileType[1], fileName);
+      setUploadCurrent(fileName);
 
-      if (data.status === "success") {
+      let data = [];
+
+      if (imageData.allImage[i].fileType !== "AR IMAGE") {
+        data = await uploadFiles(file, fileType[1], fileName);
+      } else {
+        data = await uploadFiles(file, "glb", fileName);
+      }
+
+      if (data.status === "success" && imageData.allImage[i].fileType !== "AR IMAGE") {
         images.push({ url: data.fileName, type: imageData.allImage[i].fileType });
+        imageList[i].status = "done";
+      } else {
+        arimageurl = data.fileName;
         imageList[i].status = "done";
       }
       setImageData({ ...imageData, allImage: imageList });
     }
 
-    
+    setUploadpercent(0);
 
     let product = {
       name: formik.values.name,
@@ -284,7 +315,7 @@ const AddProductPage = () => {
       price: formik.values.price,
       brand: formik.values.brand,
       userid: "",
-      arimageurl: "",
+      arimageurl: arimageurl,
       arimagedata: "",
       images: images,
       specifications: formik.values.specifications,
@@ -309,7 +340,6 @@ const AddProductPage = () => {
       console.log(error);
       toast.error("Fail");
     }
-
   };
 
   const GetAWSCredentials = async () => {
@@ -337,18 +367,23 @@ const AddProductPage = () => {
       });
 
       const filename_with_suffix = new Date().valueOf() + "." + filetype;
-      const params = {
-        Bucket: AWSCredentials.BucketName,
-        Key: "images/" + filename_with_suffix,
+      let params = {
+        Bucket: "www.emetacomm.com",
+        Key: "upload_doc/images/" + filename_with_suffix,
         Body: file,
         ACL: "public-read",
         ContentType: contentType,
       };
 
+      if (filetype === "glb") {
+        params.Key = "upload_doc/glb/" + filename_with_suffix;
+      }
+
       bucket
         .upload(params)
         .on("httpUploadProgress", (evt) => {
           console.log((evt.loaded / evt.total) * 100);
+          setUploadpercent(((evt.loaded / evt.total) * 100).toFixed(0));
         })
         .send((err, data) => {
           if (err) {
@@ -393,17 +428,12 @@ const AddProductPage = () => {
             <div className="step-form">
               <ul>
                 <li
-                  className={
-                    step.currentStep === 1 || step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"
-                  }
+                  className={step.currentStep === 1 || step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"}
                   onClick={() => udpdateStep(1)}
                 >
                   Product Details
                 </li>
-                <li
-                  className={step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"}
-                  onClick={() => udpdateStep(2)}
-                >
+                <li className={step.currentStep === 2 || step.currentStep === 3 ? "active" : "deactive"} onClick={() => udpdateStep(2)}>
                   Photos
                 </li>
                 <li className={step.currentStep === 3 ? "active" : "deactive"} onClick={() => udpdateStep(3)}>
@@ -472,15 +502,9 @@ const AddProductPage = () => {
                             placeholder="Enter Reward Percent"
                             value={formik.values.productRewardPercent}
                             onChange={formik.handleChange}
-                            className={
-                              formik.touched.productRewardPercent && formik.errors.productRewardPercent
-                                ? "is-invalid"
-                                : ""
-                            }
+                            className={formik.touched.productRewardPercent && formik.errors.productRewardPercent ? "is-invalid" : ""}
                           />
-                          <Form.Control.Feedback type="invalid">
-                            {formik.errors.productRewardPercent}
-                          </Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{formik.errors.productRewardPercent}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
                     </Row>
@@ -577,9 +601,7 @@ const AddProductPage = () => {
                             placeholder="Enter Optional Field-1"
                             value={formik.values.optionalField1}
                             onChange={formik.handleChange}
-                            className={
-                              formik.touched.optionalField1 && formik.errors.optionalField1 ? "is-invalid" : ""
-                            }
+                            className={formik.touched.optionalField1 && formik.errors.optionalField1 ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.optionalField1}</Form.Control.Feedback>
                         </Form.Group>
@@ -594,9 +616,7 @@ const AddProductPage = () => {
                             placeholder="Enter Optional Field-2"
                             value={formik.values.optionalField2}
                             onChange={formik.handleChange}
-                            className={
-                              formik.touched.optionalField2 && formik.errors.optionalField2 ? "is-invalid" : ""
-                            }
+                            className={formik.touched.optionalField2 && formik.errors.optionalField2 ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.optionalField2}</Form.Control.Feedback>
                         </Form.Group>
@@ -613,9 +633,7 @@ const AddProductPage = () => {
                             placeholder="Enter Optional Field-3"
                             value={formik.values.optionalField3}
                             onChange={formik.handleChange}
-                            className={
-                              formik.touched.optionalField3 && formik.errors.optionalField3 ? "is-invalid" : ""
-                            }
+                            className={formik.touched.optionalField3 && formik.errors.optionalField3 ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.optionalField3}</Form.Control.Feedback>
                         </Form.Group>
@@ -630,9 +648,7 @@ const AddProductPage = () => {
                             placeholder="Enter Optional Field-4"
                             value={formik.values.optionalField4}
                             onChange={formik.handleChange}
-                            className={
-                              formik.touched.optionalField4 && formik.errors.optionalField4 ? "is-invalid" : ""
-                            }
+                            className={formik.touched.optionalField4 && formik.errors.optionalField4 ? "is-invalid" : ""}
                           />
                           <Form.Control.Feedback type="invalid">{formik.errors.optionalField4}</Form.Control.Feedback>
                         </Form.Group>
@@ -672,7 +688,13 @@ const AddProductPage = () => {
                           ></ImageUploader>
                         </Tab>
                         <Tab eventKey="3d" title="3d Model">
-                          CC
+                          <ARUploader
+                            maxUpload={1}
+                            info={"Add AR  Photos"}
+                            onSelectionChanged={ARImageLoaded}
+                            id={"AR"}
+                            imagesList={imageData.ARImage}
+                          ></ARUploader>
                         </Tab>
                       </Tabs>
                     </Col>
@@ -766,6 +788,14 @@ const AddProductPage = () => {
                     </Col>
                   </Row>
 
+                  {uploadpercent > 0 ? (
+                    <Row>
+                      <Col md={12} className="mb-2 mt-2 fw-bold">
+                        <ProgressBar now={uploadpercent} label={`${uploadCurrent}` + " -- " + `${uploadpercent}%`}></ProgressBar>
+                      </Col>
+                    </Row>
+                  ) : null}
+
                   <Row>
                     <Col md={12} className="mb-2 mt-2 fw-bold">
                       Product Images:
@@ -775,7 +805,12 @@ const AddProductPage = () => {
                         <Col xs={6} lg={4} key={i}>
                           <div className="uploader-container border border-danger mb-2">
                             <div className="pe-1 pt-1 pb-1 image-container">
-                              <img src={link.fileUrl} alt={"xx"} className="img-responsive-uploader" />
+                              {link.fileType !== "AR IMAGE" ? (
+                                <img src={link.fileUrl} alt={"xx"} className="img-responsive-uploader" />
+                              ) : (
+                                <img src={"/img/3d-min.jpg"} alt={"xx"} className="img-responsive-uploader" />
+                              )}
+
                               <div className="top-left">
                                 <span className="text-uppercase">{link.fileType}</span>
                               </div>

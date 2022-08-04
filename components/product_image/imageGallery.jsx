@@ -39,7 +39,7 @@ const ImageGallery = ({ imageData = [] }) => {
             <Card.Body>
               <Row>
                 <Col>
-                  <img src={imgLink} alt="img" className="img-fluid" style={{ height: 450, width: "100%" }} />
+                  <img src={imgLink} alt="img" className="img-fluid" style={{ height: 450, width: "100%", objectFit:'scale-down' }} />
                 </Col>
               </Row>
 

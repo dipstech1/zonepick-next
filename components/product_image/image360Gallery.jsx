@@ -21,8 +21,8 @@ const Image360Gallery = ({ imageData = [] }) => {
       setImageLinks(tempData);
 
       if (tempData.length > 0) {
-        setImgLink(common.imageUrl + tempData[0].url);
-      }
+        setImgLink(common.imageUrl + tempData[0].url)        
+      } 
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

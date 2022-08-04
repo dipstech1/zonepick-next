@@ -5,16 +5,16 @@ import { toast } from "react-toastify";
 
 let count = 0;
 
-const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv", imagesList = [] }) => {
+const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", imagesList = [] }) => {
   const [imgsSrc, setImgsSrc] = useState([]);
   const [imgInfo, setImgInfo] = useState([]);
 
   useEffect(() => {
     onSelectionChanged(imgInfo);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgInfo]);
 
-  useEffect(() => {   
+  useEffect(() => {
     if (imagesList.length > 0) {
       const items = [];
       setImgsSrc(items);
@@ -25,7 +25,7 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv"
       setImgsSrc(items);
     }
 
-    console.log("TYAH");
+    console.log(imagesList);
   }, [imagesList]);
 
   const getFile = () => {
@@ -47,10 +47,16 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv"
         await delay(100);
 
         const imagefile = filesArray[i].type;
-        const match = ["image/jpeg", "image/jpg", "image/png"];
 
-        if (!(imagefile === match[0] || imagefile === match[1] || imagefile === match[2])) {
-          toast.error("Please Select JPG/JPEG/PNG File.");
+
+        const temp = filesArray[i].name.split('.')
+
+        imagefile = temp[temp.length - 1] 
+
+        const match = ["glb"];
+
+        if (!(imagefile === match[0])) {
+          toast.error("Please Select GLB File.");
         } else {
           let fileObj = {
             name: filesArray[i].name,
@@ -97,7 +103,7 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv"
         <Col>
           <span style={{ display: "block", color: "#969090", fontSize: "18px" }}>{info}</span>
           <span style={{ display: "block", color: "#969090" }}>
-            <small>you can add upto {maxUpload} photos</small>
+            <small>You can add 1 AR Image</small>
           </span>
         </Col>
       </Row>
@@ -107,36 +113,37 @@ const ImageUploader = ({ maxUpload = 2, info = "", onSelectionChanged, id = "xv"
           <button type="button" className="btn" onClick={getFile}>
             <div className="image-container">
               <img src="/img/browse_ic.svg" alt="" className="img-responsive-uploader" />
-              <div className="centered text-nowrap">Upload Your Image(s)</div>
+              <div className="centered text-nowrap">Upload AR Image</div>
             </div>
           </button>
           <input
             type="file"
             className="custom-file-input"
-            accept={"image/png,image/jpg,image/jpeg"}
+            
             id={`img${id}`}
-            multiple={true}
             onChange={onFileChange}
             hidden={true}
+            multiple={true}
           />
         </Col>
 
-        {imgsSrc.length > 0 &&
-          imgsSrc.map((link, i) => (
-            <Col xs={6} lg={4} key={i}>
-              <div className="uploader-container border border-danger mb-2">
-                <div className="pe-1 pt-1 pb-1 image-container">
-                  <img src={link} alt={"xx"} className="img-responsive-uploader" />
-                  <div className="top-right" onClick={(e) => removeImage(i)}>
-                    <i className="fa fa-times"></i>
-                  </div>
+        {imgsSrc.length}
+
+        {imgsSrc.length > 0 ? (
+          <Col xs={6} lg={4} key={0}>
+            <div className="uploader-container border border-danger mb-2">
+              <div className="pe-1 pt-1 pb-1 image-container">
+                <img src={"/img/3d-min.jpg"} alt={"xx"} className="img-responsive-uploader" style={{ width: 110 }} />
+                <div className="top-right" onClick={(e) => removeImage(0)}>
+                  <i className="fa fa-times"></i>
                 </div>
               </div>
-            </Col>
-          ))}
+            </div>
+          </Col>
+        ) : null}
       </Row>
     </div>
   );
 };
 
-export default ImageUploader;
+export default ARUploader;
