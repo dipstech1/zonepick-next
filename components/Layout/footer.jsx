@@ -5,7 +5,7 @@ const Footer = () => {
     <>
       <div className="footer">
         <Navbar bg="deep-purple-900" variant="dark" expand="xs">
-          <Container className="text-center d-block text-white small">&copy; 2021 Softgem</Container>
+          <Container className="text-center d-block text-white small">&copy; 2021 MetaSoft</Container>
         </Navbar>
       </div>
     </>

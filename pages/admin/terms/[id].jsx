@@ -13,48 +13,58 @@ import axios from "../../../utils/axios.interceptor";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 
-const EditBrandPage = () => {
+const EditTermsPage = () => {
   const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
-      userid: "",
-      brandName: "",
+      userId: "",
+      termsName: "",
       id: "",
     },
     validationSchema: Yup.object({
-      brandName: Yup.string().required("Required"),
+      termsName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
       //  console.log(JSON.stringify(values, null, 2));
-      editBrand(values);
+      editTerms(values);
     },
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!router.isReady) return;
 
-    if (sessionStorage.getItem("brand")) {
-      const data = JSON.parse(sessionStorage.getItem("brand"));
-      formik.setFieldValue("brandName", data.brandName);
-      formik.setFieldValue("id", data.id);
-    } else {
-      router.push("/admin/brand");
+    if (router.query["id"]) {
+      formik.setFieldValue("id", router.query["id"][0]);
+
+      getDetails(router.query["id"]);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const getDetails = async (id) => {
+    try {
+      let resp = await axios.get(`terms/${id}`);
+      if (resp.data) {
+        formik.setFieldValue("termsName", resp.data?.termsName);
+      }
+    //  console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
 
-  const editBrand = async (brand) => {
-    brand.userid = getCookie("userid");
-    //  console.log(brand);
+  const editTerms = async (terms) => {
+    terms.userId = getCookie("userid");
+    //  console.log(terms);
 
     try {
-      let resp = await axios.patch(`brand/${brand.id}`, brand);
+      let resp = await axios.put(`terms/${terms.id}`, terms);
 
       if (resp.data.acknowledge) {
         router.back();
-        toast.success("Brand Updated Successfully");
+        toast.success("Terms Updated Successfully");
       } else {
         toast.error("Fail");
       }
@@ -66,7 +76,7 @@ const EditBrandPage = () => {
 
   return (
     <>
-      <Layout title="Edit Brand" metaDescription={[{ name: "description", content: "Edit Brand" }]}>
+      <Layout title="Edit Terms" metaDescription={[{ name: "description", content: "Edit Terms" }]}>
         <div id="pageContainer" className="container">
           <Breadcrumb className="m-2">
             <Link href="/" passHref>
@@ -75,35 +85,35 @@ const EditBrandPage = () => {
             <Link href="/account" passHref>
               <Breadcrumb.Item>My Account</Breadcrumb.Item>
             </Link>
-            <Link href="/admin/brand" passHref>
-              <Breadcrumb.Item>Brand</Breadcrumb.Item>
+            <Link href="/admin/terms" passHref>
+              <Breadcrumb.Item>Terms</Breadcrumb.Item>
             </Link>
-            <Breadcrumb.Item active>Edit Brand</Breadcrumb.Item>
+            <Breadcrumb.Item active>Edit Terms</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Edit Brand" activeLink={11} enableBack={true}>
+          <MyAccountLayout title="Edit Terms" activeLink={11} enableBack={true}>
             <div className="py-3 px-5">
               <Row>
                 <Col>
                   <Form onSubmit={formik.handleSubmit}>
                     <Row>
                       <Col>
-                        <Form.Group className="mb-2 position-relative" controlId="brandName">
-                          <Form.Label className="fw-bold">Brand Name:</Form.Label>
+                        <Form.Group className="mb-2 position-relative" controlId="termsName">
+                          <Form.Label className="fw-bold">Terms Name:</Form.Label>
                           <Form.Control
                             type="text"
-                            name="brandName"
-                            placeholder="Enter Brand Name"
-                            value={formik.values.brandName}
+                            name="termsName"
+                            placeholder="Enter Terms Name"
+                            value={formik.values.termsName}
                             onChange={formik.handleChange}
-                            className={formik.touched.brandName && formik.errors.brandName ? "is-invalid" : ""}
+                            className={formik.touched.termsName && formik.errors.termsName ? "is-invalid" : ""}
                           />
-                          <Form.Control.Feedback type="invalid">{formik.errors.brandName}</Form.Control.Feedback>
+                          <Form.Control.Feedback type="invalid">{formik.errors.termsName}</Form.Control.Feedback>
                         </Form.Group>
                       </Col>
                     </Row>
 
                     <Form.Group controlId="submitButton" className="text-center mt-5">
-                      <Button variant="deep-purple-900" type="submit" style={{width:'120px'}}>
+                      <Button variant="deep-purple-900" type="submit" style={{ width: "120px" }}>
                         Update
                       </Button>
                     </Form.Group>
@@ -117,4 +127,4 @@ const EditBrandPage = () => {
     </>
   );
 };
-export default withAuth(EditBrandPage,['ADMIN']);
+export default withAuth(EditTermsPage, ["ADMIN"]);

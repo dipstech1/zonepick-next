@@ -22,8 +22,8 @@ const ProductCard = ({ productDetails, addToWishList }) => {
     <>
     { productDetails ?
       <Card onClick={goToDetails} style={{cursor: 'pointer'}} className='product-row shadow-sm'>
-        <div className="image-container">
-          <Card.Img variant="top" src={common.imageUrl + ( productDetails?.product?.name ? productDetails?.product?.images[0]?.url : productDetails?.images[0]?.url)} style={{ height: 250, width: "100%" }} />
+        <div className="image-container" >
+          <Card.Img variant="top" src={common.imageUrl + ( productDetails?.product?.name ? productDetails?.product?.images[0]?.url : productDetails?.images[0]?.url)} style={{ height: 250, maxWidth: "100%" }} />
           <div className="top-left ">{productDetails?.purpose || null}</div>
         </div>
         <Card.Body>

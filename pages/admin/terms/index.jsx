@@ -11,12 +11,12 @@ import withAuth from "../../../components/withAuth";
 import axios from "../../../utils/axios.interceptor";
 let page = 0;
 
-const BrandPage = () => {
+const TermsPage = () => {
   const router = useRouter();
 
   const [userId, setUserId] = useState(null);
 
-  const [brandData, setBrandData] = useState([]);
+  const [termData, setTermData] = useState([]);
 
   let [total, setTotal] = useState(0);
   let [loading, setLoading] = useState(false);
@@ -24,24 +24,20 @@ const BrandPage = () => {
   useEffect(() => {
     const userId = getCookie("userid");
     page=0;
-    setBrandData([])
+    setTermData([])
     setUserId(userId);
     getBrands();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getMoreBrands = () => {
-    page += 1;
-    getBrands();
-  };
-
+ 
   const getBrands = async () => {
     try {
       setLoading(true);
-      let resp = await axios.get(`brand?page=${page}`);
+      let resp = await axios.get(`terms`);
       if (resp.data) {
-        setBrandData([...brandData, ...resp.data.data]);
-        setTotal(resp.data.total);
+        setTermData(resp.data);
+       // setTotal(resp.data.total);
       }
       setLoading(false);
     } catch (error) {
@@ -52,7 +48,7 @@ const BrandPage = () => {
   };
 
   const onEditClick = (item)=> {
-    router.push("brand/" + item.id);
+    router.push("terms/" + item.id);
   }
 
   const onDeleteClick= async(item,itemIndex)=>{
@@ -71,14 +67,14 @@ const BrandPage = () => {
         let res = await axios.delete(`brand/${item.id}`,  {data:sendData});
         if (res.data.acknowledge == true) {
 
-          brandData=[];
+          termData=[];
           page =0;
           getBrands();
 
           //getBrands();
-         // brandData.splice(itemIndex, 1);
-         // setBrandData(brandData);
-         // setTotal(brandData.length)
+         // termData.splice(itemIndex, 1);
+         // setTermData(termData);
+         // setTotal(termData.length)
           toast.success("Brand Deleted");
         } else {
           toast.warning("Fail");
@@ -94,12 +90,17 @@ const BrandPage = () => {
 
   const onbuttonClick = (e) => {
     // console.log(productData)
-    router.push("brand/add");
+    router.push("terms/add");
+  };
+
+  const onDetailsClick = (e) => {
+    // console.log(productData)
+    router.push("terms-details/" + e);
   };
 
   return (
     <>
-      <Layout title="Brand" metaDescription={[{ name: "description", content: "Brand" }]}>
+      <Layout title="Terms" metaDescription={[{ name: "description", content: "Terms" }]}>
         <div id="pageContainer" className="container">
           <Breadcrumb className="m-2">
             <Link href="/" passHref>
@@ -108,21 +109,21 @@ const BrandPage = () => {
             <Link href="/account" passHref>
               <Breadcrumb.Item>My Account</Breadcrumb.Item>
             </Link>
-            <Breadcrumb.Item active>Brand</Breadcrumb.Item>
+            <Breadcrumb.Item active>Terms</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Brand" activeLink={11} enableButton={true}
+          <MyAccountLayout title="Terms" activeLink={12} enableButton={true}
             iconClass="fa fa-add"
-            tooltipText="Add New Brand"
+            tooltipText="Add New Terms"
             buttoClick={(e) => onbuttonClick(e)}>
             <Row>
               <Col>
-                {brandData.length ? (
-                  brandData.map((data, i) => (
-                    <Row key={i} className="mt-2 mb-3 ">
+                {termData.length ? (
+                  termData.map((data, i) => (
+                    <Row key={i} className="mt-2 mb-3" >
                       <Col>
                         <Card>
                           <Card.Body>
-                          <div className="d-inline-block " >{data?.brandName}</div>
+                          <div className="d-inline-block " style={{cursor:'pointer'}} onClick={(e)=>onDetailsClick(data?.id)}>{data?.termsName}</div>
                           <div className="d-inline-block float-end">
                             <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
                               <i className="fa fa-edit"></i>
@@ -140,20 +141,11 @@ const BrandPage = () => {
                   <></>
                 )}
               </Col>
-            </Row>
-            {total > brandData.length ? (
-              <Row className="mt-3">
-                <Col className="text-center">
-                  <Button onClick={getMoreBrands}>
-                    Load More {loading ? <span className="spinner-border spinner-border-sm me-1 ms-2"></span> : null}
-                  </Button>
-                </Col>
-              </Row>
-            ) : null}
+            </Row>            
           </MyAccountLayout>
         </div>
       </Layout>
     </>
   );
 };
-export default withAuth(BrandPage,['ADMIN']);
+export default withAuth(TermsPage,['ADMIN']);

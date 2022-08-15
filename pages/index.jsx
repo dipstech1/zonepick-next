@@ -48,7 +48,7 @@ export default function Home() {
         setProductData([]);
       }
 
-      console.log(resp.data);
+    //  console.log(resp.data);
     } catch (error) {
       // console.log(error);
       setLoading(false);
@@ -68,6 +68,7 @@ export default function Home() {
     setProductData(productData);
     setKey(k);
     getProductData(k);
+    
   };
 
   const onSearchProducts = async (sendData) => {
@@ -148,7 +149,7 @@ export default function Home() {
                   </Col>
                 </Row>
 
-                <Row className="ps-2" style={{ minHeight: 400 }}>
+                <Row className="ps-2 scrollable overflow-auto" style={{ minHeight: 400, overflow: 'auto' }}>
                   {productData.length > 0 &&
                     productData.map((product, i) => {
                       return (

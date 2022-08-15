@@ -466,6 +466,7 @@ $color-keys: map-keys($theme-colors);
   padding-right: 50px;
 }
 
+
 #nav_main {
   .dropdown-menu {
     padding-left: 5px;
@@ -925,6 +926,10 @@ $color-keys: map-keys($theme-colors);
       transition: all 0.6s ease;
     }
   }
+
+  .container {
+    max-width: 566px;
+  }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -941,6 +946,9 @@ $color-keys: map-keys($theme-colors);
       z-index: -3 !important;
       transition: all 0.6s ease;
     }
+  }
+  .container {
+    max-width: 758px;
   }
 }
 
@@ -959,6 +967,10 @@ $color-keys: map-keys($theme-colors);
       transition: all 0.6s ease;
     }
   }
+
+  .container {
+    max-width: 982px;
+  }
 }
 
 // X-Large devices (large desktops, 1200px and up)
@@ -976,6 +988,10 @@ $color-keys: map-keys($theme-colors);
       transition: all 0.6s ease;
     }
   }
+
+  .container {
+    max-width: 1190px;
+  }
 }
 
 // XX-Large devices (larger desktops, 1400px and up)
@@ -992,6 +1008,10 @@ $color-keys: map-keys($theme-colors);
       z-index: -3 !important;
       transition: all 0.6s ease;
     }
+  }
+
+  .container {
+    max-width: 1390px;
   }
 }
 

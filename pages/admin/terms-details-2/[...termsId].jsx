@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
@@ -10,68 +9,50 @@ import axios from "../../../utils/axios.interceptor";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 
-const SubCategoryPage = () => {
+const TermDetailsPage = () => {
   const router = useRouter();
-
   const [userId, setUserId] = useState(null);
-  const [categoryName, setcategoryName] = useState(null);
-  const [categoryId, setCategoryId] = useState(null);
-  const [subcategoryList, setSubcategoryList] = useState([]);
+
+  const [termsId, setTermsId] = useState(null);
+  const [termsName, setTermsName] = useState('');
+
+  const [termsDetails, setTermsDetails] = useState([]);
+
   useEffect(() => {
     if (!router.isReady) return;
-    const categoryName = router.query["categoryName"];
 
-    //  console.log(categoryName);
+    if (router.query["termsId"]) {
+      const userId = getCookie("userid");
+      setUserId(userId);
 
-    const userId = getCookie("userid");
-    setUserId(userId);
+      const TermsId = router.query["termsId"][0];
+      setTermsId(TermsId);
 
-    if (router.query["categoryName"]) {
-      setcategoryName(categoryName);
-      getSubcategoryItems(categoryName);
+      getTermsDetails(TermsId);
+
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  const getSubcategoryItems = async (categoryName) => {
-    const sendData = {
-      category: categoryName.toString(),
-    };
+  const getTermsDetails = async (termsId) => {
     try {
-      let resp = await axios.post("category", sendData);
-      if (resp.data.length > 0) {
-        setCategoryId(resp.data[0]["id"]);
-        setSubcategoryList(resp.data[0]?.subcategories);
+      let resp = await axios.get(`terms/${termsId}`);
+      if (resp.data) {
+
+        setTermsName(resp.data.termsName)
+
+        setTermsDetails(resp.data.termsDetail)
       }
-      // console.log(resp.data);
+     // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
     }
-
-    /* try {
-      let resp = await axios.get("category/all");
-      if (resp.data.length > 0) {
-        const data = resp.data;
-        const filterData = data.filter((item) => {
-          return item.categoryName.toString() === categoryName.toString();
-        });
-
-        if (filterData) {
-          setCategoryId(filterData[0]["id"]);
-          setSubcategoryList([...filterData[0]["subcategories"]]);
-        }
-      }
-      console.log(resp.data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Fail");
-    }*/
   };
 
   const onDeleteClick = async (item) => {
-    const cnf = confirm("Are you sure you want to delete?");
+    /* const cnf = confirm("Are you sure you want to delete?");
 
     if (cnf) {
       const sendData = {
@@ -85,8 +66,8 @@ const SubCategoryPage = () => {
       try {
         let res = await axios.delete("admin/delete-subcategory", { data: sendData });
         if (res.data.acknowledge == true) {
-          getSubcategoryItems(categoryName);
-          toast.success("Subcategory Deleted");
+          getTermsDetailsItems(categoryName);
+          toast.success("TermsDetails Deleted");
         } else {
           toast.warning("Fail");
         }
@@ -94,22 +75,21 @@ const SubCategoryPage = () => {
         console.log(error);
         toast.error("Fail");
       }
-    }
+    }*/
   };
 
   const onbuttonClick = (e) => {
-    sessionStorage.setItem("categoryId", categoryId);
+    sessionStorage.setItem("termsId", termsId);
     router.push("add");
   };
 
   const onEditClick = (item) => {
-    sessionStorage.setItem("subcategory", JSON.stringify(item));
-    router.push("edit");
+    router.push("edit/" + item.id);
   };
 
   return (
     <>
-      <Layout title="Subcategory" metaDescription={[{ name: "description", content: "Subcategory" }]}>
+      <Layout title="TermsDetails" metaDescription={[{ name: "description", content: "TermsDetails" }]}>
         <div id="pageContainer" className="container">
           <Breadcrumb className="m-2">
             <Link href="/" passHref>
@@ -118,31 +98,31 @@ const SubCategoryPage = () => {
             <Link href="/account" passHref>
               <Breadcrumb.Item>My Account</Breadcrumb.Item>
             </Link>
-            <Link href="/admin/category" passHref>
-              <Breadcrumb.Item>Category</Breadcrumb.Item>
+            <Link href="/admin/terms" passHref>
+              <Breadcrumb.Item>Terms</Breadcrumb.Item>
             </Link>
-            <Link href="/admin/subcategory" passHref>
-              <Breadcrumb.Item>Subcategory</Breadcrumb.Item>
+            <Link href="/admin/terms-details" passHref>
+              <Breadcrumb.Item>Terms Details</Breadcrumb.Item>
             </Link>
-            <Breadcrumb.Item active>{router.query["categoryName"]}</Breadcrumb.Item>
+            <Breadcrumb.Item active>{termsName}</Breadcrumb.Item>
           </Breadcrumb>
           <MyAccountLayout
-            title={"Subcategory(s) of " + router.query["categoryName"]}
-            activeLink={8}
+            title={"TermsDetails(s) of " + termsName}
+            activeLink={12}
             enableBack={true}
             enableButton={true}
             iconClass="fa fa-add"
-            tooltipText="Add New Subcategory"
+            tooltipText="Add New TermsDetails"
             buttoClick={(e) => onbuttonClick(e)}
           >
             <div className="px-3 py-3">
               <Row>
-                {subcategoryList?.length > 0 &&
-                  subcategoryList?.map((data, i) => (
+                {termsDetails?.length > 0 &&
+                  termsDetails?.map((data, i) => (
                     <Col key={i} md={12} className="mt-2 mb-2">
                       <Card className="shadow-sm">
                         <Card.Body>
-                          <div className="d-inline-block">{data?.subcategoryName}</div>
+                          <div className="d-inline-block fs-5">{data?.termsDetails}</div>
                           <div className="d-inline-block float-end">
                             <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
                               <i className="fa fa-edit"></i>
@@ -163,4 +143,5 @@ const SubCategoryPage = () => {
     </>
   );
 };
-export default withAuth(SubCategoryPage, ["ADMIN"]);
+
+export default TermDetailsPage;

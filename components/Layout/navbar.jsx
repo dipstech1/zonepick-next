@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { deleteCookie, getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -35,9 +36,11 @@ const Navbars = ({ cartPending = 0 }) => {
 
   return (
     <div className="header fixed-top" id="nav_main">
-      <Navbar bg="deep-purple-900" variant="dark" fixed="top" collapseOnSelect expand="md">
+      <Navbar bg="deep-purple-900 pt-0 pb-0" variant="dark" fixed="top" collapseOnSelect expand="md">
         <Container>
-          <Navbar.Brand href="#home">eMetaComm</Navbar.Brand>
+          <Navbar.Brand href="#home">
+            <img src="/logo/logo.png" style={{height:45, width: 100 , backgroundColor:'white' , borderRadius: 4}} alt='logo'></img>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Nav className="d-flex d-md-none flex-row">
             <NavDropdown title={<i className="fa fa-user-alt"></i> + userName} id="collasible-nav-dropdown-1" active>

@@ -15,7 +15,7 @@ const MyAccountLayout = ({
 }) => {
   const router = useRouter();
 
-  const userRole= getCookie('user_role')
+  const userRole = getCookie("user_role");
 
   const onButtonClick = () => {
     if (buttoClick instanceof Function) {
@@ -80,41 +80,50 @@ const MyAccountLayout = ({
                       </a>
                     </Link>
                   </li>
-                  { userRole === 'ADMIN' ?
+                  {userRole === "ADMIN" ? (
                     <>
-                  <li className="nav-item">
-                    <small className="hr-sect">Admin Section</small>
-                  </li>
-                  <li className="nav-item">
-                    <Link href={"/admin/category"}>
-                      <a className={["nav-link", activeLink === 8 ? "active-menu" : null].join(" ")}>
-                        <i className="fa-solid fa-folder me-2"></i> Category
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href={"/admin/subcategory"}>
-                      <a className={["nav-link", activeLink === 9 ? "active-menu" : null].join(" ")}>
-                        <i className="fa-solid fa-folder-tree me-2"></i> Subcategory
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href={"/admin/product"}>
-                      <a className={["nav-link", activeLink === 10 ? "active-menu" : null].join(" ")}>
-                        <i className="fa-solid fa-swatchbook me-2"></i> Product
-                      </a>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href={"/admin/brand"}>
-                      <a className={["nav-link", activeLink === 11 ? "active-menu" : null].join(" ")}>
-                        <i className="fa-solid fa-building me-2"></i> Brand
-                      </a>
-                    </Link>
-                  </li>
-                  </> : null
-                  }
+                      <li className="nav-item">
+                        <small className="hr-sect">Admin Section</small>
+                      </li>
+                      <li className="nav-item">
+                        <Link href={"/admin/category"}>
+                          <a className={["nav-link", activeLink === 8 ? "active-menu" : null].join(" ")}>
+                            <i className="fa-solid fa-folder me-2"></i> Category
+                          </a>
+                        </Link>
+                      </li>
+                      {/*
+                        <li className="nav-item">
+                          <Link href={"/admin/subcategory"}>
+                            <a className={["nav-link", activeLink === 9 ? "active-menu" : null].join(" ")}>
+                              <i className="fa-solid fa-folder-tree me-2"></i> Subcategory
+                            </a>
+                          </Link>
+                        </li>
+                     */}
+                      <li className="nav-item">
+                        <Link href={"/admin/product"}>
+                          <a className={["nav-link", activeLink === 10 ? "active-menu" : null].join(" ")}>
+                            <i className="fa-solid fa-swatchbook me-2"></i> Product
+                          </a>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link href={"/admin/brand"}>
+                          <a className={["nav-link", activeLink === 11 ? "active-menu" : null].join(" ")}>
+                            <i className="fa-solid fa-building me-2"></i> Brand
+                          </a>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link href={"/admin/terms"}>
+                          <a className={["nav-link", activeLink === 12 ? "active-menu" : null].join(" ")}>
+                            <i className="fa-solid fa-file-contract me-2"></i> Terms
+                          </a>
+                        </Link>
+                      </li>
+                    </>
+                  ) : null}
                 </ul>
               </Card.Body>
             </Card>
