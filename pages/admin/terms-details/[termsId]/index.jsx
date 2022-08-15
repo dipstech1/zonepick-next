@@ -26,7 +26,7 @@ const TermDetailsPage = ()=> {
       const userId = getCookie("userid");
       setUserId(userId);
 
-      const TermsId = router.query["termsId"][0];
+      const TermsId = router.query["termsId"];
       setTermsId(TermsId);
 
       getTermsDetails(TermsId);
@@ -53,22 +53,15 @@ const TermDetailsPage = ()=> {
   };
 
   const onDeleteClick = async (item) => {
-    /* const cnf = confirm("Are you sure you want to delete?");
+     const cnf = confirm("Are you sure you want to delete?");
 
     if (cnf) {
-      const sendData = {
-        userid: userId,
-        id: item.id,
-        subcategoryName: item.subcategoryName,
-      };
-
-      // console.log(sendData);
-
+      
       try {
-        let res = await axios.delete("admin/delete-subcategory", { data: sendData });
+        let res = await axios.delete(`terms-details/${item.id}`);
         if (res.data.acknowledge == true) {
-          getTermsDetailsItems(categoryName);
-          toast.success("TermsDetails Deleted");
+          getTermsDetails(item.termsId);
+          toast.success("Terms Details Deleted");
         } else {
           toast.warning("Fail");
         }
@@ -76,7 +69,7 @@ const TermDetailsPage = ()=> {
         console.log(error);
         toast.error("Fail");
       }
-    }*/
+    }
   };
 
   const onbuttonClick = (e) => {
