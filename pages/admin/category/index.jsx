@@ -27,7 +27,7 @@ const Category = () => {
       if (resp.data.length > 0) {
         setCategoryList(resp.data);
       }
-    //  console.log(resp.data);
+      //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
@@ -44,10 +44,10 @@ const Category = () => {
         categoryName: item.categoryName,
       };
 
-    //  console.log(sendData);
+      //  console.log(sendData);
 
       try {
-        let res = await axios.delete("admin/delete-category",  {data:sendData});
+        let res = await axios.delete("admin/delete-category", { data: sendData });
         if (res.data.acknowledge == true) {
           getCategoryItems();
           toast.success("Category Deleted");
@@ -103,8 +103,14 @@ const Category = () => {
                     <Col key={i} md={12} className="mt-2 mb-2">
                       <Card className="shadow-sm">
                         <Card.Body>
-                          <div className="d-inline-block" style={{cursor:'pointer'}}  onClick={(e) => onCategoryClick(data)}>{data?.categoryName}</div>
+                          <div className="d-inline-block" style={{ cursor: "pointer" }} onClick={(e) => onCategoryClick(data)}>
+                            {data?.categoryName}
+                          </div>
                           <div className="d-inline-block float-end">
+                            <Button variant="default" size="sm" onClick={(e) => onCategoryClick(data)}>
+                              <i className="fa fa-folder-tree"></i>
+                            </Button>
+
                             <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
                               <i className="fa fa-edit"></i>
                             </Button>
@@ -124,4 +130,4 @@ const Category = () => {
     </>
   );
 };
-export default withAuth(Category,['ADMIN']);
+export default withAuth(Category, ["ADMIN"]);

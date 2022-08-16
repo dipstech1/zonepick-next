@@ -117,6 +117,9 @@ const TermsPage = () => {
                               {data?.termsName}
                             </div>
                             <div className="d-inline-block float-end">
+                              <Button variant="default" size="sm" onClick={(e) => onDetailsClick(data?.id)}>
+                                <i className="fa fa-folder-tree"></i>
+                              </Button>
                               <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
                                 <i className="fa fa-edit"></i>
                               </Button>

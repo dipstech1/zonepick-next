@@ -187,11 +187,11 @@ export default function ContactUs () {
                 </div>
                 <div className="d-block">
                   <i className="fa-brands fa-facebook me-3"></i>
-                  <Link href={'https://www.facebook.com/softgem'}>facebook.com/softgem</Link>
+                  <Link href={'https://www.facebook.com/softgem'}>facebook.com/metasoft</Link>
                 </div>
                 <div className="d-block">
                   <i className="fa-brands fa-twitter me-3"></i>
-                  <Link href={'https://www.facebook.com/softgem'}>twitter.com/softgem</Link>
+                  <Link href={'https://www.facebook.com/softgem'}>twitter.com/metasoft</Link>
                 </div>
                 
               </Card.Body>
