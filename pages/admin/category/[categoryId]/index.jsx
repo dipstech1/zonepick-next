@@ -1,38 +1,53 @@
-/* eslint-disable @next/next/no-img-element */
+import { getCookie } from "cookies-next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
-import MyAccountLayout from "../../../components/Account/myaccount";
-import Layout from "../../../components/Layout/layout";
-import withAuth from "../../../components/withAuth";
 import { toast } from "react-toastify";
-import axios from "../../../utils/axios.interceptor";
-import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
+import MyAccountLayout from "../../../../components/Account/myaccount";
+import Layout from "../../../../components/Layout/layout";
+import withAuth from "../../../../components/withAuth";
+import axios from "../../../../utils/axios.interceptor";
 
 const SubCategoryPage = () => {
   const router = useRouter();
 
   const [userId, setUserId] = useState(null);
-  const [categoryName, setcategoryName] = useState(null);
+  const [categoryName, setcategoryName] = useState("");
   const [categoryId, setCategoryId] = useState(null);
   const [subcategoryList, setSubcategoryList] = useState([]);
   useEffect(() => {
     if (!router.isReady) return;
-    const categoryName = router.query["categoryName"];
-
-    //  console.log(categoryName);
-
     const userId = getCookie("userid");
     setUserId(userId);
 
-    if (router.query["categoryName"]) {
-      setcategoryName(categoryName);
-      getSubcategoryItems(categoryName);
+    if (router.query["categoryId"]) {
+       getCategory(router.query["categoryId"]);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
+
+  const getCategory = async (categoryId) => {
+    try {
+      let resp = await axios.get("category/categories");
+      if (resp.data.length > 0) {
+        const tempData = resp.data;
+        const data = tempData.filter((e) => {
+          return parseInt(e.id) === parseInt(categoryId);
+        });
+
+        if (data.length > 0) {
+          setcategoryName(data[0].categoryName);
+          getSubcategoryItems(data[0].categoryName);
+        }
+      }
+      //  console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
 
   const getSubcategoryItems = async (categoryName) => {
     const sendData = {
@@ -49,25 +64,6 @@ const SubCategoryPage = () => {
       console.log(error);
       toast.error("Fail");
     }
-
-    /* try {
-      let resp = await axios.get("category/all");
-      if (resp.data.length > 0) {
-        const data = resp.data;
-        const filterData = data.filter((item) => {
-          return item.categoryName.toString() === categoryName.toString();
-        });
-
-        if (filterData) {
-          setCategoryId(filterData[0]["id"]);
-          setSubcategoryList([...filterData[0]["subcategories"]]);
-        }
-      }
-      console.log(resp.data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Fail");
-    }*/
   };
 
   const onDeleteClick = async (item) => {
@@ -98,13 +94,11 @@ const SubCategoryPage = () => {
   };
 
   const onbuttonClick = (e) => {
-    sessionStorage.setItem("categoryId", categoryId);
-    router.push("add");
+    router.push("" + categoryId +"/add?categoryName=" + categoryName);
   };
 
   const onEditClick = (item) => {
-    sessionStorage.setItem("subcategory", JSON.stringify(item));
-    router.push("edit");
+    router.push("" + categoryId +"/edit/"+ item.id +"?categoryName=" + categoryName);
   };
 
   return (
@@ -121,13 +115,10 @@ const SubCategoryPage = () => {
             <Link href="/admin/category" passHref>
               <Breadcrumb.Item>Category</Breadcrumb.Item>
             </Link>
-            <Link href="/admin/subcategory" passHref>
-              <Breadcrumb.Item>Subcategory</Breadcrumb.Item>
-            </Link>
-            <Breadcrumb.Item active>{router.query["categoryName"]}</Breadcrumb.Item>
+            <Breadcrumb.Item active>{categoryName}</Breadcrumb.Item>
           </Breadcrumb>
           <MyAccountLayout
-            title={"Subcategory(s) of " + router.query["categoryName"]}
+            title={"Subcategory(s) of " + categoryName}
             activeLink={8}
             enableBack={true}
             enableButton={true}

@@ -1,14 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Breadcrumb, Button, Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import MyAccountLayout from "../../../components/Account/myaccount";
-import Layout from "../../../components/Layout/layout";
-import withAuth from "../../../components/withAuth";
-import axios from "../../../utils/axios.interceptor";
+import MyAccountLayout from "../../../../components/Account/myaccount";
+import Layout from "../../../../components/Layout/layout";
+import withAuth from "../../../../components/withAuth";
+import axios from "../../../../utils/axios.interceptor";
 
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
@@ -39,7 +38,7 @@ const EditTermsPage = () => {
 
       getDetails(router.query["id"]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const getDetails = async (id) => {
@@ -48,7 +47,7 @@ const EditTermsPage = () => {
       if (resp.data) {
         formik.setFieldValue("termsName", resp.data?.termsName);
       }
-    //  console.log(resp.data);
+      //  console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");

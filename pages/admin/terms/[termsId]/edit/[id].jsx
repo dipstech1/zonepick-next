@@ -38,8 +38,6 @@ const EditTermsDetailsPage = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    console.log(router.query);
-
     if (router.query["id"]) {
       formik.setFieldValue("id", router.query["id"]);
       formik.setFieldValue("termsId", router.query["termsId"]);
@@ -99,7 +97,7 @@ const EditTermsDetailsPage = () => {
             <Link href="/admin/terms" passHref>
               <Breadcrumb.Item>Terms</Breadcrumb.Item>
             </Link>            
-            <Link href={"/admin/terms-details/" + router.query["termsId"]} passHref>
+            <Link href={"/admin/terms/" + router.query["termsId"]} passHref>
               <Breadcrumb.Item>{termsName}</Breadcrumb.Item>
             </Link>
             <Breadcrumb.Item active>Edit Terms Details</Breadcrumb.Item>

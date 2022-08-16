@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -23,21 +22,19 @@ const TermsPage = () => {
 
   useEffect(() => {
     const userId = getCookie("userid");
-    page=0;
-    setTermData([])
+    page = 0;
+    setTermData([]);
     setUserId(userId);
     getBrands();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
- 
   const getBrands = async () => {
     try {
       setLoading(true);
       let resp = await axios.get(`terms`);
       if (resp.data) {
         setTermData(resp.data);
-       // setTotal(resp.data.total);
       }
       setLoading(false);
     } catch (error) {
@@ -47,34 +44,27 @@ const TermsPage = () => {
     }
   };
 
-  const onEditClick = (item)=> {
-    router.push("terms/" + item.id);
-  }
+  const onEditClick = (item) => {
+    router.push("terms/edit/" + item.id);
+  };
 
-  const onDeleteClick= async(item,itemIndex)=>{
-
+  const onDeleteClick = async (item, itemIndex) => {
     const cnf = confirm("Are you sure you want to delete?");
 
     if (cnf) {
       const sendData = {
         userid: userId,
-        id: item.id
+        id: item.id,
       };
 
-    //  console.log(sendData);       
+      //  console.log(sendData);
 
       try {
-        let res = await axios.delete(`brand/${item.id}`,  {data:sendData});
+        let res = await axios.delete(`brand/${item.id}`, { data: sendData });
         if (res.data.acknowledge == true) {
-
-          termData=[];
-          page =0;
+          termData = [];
+          page = 0;
           getBrands();
-
-          //getBrands();
-         // termData.splice(itemIndex, 1);
-         // setTermData(termData);
-         // setTotal(termData.length)
           toast.success("Brand Deleted");
         } else {
           toast.warning("Fail");
@@ -84,18 +74,14 @@ const TermsPage = () => {
         toast.error("Fail");
       }
     }
-
-  }
-
+  };
 
   const onbuttonClick = (e) => {
-    // console.log(productData)
     router.push("terms/add");
   };
 
-  const onDetailsClick = (e) => {
-    // console.log(productData)
-    router.push("terms-details/" + e);
+  const onDetailsClick = (id) => {
+    router.push("terms/" + id);
   };
 
   return (
@@ -111,41 +97,47 @@ const TermsPage = () => {
             </Link>
             <Breadcrumb.Item active>Terms</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Terms" activeLink={12} enableButton={true}
+          <MyAccountLayout
+            title="Terms"
+            activeLink={12}
+            enableButton={true}
             iconClass="fa fa-add"
             tooltipText="Add New Terms"
-            buttoClick={(e) => onbuttonClick(e)}>
+            buttoClick={(e) => onbuttonClick(e)}
+          >
             <Row>
               <Col>
                 {termData.length ? (
                   termData.map((data, i) => (
-                    <Row key={i} className="mt-2 mb-3" >
+                    <Row key={i} className="mt-2 mb-3">
                       <Col>
                         <Card>
                           <Card.Body>
-                          <div className="d-inline-block " style={{cursor:'pointer'}} onClick={(e)=>onDetailsClick(data?.id)}>{data?.termsName}</div>
-                          <div className="d-inline-block float-end">
-                            <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
-                              <i className="fa fa-edit"></i>
-                            </Button>
-                            <Button variant="default" size="sm" onClick={(e) => onDeleteClick(data,i)}>
-                              <i className="fa fa-trash"></i>
-                            </Button>
-                          </div>
+                            <div className="d-inline-block " style={{ cursor: "pointer" }} onClick={(e) => onDetailsClick(data?.id)}>
+                              {data?.termsName}
+                            </div>
+                            <div className="d-inline-block float-end">
+                              <Button variant="default" size="sm" onClick={(e) => onEditClick(data)}>
+                                <i className="fa fa-edit"></i>
+                              </Button>
+                              <Button variant="default" size="sm" onClick={(e) => onDeleteClick(data, i)}>
+                                <i className="fa fa-trash"></i>
+                              </Button>
+                            </div>
                           </Card.Body>
-                        </Card>   
-                       </Col>
+                        </Card>
+                      </Col>
                     </Row>
                   ))
                 ) : (
                   <></>
                 )}
               </Col>
-            </Row>            
+            </Row>
           </MyAccountLayout>
         </div>
       </Layout>
     </>
   );
 };
-export default withAuth(TermsPage,['ADMIN']);
+export default withAuth(TermsPage, ["ADMIN"]);

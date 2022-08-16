@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";

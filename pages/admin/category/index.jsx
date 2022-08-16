@@ -71,7 +71,7 @@ const Category = () => {
   };
 
   const onCategoryClick = (item) => {
-    const surl = "subcategory/" + item.categoryName;
+    const surl = "category/" + item.id;
     router.push(surl);
   };
 

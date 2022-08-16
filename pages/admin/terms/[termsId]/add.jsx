@@ -42,7 +42,12 @@ const AddTermsDetailsPage = () => {
     if (router.query["termsId"]) {
       const TermsId = router.query["termsId"][0];
       formik.setFieldValue("termsId", TermsId);
-      getTermsDetails(TermsId);
+
+      if (router.query["termName"]) {
+        setTermsName(router.query["termName"])
+      } else {
+        getTermsDetails(TermsId);
+      }      
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
@@ -93,12 +98,12 @@ const AddTermsDetailsPage = () => {
             <Link href="/admin/terms" passHref>
               <Breadcrumb.Item>Terms</Breadcrumb.Item>
             </Link>           
-            <Link href={"/admin/terms-details/" + router.query["termsId"][0]} passHref>
+            <Link href={"/admin/terms/" + router.query["termsId"]} passHref>
               <Breadcrumb.Item>{termsName}</Breadcrumb.Item>
             </Link>
             <Breadcrumb.Item active>Add Terms Details</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Add Terms Details" activeLink={11} enableBack={true}>
+          <MyAccountLayout title="Add Terms Details" activeLink={12} enableBack={true}>
             <div className="py-3 px-5">
               <Row>
                 <Col>

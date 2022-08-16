@@ -1,13 +1,13 @@
+import { getCookie } from "cookies-next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 import MyAccountLayout from "../../../../components/Account/myaccount";
 import Layout from "../../../../components/Layout/layout";
 import WithAuth from "../../../../components/withAuth";
-import { toast } from "react-toastify";
 import axios from "../../../../utils/axios.interceptor";
-import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
 
 
 const TermDetailsPage = ()=> {
@@ -73,11 +73,11 @@ const TermDetailsPage = ()=> {
   };
 
   const onbuttonClick = (e) => {
-    router.push(router.query["termsId"][0] + "/add");
+    router.push(router.query["termsId"] + "/add?termName=" + termsName);
   };
 
   const onEditClick = (item) => {
-    router.push(router.query["termsId"][0] + "/edit/" + item.id);
+    router.push(router.query["termsId"] + "/edit/" + item.id);
   };
 
   return (
