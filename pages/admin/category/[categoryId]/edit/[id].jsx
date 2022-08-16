@@ -75,22 +75,20 @@ const EditCategoryPage = () => {
     try {
       let resp = await axios.post("category", sendData);
       if (resp.data.length > 0) {
+        if (resp.data[0].subcategories?.length > 0) {
+          const subcategories = resp.data[0].subcategories;
 
-        if (resp.data[0].subcategories?.length> 0) {
-          const subcategories = resp.data[0].subcategories ;
+          const tempData = subcategories.filter((e) => {
+            return parseInt(e.id) === parseInt(router.query["id"]);
+          });
 
-          const tempData =  subcategories.filter((e)=>{
-            return parseInt(e.id) === parseInt(router.query["id"])
-          })
-
-          if (tempData.length> 0) {
-
+          if (tempData.length > 0) {
             formik.setFieldValue("subcategoryName", tempData[0].subcategoryName);
             formik.setFieldValue("id", tempData[0].id);
           }
         }
       }
-     // console.log(resp.data);
+      // console.log(resp.data);
     } catch (error) {
       console.log(error);
       toast.error("Fail");
