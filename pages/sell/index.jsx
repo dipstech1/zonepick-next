@@ -55,6 +55,11 @@ const MyProductList = () => {
     }*/
   };
 
+  const onEditClick = (item) => {
+    sessionStorage.setItem("myListing", JSON.stringify(item));
+    router.push("sell/edit");
+  }
+
   const goToProductDetails = (data) => {
     router.push(`product/${data.productId[0].ParentId}/${data.productId[0].recordId}`);
   };
@@ -123,7 +128,7 @@ const MyProductList = () => {
                                     <Col xs={2}>
                                       <div className="float-end pe-2">
                                         <span
-                                          onClick={(e) => removeMyProducts(data)}
+                                          onClick={(e) => onEditClick(data)}
                                           data-bs-toggle="tooltip"
                                           data-bs-placement="left"
                                           title="Edit Product"

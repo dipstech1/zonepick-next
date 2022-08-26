@@ -24,7 +24,7 @@ const MyProductList = () => {
 
   useEffect(() => {
     const userId = getCookie("userid");
-    page=0;
+    page = 0;
     setProductData([])
     setUserId(userId);
     getMyProducts();
@@ -77,6 +77,11 @@ const MyProductList = () => {
     router.push("product/add");
   };
 
+  const onEditClick = (item) => {
+    sessionStorage.setItem("product", JSON.stringify(item));
+    router.push("product/edit");
+  }
+
   return (
     <>
       <Layout title="Product(s)" metaDescription={[{ name: "description", content: "Product(s)" }]}>
@@ -126,12 +131,13 @@ const MyProductList = () => {
                                     <Col xs={2}>
                                       <div className="float-end pe-2">
                                         <span
-                                          onClick={(e) => removeMyProducts(data)}
+                                          onClick={() => onEditClick(data)}
                                           data-bs-toggle="tooltip"
                                           data-bs-placement="left"
                                           title="Edit Product"
                                         >
-                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
+                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}
+                                          ></i>
                                         </span>
                                         <span
                                           onClick={(e) => removeMyProducts(data)}
@@ -182,4 +188,4 @@ const MyProductList = () => {
     </>
   );
 };
-export default withAuth(MyProductList,['ADMIN']);
+export default withAuth(MyProductList, ['ADMIN']);
