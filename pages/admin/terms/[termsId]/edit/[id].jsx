@@ -63,24 +63,22 @@ const EditTermsDetailsPage = () => {
     }
   };
 
-  const editTerms = async (terms) => {
-    terms.userId = getCookie("userid");
+  const editTerms = async (termsDetails) => {
+    termsDetails.userId = getCookie("userid");
 
-    console.log(terms)
-
-   /* try {
-      let resp = await axios.post("terms-details", terms);
+    try {
+      let resp = await axios.put(`terms-details/${termsDetails.id}`, termsDetails);
 
       if (resp.data.acknowledge) {
         router.back();
-        toast.success("Terms Details added Successfully");
+        toast.success("Terms Details updated Successfully");
       } else {
         toast.error("Fail");
       }
     } catch (error) {
       console.log(error);
       toast.error("Fail");
-    }*/
+    }
   };
 
   return (
