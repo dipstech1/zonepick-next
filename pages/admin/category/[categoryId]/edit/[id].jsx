@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Breadcrumb, Button, Col, Form, Row, Tab, Tabs } from "react-bootstrap";
+import { Breadcrumb, Button, Col, Form, Row, Tab, Tabs, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import MyAccountLayout from "../../../../../components/Account/myaccount";
@@ -18,6 +18,9 @@ const EditCategoryPage = () => {
   const [key, setKey] = useState("home");
 
   const [categoryName, setcategoryName] = useState("");
+  const [filterName, setFilterName] = useState("");
+  const [filterData, setFilterData] = useState([]);
+  const [isAddFilter, setIsAddFilter] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -83,6 +86,8 @@ const EditCategoryPage = () => {
           });
 
           if (tempData.length > 0) {
+            setFilterData(tempData[0].filters)
+            console.log("tempData", tempData)
             formik.setFieldValue("subcategoryName", tempData[0].subcategoryName);
             formik.setFieldValue("id", tempData[0].id);
           }
@@ -113,6 +118,26 @@ const EditCategoryPage = () => {
       toast.error("Fail");
     }
   };
+
+  const filterClick = async (e) => {
+    e.preventDefault();
+
+    let data = {
+      filterName: filterName,
+      subcategory: formik.values.id
+    }
+
+    try {
+      let added = await axios.post(`admin/add-filter`, data);
+      if (added.data.acknowledge) {
+        setIsAddFilter(false);
+        toast.success("Filter Added");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail")
+    }
+  }
 
   return (
     <>
@@ -168,7 +193,66 @@ const EditCategoryPage = () => {
                     </Row>
                   </Tab>
                   <Tab eventKey="filter" title={"Filters"}>
-                    BB
+                    <div className="d-block text-end mb-2">
+                      <Button variant="deep-purple-900" size="sm"
+                        type="button"
+                        style={{ fontSize: ".90rem" }}
+                        onClick={() => setIsAddFilter(!isAddFilter)}
+                      >
+                        {isAddFilter ? "Show Filters" : "Add New Filter"}
+                      </Button>
+                    </div>
+                    {
+                      isAddFilter ?
+                        <Card>
+                          <Card.Body>
+                            <Row>
+                              <Form.Group className="mb-2 position-relative" controlId="filter">
+                                <Form.Label className="fw-bold">Filter Name:</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  name="filter"
+                                  placeholder="Enter Filter Name"
+                                  value={filterName}
+                                  onChange={(e) => setFilterName(e.target.value)}
+                                />
+                              </Form.Group>
+                            </Row>
+                            <Form.Group controlId="submitButton" className="text-center mt-5">
+                              <Button variant="primary"
+                                size="sm"
+                                style={{ width: '120px' }}
+                                onClick={(e) => filterClick(e)}
+                              >
+                                Add
+                              </Button>
+                            </Form.Group>
+                          </Card.Body>
+                        </Card>
+                        :
+                        filterData.length > 0 &&
+                        filterData.map((filter, i) => (
+                          <Row key={i} className="mb-2">
+                            <Col>
+                              <Card>
+                                <Card.Body>
+                                  <div className="d-inline-block">
+                                    {filter?.filterName}
+                                  </div>
+                                  <div className="d-inline-block float-end">
+                                    <i className="fa fa-edit me-2"
+                                      style={{ cursor: 'pointer' }}>
+                                    </i>
+                                    <i className="fa fa-trash"
+                                      style={{ cursor: 'pointer' }}>
+                                    </i>
+                                  </div>
+                                </Card.Body>
+                              </Card>
+                            </Col>
+                          </Row>
+                        ))
+                    }
                   </Tab>
                 </Tabs>
               </div>
