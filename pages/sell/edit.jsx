@@ -65,8 +65,8 @@ const EditAdvtPage = () => {
             sellerRewardPercent: Yup.number().required("Required").min(1, "Must be greater than 0"),
         }),
         onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
-            // addProduct(values);
+            // console.log(JSON.stringify(values, null, 2));
+            addProduct(values);
         },
     });
 

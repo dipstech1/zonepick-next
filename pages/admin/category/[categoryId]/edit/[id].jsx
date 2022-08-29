@@ -11,6 +11,7 @@ import axios from "../../../../../utils/axios.interceptor";
 
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+import FilterData from "../../../../../components/filterData";
 
 const EditCategoryPage = () => {
   const router = useRouter();
@@ -158,7 +159,7 @@ const EditCategoryPage = () => {
             </Link>
             <Breadcrumb.Item active>Edit Subcategory</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title="Edit Subcategory" activeLink={8} enableBack={true}>
+          <MyAccountLayout title={"Edit Subcategory of " + categoryName} activeLink={8} enableBack={true}>
             <div id={"editTabs"}>
               <div className="nav-no-fills">
                 <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
@@ -234,7 +235,7 @@ const EditCategoryPage = () => {
                         filterData.map((filter, i) => (
                           <Row key={i} className="mb-2">
                             <Col>
-                              <Card>
+                              <Card onClick={() => console.log(filterData)}>
                                 <Card.Body>
                                   <div className="d-inline-block">
                                     {filter?.filterName}
@@ -252,6 +253,13 @@ const EditCategoryPage = () => {
                             </Col>
                           </Row>
                         ))
+                    }
+                  </Tab>
+                  <Tab eventKey="filterData" title={"Filter Data"}>
+                    {filterData.length > 0 &&
+                      filterData.map((item, i) => (
+                        <FilterData key={i} filterData={item} />
+                      ))
                     }
                   </Tab>
                 </Tabs>

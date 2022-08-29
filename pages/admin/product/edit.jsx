@@ -10,7 +10,7 @@ import CreatableSelect from "react-select/creatable";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import MyAccountLayout from "../../../components/Account/myaccount";
-import ImageUploader from "../../../components/imageUploader";
+import ImageList from "../../../components/imageList";
 import Layout from "../../../components/Layout/layout";
 import withAuth from "../../../components/withAuth";
 import axios from "../../../utils/axios.interceptor";
@@ -381,7 +381,7 @@ const EditProductPage = () => {
                         </Link>
                         <Breadcrumb.Item active>Edit Product</Breadcrumb.Item>
                     </Breadcrumb>
-                    <MyAccountLayout title="Edit Product" activeLink={10} enableBack={true}>
+                    <MyAccountLayout title={"Edit Product Of " + formik.values.name} activeLink={10} enableBack={true}>
                         <div className="px-md-5 px-2 py-3">
                             <Container>
                                 <Row>
@@ -621,7 +621,7 @@ const EditProductPage = () => {
                                                             ))}
                                                 </Tab>
                                                 <Tab eventKey={"image"} title={"Images"}>
-                                                    <ImageUploader
+                                                    <ImageList
                                                         imagesList={formik.values.images}
                                                         onSelectionChanged={imageLoaded}
 
