@@ -11,6 +11,8 @@ import common from "../../utils/commonService";
 const SellerPage = () => {
   const router = useRouter();
   const [sellerList, setSellerList] = useState([]);
+  const [profileName, setProfileName] = useState("");
+
   useEffect(() => {
     getSellerItems();
   }, []);
@@ -33,6 +35,19 @@ const SellerPage = () => {
     router.push("/sellers/" + item.id);
   };
 
+  const onSearchProfileName = async () => {
+    setSellerList([]);
+    try {
+      let resp = await axios.get(`profile/name?name=${profileName}`);
+      if (resp.data) {
+        setSellerList(resp.data);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
+
   return (
     <>
       <Layout title="Our Sellers">
@@ -44,6 +59,26 @@ const SellerPage = () => {
 
             <Breadcrumb.Item active>Our Sellers</Breadcrumb.Item>
           </Breadcrumb>
+          <Row>
+            <Col lg={8} md={6}></Col>
+            <Col md={6} lg={4}>
+              <div className="input-group mb-3 mt-lg-0 ">
+                <input
+                  type="search"
+                  className="form-control"
+                  value={profileName}
+                  onChange={(e) => setProfileName(e.target.value)}
+                  aria-label="Dollar amount (with dot and two decimal places)"
+                />
+                <span className="input-group-text">
+                  <i className="fas fa-search"
+                    style={{ cursor: "pointer" }}
+                    onClick={onSearchProfileName}
+                  ></i>
+                </span>
+              </div>
+            </Col>
+          </Row>
           <Row>
             {sellerList.length > 0 &&
               sellerList.map((data, i) => {
