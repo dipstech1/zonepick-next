@@ -41,14 +41,14 @@ const AddCategoryPage = () => {
     if (!router.isReady) return;
 
     if (router.query["categoryId"]) {
-      
+
       formik.setFieldValue("id", parseInt(router.query["categoryId"]));
-      
+
       if (router.query["categoryName"]) {
         setcategoryName(router.query["categoryName"])
       } else {
         getCategory(router.query["categoryId"]);
-      } 
+      }
 
 
     }

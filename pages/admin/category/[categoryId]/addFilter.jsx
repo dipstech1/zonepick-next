@@ -20,8 +20,8 @@ const AddFilterPage = ({ info, onSaveData, onDelete, index }) => {
       filterName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-     // console.log(JSON.stringify(values, null, 2));
-       onSaveData(values, index);
+      // console.log(JSON.stringify(values, null, 2));
+      onSaveData(values, index);
     },
   });
 

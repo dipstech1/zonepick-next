@@ -19,6 +19,7 @@ const EditAdvtPage = () => {
     const [id, setId] = useState(null);
 
     const [productOptions, setProductOptions] = useState([]);
+    const [termsOptions, setTermsOptions] = useState([]);
 
     const [statusOptions, setStatusOptions] = useState([
         { value: "New", label: "New" },
@@ -65,8 +66,8 @@ const EditAdvtPage = () => {
             sellerRewardPercent: Yup.number().required("Required").min(1, "Must be greater than 0"),
         }),
         onSubmit: (values) => {
-            console.log(JSON.stringify(values, null, 2));
-            // addProduct(values);
+            // console.log(JSON.stringify(values, null, 2));
+            addProduct(values);
         },
     });
 
@@ -94,6 +95,7 @@ const EditAdvtPage = () => {
             setId(product?.id);
         }
         getparentProductList();
+        getTermsList();
     }, []);
 
     const getparentProductList = async () => {
@@ -117,6 +119,22 @@ const EditAdvtPage = () => {
         }
     };
 
+    const getTermsList = async () => {
+        try {
+            let res = await axios.get("terms");
+            if (res.data.length > 0) {
+                const item = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    item.push({ value: res.data[i].id, label: res.data[i].termsName })
+                    setTermsOptions([...item]);
+                }
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("fail");
+        }
+    }
+
     const addProduct = async (product) => {
         // let sendData = values
 
@@ -136,6 +154,13 @@ const EditAdvtPage = () => {
             console.log(error);
             toast.error("Fail");
         }
+    };
+
+    const setTermsData = () => {
+        const data = termsOptions.filter((e) => {
+            return e.value === parseInt(formik.values.termsId);
+        });
+        return data;
     };
 
     return (
@@ -215,9 +240,10 @@ const EditAdvtPage = () => {
                                                 <Form.Group className="mb-2 position-relative" controlId="purpose">
                                                     <Form.Label className="fw-bold">Terms Name:</Form.Label>
                                                     <Select
-                                                        options={"termsOptions"}
+                                                        options={termsOptions}
                                                         placeholder="Select Terms"
-                                                        defaultValue={formik.values.termsId}
+                                                        value={setTermsData()}
+                                                        // defaultValue={formik.values.termsId}
                                                         onChange={(selectedOption) => {
                                                             formik.setFieldValue("termsId", selectedOption.value);
                                                         }}
