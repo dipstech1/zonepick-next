@@ -63,6 +63,7 @@ const EditProductPage = () => {
             images: [],
             specifications: [],
             specificationsValue: "",
+            sellerDiscountPercent: "",
             productRewardPercent: "",
             optionalField1: "",
             optionalField2: "",
@@ -75,6 +76,7 @@ const EditProductPage = () => {
             description: Yup.string().required("Required").min(5, "Must be at least 5 characters"),
             category: Yup.string().required("Required"),
             subcategory: Yup.string().required("Required"),
+            sellerDiscountPercent: Yup.number().required("Required").min(0, "Must be 0 Or greater than 0"),
             productRewardPercent: Yup.number().required("Required").min(0, "Must be 0 Or greater than 0"),
         }),
         onSubmit: (values) => {
@@ -91,10 +93,10 @@ const EditProductPage = () => {
 
             formik.setFieldValue("name", data.name);
             formik.setFieldValue("description", data.description);
-            formik.setFieldValue("category", data.category.categoryName);
-            formik.setFieldValue("subcategory", data.subcategory.subcategoryName);
+            formik.setFieldValue("category", data.category.id);
+            formik.setFieldValue("subcategory", data.subcategory.id);
             formik.setFieldValue("brand", data.brand);
-            // formik.setFieldValue("brandId",data.);
+            formik.setFieldValue("sellerDiscountPercent", data.discountPercent);
             formik.setFieldValue("productRewardPercent", data.productRewardPercent);
             formik.setFieldValue("specifications", data.specifications);
             formik.setFieldValue("optionalField1", data.optionalField1);
@@ -256,8 +258,9 @@ const EditProductPage = () => {
             userid: "",
             arimageurl: arimageurl,
             arimagedata: "",
-            images: images,
-            specifications: formik.values.specifications,
+            // images: images,
+            // specifications: formik.values.specifications,
+            discountPercent: parseInt(formik.values.sellerDiscountPercent),
             productRewardPercent: parseInt(formik.values.productRewardPercent),
             optionalField1: formik.values.optionalField1,
             optionalField2: formik.values.optionalField2,
@@ -407,7 +410,7 @@ const EditProductPage = () => {
                                                     </Row>
 
                                                     <Row>
-                                                        <Col md={8}>
+                                                        <Col md={6}>
                                                             <Form.Group className="mb-2 position-relative" controlId="brand">
                                                                 <Form.Label className="fw-bold">Brand:</Form.Label>
                                                                 <Select
@@ -424,7 +427,21 @@ const EditProductPage = () => {
                                                                 <Form.Control.Feedback type="invalid">{formik.errors.brand}</Form.Control.Feedback>
                                                             </Form.Group>
                                                         </Col>
-                                                        <Col md={4}>
+                                                        <Col md={3}>
+                                                            <Form.Group className="mb-2 position-relative" controlId="sellerDiscountPercent">
+                                                                <Form.Label className="fw-bold">Discount Percent:</Form.Label>
+                                                                <Form.Control
+                                                                    type="number"
+                                                                    name="sellerDiscountPercent"
+                                                                    placeholder="Enter Discount Percent"
+                                                                    value={formik.values.sellerDiscountPercent}
+                                                                    onChange={formik.handleChange}
+                                                                    className={formik.touched.sellerDiscountPercent && formik.errors.sellerDiscountPercent ? "is-invalid" : ""}
+                                                                />
+                                                                <Form.Control.Feedback type="invalid">{formik.errors.sellerDiscountPercent}</Form.Control.Feedback>
+                                                            </Form.Group>
+                                                        </Col>
+                                                        <Col md={3}>
                                                             <Form.Group className="mb-2 position-relative" controlId="productRewardPercent">
                                                                 <Form.Label className="fw-bold">Reward Percent:</Form.Label>
                                                                 <Form.Control
