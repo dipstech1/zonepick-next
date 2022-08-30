@@ -21,6 +21,7 @@ export default function Home() {
   let [productData, setProductData] = useState([]);
   let [total, setTotal] = useState(0);
   let [loading, setLoading] = useState(false);
+  const [productName, setProductName] = useState("");
 
   useEffect(() => {
     const userId = getCookie("userid");
@@ -48,7 +49,7 @@ export default function Home() {
         setProductData([]);
       }
 
-    //  console.log(resp.data);
+      //  console.log(resp.data);
     } catch (error) {
       // console.log(error);
       setLoading(false);
@@ -68,7 +69,7 @@ export default function Home() {
     setProductData(productData);
     setKey(k);
     getProductData(k);
-    
+
   };
 
   const onSearchProducts = async (sendData) => {
@@ -98,6 +99,27 @@ export default function Home() {
     setLoading(false);
   };
 
+  const onSearchProductName = async () => {
+    setLoading(true);
+    setProductData([]);
+    setTotal(0);
+
+    try {
+      let resp = await axios.get(`products/productName?productName=${productName}`);
+      if (resp.data.total) {
+        console.log("RESPONCE", resp)
+        setProductData([resp?.data?.data]);
+        setTotal(resp?.data?.total);
+      } else {
+        setProductData([]);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Fail");
+    }
+    setLoading(false);
+  }
+
   return (
     <>
       <Layout title="Home">
@@ -113,10 +135,14 @@ export default function Home() {
                     <input
                       type="search"
                       className="form-control"
+                      value={productName}
+                      onChange={(e) => setProductName(e.target.value)}
                       aria-label="Dollar amount (with dot and two decimal places)"
                     />
                     <span className="input-group-text">
-                      <i className="fas fa-search"></i>
+                      <i className="fas fa-search"
+                        onClick={onSearchProductName}
+                      ></i>
                     </span>
                   </div>
                 </div>
