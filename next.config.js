@@ -13,7 +13,7 @@ const nextConfig = {
     currency: "INR",
     lang: "en-IN",
   },
-  exportPathMap: async function (
+ /* exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
@@ -26,7 +26,7 @@ const nextConfig = {
 
      // '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },
     }
-  }
+  }*/
 
 };
 
