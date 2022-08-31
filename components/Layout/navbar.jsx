@@ -87,6 +87,9 @@ const Navbars = ({ cartPending = 0 }) => {
               <Link href="/sellers" passHref>
                 <Nav.Link active={router.pathname === "/sellers" ? true : false}>Our Sellers</Nav.Link>
               </Link>
+              <Link href="/virtual-shop/mobile-shop" passHref>
+                <Nav.Link active={router.pathname === "/virtual-shop/mobile-shop" ? true : false}>Virual Mobile shop</Nav.Link>
+              </Link>
               <Link href="/contact" passHref>
                 <Nav.Link active={router.pathname === "/contact" ? true : false}>Contact Us</Nav.Link>
               </Link>

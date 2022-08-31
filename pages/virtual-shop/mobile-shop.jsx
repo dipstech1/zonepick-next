@@ -148,11 +148,11 @@ const MobileList = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Mobile1")) {
-        window.location = "MobileShopColor?modelName=Mobile&set=1";
+        window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("Mobile2")) {
-        window.location = "MobileShopColor?modelName=Mobile&set=2";
+        window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {

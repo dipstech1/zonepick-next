@@ -1,3 +1,4 @@
+import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
 import * as THREE from "../../public/build/three.module.js";
@@ -18,26 +19,38 @@ var mouse = new THREE.Vector2();
 var isdone = false;
 var rot;
 var set = 1;
+var imgSrc = "/images/Mobile2.jpg";
 
 const MobileShopColor = () => {
   const [show, setShow] = useState(false);
+  const router = useRouter();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    container = document.getElementById("game");
-    container.addEventListener("mousedown", onMouseDown, false);
+    if (!router.isReady) return;
 
-    initLoader();
-    animate();
-  }, []);
+    if (router.query["modelName"]) {
+      modelName = router.query["modelName"];
+      modelPath = "/models/" + modelName;
+      set = router.query["set"];
+
+      container = document.getElementById("game");
+      container.addEventListener("mousedown", onMouseDown, false);
+
+      initLoader();
+      animate();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   function initLoader() {
     container = document.getElementById("game");
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100000);
-    camera.position.set(10, 100, -300);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.10, 10000);
+     camera.position.set(-10, -100, -500);
     //camera.rotation.set( 0,-90,0);
 
     scene = new THREE.Scene();
@@ -75,6 +88,11 @@ const MobileShopColor = () => {
       object.scale.set(1, 1, 1);
       object.position.set(0, 0, 0);
       object.rotation.y = (90 * Math.PI) / 180;
+      if (set === 2) {
+        object.position.set(-15,-105,-500);
+        object.rotation.y = (90 * Math.PI) / 180;
+      }
+
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "mobile";
@@ -134,38 +152,37 @@ const MobileShopColor = () => {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("mobile")) {
         if (set == 1) {
+          setShow(true);
+          imgSrc = "/images/Mobile2.jpg";
 
-            setShow(true)
+          // modalimg = document.getElementsByClassName("modalImg");
+          //  modalimg[0].src = "./images/Mobile1.jpg";
 
+          //  handleShow()
 
-         // modalimg = document.getElementsByClassName("modalImg");
-        //  modalimg[0].src = "./images/Mobile1.jpg";
-
-        //  handleShow()
-
-         /* var actModal = document.getElementById("exampleModal");
+          /* var actModal = document.getElementById("exampleModal");
           var modal = new bootstrap.Modal(actModal);
           modal.show();*/
         }
 
         if (set == 2) {
-         // modalimg = document.getElementsByClassName("modalImg");
-         // modalimg[0].src = "./images/Mobile2.jpg";
-         /* var actModal = document.getElementById("exampleModal");
+          setShow(true);
+          imgSrc = "/images/Laptop.jpg";
+          // modalimg = document.getElementsByClassName("modalImg");
+          // modalimg[0].src = "./images/Mobile2.jpg";
+          /* var actModal = document.getElementById("exampleModal");
           var modal = new bootstrap.Modal(actModal);
           modal.show();*/
-
-         // handleShow()
+          // handleShow()
         }
 
         if (set == 3) {
-       //   modalimg = document.getElementsByClassName("modalImg");
-        //  modalimg[0].src = "./images/Mobile3.jpg";
-         /* var actModal = document.getElementById("exampleModal");
+          //   modalimg = document.getElementsByClassName("modalImg");
+          //  modalimg[0].src = "./images/Mobile3.jpg";
+          /* var actModal = document.getElementById("exampleModal");
           var modal = new bootstrap.Modal(actModal);
           modal.show();*/
-
-        //  handleShow()
+          //  handleShow()
         }
       }
     }
@@ -173,14 +190,15 @@ const MobileShopColor = () => {
 
   return (
     <>
-      <div id="game" align="center"></div>
+      <div id="game" align="center" style={{ display: "block", position: "absolute" }}></div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Image className="modalImg" src="/images/Mobile2.jpg" style={{width:"100%",height:"auto"}} alt="na"></Image>
+          
+          <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>
         </Modal.Body>
         <Modal.Footer>
           <button type="button" className="mybtn btn-primary">
