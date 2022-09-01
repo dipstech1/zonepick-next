@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "../utils/axios.interceptor";
 
 
-const FilterData = ({ filterData = {}, isAddFilterData = false, filterDataAddClick, filterDataEditClick, isAddFilterDataClick }) => {
+const FilterData = ({ filterData = {}, isAddFilterData = false, filterDataAddClick, filterDataEditClick, filterDataDelete, isAddFilterDataClick }) => {
     const { options } = filterData;
     const [filterDataName, setFilterDataName] = useState("");
     const [id, setId] = useState("");
@@ -106,9 +106,10 @@ const FilterData = ({ filterData = {}, isAddFilterData = false, filterDataAddCli
                                                 title="Edit Filter Data"
                                                 style={{ cursor: 'pointer' }}>
                                             </i>
-                                            {/* <i className="fa fa-trash"
+                                            <i className="fa fa-trash"
+                                                onClick={() => filterDataDelete(data.id)}
                                                 style={{ cursor: 'pointer' }}>
-                                            </i> */}
+                                            </i>
                                         </div>
                                     </Card.Body>
                                 </Card>
