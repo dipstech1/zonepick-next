@@ -108,7 +108,7 @@ export default function Home() {
       let resp = await axios.get(`products/productName?productName=${productName}`);
       if (resp.data.total) {
         console.log("RESPONCE", resp)
-        setProductData([resp?.data?.data]);
+        setProductData(resp?.data?.data);
         setTotal(resp?.data?.total);
       } else {
         setProductData([]);
@@ -141,6 +141,7 @@ export default function Home() {
                     />
                     <span className="input-group-text">
                       <i className="fas fa-search"
+                        style={{ cursor: "pointer" }}
                         onClick={onSearchProductName}
                       ></i>
                     </span>

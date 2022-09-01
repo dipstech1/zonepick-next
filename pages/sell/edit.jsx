@@ -37,6 +37,7 @@ const EditAdvtPage = () => {
     const formik = useFormik({
         initialValues: {
             productName: "",
+            sellerProductName: "",
             productDetailsData: "",
             itemDescription: "",
             productId: "",
@@ -58,6 +59,7 @@ const EditAdvtPage = () => {
         },
         validationSchema: Yup.object({
             productId: Yup.string().required("Required"),
+            sellerProductName: Yup.string().required("Required"),
             productStatus: Yup.string().required("Required"),
             price: Yup.number().required("Required").min(1, "Must be greater than 0"),
             purpose: Yup.string().required("Required"),
@@ -202,7 +204,22 @@ const EditAdvtPage = () => {
                                                 </Form.Group>
                                             </Col>
                                         </Row>
-
+                                        <Row>
+                                            <Col>
+                                                <Form.Group className="mb-2 position-relative" controlId="sellerProductName">
+                                                    <Form.Label className="fw-bold">Seller Product Name:</Form.Label>
+                                                    <Form.Control
+                                                        type="text"
+                                                        name="sellerProductName"
+                                                        placeholder="Enter Seller Product Name"
+                                                        value={formik.values.sellerProductName}
+                                                        onChange={formik.handleChange}
+                                                        className={formik.touched.sellerProductName && formik.errors.sellerProductName ? "is-invalid" : ""}
+                                                    />
+                                                    <Form.Control.Feedback type="invalid">{formik.errors.sellerProductName}</Form.Control.Feedback>
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
                                         <Row>
                                             <Col md={6}>
                                                 <Form.Group className="mb-2 position-relative" controlId="productStatus">
