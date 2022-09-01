@@ -1,3 +1,4 @@
+import { useRouter } from "next/router.js";
 import { useEffect } from "react";
 import * as THREE from "../../public/build/three.module.js";
 import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
@@ -22,6 +23,7 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
 const MobileList = () => {
+  const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
     container.addEventListener("mousedown", onMouseDown, false);
@@ -79,7 +81,7 @@ const MobileList = () => {
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(-15,-30,-300);
+      object.position.set(-15, -30, -300);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -93,8 +95,8 @@ const MobileList = () => {
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(15,-15,-500);
-      object.rotation.y=-5.62;
+      object.position.set(15, -15, -500);
+      object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "Mobile2";
@@ -148,15 +150,17 @@ const MobileList = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Mobile1")) {
-        window.location = "mobile-view?modelName=Mobile.fbx&set=1";
+        router.push("mobile-view?modelName=Mobile.fbx&set=1");
+        // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("Mobile2")) {
-        window.location = "mobile-view?modelName=Laptop.FBX&set=2";
+        router.push("mobile-view?modelName=Laptop.FBX&set=2");
+        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-       // window.location = "MobileShopColor.html?modelName=Mobile&set=3";
+        // window.location = "MobileShopColor.html?modelName=Mobile&set=3";
       }
     }
   }
@@ -170,7 +174,7 @@ const MobileList = () => {
 
   return (
     <>
-      <div id="game" align="center" style={{display: 'block' , position: 'absolute'}}></div>
+      <div id="game" align="center" style={{ display: "block", position: "absolute" }}></div>
     </>
   );
 };
