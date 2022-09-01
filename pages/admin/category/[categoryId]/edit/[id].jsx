@@ -22,6 +22,9 @@ const EditCategoryPage = () => {
   const [filterName, setFilterName] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [isAddFilter, setIsAddFilter] = useState(false);
+  const [isAddFilterData, setIsAddFilterData] = useState(false);
+  const [filterId, setFilterId] = useState("");
+  const [mode, setMode] = useState("Add");
 
   const formik = useFormik({
     initialValues: {
@@ -132,6 +135,7 @@ const EditCategoryPage = () => {
       let added = await axios.post(`admin/add-filter`, data);
       if (added.data.acknowledge) {
         setIsAddFilter(false);
+        getSubcategory(router.query["categoryName"]);
         toast.success("Filter Added");
       }
     } catch (error) {
@@ -139,6 +143,61 @@ const EditCategoryPage = () => {
       toast.error("Fail")
     }
   }
+
+  const filterDataAddClick = async (data) => {
+    try {
+      let resp = await axios.post("admin/add-filterdata", data);
+      if (resp.data.acknowledge) {
+        toast.success("Filter Data Added Successfully");
+        setIsAddFilterData(false);
+        getSubcategory(router.query["categoryName"]);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
+
+  const filterDataEditClick = async (data) => {
+    try {
+      let resp = await axios.post("admin/update-filterdataname", data);
+      if (resp.data.acknowledge) {
+        toast.success("Successfully Updated");
+        isAddFilterDataClick();
+        getSubcategory(router.query["categoryName"]);
+
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  }
+
+  const isAddFilterDataClick = () => {
+    setIsAddFilterData(!isAddFilterData);
+  };
+
+  const onFilterEditClick = ({ id, filterName }) => {
+    setIsAddFilter(true);
+    setFilterName(filterName);
+    setFilterId(id);
+    setMode("Edit");
+  }
+
+  const handleUpdate = async () => {
+    try {
+      let resp = await axios.post("admin/update-filtername", { id: parseInt(filterId), filterName });
+      if (resp.data.acknowledge) {
+        toast.success("successfully Updated");
+        setIsAddFilter(false);
+        getSubcategory(router.query["categoryName"]);
+
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail")
+    }
+  };
 
   return (
     <>
@@ -159,7 +218,7 @@ const EditCategoryPage = () => {
             </Link>
             <Breadcrumb.Item active>Edit Subcategory</Breadcrumb.Item>
           </Breadcrumb>
-          <MyAccountLayout title={"Edit Subcategory of " + categoryName} activeLink={8} enableBack={true}>
+          <MyAccountLayout title={"Edit Subcategory of " + formik.values.subcategoryName} activeLink={8} enableBack={true}>
             <div id={"editTabs"}>
               <div className="nav-no-fills">
                 <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="mb-3">
@@ -219,15 +278,40 @@ const EditCategoryPage = () => {
                                 />
                               </Form.Group>
                             </Row>
-                            <Form.Group controlId="submitButton" className="text-center mt-5">
-                              <Button variant="primary"
-                                size="sm"
-                                style={{ width: '120px' }}
-                                onClick={(e) => filterClick(e)}
-                              >
-                                Add
-                              </Button>
-                            </Form.Group>
+                            {mode === "Add" ?
+                              <Form.Group controlId="submitButton" className="text-center mt-5">
+                                <Button variant="primary"
+                                  size="sm"
+                                  style={{ width: '120px' }}
+                                  onClick={(e) => filterClick(e)}
+                                >
+                                  Add
+                                </Button>
+                                <Button variant="danger" className="ms-2"
+                                  size="sm"
+                                  style={{ width: '120px' }}
+                                  onClick={() => setIsAddFilter(false)}
+                                >
+                                  Cancel
+                                </Button>
+                              </Form.Group> :
+                              <Form.Group controlId="submitButton" className="text-center mt-5">
+                                <Button variant="primary"
+                                  size="sm"
+                                  style={{ width: '120px' }}
+                                  onClick={handleUpdate}
+                                >
+                                  Update
+                                </Button>
+                                <Button variant="danger" className="ms-2"
+                                  size="sm"
+                                  style={{ width: '120px' }}
+                                  onClick={() => setIsAddFilter(false)}
+                                >
+                                  Cancel
+                                </Button>
+                              </Form.Group>
+                            }
                           </Card.Body>
                         </Card>
                         :
@@ -235,19 +319,32 @@ const EditCategoryPage = () => {
                         filterData.map((filter, i) => (
                           <Row key={i} className="mb-2">
                             <Col>
-                              <Card onClick={() => console.log(filterData)}>
+                              <Card>
                                 <Card.Body>
-                                  <div className="d-inline-block">
-                                    {filter?.filterName}
+                                  <div className="d-block text-end mb-2">
+                                    <Button variant="warning" size="sm"
+                                      type="button"
+                                      style={{ fontSize: ".80rem" }}
+                                      onClick={() => setIsAddFilterData(!isAddFilterData)}
+                                    >
+                                      {isAddFilterData ? "Show Filter Data" : "Add New Filter Data"}
+                                    </Button>
                                   </div>
-                                  <div className="d-inline-block float-end">
-                                    <i className="fa fa-edit me-2"
+                                  <div className="d-inline-block mb-2 fw-bold">
+                                    Filter Name: {filter?.filterName}
+                                  </div>
+                                  <div className="d-inline-block float-end mb-2">
+                                    <i className="fa fa-edit me-3"
+                                      title="Edit Filter Name"
+                                      onClick={(e) => onFilterEditClick(filter)}
                                       style={{ cursor: 'pointer' }}>
                                     </i>
                                     <i className="fa fa-trash"
+                                      title="Delete Filter"
                                       style={{ cursor: 'pointer' }}>
                                     </i>
                                   </div>
+                                  <FilterData key={i} isAddFilterDataClick={isAddFilterDataClick} filterDataEditClick={filterDataEditClick} filterData={filter} filterDataAddClick={filterDataAddClick} isAddFilterData={isAddFilterData} />
                                 </Card.Body>
                               </Card>
                             </Col>
