@@ -21,6 +21,9 @@ const EditProductPage = () => {
     const router = useRouter();
     const [isAddSpecification, setIsAddSpecification] = useState(false);
     const [specification, setSpecification] = useState("");
+    const [specificationId, setSpecificationId] = useState(null);
+    const [mode, setMode] = useState("Add");
+
     const components = {
         DropdownIndicator: null,
     };
@@ -366,7 +369,47 @@ const EditProductPage = () => {
             console.log(error)
             toast.error("Fail")
         }
-    }
+    };
+
+    const onSpecificationEditClic = ({ id, spec }) => {
+        setSpecification(spec);
+        setSpecificationId(id);
+        setIsAddSpecification(true);
+        setMode("Edit");
+    };
+
+    const reset = () => {
+        setSpecification("");
+        setSpecificationId(null);
+        setIsAddSpecification(false);
+        setMode("Add");
+    };
+
+    const onUpdateClick = async () => {
+        try {
+            let resp = await axios.put(`specification/${specificationId}`, { spec: specification });
+            if (resp.data.acknowledge) {
+                toast.success("Successfully Updated");
+                reset();
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Fail");
+        }
+    };
+
+    const onDeleteClick = async ({ id }) => {
+        try {
+            let resp = await axios.delete(`specification/${id}`);
+            if (resp.data.acknowledge) {
+                toast.success("Succefully Delete");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Fail");
+        }
+    };
+
 
     return (
         <>
@@ -577,15 +620,16 @@ const EditProductPage = () => {
                                                     </Row>
                                                 </Tab>
                                                 <Tab eventKey={"specification"} title={"Specification"}>
-                                                    <div className="d-block text-end mb-2">
-                                                        <Button variant="deep-purple-900" size="sm"
-                                                            type="button"
-                                                            style={{ fontSize: ".90rem" }}
-                                                            onClick={() => setIsAddSpecification(!isAddSpecification)}
-                                                        >
-                                                            {isAddSpecification ? "Show Specification" : "Add New Specification"}
-                                                        </Button>
-                                                    </div>
+                                                    {isAddSpecification ? null :
+                                                        <div className="d-block text-end mb-2">
+                                                            <Button variant="warning" size="sm"
+                                                                type="button"
+                                                                style={{ fontSize: ".90rem" }}
+                                                                onClick={() => setIsAddSpecification(!isAddSpecification)}
+                                                            >
+                                                                Add New Specification
+                                                            </Button>
+                                                        </div>}
                                                     {
                                                         isAddSpecification ?
                                                             <Card>
@@ -602,15 +646,40 @@ const EditProductPage = () => {
                                                                             />
                                                                         </Form.Group>
                                                                     </Row>
-                                                                    <Form.Group controlId="submitButton" className="text-center mt-5">
-                                                                        <Button variant="primary"
-                                                                            size="sm"
-                                                                            style={{ width: '120px' }}
-                                                                            onClick={(e) => specificationClick(e)}
-                                                                        >
-                                                                            Add
-                                                                        </Button>
-                                                                    </Form.Group>
+                                                                    {mode === "Add" ?
+                                                                        <Form.Group controlId="submitButton" className="text-center mt-5">
+                                                                            <Button variant="primary"
+                                                                                size="sm"
+                                                                                style={{ width: '120px' }}
+                                                                                onClick={(e) => specificationClick(e)}
+                                                                            >
+                                                                                Add
+                                                                            </Button>
+                                                                            <Button variant="danger" className="ms-2 text-white"
+                                                                                size="sm"
+                                                                                style={{ width: '120px' }}
+                                                                                onClick={reset}
+                                                                            >
+                                                                                Cancel
+                                                                            </Button>
+                                                                        </Form.Group> :
+                                                                        <Form.Group controlId="submitButton" className="text-center mt-5">
+                                                                            <Button variant="primary"
+                                                                                size="sm"
+                                                                                style={{ width: '120px' }}
+                                                                                onClick={onUpdateClick}
+                                                                            >
+                                                                                Update
+                                                                            </Button>
+                                                                            <Button variant="danger" className="ms-2 text-white"
+                                                                                size="sm"
+                                                                                style={{ width: '120px' }}
+                                                                                onClick={reset}
+                                                                            >
+                                                                                Cancel
+                                                                            </Button>
+                                                                        </Form.Group>
+                                                                    }
                                                                 </Card.Body>
                                                             </Card>
                                                             :
@@ -625,9 +694,11 @@ const EditProductPage = () => {
                                                                                 </div>
                                                                                 <div className="d-inline-block float-end">
                                                                                     <i className="fa fa-edit me-2"
+                                                                                        onClick={() => onSpecificationEditClic(data)}
                                                                                         style={{ cursor: 'pointer' }}>
                                                                                     </i>
                                                                                     <i className="fa fa-trash"
+                                                                                        onClick={() => onDeleteClick(data)}
                                                                                         style={{ cursor: 'pointer' }}>
                                                                                     </i>
                                                                                 </div>
@@ -645,14 +716,14 @@ const EditProductPage = () => {
                                                     />
                                                 </Tab>
                                             </Tabs>
-
-                                            <Form.Group controlId="submitButton" className="float-end mt-3">
-                                                <Button variant="deep-purple-900"
-                                                    onClick={(e) => onSubmitClick()}
-                                                >
-                                                    submit
-                                                </Button>
-                                            </Form.Group>
+                                            {isAddSpecification || mode === "Edit" ? null :
+                                                <Form.Group controlId="submitButton" className="float-end mt-3">
+                                                    <Button variant="deep-purple-900"
+                                                        onClick={(e) => onSubmitClick()}
+                                                    >
+                                                        submit
+                                                    </Button>
+                                                </Form.Group>}
                                         </Form>
                                     </Col>
                                 </Row>
