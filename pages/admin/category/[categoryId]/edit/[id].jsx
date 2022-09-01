@@ -352,13 +352,6 @@ const EditCategoryPage = () => {
                         ))
                     }
                   </Tab>
-                  <Tab eventKey="filterData" title={"Filter Data"}>
-                    {filterData.length > 0 &&
-                      filterData.map((item, i) => (
-                        <FilterData key={i} filterData={item} />
-                      ))
-                    }
-                  </Tab>
                 </Tabs>
               </div>
             </div>
