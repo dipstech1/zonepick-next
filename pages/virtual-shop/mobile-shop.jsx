@@ -51,10 +51,10 @@ const MobileList = () => {
 
   const initLoader = () => {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.3, 1000);
-   // camera.position.x = 100;
-   // camera.position.y = 160;
+    // camera.position.x = 100;
+    // camera.position.y = 160;
     camera.position.z = 200;
-    
+
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
@@ -193,7 +193,11 @@ const MobileList = () => {
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-        // window.location = "MobileShopColor.html?modelName=Mobile&set=3";
+        router.push("mobile-view?modelName=Mobile.fbx&set=1");
+      }
+
+      if (intersects[0].object.name.includes("Mobile4")) {
+        router.push("mobile-view?modelName=Mobile.fbx&set=1");
       }
     }
   }
