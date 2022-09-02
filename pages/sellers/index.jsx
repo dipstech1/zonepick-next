@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Breadcrumb, Card, Col, Row } from "react-bootstrap";
+import { Breadcrumb, Card, Col, Image, Row } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
@@ -71,10 +71,7 @@ const SellerPage = () => {
                   aria-label="Dollar amount (with dot and two decimal places)"
                 />
                 <span className="input-group-text">
-                  <i className="fas fa-search"
-                    style={{ cursor: "pointer" }}
-                    onClick={onSearchProfileName}
-                  ></i>
+                  <i className="fas fa-search" style={{ cursor: "pointer" }} onClick={onSearchProfileName}></i>
                 </span>
               </div>
             </Col>
@@ -116,11 +113,12 @@ const SellerPage = () => {
                               <i className="fa fa-mobile-retro me-3"></i>{" "}
                               <Link href={"tel:" + data.phone}>{data.phone}</Link>
                             </div>
-                            */
-                            }
+                            */}
                             <div className="d-block text-nowrap mt-2 small">
                               <i className="fa fa-envelope me-2"></i>
-                              <Link href={"mailto:" + data.email} style><span>{data.email}</span></Link>
+                              <Link href={"mailto:" + data.email} style>
+                                <span>{data.email}</span>
+                              </Link>
                             </div>
                             <div
                               className="d-block mt-4 float-end me-3 animate-i text-deep-purple-900"
@@ -129,7 +127,10 @@ const SellerPage = () => {
                                 onSellerClick(data);
                               }}
                             >
-                              View Products <span className="lefttoright"><i className="fas fa-arrow-right"></i></span>
+                              View Products{" "}
+                              <span className="lefttoright">
+                                <i className="fas fa-arrow-right"></i>
+                              </span>
                             </div>
                           </Col>
                         </Row>
@@ -138,6 +139,68 @@ const SellerPage = () => {
                   </Col>
                 );
               })}
+          </Row>
+
+          <Row>
+            <Col md={4}>
+              <Card
+                className="p-0" style={{cursor: "pointer"}}
+                onClick={() => {
+                  router.push("/virtual-shop/mobile-shop");
+                }}
+              >
+                <Card.Body>
+                  <Row>
+                    <Col md={2}>
+                      <Image src={"/images/Mobile3.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
+                    </Col>
+                    <Col md={10} className="d-flex align-items-center">
+                      <h5> Mobile Shop</h5>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col md={4}>
+              <Card
+                className="p-0" style={{cursor: "pointer"}}
+                onClick={() => {
+                  router.push("/virtual-shop/electronic-shop");
+                }}
+              >
+                <Card.Body>
+                  <Row>
+                    <Col md={2}>
+                      <Image src={"/images/Laptop.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
+                    </Col>
+                    <Col md={10} className="d-flex align-items-center">
+                      <h5> Electronic Shop</h5>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col md={4}>
+              <Card
+                className="p-0" style={{cursor: "pointer"}}
+                onClick={() => {
+                  router.push("/virtual-shop/car-shop");
+                }}
+              >
+                <Card.Body>
+                  <Row>
+                    <Col md={2}>
+                      <Image src={"/images/Car2.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
+                    </Col>
+                    <Col md={10} className="d-flex align-items-center">
+                      <h5> Car Shop</h5>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
         </div>
       </Layout>

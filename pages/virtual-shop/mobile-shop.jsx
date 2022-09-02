@@ -4,6 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import Layout from "../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -98,10 +99,10 @@ const MobileList = () => {
     });
 
     var loader1 = new FBXLoader(loadingManager);
-    loader1.load(modelPath_2, function (object) {
+    loader1.load(modelPath_1, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(45, -10, -500);
-      object.rotation.y = -5.62;
+      object.position.set(75, -65, -400);
+      // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "Mobile2";
@@ -114,25 +115,11 @@ const MobileList = () => {
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_1, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(75, -65, -400);
-      // object.rotation.y = -5.62;
-      object.traverse(function (child) {
-        if (child.isMesh) {
-          child.name = "Mobile3";
-        }
-      });
-      rot3 = object;
-      scene.add(object);
-    });
-
-    var loader1 = new FBXLoader(loadingManager);
-    loader1.load(modelPath_1, function (object) {
-      object.scale.set(0.5, 0.5, 0.5);
       object.position.set(-35, -65, -400);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Mobile4";
+          child.name = "Mobile3";
         }
       });
       rot3 = object;
@@ -163,6 +150,9 @@ const MobileList = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if(rot1!=null){
+      rot1.rotation.y+=0.005;
+    }
   }
 
   function onTransitionEnd(event) {
@@ -188,15 +178,11 @@ const MobileList = () => {
       }
 
       if (intersects[0].object.name.includes("Mobile2")) {
-        router.push("mobile-view?modelName=Laptop.FBX&set=2");
+        router.push("mobile-view?modelName=Mobile.fbx&set=1");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-        router.push("mobile-view?modelName=Mobile.fbx&set=1");
-      }
-
-      if (intersects[0].object.name.includes("Mobile4")) {
         router.push("mobile-view?modelName=Mobile.fbx&set=1");
       }
     }
@@ -210,9 +196,9 @@ const MobileList = () => {
   }
 
   return (
-    <>
-      <div id="game" align="center" style={{ display: "block", position: "absolute" }}></div>
-    </>
+    <Layout title="Virtual Mobile Shop" showFooter={false} showNav={false}>
+      <div id="game" align="center" style={{ display: "block", position: "absolute", minHeight: "100vh" }}></div>
+    </Layout>
   );
 };
 

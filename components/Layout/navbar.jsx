@@ -8,7 +8,7 @@ import verifyToken from "../../utils/verifyToken";
 
 const Navbars = ({ cartPending = 0 }) => {
   const router = useRouter();
-  const [userName,setUserName]=useState('')
+  const [userName, setUserName] = useState("");
   let [loggedIn, setLoggedIn] = useState(false);
 
   const logoutClick = (e) => {
@@ -29,7 +29,7 @@ const Navbars = ({ cartPending = 0 }) => {
     setLoggedIn(data.verified);
     console.log("Status:" + loggedIn);
 
-    setUserName(getCookie('user_name'))
+    setUserName(getCookie("user_name"));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -39,7 +39,7 @@ const Navbars = ({ cartPending = 0 }) => {
       <Navbar bg="deep-purple-900 pt-0 pb-0" variant="dark" fixed="top" collapseOnSelect expand="md">
         <Container>
           <Navbar.Brand href="#home">
-            <img src="/logo/logo.png" style={{height:45, width: 100 , backgroundColor:'white' , borderRadius: 4}} alt='logo'></img>
+            <img src="/logo/logo.png" style={{ height: 45, width: 100, backgroundColor: "white", borderRadius: 4 }} alt="logo"></img>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Nav className="d-flex d-md-none flex-row">
@@ -87,9 +87,12 @@ const Navbars = ({ cartPending = 0 }) => {
               <Link href="/sellers" passHref>
                 <Nav.Link active={router.pathname === "/sellers" ? true : false}>Our Sellers</Nav.Link>
               </Link>
-              <Link href="/virtual-shop/mobile-shop" passHref>
+              {/*
+                <Link href="/virtual-shop/mobile-shop" passHref>
                 <Nav.Link active={router.pathname === "/virtual-shop/mobile-shop" ? true : false}>Virual Mobile shop</Nav.Link>
               </Link>
+                    */}
+
               <Link href="/contact" passHref>
                 <Nav.Link active={router.pathname === "/contact" ? true : false}>Contact Us</Nav.Link>
               </Link>

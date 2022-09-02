@@ -18,21 +18,23 @@ const ModelLoader = (props) => {
   useEffect(() => {
     // Add mesh to camera
     const meshRef = ref.current;
-    
   }, [ref.current]);
 
   return (
     <Suspense>
-      <mesh ref={ref} geometry={geometry} material={material} position={[25, -65, -400]}>
-        <primitive object={fbx} dispose={null} />
-      </mesh>
+      <group dispose={null} rotation={[Math.PI, 0, -Math.PI / 2]} scale={[1, 1, 1]}>
+        <mesh ref={ref} geometry={geometry} material={material}>
+          <primitive object={fbx} dispose={null} position={[25, -65, -400]} />
+          <primitive object={fbx} dispose={null} position={[45, -65, -400]} />
+        </mesh>
+      </group>
     </Suspense>
   );
 };
 
 const ModelViewGTLF = ({ arImageUrl = "/models/Mobile.fbx", scale = [0.1, 0.1, 0.1] }) => {
   const ref = useRef();
- 
+
   return (
     <>
       <Row>

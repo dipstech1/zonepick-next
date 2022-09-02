@@ -1,6 +1,7 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
+import Layout from "../../components/Layout/layout.jsx";
 import * as THREE from "../../public/build/three.module.js";
 import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
@@ -20,6 +21,9 @@ var isdone = false;
 var rot;
 var set = 1;
 var imgSrc = "/images/Mobile2.jpg";
+var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 
 const MobileShopColor = () => {
   const [show, setShow] = useState(false);
@@ -49,8 +53,8 @@ const MobileShopColor = () => {
   function initLoader() {
     container = document.getElementById("game");
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.10, 10000);
-     camera.position.set(-10, -100, -500);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.set(-10, -100, -500);
     //camera.rotation.set( 0,-90,0);
 
     scene = new THREE.Scene();
@@ -89,7 +93,7 @@ const MobileShopColor = () => {
       object.position.set(0, 0, 0);
       object.rotation.y = (90 * Math.PI) / 180;
       if (set === 2) {
-        object.position.set(-15,-105,-500);
+        object.position.set(-15, -105, -500);
         object.rotation.y = (90 * Math.PI) / 180;
       }
 
@@ -188,16 +192,57 @@ const MobileShopColor = () => {
     }
   }
 
+  const CgangeToBlue = () => {
+    rot.traverse(function (child) {
+      if (child.isMesh) {
+        //var materialCol=child.material.color;
+        //child.material.color=new THREE.Color( 0x00ff00 );
+        //materials.push(child.material);
+        child.material = blueMat;
+        child.material.needsUpdate = true;
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
+    
+  };
+
+  const CgangeToGreen = () => {
+    rot.traverse(function (child) {
+      if (child.isMesh) {
+        //var materialCol=child.material.color;
+        //child.material.color=new THREE.Color( 0x00ff00 );
+        //materials.push(child.material);
+        child.material = greenMat;
+        child.material.needsUpdate = true;
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
+  };
+
+  const CgangeToRed = () => {
+    rot.traverse(function (child) {
+      if (child.isMesh) {
+        //var materialCol=child.material.color;
+        //child.material.color=new THREE.Color( 0x00ff00 );
+        //materials.push(child.material);
+        child.material = redMat;
+        child.material.needsUpdate = true;
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
+  };
+
   return (
-    <>
+    <Layout title="Mobile Details" showFooter={false} showNav={false}>
       <div id="game" align="center" style={{ display: "block", position: "absolute" }}></div>
+      <div id="header" style={{ marginTop: 10, position: "relative", zIndex: 10, textAlign: "center" }}>
+        <button className="btn btn-primary" onClick={() => CgangeToBlue()}></button>
+        <button className="btn btn-success" onClick={() => CgangeToGreen()}></button>
+        <button className="btn btn-danger" onClick={() => CgangeToRed()}></button>
+      </div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>
         </Modal.Body>
         <Modal.Footer>
@@ -210,7 +255,7 @@ const MobileShopColor = () => {
           </button>
         </Modal.Footer>
       </Modal>
-    </>
+    </Layout>
   );
 };
 
