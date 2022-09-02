@@ -89,13 +89,11 @@ const MobileShopColor = () => {
     var materials = [];
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
-
-      console.log(set)
       
       object.position.set(0, 0, 0);
       object.rotation.y = (90 * Math.PI) / 180;
       if (set === 1) {
-        object.scale.set(15.36, 15.36, 15.36);
+        object.scale.set(0.36, 0.36, 0.36);
         object.position.set(-15, -105, -500);
         object.rotation.y = (90 * Math.PI) / 180;
       }
@@ -165,7 +163,7 @@ const MobileShopColor = () => {
       if (intersects[0].object.name.includes("mobile")) {
         if (set == 1) {
           setShow(true);
-          imgSrc = "/images/headset.jpg";
+          imgSrc = "/images/ChairSet.jpg";
 
           // modalimg = document.getElementsByClassName("modalImg");
           //  modalimg[0].src = "./images/Mobile1.jpg";
@@ -189,10 +187,8 @@ const MobileShopColor = () => {
         }
 
         if (set == 3) {
-          setShow(true);
-          imgSrc = "/images/laptop2.jpg";
           //   modalimg = document.getElementsByClassName("modalImg");
-          //  modalimg[0].src = "./images/laptop2.jpg";
+          //  modalimg[0].src = "./images/Mobile3.jpg";
           /* var actModal = document.getElementById("exampleModal");
           var modal = new bootstrap.Modal(actModal);
           modal.show();*/

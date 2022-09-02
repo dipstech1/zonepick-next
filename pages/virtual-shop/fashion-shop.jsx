@@ -11,10 +11,9 @@ var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, l
 var sceneName;
 var isMouseDown = false;
 
-var panoName = "electronic.jpg";
-var modelPath_1 = "/models/headset0001.fbx";
+var panoName = "d3.jpg";
+var modelPath_1 = "/models/ChairSet.fbx";
 var modelPath_2 = "/models/Laptop.FBX";
-var modelPath_3 = "/models/Laptop_001.fbx";
 
 var rot1, rot2, rot3;
 
@@ -86,45 +85,34 @@ const MobileList = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(4.75, 4.75, 4.75);
-      object.position.set(-210, -40, -500);
+      object.scale.set(0.35,0.35,0.35);
+      object.position.set(-200,-250,-350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "headset";
+          child.name = "chairset";
         }
       });
       rot1 = object;
       scene.add(object);
     });
 
+   
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(285, -40, -500);
+      object.position.set(215, 40, -500);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "laptop";
         }
       });
-      rot2 = object;
-      scene.add(object);
-    });
-
-    var loader2 = new FBXLoader(loadingManager);
-    loader2.load(modelPath_3, function (object) {
-      object.scale.set(0.35, 0.35, 0.35);
-      object.position.set(180, -80, -400);
-       object.rotation.y = 12.02;
-      object.traverse(function (child) {
-        if (child.isMesh) {
-          child.name = "macbook";
-        }
-      });
       rot3 = object;
       scene.add(object);
     });
+
+
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -150,9 +138,6 @@ const MobileList = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-    if(rot1!=null){
-      rot1.rotation.y+=0.01;
-    }
   }
 
   function onTransitionEnd(event) {
@@ -172,20 +157,15 @@ const MobileList = () => {
     var intersects = raycaster.intersectObjects(scene.children, true);
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
-      if (intersects[0].object.name.includes("headset")) {
-        router.push("electronic-view?modelName=headset0001.fbx&set=1");
+      if (intersects[0].object.name.includes("chairset")) {
+        router.push("electronic-view?modelName=ChairSet.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("laptop")) {
         router.push("electronic-view?modelName=Laptop.FBX&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
-
-      if (intersects[0].object.name.includes("macbook")) {
-        router.push("electronic-view?modelName=Laptop_001.fbx&set=3");
-        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
+      }      
     }
   }
 
@@ -198,7 +178,8 @@ const MobileList = () => {
 
   return (
     <Layout title="Electronic Shop" showFooter={false} showNav={false}>
-      <div id="game" align="center" style={{ display: "block", position: "absolute", minHeight: "100vh" }}></div>
+      
+        <div id="game" align="center" style={{ display: "block", position: "absolute" , minHeight: '100vh' }}></div>
     </Layout>
   );
 };
