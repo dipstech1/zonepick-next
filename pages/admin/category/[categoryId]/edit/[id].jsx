@@ -171,7 +171,20 @@ const EditCategoryPage = () => {
       console.log(error);
       toast.error("Fail");
     }
-  }
+  };
+
+  const filterDataDelete = async (id) => {
+    try {
+      let resp = await axios.delete(`admin/filter-data/${id}`);
+      if (resp.data.acknowledge) {
+        toast.success("Successfully Delete");
+        getSubcategory(router.query["categoryName"]);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
 
   const isAddFilterDataClick = () => {
     setIsAddFilterData(!isAddFilterData);
@@ -182,7 +195,20 @@ const EditCategoryPage = () => {
     setFilterName(filterName);
     setFilterId(id);
     setMode("Edit");
-  }
+  };
+
+  const filterDeleteClick = async (id) => {
+    try {
+      let resp = await axios.delete(`admin/filter/${id}`);
+      if (resp.data.acknowledge) {
+        toast.success("Successfully Deleted");
+        getSubcategory(router.query["categoryName"]);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
 
   const handleUpdate = async () => {
     try {
@@ -341,10 +367,18 @@ const EditCategoryPage = () => {
                                     </i>
                                     <i className="fa fa-trash"
                                       title="Delete Filter"
+                                      onClick={() => filterDeleteClick(filter.id)}
                                       style={{ cursor: 'pointer' }}>
                                     </i>
                                   </div>
-                                  <FilterData key={i} isAddFilterDataClick={isAddFilterDataClick} filterDataEditClick={filterDataEditClick} filterData={filter} filterDataAddClick={filterDataAddClick} isAddFilterData={isAddFilterData} />
+                                  <FilterData
+                                    key={i}
+                                    filterDataDelete={filterDataDelete}
+                                    isAddFilterDataClick={isAddFilterDataClick}
+                                    filterDataEditClick={filterDataEditClick}
+                                    filterData={filter}
+                                    filterDataAddClick={filterDataAddClick}
+                                    isAddFilterData={isAddFilterData} />
                                 </Card.Body>
                               </Card>
                             </Col>
