@@ -1,8 +1,9 @@
 import { useRouter } from "next/router.js";
 import { useEffect } from "react";
-import * as THREE from "../../public/build/three.module.js";
-import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
-import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
+import * as THREE from "three";
+
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -14,7 +15,7 @@ var modelName = "Mobile";
 var modelPath_1 = "/models/Mobile.fbx";
 var modelPath_2 = "/models/Laptop.FBX";
 
-var rot1, rot2;
+var rot1, rot2, rot3;
 
 let count = 1;
 
@@ -50,7 +51,11 @@ const MobileList = () => {
 
   const initLoader = () => {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.3, 1000);
-    camera.position.set(0, 0, -100);
+   // camera.position.x = 100;
+   // camera.position.y = 160;
+    camera.position.z = 200;
+    
+    //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
     const geometry = new THREE.SphereGeometry(550, 200, 400);
@@ -72,8 +77,8 @@ const MobileList = () => {
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
     light3 = new THREE.PointLight(0xffffff, 0.1);
-    light3.position.set(0, 50, 50);
-    light3.rotation.set(0, -135, 0);
+    light3.position.set(85, -50, 50);
+    light3.rotation.set(0, 20, 0);
     scene.add(light3);
 
     const loadingManager = new THREE.LoadingManager();
@@ -81,7 +86,7 @@ const MobileList = () => {
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(-15, -30, -300);
+      object.position.set(25, -65, -400);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -95,7 +100,7 @@ const MobileList = () => {
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(15, -15, -500);
+      object.position.set(45, -10, -500);
       object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -103,6 +108,34 @@ const MobileList = () => {
         }
       });
       rot2 = object;
+      scene.add(object);
+    });
+
+    var loader1 = new FBXLoader(loadingManager);
+    loader1.load(modelPath_1, function (object) {
+      object.scale.set(0.5, 0.5, 0.5);
+      object.position.set(75, -65, -400);
+      // object.rotation.y = -5.62;
+      object.traverse(function (child) {
+        if (child.isMesh) {
+          child.name = "Mobile3";
+        }
+      });
+      rot3 = object;
+      scene.add(object);
+    });
+
+    var loader1 = new FBXLoader(loadingManager);
+    loader1.load(modelPath_1, function (object) {
+      object.scale.set(0.5, 0.5, 0.5);
+      object.position.set(-35, -65, -400);
+      // object.rotation.y = -5.62;
+      object.traverse(function (child) {
+        if (child.isMesh) {
+          child.name = "Mobile4";
+        }
+      });
+      rot3 = object;
       scene.add(object);
     });
 
@@ -122,7 +155,7 @@ const MobileList = () => {
     controls.maxDistance = 400;
     controls.update();
     controls.enablePan = false;
-    controls.rotateInLeft((180 * Math.PI) / 180);
+    //controls.rotateInLeft((180 * Math.PI) / 180);
     //
   };
 
