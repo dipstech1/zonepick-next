@@ -141,67 +141,7 @@ const SellerPage = () => {
               })}
           </Row>
 
-          <Row>
-            <Col md={4}>
-              <Card
-                className="p-0" style={{cursor: "pointer"}}
-                onClick={() => {
-                  router.push("/virtual-shop/mobile-shop");
-                }}
-              >
-                <Card.Body>
-                  <Row>
-                    <Col md={2}>
-                      <Image src={"/images/Mobile3.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
-                    </Col>
-                    <Col md={10} className="d-flex align-items-center">
-                      <h5> Mobile Shop</h5>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col>
 
-            <Col md={4}>
-              <Card
-                className="p-0" style={{cursor: "pointer"}}
-                onClick={() => {
-                  router.push("/virtual-shop/electronic-shop");
-                }}
-              >
-                <Card.Body>
-                  <Row>
-                    <Col md={2}>
-                      <Image src={"/images/Laptop.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
-                    </Col>
-                    <Col md={10} className="d-flex align-items-center">
-                      <h5> Electronic Shop</h5>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col md={4}>
-              <Card
-                className="p-0" style={{cursor: "pointer"}}
-                onClick={() => {
-                  router.push("/virtual-shop/car-shop");
-                }}
-              >
-                <Card.Body>
-                  <Row>
-                    <Col md={2}>
-                      <Image src={"/images/Car2.jpg"} alt="image" style={{ width: 60, height: 60, objectFit: "scale-down" }}></Image>
-                    </Col>
-                    <Col md={10} className="d-flex align-items-center">
-                      <h5> Car Shop</h5>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
         </div>
       </Layout>
     </>

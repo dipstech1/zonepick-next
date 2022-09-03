@@ -198,6 +198,17 @@ const MobileShopColor = () => {
           modal.show();*/
           //  handleShow()
         }
+
+        if (set == 4) {
+          setShow(true);
+          imgSrc = "/images/Mi_tv.jpg";
+          //   modalimg = document.getElementsByClassName("modalImg");
+          //  modalimg[0].src = "./images/laptop2.jpg";
+          /* var actModal = document.getElementById("exampleModal");
+          var modal = new bootstrap.Modal(actModal);
+          modal.show();*/
+          //  handleShow()
+        }
       }
     }
   }
@@ -256,11 +267,11 @@ const MobileShopColor = () => {
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>
         </Modal.Body>
         <Modal.Footer>
-          <button type="button" className="mybtn btn-primary">
+          <button type="button" className="my btn btn-primary">
             ADD TO CART
           </button>
           <div className="clearfix"></div>
-          <button type="button" className="mybtn btn-primary">
+          <button type="button" className="my btn btn-primary">
             BUY NOW
           </button>
         </Modal.Footer>

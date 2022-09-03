@@ -87,6 +87,49 @@ const Navbars = ({ cartPending = 0 }) => {
               <Link href="/sellers" passHref>
                 <Nav.Link active={router.pathname === "/sellers" ? true : false}>Our Sellers</Nav.Link>
               </Link>
+
+              <NavDropdown title="Virtual-shop" id="collasible-nav-dropdown" align="end">
+                <Link href="/virtual-shop/mobile-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-mobile me-2"></i>Mobile Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/car-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-bus me-2"></i>Car Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/car-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-laptop me-2"></i>Electronic Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/furniture-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-chair me-2"></i>Furniture Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/shoe-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-shoe-prints me-2"></i>Shoe Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/fashion-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-vest-patches me-2"></i>Fashion Shop
+                  </NavDropdown.Item>
+                </Link>
+
+
+
+                
+              </NavDropdown>
+
               {/*
                 <Link href="/virtual-shop/mobile-shop" passHref>
                 <Nav.Link active={router.pathname === "/virtual-shop/mobile-shop" ? true : false}>Virual Mobile shop</Nav.Link>

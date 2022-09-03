@@ -11,12 +11,14 @@ var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, l
 var sceneName;
 var isMouseDown = false;
 
-var panoName = "electronic.jpg";
+var panoName = "train-station.jpeg";
 var modelPath_1 = "/models/headset0001.fbx";
 var modelPath_2 = "/models/Laptop.FBX";
 var modelPath_3 = "/models/Laptop_001.fbx";
+var modelPath_4 = "/models/MI_SMART_TV.fbx";
 
-var rot1, rot2, rot3;
+
+var rot1, rot2, rot3, rot4;
 
 let count = 1;
 
@@ -59,7 +61,7 @@ const MobileList = () => {
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
-    const geometry = new THREE.SphereGeometry(550, 200, 400);
+    const geometry = new THREE.SphereGeometry(550, 500, 400);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/" + panoName);
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -87,7 +89,7 @@ const MobileList = () => {
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
       object.scale.set(4.75, 4.75, 4.75);
-      object.position.set(-210, -40, -500);
+      object.position.set(-250, -40, -300);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -98,10 +100,10 @@ const MobileList = () => {
       scene.add(object);
     });
 
-    var loader1 = new FBXLoader(loadingManager);
+   /* var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(285, -40, -500);
+      object.position.set(105, -40, -300);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -110,19 +112,33 @@ const MobileList = () => {
       });
       rot2 = object;
       scene.add(object);
-    });
+    });*/
 
     var loader2 = new FBXLoader(loadingManager);
     loader2.load(modelPath_3, function (object) {
       object.scale.set(0.35, 0.35, 0.35);
-      object.position.set(180, -80, -400);
-       object.rotation.y = 12.02;
+      object.position.set(100, -50, -300);
+      //  object.rotation.y = 12.02;
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "macbook";
         }
       });
       rot3 = object;
+      scene.add(object);
+    });
+
+    var loader3 = new FBXLoader(loadingManager);
+    loader3.load(modelPath_4, function (object) {
+      object.scale.set(0.75, 0.75, 0.75);
+      object.position.set(-75, -80, -400);
+      object.rotation.y = 12.02;
+      object.traverse(function (child) {
+        if (child.isMesh) {
+          child.name = "tv";
+        }
+      });
+      rot4 = object;
       scene.add(object);
     });
 
@@ -150,8 +166,20 @@ const MobileList = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-    if(rot1!=null){
-      rot1.rotation.y+=0.01;
+    if (rot1 != null) {
+      rot1.rotation.y += 0.01;
+    }
+
+    if (rot2 != null) {
+      rot2.rotation.y += 0.005;
+    }
+
+    if (rot3 != null) {
+      rot3.rotation.y += 0.005;
+    }
+
+    if (rot4 != null) {
+      rot4.rotation.y += 0.005;
     }
   }
 
@@ -184,6 +212,11 @@ const MobileList = () => {
 
       if (intersects[0].object.name.includes("macbook")) {
         router.push("electronic-view?modelName=Laptop_001.fbx&set=3");
+        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
+      }
+
+      if (intersects[0].object.name.includes("tv")) {
+        router.push("electronic-view?modelName=MI_SMART_TV.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }
