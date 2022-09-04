@@ -31,3 +31,4 @@ yarn-error.log*
 # vercel
 .vercel
 *.Identifier
+public/images/computer-table.jpg:Zone.Identifier
