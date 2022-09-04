@@ -59,7 +59,7 @@ const MobileList = () => {
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
-    const geometry = new THREE.SphereGeometry(550, 200, 400);
+    const geometry = new THREE.SphereGeometry(550, 500, 400);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/" + panoName);
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -126,6 +126,10 @@ const MobileList = () => {
       scene.add(object);
     });
 
+    
+
+    
+
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -151,7 +155,11 @@ const MobileList = () => {
     renderer.render(scene, camera);
     controls.update();
     if(rot1!=null){
-      rot1.rotation.y+=0.005;
+      rot3.rotation.y+=0.005;
+    }
+
+    if(rot2!=null){
+      rot2.rotation.y-=0.005;
     }
   }
 

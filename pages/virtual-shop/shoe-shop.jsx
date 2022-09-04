@@ -62,7 +62,7 @@ const MobileList = () => {
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
-    const geometry = new THREE.SphereGeometry(550, 200, 400);
+    const geometry = new THREE.SphereGeometry(550, 500, 400);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/" + panoName);
     const material = new THREE.MeshBasicMaterial({ map: texture });

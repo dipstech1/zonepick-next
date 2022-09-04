@@ -59,7 +59,7 @@ const MobileShopColor = () => {
 
     scene = new THREE.Scene();
     //scene.background = new THREE.Color( 0xc6c4c4 );
-    const geometry = new THREE.SphereGeometry(550, 200, 400);
+    const geometry = new THREE.SphereGeometry(550, 500, 400);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/CarShop.jpg");
     const material = new THREE.MeshBasicMaterial({ map: texture });

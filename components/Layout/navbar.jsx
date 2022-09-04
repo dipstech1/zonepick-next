@@ -101,7 +101,7 @@ const Navbars = ({ cartPending = 0 }) => {
                   </NavDropdown.Item>
                 </Link>
 
-                <Link href="/virtual-shop/car-shop" passHref>
+                <Link href="/virtual-shop/electronic-shop" passHref>
                   <NavDropdown.Item>
                     <i className="fa-solid fa-laptop me-2"></i>Electronic Shop
                   </NavDropdown.Item>
@@ -124,10 +124,6 @@ const Navbars = ({ cartPending = 0 }) => {
                     <i className="fa-solid fa-vest-patches me-2"></i>Fashion Shop
                   </NavDropdown.Item>
                 </Link>
-
-
-
-                
               </NavDropdown>
 
               {/*
