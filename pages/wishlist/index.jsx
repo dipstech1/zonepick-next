@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
+import { Breadcrumb, Button, Card, Col, Image, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
@@ -119,8 +119,8 @@ const WishList = () => {
                           <Card.Body className="p-0">
                             <Row>
                               <Col md={3} lg={2}>
-                                <img
-                                  src={common.imageUrl + data?.productId[0].product.images[0].url}
+                                <Image
+                                  src={common.imageUrl + data?.productId[0]?.product?.images[0].url}
                                   className="img-responsive-1 w-100"
                                   alt="dd"
                                   style={{ cursor: "pointer" }}

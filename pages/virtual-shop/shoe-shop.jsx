@@ -51,6 +51,7 @@ const MobileList = () => {
 
     //
     // console.log(container.firstElementChild.remove())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initLoader = () => {

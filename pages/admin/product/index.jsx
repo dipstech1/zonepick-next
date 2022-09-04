@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Breadcrumb, Button, Card, Col, Row } from "react-bootstrap";
+import { Breadcrumb, Button, Card, Col, Image, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import MyAccountLayout from "../../../components/Account/myaccount";
 import Layout from "../../../components/Layout/layout";
@@ -25,7 +25,7 @@ const MyProductList = () => {
   useEffect(() => {
     const userId = getCookie("userid");
     page = 0;
-    setProductData([])
+    setProductData([]);
     setUserId(userId);
     getMyProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +80,7 @@ const MyProductList = () => {
   const onEditClick = (item) => {
     sessionStorage.setItem("product", JSON.stringify(item));
     router.push("product/edit");
-  }
+  };
 
   return (
     <>
@@ -114,8 +114,8 @@ const MyProductList = () => {
                             <Row>
                               <Col md={3} lg={2}>
                                 <div className="image-container">
-                                  <img
-                                    src={common.imageUrl + data?.images[0].url}
+                                  <Image
+                                    src={common.imageUrl + data?.images[0]?.url}
                                     className="img-responsive-1 w-100"
                                     alt="dd"
                                     style={{ cursor: "pointer" }}
@@ -136,8 +136,7 @@ const MyProductList = () => {
                                           data-bs-placement="left"
                                           title="Edit Product"
                                         >
-                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}
-                                          ></i>
+                                          <i className="fa fa-edit small me-4" style={{ cursor: "pointer" }}></i>
                                         </span>
                                         <span
                                           onClick={(e) => removeMyProducts(data)}
@@ -188,4 +187,4 @@ const MyProductList = () => {
     </>
   );
 };
-export default withAuth(MyProductList, ['ADMIN']);
+export default withAuth(MyProductList, ["ADMIN"]);

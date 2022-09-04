@@ -116,6 +116,7 @@ const EditProductPage = () => {
         }
         GetAWSCredentials();
         getCategorytList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getBrandtList = async () => {

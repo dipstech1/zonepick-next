@@ -18,6 +18,7 @@ const ModelLoader = (props) => {
   useEffect(() => {
     // Add mesh to camera
     const meshRef = ref.current;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref.current]);
 
   return (
