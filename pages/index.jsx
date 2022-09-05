@@ -22,11 +22,14 @@ export default function Home() {
   let [total, setTotal] = useState(0);
   let [loading, setLoading] = useState(false);
   const [productName, setProductName] = useState("");
+  const [isCompare, setIsCompare] = useState(false);
+  const [comparedProductCount, setComparedProductCount] = useState(0);
 
   useEffect(() => {
     const userId = getCookie("userid");
     setUserId(userId);
     getProductData("BUY");
+    localStorage.removeItem("productCompare");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -120,6 +123,45 @@ export default function Home() {
     setLoading(false);
   }
 
+  const goToCompare = (e) => {
+    e.preventDefault();
+    router.push("product/compare")
+  };
+
+  const onCheckBoxClick = (item, event) => {
+
+    let sendData = [{
+      productId: item.product?.productId,
+      recordId: item.recordId,
+    }];
+
+    const getData = JSON.parse(localStorage.getItem("productCompare"));
+
+    if (getData) {
+      if (!event.target.checked) {
+        const newData = getData.filter((product) => parseInt(product.recordId) !== parseInt(item.recordId));
+        localStorage.setItem("productCompare", JSON.stringify(newData));
+      } else {
+        if (getData.length > 3) {
+          return toast.info("You have already selected 4 products");
+        } else {
+          const newData = [...getData, ...sendData]
+          localStorage.setItem("productCompare", JSON.stringify(newData));
+        }
+      }
+    } else {
+      localStorage.setItem("productCompare", JSON.stringify(sendData));
+    };
+
+    getCompareData();
+  };
+
+  const getCompareData = () => {
+    let product = JSON.parse(localStorage.getItem("productCompare"));
+    product.length > 0 ? setIsCompare(true) : setIsCompare(false);
+    setComparedProductCount(product.length)
+  }
+
   return (
     <>
       <Layout title="Home">
@@ -156,7 +198,6 @@ export default function Home() {
               <Col md={3}>
                 <FaecetSearch onSearch={onSearchProducts}></FaecetSearch>
               </Col>
-
               <Col>
                 <Row>
                   <Col md={12}>
@@ -175,13 +216,22 @@ export default function Home() {
                     </div>
                   </Col>
                 </Row>
-
+                {isCompare ?
+                  <Row>
+                    <Col>
+                      <Button variant="indigo"
+                        className="mb-3 ms-5 fixed-bottom"
+                        onClick={goToCompare}
+                        style={{ width: "150px" }}>Compare {comparedProductCount}</Button>
+                    </Col>
+                  </Row> : null
+                }
                 <Row className="ps-2 scrollable overflow-auto" style={{ minHeight: 400, overflow: 'auto' }}>
                   {productData.length > 0 &&
                     productData.map((product, i) => {
                       return (
                         <Col key={i} md={4} className="mb-3">
-                          <ProductCard productDetails={product} addToWishList={addToWishList} />
+                          <ProductCard productDetails={product} addToWishList={addToWishList} onCheckBoxClick={onCheckBoxClick} />
                         </Col>
                       );
                     })}

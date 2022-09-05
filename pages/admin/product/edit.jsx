@@ -709,11 +709,31 @@ const EditProductPage = () => {
                                                             ))}
                                                 </Tab>
                                                 <Tab eventKey={"image"} title={"Images"}>
-                                                    <ImageList
-                                                        imagesList={formik.values.images}
-                                                        onSelectionChanged={imageLoaded}
+                                                    <Tabs defaultActiveKey="pimage" id="controlled-tab-example" className="mb-3 ">
+                                                        <Tab eventKey={"pimage"} title={"Normal Image"}>
+                                                            <ImageList
+                                                                maxUpload={5}
+                                                                info={"Add Product Photos"}
+                                                                id={"normal"}
+                                                                imagesList={formik.values.images}
+                                                                onSelectionChanged={imageLoaded}
 
-                                                    />
+                                                            />
+                                                        </Tab>
+                                                        <Tab eventKey={"360image"} title={"360 Image"}>
+                                                            <ImageList
+                                                                maxUpload={2}
+                                                                info={"Add 360 Photos"}
+                                                                id={"img360"}
+                                                                imagesList={formik.values.images}
+                                                                onSelectionChanged={imageLoaded}
+
+                                                            />
+                                                        </Tab>
+                                                        <Tab eventKey="3d" title="3d Model">
+                                                            BB
+                                                        </Tab>
+                                                    </Tabs>
                                                 </Tab>
                                             </Tabs>
                                             {isAddSpecification || mode === "Edit" ? null :
