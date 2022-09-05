@@ -145,7 +145,7 @@ const EditAdvtPage = () => {
         console.log(product);
 
         try {
-            let added = await axios.put(`products/${id}`, product);
+            let added = await axios.put(`products/${product.productId}`, product);
 
             if (added.data.acknowledge) {
                 router.back();
