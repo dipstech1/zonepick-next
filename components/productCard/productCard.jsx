@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-import { Button, Card } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Form } from "react-bootstrap";
 import common from "../../utils/commonService";
+import { toast } from "react-toastify";
 
-const ProductCard = ({ productDetails, addToWishList }) => {
+const ProductCard = ({ productDetails, addToWishList, onCheckBoxClick }) => {
   const router = useRouter();
 
   const goToDetails = (e, data) => {
@@ -18,15 +20,41 @@ const ProductCard = ({ productDetails, addToWishList }) => {
     addToWishList(body);
   };
 
+  // const onCheckBoxClick = (item, event) => {
+
+  //   let sendData = [{
+  //     productId: item.product?.productId,
+  //     recordId: item.recordId,
+  //   }];
+
+  //   const getData = JSON.parse(localStorage.getItem("productCompare"));
+
+  //   if (getData) {
+  //     if (!event.target.checked) {
+  //       const newData = getData.filter((product) => parseInt(product.recordId) !== parseInt(item.recordId));
+  //       localStorage.setItem("productCompare", JSON.stringify(newData));
+  //     } else {
+  //       if (getData.length > 3) {
+  //         return toast.info("You have already selected 4 products");
+  //       } else {
+  //         const newData = [...getData, ...sendData]
+  //         localStorage.setItem("productCompare", JSON.stringify(newData));
+  //       }
+  //     }
+  //   } else {
+  //     localStorage.setItem("productCompare", JSON.stringify(sendData));
+  //   }
+  // };
+
   return (
     <>
       {productDetails ?
-        <Card onClick={goToDetails} style={{ cursor: 'pointer' }} className='product-row shadow-sm'>
-          <div className="image-container" >
+        <Card className='product-row shadow-sm'>
+          <div onClick={goToDetails} style={{ cursor: 'pointer' }} className="image-container" >
             <Card.Img variant="top" src={common.imageUrl + (productDetails?.product?.name ? productDetails?.product?.images[0]?.url : productDetails?.images[0]?.url)} style={{ height: 250, maxWidth: "100%" }} />
             <div className="top-left ">{productDetails?.purpose || null}</div>
           </div>
-          <Card.Body>
+          <Card.Body onClick={goToDetails} style={{ cursor: 'pointer' }}>
             <Card.Title>
               <span>{productDetails?.product?.name || productDetails?.name}</span>
             </Card.Title>
@@ -51,6 +79,16 @@ const ProductCard = ({ productDetails, addToWishList }) => {
             </div>
             <Card.Text></Card.Text>
           </Card.Body>
+          <Card.Footer>
+            <Form>
+              <Form.Check
+                type={"checkBox"}
+                id={`default-checkBox}`}
+                label="Add to Compare"
+                onClick={() => onCheckBoxClick(productDetails, event)}
+              />
+            </Form>
+          </Card.Footer>
         </Card> : null
       }
     </>

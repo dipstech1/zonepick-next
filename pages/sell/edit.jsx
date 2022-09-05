@@ -79,6 +79,7 @@ const EditAdvtPage = () => {
             const data = JSON.parse(sessionStorage.getItem("myListing"));
             const { product } = data;
             formik.setFieldValue("productName", product.name);
+            formik.setFieldValue("sellerProductName", data.sellerProductName);
             formik.setFieldValue("itemDescription", product.description);
             formik.setFieldValue("productId", product.productId);
             formik.setFieldValue("productStatus", data.productStatus);
@@ -94,11 +95,10 @@ const EditAdvtPage = () => {
             formik.setFieldValue("taxPercentage3", data.taxPercentage3);
             formik.setFieldValue("sellerDiscountPercent", data.sellerDiscountPercent);
             formik.setFieldValue("termsId", data.termsId);
-            setId(product?.id);
+            setId(data?.id);
         }
         getparentProductList();
         getTermsList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getparentProductList = async () => {
@@ -145,7 +145,7 @@ const EditAdvtPage = () => {
         console.log(product);
 
         try {
-            let added = await axios.put(`products/${product.productId}`, product);
+            let added = await axios.put(`products/${id}`, product);
 
             if (added.data.acknowledge) {
                 router.back();
