@@ -224,7 +224,7 @@ const ProductDetailsPage = () => {
                     <ImageViewer
                       imageData={productDetails?.product?.images}
                       onIimageViewTabChanged={onIimageViewTabChanged}
-                      arImageUrl={common.arUrl + productDetails?.product?.arimageurl}
+                      arImageUrl={ productDetails?.product?.arimageurl.includes(".glb") ? common.arUrl + productDetails?.product?.arimageurl : common.arUrl_fbx + productDetails?.product?.arimageurl}
                       arimage ={productDetails?.product?.arimageurl}
                     ></ImageViewer>
                     <Row className="mt-2">

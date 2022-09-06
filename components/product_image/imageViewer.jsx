@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, Col, Row, Tab, Tabs } from "react-bootstrap";
 import Image360Gallery from "./image360Gallery";
 import ImageGallery from "./imageGallery";
+import ModelViewFBX from "./ModelViewFBX";
 import ModelViewGTLF from "./ModelViewGTLF";
 const ImageViewer = ({ imageData = [], arImageUrl = "", arimage = "", scaleImage = [1.1, 1.1, 1.1], onIimageViewTabChanged }) => {
   const [key, setKey] = useState("image-1");
@@ -20,7 +21,7 @@ const ImageViewer = ({ imageData = [], arImageUrl = "", arimage = "", scaleImage
   useEffect(() => {
     if (imageData.length > 0) {
       const tempData = imageData.filter((e) => {
-        return e.type === "360Image";
+        return (e.type === "360Image" || e.type === "360");
       });
 
       if (tempData.length > 0) {
@@ -31,10 +32,7 @@ const ImageViewer = ({ imageData = [], arImageUrl = "", arimage = "", scaleImage
     }
   }, [imageData]);
 
-  const onThreeChange = (data) => {
-    console.log(data);
-  };
-
+  
   return (
     <>
       <Row>
@@ -54,7 +52,8 @@ const ImageViewer = ({ imageData = [], arImageUrl = "", arimage = "", scaleImage
 
                   {arimage !== "" ? (
                     <Tab eventKey="image-3" title={"3d View"}>
-                      {key === "image-3" ? <ModelViewGTLF arImageUrl={arImageUrl} scale={scaleImage}></ModelViewGTLF> : null}
+                      {key === "image-3" && arImageUrl.includes(".glb") ? <ModelViewGTLF arImageUrl={arImageUrl} scale={scaleImage}></ModelViewGTLF> : null}
+                      {(key === "image-3" && arImageUrl.includes(".fbx"))  ? <ModelViewFBX arImageUrl={arImageUrl} scale={scaleImage}></ModelViewFBX> : null}
                     </Tab>
                   ) : null}
                 </Tabs>

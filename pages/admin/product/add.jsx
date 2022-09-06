@@ -66,6 +66,7 @@ const AddProductPage = () => {
       images: [],
       specifications: [],
       specificationsValue: "",
+      discountPercent: 0,
       productRewardPercent: "",
       optionalField1: "",
       optionalField2: "",
@@ -82,7 +83,7 @@ const AddProductPage = () => {
       productRewardPercent: Yup.number().required("Required").min(0, "Must be 0 Or greater than 0"),
     }),
     onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
+      // console.log(JSON.stringify(values, null, 2));
       setStep({ ...step, completeStep: 2, currentStep: 2 });
 
       // formik.resetForm();
@@ -230,7 +231,7 @@ const AddProductPage = () => {
       imageData.productImage.forEach((e) => {
         imageList.push({
           fileInfo: e.fileInfo,
-          fileType: "normal",
+          fileType: "image",
           fileUrl: e.fileUrl,
           status: "Pending",
         });
@@ -239,7 +240,7 @@ const AddProductPage = () => {
       imageData.threeSixtyImage.forEach((e) => {
         imageList.push({
           fileInfo: e.fileInfo,
-          fileType: "360Image",
+          fileType: "360",
           fileUrl: e.fileUrl,
           status: "Pending",
         });
@@ -248,7 +249,7 @@ const AddProductPage = () => {
       imageData.ARImage.forEach((e) => {
         imageList.push({
           fileInfo: e.fileInfo,
-          fileType: "AR IMAGE",
+          fileType: "ar",
           fileUrl: e.fileUrl,
           status: "Pending",
         });
@@ -289,13 +290,15 @@ const AddProductPage = () => {
 
       let data = [];
 
-      if (imageData.allImage[i].fileType !== "AR IMAGE") {
+      if (imageData.allImage[i].fileType !== "ar") {
         data = await uploadFiles(file, fileType[1], fileName);
       } else {
-        data = await uploadFiles(file, "glb", fileName);
+        const ftype = fileName.split(".");
+
+        data = await uploadFiles(file, ftype[ftype.length - 1], fileName);
       }
 
-      if (data.status === "success" && imageData.allImage[i].fileType !== "AR IMAGE") {
+      if (data.status === "success" && imageData.allImage[i].fileType !== "ar") {
         images.push({ url: data.fileName, type: imageData.allImage[i].fileType });
         imageList[i].status = "done";
       } else {
@@ -319,6 +322,7 @@ const AddProductPage = () => {
       arimagedata: "",
       images: images,
       specifications: formik.values.specifications,
+      discountPercent: 0,
       productRewardPercent: parseInt(formik.values.productRewardPercent),
       optionalField1: formik.values.optionalField1,
       optionalField2: formik.values.optionalField2,
@@ -377,6 +381,10 @@ const AddProductPage = () => {
 
       if (filetype === "glb") {
         params.Key = "upload_doc/glb/" + filename_with_suffix;
+      }
+
+      if (filetype === "fbx") {
+        params.Key = "upload_doc/fbx/" + filename_with_suffix;
       }
 
       bucket
@@ -805,7 +813,7 @@ const AddProductPage = () => {
                         <Col xs={6} lg={4} key={i}>
                           <div className="uploader-container border border-danger mb-2">
                             <div className="pe-1 pt-1 pb-1 image-container">
-                              {link.fileType !== "AR IMAGE" ? (
+                              {link.fileType !== "ar" ? (
                                 <img src={link.fileUrl} alt={"xx"} className="img-responsive-uploader" />
                               ) : (
                                 <img src={"/img/3d-min.jpg"} alt={"xx"} className="img-responsive-uploader" />

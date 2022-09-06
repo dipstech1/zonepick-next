@@ -15,7 +15,7 @@ const Image360Gallery = ({ imageData = [] }) => {
   useEffect(() => {
     if (imageData.length > 0) {
       const tempData = imageData.filter((e) => {
-        return e.type === "360Image";
+        return (e.type === "360Image" || e.type === "360");
       });
 
       setImageLinks(tempData);

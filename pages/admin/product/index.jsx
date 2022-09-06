@@ -79,7 +79,7 @@ const MyProductList = () => {
 
   const onEditClick = (item) => {
     sessionStorage.setItem("product", JSON.stringify(item));
-    router.push("product/edit");
+    router.push("product/edit?productId=" + item.productId);
   };
 
   return (

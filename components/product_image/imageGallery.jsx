@@ -19,7 +19,7 @@ const ImageGallery = ({ imageData = [] }) => {
     if (imageData.length > 0) {
 
       const tempData = imageData.filter((e) => {
-        return e.type === "normal";
+        return (e.type === "normal" || e.type==="image");
       });
 
       setImageLinks(tempData);

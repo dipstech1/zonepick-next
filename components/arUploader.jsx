@@ -5,12 +5,18 @@ import { toast } from "react-toastify";
 
 let count = 0;
 
-const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", imagesList = [] }) => {
+const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", imagesList = [],  mode="edit" }) => {
   const [imgsSrc, setImgsSrc] = useState([]);
   const [imgInfo, setImgInfo] = useState([]);
 
   useEffect(() => {
+
     onSelectionChanged(imgInfo);
+
+    if (mode==="add") {
+      
+    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgInfo]);
 
@@ -53,10 +59,10 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
 
         imagefile = temp[temp.length - 1] 
 
-        const match = ["glb"];
+        const match = ["glb","fbx"];
 
-        if (!(imagefile === match[0])) {
-          toast.error("Please Select GLB File.");
+        if (!(imagefile === match[0] || imagefile === match[1])) {
+          toast.error("Please Select GLB/FBX File.");
         } else {
           let fileObj = {
             name: filesArray[i].name,
@@ -126,8 +132,6 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
             multiple={true}
           />
         </Col>
-
-        {imgsSrc.length}
 
         {imgsSrc.length > 0 ? (
           <Col xs={6} lg={4} key={0}>
