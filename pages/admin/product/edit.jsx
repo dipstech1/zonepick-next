@@ -92,16 +92,15 @@ const EditProductPage = () => {
   });
 
   useEffect(() => {
-
     if (!router.isReady) return;
 
     if (router.query["productId"]) {
       formik.setFieldValue("productId", router.query["productId"]);
       getProductDeatails(router.query["productId"]);
     } else {
-      router.back()
+      router.back();
     }
-        
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
@@ -109,7 +108,6 @@ const EditProductPage = () => {
     try {
       let resp = await axios.get(`admin/products/${productId}`);
       if (resp.data) {
-
         const data = resp.data;
 
         formik.setFieldValue("name", data.name);
@@ -263,7 +261,7 @@ const EditProductPage = () => {
     setImageData({ ...imageData, ARImage: data });
   };
 
-  const onSubmitClick = async () => {
+  const onSubmitClick = async (mode = "add", arimageurl = formik.values.arimageurl) => {
     const images = [];
 
     let product = {
@@ -273,7 +271,7 @@ const EditProductPage = () => {
       subcategory: formik.values.subcategory,
       brand: formik.values.brand,
       userid: "",
-     // arimageurl: arimageurl,
+      arimageurl: arimageurl,
       arimagedata: "",
       images: images,
       // specifications: formik.values.specifications,
@@ -286,14 +284,20 @@ const EditProductPage = () => {
     };
     product.userid = getCookie("userid");
 
-    console.log(product);
+    //console.log(product);
 
     try {
       let added = await axios.put(`admin/products/${formik.values.productId}`, product);
 
       if (added.data.acknowledge) {
-        router.replace("/admin/product");
-        toast.success("Product updated Successfully");
+        if (mode === "add") {
+          router.replace("/admin/product");
+          toast.success("Product updated Successfully");
+        } else {
+          toast.success("AR Image updated Successfully");
+        }
+
+       
       } else {
         toast.error("Fail");
       }
@@ -316,57 +320,6 @@ const EditProductPage = () => {
       console.log(error);
       toast.error("Fail");
     }
-  };
-
-  const uploadFiles = async (file, filetype, filename) => {
-    return new Promise((resolve, reject) => {
-      const contentType = file.type;
-      const bucket = new S3({
-        accessKeyId: AWSCredentials.AccessKeyID,
-        secretAccessKey: AWSCredentials.SecretAccessKey,
-        region: AWSCredentials.Region,
-      });
-
-      const filename_with_suffix = new Date().valueOf() + "." + filetype;
-      let params = {
-        Bucket: "www.emetacomm.com",
-        Key: "upload_doc/images/" + filename_with_suffix,
-        Body: file,
-        ACL: "public-read",
-        ContentType: contentType,
-      };
-
-      if (filetype === "glb") {
-        params.Key = "upload_doc/glb/" + filename_with_suffix;
-      }
-
-      bucket
-        .upload(params)
-        .on("httpUploadProgress", (evt) => {
-          console.log((evt.loaded / evt.total) * 100);
-          setUploadpercent(((evt.loaded / evt.total) * 100).toFixed(0));
-        })
-        .send((err, data) => {
-          if (err) {
-            console.log("There was an error uploading your file: ", err);
-          }
-        });
-
-      bucket.upload(params, (err, data) => {
-        if (err) {
-          console.log("There was an error uploading your file: ", err);
-
-          reject({
-            status: "error",
-          });
-        }
-
-        resolve({
-          status: "success",
-          fileName: filename_with_suffix,
-        });
-      });
-    });
   };
 
   const specificationClick = async (e) => {
@@ -633,6 +586,14 @@ const EditProductPage = () => {
                               </Form.Group>
                             </Col>
                           </Row>
+
+                          {isAddSpecification || mode === "Edit" ? null : (
+                            <Form.Group controlId="submitButton" className="float-end mt-3">
+                              <Button variant="deep-purple-900" onClick={(e) => onSubmitClick()}>
+                                Update
+                              </Button>
+                            </Form.Group>
+                          )}
                         </Tab>
                         <Tab eventKey={"specification"} title={"Specification"}>
                           {isAddSpecification ? null : (
@@ -733,7 +694,7 @@ const EditProductPage = () => {
                                 AWSCredentials={AWSCredentials}
                               ></ImageUploader>
                             </Tab>
-                            <Tab eventKey="3d" title="3d Model">
+                            <Tab eventKey="3d" title="AR Image">
                               <ARUploader
                                 maxUpload={1}
                                 info={"Add AR  Photos"}
@@ -741,18 +702,16 @@ const EditProductPage = () => {
                                 id={"AR"}
                                 imagesList={imageData.ARImage}
                                 mode={"edit"}
+                                AWSCredentials={AWSCredentials}
+                                onUploadComplete={(arimageurl) => {                                  
+                                  formik.setFieldValue("arimageurl", arimageurl);
+                                  onSubmitClick("edit",arimageurl);
+                                }}
                               ></ARUploader>
                             </Tab>
                           </Tabs>
                         </Tab>
                       </Tabs>
-                      {isAddSpecification || mode === "Edit" ? null : (
-                        <Form.Group controlId="submitButton" className="float-end mt-3">
-                          <Button variant="deep-purple-900" onClick={(e) => onSubmitClick()}>
-                            Update
-                          </Button>
-                        </Form.Group>
-                      )}
                     </Form>
                   </Col>
                 </Row>

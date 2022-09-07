@@ -1,22 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, ProgressBar, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
+import * as S3 from "aws-sdk/clients/s3";
+import axios from "../utils/axios.interceptor";
 
 let count = 0;
 
-const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", imagesList = [],  mode="edit" }) => {
+const ARUploader = ({
+  maxUpload = 1,
+  info = "",
+  onSelectionChanged,
+  onUploadComplete,
+  id = "xv",
+  imagesList = [],
+  mode = "edit",
+  AWSCredentials = {},
+}) => {
   const [imgsSrc, setImgsSrc] = useState([]);
   const [imgInfo, setImgInfo] = useState([]);
 
-  useEffect(() => {
+  const [uploadpercent, setUploadpercent] = useState(0);
+  const [uploadCurrent, setUploadCurrent] = useState(0);
 
+  useEffect(() => {
     onSelectionChanged(imgInfo);
 
-    if (mode==="add") {
-      
-    }
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgInfo]);
 
@@ -54,12 +63,11 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
 
         const imagefile = filesArray[i].type;
 
+        const temp = filesArray[i].name.split(".");
 
-        const temp = filesArray[i].name.split('.')
+        imagefile = temp[temp.length - 1];
 
-        imagefile = temp[temp.length - 1] 
-
-        const match = ["glb","fbx"];
+        const match = ["glb", "fbx"];
 
         if (!(imagefile === match[0] || imagefile === match[1])) {
           toast.error("Please Select GLB/FBX File.");
@@ -81,6 +89,9 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
             // setImgsSrc((imgs) => [...imgs, reader.result]);
           };
           reader.onloadend = () => {
+            if (mode === "edit") {
+              prepareUpload(imageArray);
+            }
             setImgInfo((imgs) => [...imgs, imageArray[imageArray.length - 1]]);
           };
           reader.onerror = () => {
@@ -103,6 +114,82 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
     setImgInfo([...array2]);
   };
 
+  const prepareUpload = async (imageArray) => {
+    for (let i = 0; i < imageArray.length; i++) {
+      const file = imageArray[i].fileInfo.file;
+      const fileType = imageArray[i].fileInfo.file.type.split("/");
+      const fileName = imageArray[i].fileInfo.file.name;
+
+      setUploadCurrent(fileName);
+
+      let data = [];
+
+      const ftype = fileName.split(".");
+
+      data = await uploadFiles(file, ftype[ftype.length - 1], fileName);
+
+      if (data.status === "success") {
+        onUploadComplete(data.fileName)
+       // console.log(data);
+      }
+    }
+  };
+
+  const uploadFiles = async (file, filetype, filename) => {
+    return new Promise((resolve, reject) => {
+      const contentType = file.type;
+      const bucket = new S3({
+        accessKeyId: AWSCredentials.AccessKeyID,
+        secretAccessKey: AWSCredentials.SecretAccessKey,
+        region: AWSCredentials.Region,
+      });
+
+      const filename_with_suffix = new Date().valueOf() + "." + filetype;
+      let params = {
+        Bucket: "www.emetacomm.com",
+        Key: "upload_doc/images/" + filename_with_suffix,
+        Body: file,
+        ACL: "public-read",
+        ContentType: contentType,
+      };
+
+      if (filetype === "glb") {
+        params.Key = "upload_doc/glb/" + filename_with_suffix;
+      }
+
+      if (filetype === "fbx") {
+        params.Key = "upload_doc/fbx/" + filename_with_suffix;
+      }
+
+      bucket
+        .upload(params)
+        .on("httpUploadProgress", (evt) => {
+          console.log((evt.loaded / evt.total) * 100);
+          setUploadpercent(((evt.loaded / evt.total) * 100).toFixed(0));
+        })
+        .send((err, data) => {
+          if (err) {
+            console.log("There was an error uploading your file: ", err);
+          }
+        });
+
+      bucket.upload(params, (err, data) => {
+        if (err) {
+          console.log("There was an error uploading your file: ", err);
+
+          reject({
+            status: "error",
+          });
+        }
+
+        resolve({
+          status: "success",
+          fileName: filename_with_suffix,
+        });
+      });
+    });
+  };
+
   return (
     <div>
       <Row>
@@ -122,15 +209,7 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
               <div className="centered text-nowrap">Upload AR Image</div>
             </div>
           </button>
-          <input
-            type="file"
-            className="custom-file-input"
-            
-            id={`img${id}`}
-            onChange={onFileChange}
-            hidden={true}
-            multiple={true}
-          />
+          <input type="file" className="custom-file-input" id={`img${id}`} onChange={onFileChange} hidden={true} multiple={true} />
         </Col>
 
         {imgsSrc.length > 0 ? (
@@ -146,6 +225,16 @@ const ARUploader = ({ maxUpload = 1, info = "", onSelectionChanged, id = "xv", i
           </Col>
         ) : null}
       </Row>
+
+      {(uploadpercent > 0 || uploadpercent < 100)  ? (
+        <Row>
+          <Col md={12} className="mb-2 mt-2 fw-bold">
+            <ProgressBar now={uploadpercent} label={`${uploadCurrent}` + " -- " + `${uploadpercent}%`}></ProgressBar>
+          </Col>
+        </Row>
+      ) : null}
+
+
     </div>
   );
 };

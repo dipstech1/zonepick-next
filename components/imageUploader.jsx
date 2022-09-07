@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, ProgressBar, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import * as S3 from "aws-sdk/clients/s3";
 import axios from "../utils/axios.interceptor";
@@ -40,12 +40,9 @@ const ImageUploader = ({
       setImgsSrc(items);
       if (count < 2) {
         setImgInfo(items);
-        count = count + 1
+        count = count + 1;
       }
-     
     }
-
-   
 
     console.log("TYAH");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -281,6 +278,13 @@ const ImageUploader = ({
             </Col>
           ))}
       </Row>
+      {uploadpercent > 0 || uploadpercent < 100  ? (
+        <Row>
+          <Col md={12} className="mb-2 mt-2 fw-bold">
+            <ProgressBar now={uploadpercent} label={`${uploadCurrent}` + " -- " + `${uploadpercent}%`}></ProgressBar>
+          </Col>
+        </Row>
+      ) : null}
     </div>
   );
 };

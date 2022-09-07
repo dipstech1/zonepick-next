@@ -695,7 +695,7 @@ const AddProductPage = () => {
                             imagesList={imageData.threeSixtyImage}
                           ></ImageUploader>
                         </Tab>
-                        <Tab eventKey="3d" title="3d Model">
+                        <Tab eventKey="3d" title="AR Image">
                           <ARUploader
                             maxUpload={1}
                             info={"Add AR  Photos"}
