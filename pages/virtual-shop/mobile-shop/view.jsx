@@ -1,11 +1,10 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
-import { Image, Modal } from "react-bootstrap";
-import * as THREE from "three";
-import Layout from "../../../components/Layout/layout.jsx";
-
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { Button, Image, Modal } from "react-bootstrap";
+import Layout from "../../components/Layout/layout.jsx";
+import * as THREE from "../../public/build/three.module.js";
+import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
+import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -22,11 +21,11 @@ var isdone = false;
 var rot;
 var set = 1;
 var imgSrc = "/images/Mobile2.jpg";
-var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+var redMat = new THREE.MeshNormalMaterial({ color: 0xff0000 });
+var greenMat = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
+var blueMat = new THREE.MeshNormalMaterial({ color: 0x0000ff });
 
-const MobileShopColor = () => {
+const ItemViewPage = () => {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -73,7 +72,7 @@ const MobileShopColor = () => {
     // directionalLight.position.set(0,0,0);
     // directionalLight.castShadow = false;
     // scene.add(directionalLight); */
-    light1 = new THREE.PointLight(0xffffff, 0.1);
+    light1 = new THREE.PointLight(0xffffff, 0.7);
     light1.position.set(0, -50, -40);
     light1.rotation.set(0, 0, 45);
     scene.add(light1);
@@ -81,7 +80,7 @@ const MobileShopColor = () => {
     light2.position.set(-38, -67, 61);
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
-    light3 = new THREE.PointLight(0xffffff, 0.1);
+    light3 = new THREE.PointLight(0xffffff, 0.7);
     light3.position.set(0, 50, 50);
     light3.rotation.set(0, -135, 0);
     scene.add(light3);
@@ -91,12 +90,9 @@ const MobileShopColor = () => {
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
       object.scale.set(1, 1, 1);
-      object.position.set(0, 0, 0);
+      object.position.set(0, -40, 0);
       object.rotation.y = (90 * Math.PI) / 180;
-      if (set === 2) {
-        object.position.set(-15, -105, -500);
-        object.rotation.y = (90 * Math.PI) / 180;
-      }
+      
 
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -126,7 +122,7 @@ const MobileShopColor = () => {
 
     controls.enablePan = false;
     //controls.rotateInLeft( 90* Math.PI / 180 );
-    // controls.rotateInUp((25 * Math.PI) / 180);
+    controls.rotateInUp((25 * Math.PI) / 180);
     controls.update();
     //container.addEventListener('mousemove', onMouseUp);
     //container.addEventListener('mousedown', onMouseDown);
@@ -140,6 +136,9 @@ const MobileShopColor = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if(rot!=null){
+      rot.rotation.y+=0.005;
+    }
   }
 
   function onMouseDown(e) {
@@ -201,9 +200,9 @@ const MobileShopColor = () => {
         //materials.push(child.material);
         child.material = blueMat;
         child.material.needsUpdate = true;
-      }
-    });
-    //child.material.color=new THREE.Color( 0x00ff00 );
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
+    
   };
 
   const CgangeToGreen = () => {
@@ -214,9 +213,8 @@ const MobileShopColor = () => {
         //materials.push(child.material);
         child.material = greenMat;
         child.material.needsUpdate = true;
-      }
-    });
-    //child.material.color=new THREE.Color( 0x00ff00 );
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
   };
 
   const CgangeToRed = () => {
@@ -227,9 +225,8 @@ const MobileShopColor = () => {
         //materials.push(child.material);
         child.material = redMat;
         child.material.needsUpdate = true;
-      }
-    });
-    //child.material.color=new THREE.Color( 0x00ff00 );
+      }})
+      //child.material.color=new THREE.Color( 0x00ff00 );
   };
 
   return (
@@ -243,7 +240,7 @@ const MobileShopColor = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Buy Now</Modal.Title>
+          <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>
@@ -262,4 +259,4 @@ const MobileShopColor = () => {
   );
 };
 
-export default MobileShopColor;
+export default ItemViewPage;

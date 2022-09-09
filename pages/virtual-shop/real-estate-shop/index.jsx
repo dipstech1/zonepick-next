@@ -25,7 +25,7 @@ var mouseTouch = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-const MobileList = () => {
+const ItemListPage = () => {
   const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
@@ -233,4 +233,4 @@ const MobileList = () => {
   );
 };
 
-export default MobileList;
+export default ItemListPage;

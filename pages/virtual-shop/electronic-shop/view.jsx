@@ -1,11 +1,10 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
-import { Image, Modal } from "react-bootstrap";
-import Layout from "../../../components/Layout/layout.jsx";
-import * as THREE from "three";
-
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { Button, Image, Modal } from "react-bootstrap";
+import Layout from "../../components/Layout/layout.jsx";
+import * as THREE from "../../public/build/three.module.js";
+import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
+import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -22,11 +21,11 @@ var isdone = false;
 var rot;
 var set = 1;
 var imgSrc = "/images/Mobile2.jpg";
-var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+var redMat = new THREE.MeshNormalMaterial({ color: 0xff0000 });
+var greenMat = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
+var blueMat = new THREE.MeshNormalMaterial({ color: 0x0000ff });
 
-const MobileShopColor = () => {
+const ItemViewPage = () => {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -92,7 +91,7 @@ const MobileShopColor = () => {
     loader.load(modelPath, function (object) {
       console.log(set);
 
-      object.position.set(0, 0, 0);
+      object.position.set(0, -50, 0);
       object.rotation.y = (90 * Math.PI) / 180;
       if (set === 1) {
         object.scale.set(15.36, 15.36, 15.36);
@@ -133,7 +132,7 @@ const MobileShopColor = () => {
 
     controls.enablePan = false;
     //controls.rotateInLeft( 90* Math.PI / 180 );
-   // controls.rotateInUp((25 * Math.PI) / 180);
+    controls.rotateInUp((25 * Math.PI) / 180);
     controls.update();
     //container.addEventListener('mousemove', onMouseUp);
     //container.addEventListener('mousedown', onMouseDown);
@@ -147,6 +146,9 @@ const MobileShopColor = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if (rot != null) {
+      rot.rotation.y += 0.005;
+    }
   }
 
   function onMouseDown(e) {
@@ -263,7 +265,7 @@ const MobileShopColor = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Buy Now</Modal.Title>
+          <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>
@@ -282,4 +284,4 @@ const MobileShopColor = () => {
   );
 };
 
-export default MobileShopColor;
+export default ItemViewPage;

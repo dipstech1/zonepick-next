@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../../components/Layout/layout";
+import Layout from "../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -14,7 +14,8 @@ var isMouseDown = false;
 var panoName = "d6.jpg";
 var modelName = "Mobile";
 var modelPath_1 = "/models/Mobile.fbx";
-var modelPath_2 = "/models/Laptop.FBX";
+var modelPath_2 = "/models/xiami_s12_ultra_white.fbx";
+var modelPath_3 = "/models/Mobile_Phone.fbx";
 
 var rot1, rot2, rot3;
 
@@ -24,7 +25,7 @@ var mouseTouch = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-const MobileList = () => {
+const ItemListPage = () => {
   const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
@@ -60,7 +61,7 @@ const MobileList = () => {
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
-    const geometry = new THREE.SphereGeometry(550, 500, 400);
+    const geometry = new THREE.SphereGeometry(600, 600, 600);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/" + panoName);
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -70,15 +71,15 @@ const MobileList = () => {
     hlight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(hlight);
 
-    light1 = new THREE.PointLight(0xffffff, 0.1);
+    light1 = new THREE.PointLight(0xffffff, 0.8);
     light1.position.set(0, -50, -40);
     light1.rotation.set(0, 0, 45);
     scene.add(light1);
-    light2 = new THREE.PointLight(0xffffff, 0.07);
+    light2 = new THREE.PointLight(0xffffff, 0.7);
     light2.position.set(-38, -67, 61);
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
-    light3 = new THREE.PointLight(0xffffff, 0.1);
+    light3 = new THREE.PointLight(0xffffff, 0.8);
     light3.position.set(85, -50, 50);
     light3.rotation.set(0, 20, 0);
     scene.add(light3);
@@ -87,7 +88,7 @@ const MobileList = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(0.5, 0.5, 0.5);
+      object.scale.set(1, 1, 1);
       object.position.set(25, -65, -400);
       //object.rotation.y=0;
       object.traverse(function (child) {
@@ -100,9 +101,9 @@ const MobileList = () => {
     });
 
     var loader1 = new FBXLoader(loadingManager);
-    loader1.load(modelPath_1, function (object) {
-      object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(75, -65, -400);
+    loader1.load(modelPath_2, function (object) {
+      object.scale.set(5, 5, 5);
+      object.position.set(160, -80, -200);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -113,10 +114,10 @@ const MobileList = () => {
       scene.add(object);
     });
 
-    var loader1 = new FBXLoader(loadingManager);
-    loader1.load(modelPath_1, function (object) {
-      object.scale.set(0.5, 0.5, 0.5);
-      object.position.set(-35, -65, -400);
+    var loader2 = new FBXLoader(loadingManager);
+    loader2.load(modelPath_3, function (object) {
+      object.scale.set(0.7, 0.7, 0.7);
+      object.position.set(-150, -150, -500);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -152,11 +153,15 @@ const MobileList = () => {
     renderer.render(scene, camera);
     controls.update();
     if (rot1 != null) {
-      rot3.rotation.y += 0.005;
+      rot1.rotation.y -= 0.005;
     }
 
     if (rot2 != null) {
       rot2.rotation.y -= 0.005;
+    }
+
+    if (rot3 != null) {
+      rot3.rotation.y -= 0.005;
     }
   }
 
@@ -178,17 +183,17 @@ const MobileList = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Mobile1")) {
-        router.push("mobile-shop/view?modelName=Mobile.fbx&set=1");
+        router.push("mobile-view?modelName=Mobile.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("Mobile2")) {
-        router.push("mobile-shop/view?modelName=Mobile.fbx&set=1");
+        router.push("mobile-view?modelName=xiami_s12_ultra_white.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-        router.push("mobile-shop/view?modelName=Mobile.fbx&set=1");
+        router.push("mobile-view?modelName=Mobile_Phone.fbx&set=3");
       }
     }
   }
@@ -207,4 +212,4 @@ const MobileList = () => {
   );
 };
 
-export default MobileList;
+export default ItemListPage;

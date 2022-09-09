@@ -1,10 +1,12 @@
 import { useRouter } from "next/router.js";
 import { useEffect } from "react";
 import * as THREE from "three";
+import { ObjectLoader } from "three";
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import Layout from "../../../components/Layout/layout";
+import Layout from "../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -13,9 +15,9 @@ var isMouseDown = false;
 
 var panoName = "d3.jpg";
 var modelPath_1 = "/models/Black_shoe.fbx";
-var modelPath_2 = "/models/supastarOBJ.obj";
+var modelPath_2 = "/models/Sneakers.fbx";
 var modelPath_3 = "/models/Vans.FBX";
-var modelPath_4 = "/models/shoe.obj";
+var modelPath_4 = "/models/shoe_only.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -25,7 +27,7 @@ var mouseTouch = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-const MobileList = () => {
+const ItemListPage = () => {
   const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
@@ -71,15 +73,15 @@ const MobileList = () => {
     hlight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(hlight);
 
-    light1 = new THREE.PointLight(0xffffff, 0.1);
+    light1 = new THREE.PointLight(0xffffff, 0.7);
     light1.position.set(0, -50, -40);
     light1.rotation.set(0, 0, 45);
     scene.add(light1);
-    light2 = new THREE.PointLight(0xffffff, 0.07);
+    light2 = new THREE.PointLight(0xffffff, 0.7);
     light2.position.set(-38, -67, 61);
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
-    light3 = new THREE.PointLight(0xffffff, 0.1);
+    light3 = new THREE.PointLight(0xffffff, 0.7);
     light3.position.set(85, -50, 50);
     light3.rotation.set(0, 20, 0);
     scene.add(light3);
@@ -88,8 +90,8 @@ const MobileList = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(3.35, 3.35, 3.35);
-      object.position.set(-50, -150, -350);
+      object.scale.set(5, 5, 5);
+      object.position.set(-50, -100, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -100,14 +102,14 @@ const MobileList = () => {
       scene.add(object);
     });
 
-    var loader1 = new OBJLoader(loadingManager);
+    var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(0.2, 0.2, 0.2);
-      object.position.set(215, -40, -400);
+      object.scale.set(5, 5, 5);
+      object.position.set(-150, -50, -250);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "supastarOBJ";
+          child.name = "Sneakers";
         }
       });
       rot2 = object;
@@ -116,8 +118,8 @@ const MobileList = () => {
 
     var loader3 = new FBXLoader(loadingManager);
     loader3.load(modelPath_3, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(50, -150, -350);
+      object.scale.set(0.5, 0.5, 0.5);
+      object.position.set(50, -50, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -128,14 +130,14 @@ const MobileList = () => {
       scene.add(object);
     });
 
-    var loader4 = new OBJLoader(loadingManager);
+    var loader4 = new FBXLoader(loadingManager);
     loader4.load(modelPath_4, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(115, -40, -200);
+      object.scale.set(0.15, 0.15, 0.15);
+      object.position.set(215, -80, -300);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "shoe";
+          child.name = "shoe_only";
         }
       });
       rot4 = object;
@@ -178,6 +180,10 @@ const MobileList = () => {
     if (rot3 != null) {
       rot3.rotation.y += 0.005;
     }
+
+    if (rot4 != null) {
+      rot4.rotation.y += 0.005;
+    }
   }
 
   function onTransitionEnd(event) {
@@ -198,22 +204,22 @@ const MobileList = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Black_shoe")) {
-        router.push("shoe-shop/view?modelName=Black_shoe.fbx&set=1");
+        router.push("shoe-view?modelName=Black_shoe.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("supastarOBJ")) {
-        router.push("shoe-shop/view?modelName=supastarOBJ.obj&set=2");
+      if (intersects[0].object.name.includes("Sneakers")) {
+        router.push("shoe-view?modelName=Sneakers.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Vans")) {
-        router.push("shoe-shop/view?modelName=Vans.FBX&set=3");
+        router.push("shoe-view?modelName=Vans.FBX&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("shoe")) {
-        router.push("shoe-shop/view?modelName=shoe.obj&set=4");
+        router.push("shoe-view?modelName=shoe_only.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }
@@ -233,4 +239,4 @@ const MobileList = () => {
   );
 };
 
-export default MobileList;
+export default ItemListPage;

@@ -26,7 +26,7 @@ var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 
-const MobileShopColor = () => {
+const ItemViewPage = () => {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -266,4 +266,4 @@ const MobileShopColor = () => {
   );
 };
 
-export default MobileShopColor;
+export default ItemViewPage;

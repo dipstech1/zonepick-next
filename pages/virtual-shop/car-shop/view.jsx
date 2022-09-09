@@ -1,10 +1,10 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
-import Layout from "../../../components/Layout/layout.jsx";
-import * as THREE from "../../../public/build/three.module.js";
-import { OrbitControls } from "../../../public/jsm/controls/OrbitControls.js";
-import { FBXLoader } from "../../../public/jsm/loaders/FBXLoader.js";
+import Layout from "../../components/Layout/layout.jsx";
+import * as THREE from "../../public/build/three.module.js";
+import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
+import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -21,11 +21,11 @@ var isdone = false;
 var rot;
 var set = 1;
 var imgSrc = "/images/Car2.jpg";
-var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+var redMat = new THREE.MeshNormalMaterial({ color: 0xff0000 });
+var greenMat = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
+var blueMat = new THREE.MeshNormalMaterial({ color: 0x0000ff });
 
-const MobileShopColor = () => {
+const ItemViewPage = () => {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
@@ -89,8 +89,8 @@ const MobileShopColor = () => {
     var materials = [];
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
-      object.scale.set(1, 1, 1);
-      object.position.set(0, 0, 0);
+      object.scale.set(.60, .60, .60);
+      object.position.set(0, -100, 0);
       object.rotation.y = (90 * Math.PI) / 180;
       if (set === 2) {
         object.position.set(-15, -105, -500);
@@ -139,6 +139,9 @@ const MobileShopColor = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if(rot!=null){
+      rot.rotation.y+=0.005;
+    }
   }
 
   function onMouseDown(e) {
@@ -259,4 +262,4 @@ const MobileShopColor = () => {
   );
 };
 
-export default MobileShopColor;
+export default ItemViewPage;

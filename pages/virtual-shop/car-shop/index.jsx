@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../../components/Layout/layout";
+import Layout from "../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -13,12 +13,12 @@ var isMouseDown = false;
 
 var panoName = "CarShop.jpg";
 
-var modelPath1 = "/models/car0.fbx";
-var modelPath2 = "/models/car1.fbx";
-var modelPath3 = "/models/car2.fbx";
-var modelPath4 = "/models/car3.fbx";
+var modelPath1 = "/models/ford.fbx";
+var modelPath2 = "/models/audi.fbx";
+var modelPath3 = "/models/range.fbx";
+var modelPath4 = "/models/chevrolet.fbx";
 
-var rot1, rot2, rot3;
+var rot1, rot2, rot3,rot4;
 
 let count = 1;
 
@@ -26,7 +26,7 @@ var mouseTouch = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-const ViewPage = () => {
+const ItemListPage = () => {
   const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
@@ -50,7 +50,7 @@ const ViewPage = () => {
 
     //
     // console.log(container.firstElementChild.remove())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initLoader = () => {
@@ -62,7 +62,7 @@ const ViewPage = () => {
     //camera.lookAt (new THREE.Vector3(0,0,0));
 
     scene = new THREE.Scene();
-    const geometry = new THREE.SphereGeometry(550, 500, 400);
+    const geometry = new THREE.SphereGeometry(650, 500, 500);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/" + panoName);
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -72,15 +72,15 @@ const ViewPage = () => {
     hlight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(hlight);
 
-    light1 = new THREE.PointLight(0xffffff, 0.1);
+    light1 = new THREE.PointLight(0xffffff, 0.7);
     light1.position.set(0, -50, -40);
     light1.rotation.set(0, 0, 45);
     scene.add(light1);
-    light2 = new THREE.PointLight(0xffffff, 0.07);
+    light2 = new THREE.PointLight(0xffffff, 0.7);
     light2.position.set(-38, -67, 61);
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
-    light3 = new THREE.PointLight(0xffffff, 0.1);
+    light3 = new THREE.PointLight(0xffffff, 0.7);
     light3.position.set(85, -50, 50);
     light3.rotation.set(0, 20, 0);
     scene.add(light3);
@@ -89,8 +89,8 @@ const ViewPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath1, function (object) {
-      object.scale.set(0.85, 0.85, 0.85);
-      object.position.set(-500, -250, 50);
+      object.scale.set(0.55, 0.55, 0.55);
+      object.position.set(-400, -300, 50);
       object.rotation.y = (90 * Math.PI) / 180;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -103,13 +103,13 @@ const ViewPage = () => {
 
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath2, function (object) {
-      object.scale.set(1.25, 1.25, 1.25);
-      object.position.set(500, -250, 50);
+      object.scale.set(.60, .60, .60);
+      object.position.set(300, -230, 50);
 
       object.rotation.y = (-90 * Math.PI) / 180;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Ford2";
+          child.name = "Audi";
         }
       });
       rot2 = object;
@@ -118,28 +118,29 @@ const ViewPage = () => {
 
     var loader2 = new FBXLoader(loadingManager);
     loader2.load(modelPath3, function (object) {
-      object.scale.set(0.85, 0.85, 0.85);
-      object.position.set(0, -250, -500);
+      object.scale.set(.55, .55, .55);
+      object.position.set(0, -250, -400);
       object.rotation.y = (0 * Math.PI) / 180;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Ford3";
+          child.name = "Range";
         }
       });
+      rot3 = object;
       scene.add(object);
     });
 
     var loader3 = new FBXLoader(loadingManager);
     loader3.load(modelPath4, function (object) {
-      object.scale.set(100, 100, 100);
-      object.position.set(0, -250, 500);
+      object.scale.set(.5, .5, .5);
+      object.position.set(0, -250, 400);
       object.rotation.y = (180 * Math.PI) / 180;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Jeep";
+          child.name = "Chevrolet";
         }
       });
-      rot3 = object;
+      rot4 = object;
       scene.add(object);
     });
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -166,6 +167,20 @@ const ViewPage = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if(rot1!=null){
+      rot1.rotation.y+=0.005;
+    }
+
+    if(rot2!=null){
+      rot2.rotation.y+=0.005;
+    }
+
+    if(rot3!=null){
+      rot3.rotation.y+=0.005;
+    }
+    if(rot4!=null){
+      rot4.rotation.y+=0.005;
+    }
   }
 
   function onTransitionEnd(event) {
@@ -186,21 +201,21 @@ const ViewPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Ford")) {
-        router.push("car-shop/view?modelName=car0.fbx&set=1");
+        router.push("car-view?modelName=ford.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("Ford2")) {
-        router.push("car-shop/view?modelName=car1.FBX&set=2");
+      if (intersects[0].object.name.includes("Audi")) {
+        router.push("car-view?modelName=audi.FBX&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Ford3")) {
-        router.push("car-shop/view?modelName=car2.fbx&set=1");
+      if (intersects[0].object.name.includes("Range")) {
+        router.push("car-view?modelName=range.fbx&set=1");
       }
 
-      if (intersects[0].object.name.includes("Jeep")) {
-        router.push("car-shop/view?modelName=car3.fbx&set=1");
+      if (intersects[0].object.name.includes("Chevrolet")) {
+        router.push("car-view?modelName=chevrolet.fbx&set=1");
       }
     }
   }
@@ -219,4 +234,4 @@ const ViewPage = () => {
   );
 };
 
-export default ViewPage;
+export default ItemListPage;

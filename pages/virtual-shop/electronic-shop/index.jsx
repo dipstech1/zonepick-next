@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../../components/Layout/layout";
+import Layout from "../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -17,7 +17,6 @@ var modelPath_2 = "/models/Laptop.FBX";
 var modelPath_3 = "/models/Laptop_001.fbx";
 var modelPath_4 = "/models/MI_SMART_TV.fbx";
 
-
 var rot1, rot2, rot3, rot4;
 
 let count = 1;
@@ -26,7 +25,7 @@ var mouseTouch = new THREE.Vector2();
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
-const MobileList = () => {
+const ItemListPage = () => {
   const router = useRouter();
   useEffect(() => {
     container = document.getElementById("game");
@@ -50,7 +49,7 @@ const MobileList = () => {
 
     //
     // console.log(container.firstElementChild.remove())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initLoader = () => {
@@ -101,7 +100,7 @@ const MobileList = () => {
       scene.add(object);
     });
 
-   /* var loader1 = new FBXLoader(loadingManager);
+    /* var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
       object.position.set(105, -40, -300);
@@ -202,22 +201,22 @@ const MobileList = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("headset")) {
-        router.push("electronic-shop/view?modelName=headset0001.fbx&set=1");
+        router.push("electronic-view?modelName=headset0001.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("laptop")) {
-        router.push("electronic-shop/view?modelName=Laptop.FBX&set=2");
+        router.push("electronic-view?modelName=Laptop.FBX&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("macbook")) {
-        router.push("electronic-shop/view?modelName=Laptop_001.fbx&set=3");
+        router.push("electronic-view?modelName=Laptop_001.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("tv")) {
-        router.push("electronic-shop/view?modelName=MI_SMART_TV.fbx&set=4");
+        router.push("electronic-view?modelName=MI_SMART_TV.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }
@@ -237,4 +236,4 @@ const MobileList = () => {
   );
 };
 
-export default MobileList;
+export default ItemListPage;
