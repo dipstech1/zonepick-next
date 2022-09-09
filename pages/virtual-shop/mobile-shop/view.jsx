@@ -1,10 +1,10 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
-import Layout from "../../components/Layout/layout.jsx";
-import * as THREE from "../../public/build/three.module.js";
-import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
-import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
+import Layout from "../../../components/Layout/layout.jsx";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -122,7 +122,7 @@ const ItemViewPage = () => {
 
     controls.enablePan = false;
     //controls.rotateInLeft( 90* Math.PI / 180 );
-    controls.rotateInUp((25 * Math.PI) / 180);
+   // controls.rotateInUp((25 * Math.PI) / 180);
     controls.update();
     //container.addEventListener('mousemove', onMouseUp);
     //container.addEventListener('mousedown', onMouseDown);
@@ -240,7 +240,7 @@ const ItemViewPage = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Buy Now</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>

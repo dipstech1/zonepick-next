@@ -1,10 +1,9 @@
 import { useRouter } from "next/router.js";
 import { useEffect } from "react";
 import * as THREE from "three";
-
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -203,22 +202,22 @@ const ItemListPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Wardrobe")) {
-        router.push("furniture-view?modelName=Wardrobe_door.fbx&set=1");
+        router.push("furniture-shop/view?modelName=Wardrobe_door.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("koltuk2")) {
-        router.push("furniture-view?modelName=koltuk2.fbx&set=2");
+        router.push("furniture-shop/view?modelName=koltuk2.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Computer_Desk")) {
-        router.push("furniture-view?modelName=Computer_Desk.FBX&set=3");
+        router.push("furniture-shop/view?modelName=Computer_Desk.FBX&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("tv")) {
-        router.push("furniture-view?modelName=MI_SMART_TV.fbx&set=4");
+        router.push("furniture-shop/view?modelName=MI_SMART_TV.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }

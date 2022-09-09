@@ -1,10 +1,10 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
-import Layout from "../../components/Layout/layout.jsx";
-import * as THREE from "../../public/build/three.module.js";
-import { OrbitControls } from "../../public/jsm/controls/OrbitControls.js";
-import { FBXLoader } from "../../public/jsm/loaders/FBXLoader.js";
+import Layout from "../../../components/Layout/layout.jsx";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -92,7 +92,6 @@ const ItemViewPage = () => {
       object.scale.set(1, 1, 1);
       object.position.set(0, -80, 0);
       object.rotation.y = (90 * Math.PI) / 180;
-      
 
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -122,7 +121,7 @@ const ItemViewPage = () => {
 
     controls.enablePan = false;
     //controls.rotateInLeft( 90* Math.PI / 180 );
-    controls.rotateInUp((25 * Math.PI) / 180);
+    //controls.rotateInUp((25 * Math.PI) / 180);
     controls.update();
     //container.addEventListener('mousemove', onMouseUp);
     //container.addEventListener('mousedown', onMouseDown);
@@ -136,8 +135,8 @@ const ItemViewPage = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
-    if(rot!=null){
-      rot.rotation.y+=0.005;
+    if (rot != null) {
+      rot.rotation.y += 0.005;
     }
   }
 
@@ -157,7 +156,7 @@ const ItemViewPage = () => {
       if (intersects[0].object.name.includes("mobile")) {
         if (set == 1) {
           setShow(true);
-          imgSrc = "/images/ChairSet.jpg";
+          imgSrc = "/images/Shoe.jpg";
 
           // modalimg = document.getElementsByClassName("modalImg");
           //  modalimg[0].src = "./images/Mobile1.jpg";
@@ -171,7 +170,7 @@ const ItemViewPage = () => {
 
         if (set == 2) {
           setShow(true);
-          imgSrc = "/images/Laptop.jpg";
+          imgSrc = "/images/Shoe.jpg";
           // modalimg = document.getElementsByClassName("modalImg");
           // modalimg[0].src = "./images/Mobile2.jpg";
           /* var actModal = document.getElementById("exampleModal");
@@ -181,6 +180,8 @@ const ItemViewPage = () => {
         }
 
         if (set == 3) {
+          setShow(true);
+          imgSrc = "/images/Shoe-2.jpg";
           //   modalimg = document.getElementsByClassName("modalImg");
           //  modalimg[0].src = "./images/Mobile3.jpg";
           /* var actModal = document.getElementById("exampleModal");
@@ -200,9 +201,9 @@ const ItemViewPage = () => {
         //materials.push(child.material);
         child.material = blueMat;
         child.material.needsUpdate = true;
-      }})
-      //child.material.color=new THREE.Color( 0x00ff00 );
-    
+      }
+    });
+    //child.material.color=new THREE.Color( 0x00ff00 );
   };
 
   const CgangeToGreen = () => {
@@ -213,8 +214,9 @@ const ItemViewPage = () => {
         //materials.push(child.material);
         child.material = greenMat;
         child.material.needsUpdate = true;
-      }})
-      //child.material.color=new THREE.Color( 0x00ff00 );
+      }
+    });
+    //child.material.color=new THREE.Color( 0x00ff00 );
   };
 
   const CgangeToRed = () => {
@@ -225,8 +227,9 @@ const ItemViewPage = () => {
         //materials.push(child.material);
         child.material = redMat;
         child.material.needsUpdate = true;
-      }})
-      //child.material.color=new THREE.Color( 0x00ff00 );
+      }
+    });
+    //child.material.color=new THREE.Color( 0x00ff00 );
   };
 
   return (
@@ -240,7 +243,7 @@ const ItemViewPage = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Buy Now</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Image className="modalImg" src={imgSrc} style={{ width: "100%", height: "auto" }} alt="na"></Image>

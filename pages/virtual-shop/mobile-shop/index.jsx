@@ -4,7 +4,7 @@ import * as THREE from "three";
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -183,17 +183,17 @@ const ItemListPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Mobile1")) {
-        router.push("mobile-view?modelName=Mobile.fbx&set=1");
+        router.push("mobile-shop/view?modelName=Mobile.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("Mobile2")) {
-        router.push("mobile-view?modelName=xiami_s12_ultra_white.fbx&set=2");
+        router.push("mobile-shop/view?modelName=xiami_s12_ultra_white.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-        router.push("mobile-view?modelName=Mobile_Phone.fbx&set=3");
+        router.push("mobile-shop/view?modelName=Mobile_Phone.fbx&set=3");
       }
     }
   }

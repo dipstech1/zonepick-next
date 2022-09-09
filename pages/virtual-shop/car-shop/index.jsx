@@ -1,10 +1,9 @@
 import { useRouter } from "next/router.js";
 import { useEffect } from "react";
 import * as THREE from "three";
-
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import Layout from "../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -201,21 +200,21 @@ const ItemListPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Ford")) {
-        router.push("car-view?modelName=ford.fbx&set=1");
+        router.push("car-shop/view?modelName=ford.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
       if (intersects[0].object.name.includes("Audi")) {
-        router.push("car-view?modelName=audi.FBX&set=2");
+        router.push("car-shop/view?modelName=audi.FBX&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("Range")) {
-        router.push("car-view?modelName=range.fbx&set=1");
+        router.push("car-shop/view?modelName=range.fbx&set=1");
       }
 
       if (intersects[0].object.name.includes("Chevrolet")) {
-        router.push("car-view?modelName=chevrolet.fbx&set=1");
+        router.push("car-shop/view?modelName=chevrolet.fbx&set=1");
       }
     }
   }
