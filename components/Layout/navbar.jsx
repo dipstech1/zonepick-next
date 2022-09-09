@@ -124,6 +124,19 @@ const Navbars = ({ cartPending = 0 }) => {
                     <i className="fa-solid fa-vest-patches me-2"></i>Fashion Shop
                   </NavDropdown.Item>
                 </Link>
+                <Link href="/virtual-shop/hardware-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-screwdriver-wrench me-2"></i>Hardware Shop
+                  </NavDropdown.Item>
+                </Link>
+
+                <Link href="/virtual-shop/real-estate-shop" passHref>
+                  <NavDropdown.Item>
+                    <i className="fa-solid fa-building me-2"></i>Real Estate Shop
+                  </NavDropdown.Item>
+                </Link>
+
+
               </NavDropdown>
 
               {/*
