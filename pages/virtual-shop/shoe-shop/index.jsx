@@ -11,10 +11,10 @@ var sceneName;
 var isMouseDown = false;
 
 var panoName = "d3.jpg";
-var modelPath_1 = "/models/Black_shoe.fbx";
-var modelPath_2 = "/models/Sneakers.fbx";
+var modelPath_1 = "/models/shoe_only.fbx";
+var modelPath_2 = "/models/shoes.fbx";
 var modelPath_3 = "/models/Vans.FBX";
-var modelPath_4 = "/models/shoe_only.fbx";
+var modelPath_4 = "/models/Winter_shoe_size32.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -87,12 +87,12 @@ const ItemListPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(5, 5, 5);
-      object.position.set(-50, -100, -350);
+      object.scale.set(.3, .3, .3);
+      object.position.set(-100, -100, -450);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Black_shoe";
+          child.name = "shoe_only";
         }
       });
       rot1 = object;
@@ -101,12 +101,12 @@ const ItemListPage = () => {
 
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(5, 5, 5);
-      object.position.set(-150, -50, -250);
+      object.scale.set(.3, .3, .3);
+      object.position.set(-250, -50, -250);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Sneakers";
+          child.name = "shoes";
         }
       });
       rot2 = object;
@@ -115,7 +115,7 @@ const ItemListPage = () => {
 
     var loader3 = new FBXLoader(loadingManager);
     loader3.load(modelPath_3, function (object) {
-      object.scale.set(0.5, 0.5, 0.5);
+      object.scale.set(0.8, 0.8, 0.8);
       object.position.set(50, -50, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
@@ -129,12 +129,12 @@ const ItemListPage = () => {
 
     var loader4 = new FBXLoader(loadingManager);
     loader4.load(modelPath_4, function (object) {
-      object.scale.set(0.15, 0.15, 0.15);
-      object.position.set(215, -80, -300);
+      object.scale.set(0.1, 0.1, 0.1);
+      object.position.set(215, -80, -400);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "shoe_only";
+          child.name = "Winter_shoe_size32";
         }
       });
       rot4 = object;
@@ -200,13 +200,13 @@ const ItemListPage = () => {
     var intersects = raycaster.intersectObjects(scene.children, true);
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
-      if (intersects[0].object.name.includes("Black_shoe")) {
-        router.push("shoe-shop/view?modelName=Black_shoe.fbx&set=1");
+      if (intersects[0].object.name.includes("shoe_only")) {
+        router.push("shoe-shop/view?modelName=shoe_only.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("Sneakers")) {
-        router.push("shoe-shop/view?modelName=Sneakers.fbx&set=2");
+      if (intersects[0].object.name.includes("shoes")) {
+        router.push("shoe-shop/view?modelName=shoes.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
@@ -215,8 +215,8 @@ const ItemListPage = () => {
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("shoe")) {
-        router.push("shoe-shop/view?modelName=shoe_only.fbx&set=4");
+      if (intersects[0].object.name.includes("Winter_shoe_size32")) {
+        router.push("shoe-shop/view?modelName=Winter_shoe_size32.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }

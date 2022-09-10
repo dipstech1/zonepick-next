@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import Layout from "../../../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -13,8 +13,8 @@ var isMouseDown = false;
 
 var panoName = "fashion.jpeg";
 var modelPath_1 = "/models/tshirt.fbx";
-var modelPath_2 = "/models/Vans.FBX";
-var modelPath_3 = "/models/shoe.obj";
+var modelPath_2 = "/models/low1.fbx";
+var modelPath_3 = "/models/leather_cloth.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -70,15 +70,15 @@ const ItemListPage = () => {
     hlight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(hlight);
 
-    light1 = new THREE.PointLight(0xffffff, 0.1);
+    light1 = new THREE.PointLight(0xffffff, 0.7);
     light1.position.set(0, -50, -40);
     light1.rotation.set(0, 0, 45);
     scene.add(light1);
-    light2 = new THREE.PointLight(0xffffff, 0.07);
+    light2 = new THREE.PointLight(0xffffff, 0.7);
     light2.position.set(-38, -67, 61);
     light2.rotation.set(0, -45, 0);
     scene.add(light2);
-    light3 = new THREE.PointLight(0xffffff, 0.1);
+    light3 = new THREE.PointLight(0xffffff, 0.7);
     light3.position.set(85, -50, 50);
     light3.rotation.set(0, 20, 0);
     scene.add(light3);
@@ -87,8 +87,8 @@ const ItemListPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(2.35, 2.35, 2.35);
-      object.position.set(-50, -250, -350);
+      object.scale.set(2.5, 2.5, 2.5);
+      object.position.set(-250, -300, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -99,14 +99,14 @@ const ItemListPage = () => {
       scene.add(object);
     });
 
-   /* var loader1 = new OBJLoader(loadingManager);
+   var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(0.2, 0.2, 0.2);
-      object.position.set(215, -40, -400);
+      object.scale.set(2.5, 2.5, 2.5);
+      object.position.set(315, -350, -400);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "supastarOBJ";
+          child.name = "low1";
         }
       });
       rot2 = object;
@@ -115,31 +115,19 @@ const ItemListPage = () => {
 
     var loader3 = new FBXLoader(loadingManager);
     loader3.load(modelPath_3, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(50, -150, -350);
+      object.scale.set(2.5, 2.5, 2.5);
+      object.position.set(50, -250, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Vans";
+          child.name = "leather_cloth";
         }
       });
       rot3 = object;
       scene.add(object);
     });
 
-    var loader4 = new OBJLoader(loadingManager);
-    loader4.load(modelPath_4, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(115, -40, -200);
-      // object.rotation.y = -5.62;
-      object.traverse(function (child) {
-        if (child.isMesh) {
-          child.name = "shoe";
-        }
-      });
-      rot4 = object;
-      scene.add(object);
-    });*/
+    
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -201,13 +189,13 @@ const ItemListPage = () => {
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("supastarOBJ")) {
-        router.push("fashion-shop/view?modelName=supastarOBJ.obj&set=2");
+      if (intersects[0].object.name.includes("low1")) {
+        router.push("fashion-shop/view?modelName=low1.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Vans")) {
-        router.push("fashion-shop/view?modelName=Vans.FBX&set=3");
+      if (intersects[0].object.name.includes("leather_cloth")) {
+        router.push("fashion-shop/view?modelName=leather_cloth.FBX&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 

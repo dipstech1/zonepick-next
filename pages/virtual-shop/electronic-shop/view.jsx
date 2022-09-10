@@ -59,7 +59,7 @@ const ItemViewPage = () => {
 
     scene = new THREE.Scene();
     //scene.background = new THREE.Color( 0xc6c4c4 );
-    const geometry = new THREE.SphereGeometry(550, 500, 400);
+    const geometry = new THREE.SphereGeometry(650, 500, 400);
     geometry.scale(-1, 1, 1);
     const texture = new THREE.TextureLoader().load("/images/CarShop.jpg");
     const material = new THREE.MeshBasicMaterial({ map: texture });
@@ -90,20 +90,16 @@ const ItemViewPage = () => {
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
       console.log(set);
-
+      object.scale.set(1, 1,1);
       object.position.set(0, -50, 0);
       object.rotation.y = (90 * Math.PI) / 180;
-      if (set === 1) {
+      if (set == 1) {
         object.scale.set(15.36, 15.36, 15.36);
-        object.position.set(-15, -105, -500);
+        object.position.set(0, -105, 500);
         object.rotation.y = (90 * Math.PI) / 180;
       }
 
-      if (set === 2) {
-        object.position.set(-15, -105, -500);
-        object.rotation.y = (90 * Math.PI) / 180;
-      }
-
+      
       object.traverse(function (child) {
         if (child.isMesh) {
           child.name = "mobile";

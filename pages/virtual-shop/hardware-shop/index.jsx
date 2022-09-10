@@ -4,7 +4,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import Layout from "../../../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
+
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -13,8 +14,8 @@ var isMouseDown = false;
 
 var panoName = "HardwareShop.jpg";
 var modelPath_1 = "/models/Toilet.FBX";
-var modelPath_2 = "/models/Vans.FBX";
-var modelPath_3 = "/models/shoe.obj";
+var modelPath_2 = "/models/SingleBasin.FBX";
+var modelPath_3 = "/models/TOTO.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -87,8 +88,8 @@ const ItemListPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(0.95, 0.95, 0.95);
-      object.position.set(-150, -250, -350);
+      object.scale.set(0.75, 0.75, 0.75);
+      object.position.set(-150, -200, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -99,47 +100,34 @@ const ItemListPage = () => {
       scene.add(object);
     });
 
-   /* var loader1 = new OBJLoader(loadingManager);
+   var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(0.2, 0.2, 0.2);
-      object.position.set(215, -40, -400);
+      object.scale.set(1, 1, 1);
+      object.position.set(215, -200, -400);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "supastarOBJ";
+          child.name = "SingleBasin";
         }
       });
       rot2 = object;
       scene.add(object);
     });
 
-    var loader3 = new FBXLoader(loadingManager);
-    loader3.load(modelPath_3, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(50, -150, -350);
+    var loader2 = new FBXLoader(loadingManager);
+    loader2.load(modelPath_3, function (object) {
+      object.scale.set(1.75, 1.75, 1.75);
+      object.position.set(30, -100, -100);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Vans";
+          child.name = "TOTO";
         }
       });
       rot3 = object;
       scene.add(object);
     });
 
-    var loader4 = new OBJLoader(loadingManager);
-    loader4.load(modelPath_4, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(115, -40, -200);
-      // object.rotation.y = -5.62;
-      object.traverse(function (child) {
-        if (child.isMesh) {
-          child.name = "shoe";
-        }
-      });
-      rot4 = object;
-      scene.add(object);
-    });*/
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -167,16 +155,16 @@ const ItemListPage = () => {
     controls.update();
 
     if (rot1 != null) {
-      rot1.rotation.y += 0.01;
+      rot1.rotation.y += 0.005;
     }
 
     if (rot2 != null) {
       rot2.rotation.y += 0.005;
     }
-
     if (rot3 != null) {
       rot3.rotation.y += 0.005;
     }
+    
   }
 
   function onTransitionEnd(event) {
@@ -201,20 +189,16 @@ const ItemListPage = () => {
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("supastarOBJ")) {
-        router.push("hardware-shop/view?modelName=supastarOBJ.obj&set=2");
+      if (intersects[0].object.name.includes("SingleBasin")) {
+        router.push("hardware-shop/view?modelName=SingleBasin.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Vans")) {
-        router.push("hardware-shop/view?modelName=Vans.FBX&set=3");
+      if (intersects[0].object.name.includes("TOTO")) {
+        router.push("hardware-shop/view?modelName=TOTO.FBX&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("shoe")) {
-        router.push("hardware-shop/view?modelName=shoe.obj&set=4");
-        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
     }
   }
 

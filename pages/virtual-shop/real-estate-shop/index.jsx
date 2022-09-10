@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import Layout from "../../../../components/Layout/layout";
+import Layout from "../../../components/Layout/layout";
 
 var container, controls;
 var camera, scene, renderer, hlight, directionalLight, light1, light2, light3, light4, light5;
@@ -12,9 +12,9 @@ var sceneName;
 var isMouseDown = false;
 
 var panoName = "top-of-a-bed.jpeg";
-var modelPath_1 = "/models/InteriorTest.fbx";
-var modelPath_2 = "/models/building_04.fbx";
-var modelPath_3 = "/morden_house.FBX";
+var modelPath_1 = "/models/modern.fbx";
+var modelPath_2 = "/models/building.fbx";
+var modelPath_3 = "/models/interior.FBX";
 
 
 var rot1, rot2, rot3, rot4;
@@ -88,12 +88,12 @@ const ItemListPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(0.45, 0.45, 0.45);
-      object.position.set(-50, -150, -350);
+      object.scale.set(0.01, 0.01, 0.01);
+      object.position.set(-250, -150, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "InteriorTest";
+          child.name = "modern";
         }
       });
       rot1 = object;
@@ -102,21 +102,21 @@ const ItemListPage = () => {
 
     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(2.2, 2.2, 2.2);
-      object.position.set(50, -40, -200);
+      object.scale.set(10, 10, 10);
+      object.position.set(100, -100, -200);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "supastarOBJ";
+          child.name = "building";
         }
       });
       rot2 = object;
       scene.add(object);
     });
-
-  /*  var loader3 = new FBXLoader(loadingManager);
-    loader3.load(modelPath_3, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
+/*
+    var loader2 = new FBXLoader(loadingManager);
+    loader2.load(modelPath_3, function (object) {
+      object.scale.set(0.1, 0.1, 0.1);
       object.position.set(50, -150, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
@@ -126,9 +126,9 @@ const ItemListPage = () => {
       });
       rot3 = object;
       scene.add(object);
-    });*/
+    });
 
-   /* var loader4 = new OBJLoader(loadingManager);
+    var loader4 = new OBJLoader(loadingManager);
     loader4.load(modelPath_4, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
       object.position.set(115, -40, -200);
@@ -197,25 +197,16 @@ const ItemListPage = () => {
     var intersects = raycaster.intersectObjects(scene.children, true);
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
-      if (intersects[0].object.name.includes("InteriorTest")) {
-        router.push("real-estate-shop/view?modelName=InteriorTest.fbx&set=1");
+      if (intersects[0].object.name.includes("modern")) {
+        router.push("real-estate-shop/view?modelName=modern.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("supastarOBJ")) {
-        router.push("real-estate-shop/view?modelName=supastarOBJ.obj&set=2");
+      if (intersects[0].object.name.includes("building")) {
+        router.push("real-estate-shop/view?modelName=building.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Vans")) {
-        router.push("real-estate-shop/view?modelName=Vans.FBX&set=3");
-        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
-
-      if (intersects[0].object.name.includes("shoe")) {
-        router.push("real-estate-shop/view?modelName=shoe.obj&set=4");
-        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
     }
   }
 

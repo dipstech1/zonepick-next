@@ -115,8 +115,8 @@ const ItemListPage = () => {
 
     var loader2 = new FBXLoader(loadingManager);
     loader2.load(modelPath_3, function (object) {
-      object.scale.set(1.25, 1.25, 1.25);
-      object.position.set(409, -112, -100);
+      object.scale.set(1.55, 1.55, 1.55);
+      object.position.set(209, -100, 100);
       //  object.rotation.y = 12.02;
       object.traverse(function (child) {
         if (child.isMesh) {

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router.js";
 import { useEffect, useState } from "react";
 import { Button, Image, Modal } from "react-bootstrap";
-import Layout from "../../../../components/Layout/layout.jsx";
+import Layout from "../../../components/Layout/layout";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
@@ -22,9 +22,9 @@ var isdone = false;
 var rot;
 var set = 1;
 var imgSrc = "/images/Mobile2.jpg";
-var redMat = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-var greenMat = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-var blueMat = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+var redMat = new THREE.MeshNormalMaterial({ color: 0xff0000 });
+var greenMat = new THREE.MeshNormalMaterial({ color: 0x00ff00 });
+var blueMat = new THREE.MeshNormalMaterial({ color: 0x0000ff });
 
 const ItemViewPage = () => {
   const [show, setShow] = useState(false);
@@ -90,19 +90,15 @@ const ItemViewPage = () => {
     var materials = [];
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
-      
-      object.position.set(0, 0, 0);
-      object.rotation.y = (90 * Math.PI) / 180;
-      if (set === 1) {
-        object.scale.set(0.36, 0.36, 0.36);
-        object.position.set(-15, -105, -500);
-        object.rotation.y = (90 * Math.PI) / 180;
-      }
 
-      if (set === 2) {
-        object.position.set(-15, -105, -500);
-        object.rotation.y = (90 * Math.PI) / 180;
-      }
+      if (set==2)
+      {object.scale.set(20,20, 20);
+      object.position.set(-100, -100, 0);
+      object.rotation.y = (90 * Math.PI) / 180;}
+      else
+      {object.scale.set(0.02, 0.02, 0.02);
+        object.position.set(-50, -100, 0);
+        object.rotation.y = (90 * Math.PI) / 180;}
 
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -146,6 +142,9 @@ const ItemViewPage = () => {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    if(rot!=null){
+      rot.rotation.y+=0.005;
+    }
   }
 
   function onMouseDown(e) {
@@ -178,7 +177,7 @@ const ItemViewPage = () => {
 
         if (set == 2) {
           setShow(true);
-          imgSrc = "/images/Laptop.jpg";
+          imgSrc = "/images/1662492931470.jpg";
           // modalimg = document.getElementsByClassName("modalImg");
           // modalimg[0].src = "./images/Mobile2.jpg";
           /* var actModal = document.getElementById("exampleModal");
