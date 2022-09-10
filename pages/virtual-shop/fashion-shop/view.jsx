@@ -93,7 +93,7 @@ const ItemViewPage = () => {
     loader.load(modelPath, function (object) {
       
       if (set==3){
-        object.scale.set(10, 10,10 );
+        object.scale.set(3, 3,3 );
         object.position.set(0, -400, 0);
         object.rotation.y = (90 * Math.PI) / 180;
       }

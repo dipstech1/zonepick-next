@@ -94,13 +94,13 @@ const ItemViewPage = () => {
       object.scale.set(1, 1, 1);
       object.position.set(0, -80, 0);
       object.rotation.y = (90 * Math.PI) / 180;
-      /*
-      if (set === 1) {
-        object.scale.set(15.36, 15.36, 15.36);
-        object.position.set(-15, -105, -500);
-        object.rotation.y = (90 * Math.PI) / 180;
+      
+      if (set ==3) {
+        object.scale.set(3, 3, 3);
+      object.position.set(0, -80, 0);
+      object.rotation.y = (90 * Math.PI) / 180;
       }
-
+/*
       if (set === 2) {
         object.position.set(-15, -105, -500);
         object.rotation.y = (90 * Math.PI) / 180;

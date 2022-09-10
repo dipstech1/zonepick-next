@@ -98,7 +98,11 @@ const ItemViewPage = () => {
         object.position.set(0, -105, 500);
         object.rotation.y = (90 * Math.PI) / 180;
       }
-
+      if (set == 2) {
+        object.scale.set(2, 2, 2);
+        object.position.set(0, 200, 400);
+        object.rotation.y = (90 * Math.PI) / 180;
+      }
       
       object.traverse(function (child) {
         if (child.isMesh) {

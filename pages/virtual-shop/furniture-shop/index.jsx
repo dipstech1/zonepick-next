@@ -11,9 +11,9 @@ var sceneName;
 var isMouseDown = false;
 
 var panoName = "home-interior.jpeg";
-var modelPath_1 = "/models/Wardrobe_door.fbx";
+var modelPath_1 = "/models/wardrobe_door.fbx";
 var modelPath_2 = "/models/koltuk2.fbx";
-var modelPath_3 = "/models/Computer_Desk.FBX";
+var modelPath_3 = "/models/computer_desk.fbx";
 
 
 var rot1, rot2, rot3, rot4;
@@ -120,7 +120,7 @@ const ItemListPage = () => {
       //  object.rotation.y = 12.02;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Computer_Desk";
+          child.name = "computer_desk";
         }
       });
       rot3 = object;
@@ -202,7 +202,7 @@ const ItemListPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Wardrobe")) {
-        router.push("furniture-shop/view?modelName=Wardrobe_door.fbx&set=1");
+        router.push("furniture-shop/view?modelName=wardrobe_door.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
@@ -211,15 +211,12 @@ const ItemListPage = () => {
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Computer_Desk")) {
-        router.push("furniture-shop/view?modelName=Computer_Desk.FBX&set=3");
+      if (intersects[0].object.name.includes("computer_desk")) {
+        router.push("furniture-shop/view?modelName=computer_desk.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("tv")) {
-        router.push("furniture-shop/view?modelName=MI_SMART_TV.fbx&set=4");
-        // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
-      }
+      
     }
   }
 

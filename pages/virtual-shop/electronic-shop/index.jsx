@@ -13,9 +13,9 @@ var isMouseDown = false;
 
 var panoName = "train-station.jpeg";
 var modelPath_1 = "/models/headset0001.fbx";
-var modelPath_2 = "/models/Laptop.FBX";
-var modelPath_3 = "/models/Laptop_001.fbx";
-var modelPath_4 = "/models/MI_SMART_TV.fbx";
+var modelPath_2 = "/models/laptop.fbx";
+var modelPath_3 = "/models/laptop_001.fbx";
+var modelPath_4 = "/models/mi_smart_tv.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -100,10 +100,10 @@ const ItemListPage = () => {
       scene.add(object);
     });
 
-    /* var loader1 = new FBXLoader(loadingManager);
+     var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(105, -40, -300);
+      object.position.set(130, 40, -200);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -112,11 +112,11 @@ const ItemListPage = () => {
       });
       rot2 = object;
       scene.add(object);
-    });*/
+    });
 
     var loader2 = new FBXLoader(loadingManager);
     loader2.load(modelPath_3, function (object) {
-      object.scale.set(0.35, 0.35, 0.35);
+      object.scale.set(0.75, 0.75, 0.75);
       object.position.set(100, -50, -300);
       //  object.rotation.y = 12.02;
       object.traverse(function (child) {
@@ -131,7 +131,7 @@ const ItemListPage = () => {
     var loader3 = new FBXLoader(loadingManager);
     loader3.load(modelPath_4, function (object) {
       object.scale.set(0.75, 0.75, 0.75);
-      object.position.set(-75, -80, -400);
+      object.position.set(-100, -80, -400);
       object.rotation.y = 12.02;
       object.traverse(function (child) {
         if (child.isMesh) {
@@ -167,7 +167,7 @@ const ItemListPage = () => {
     renderer.render(scene, camera);
     controls.update();
     if (rot1 != null) {
-      rot1.rotation.y += 0.01;
+      rot1.rotation.y += 0.005;
     }
 
     if (rot2 != null) {
@@ -206,17 +206,17 @@ const ItemListPage = () => {
       }
 
       if (intersects[0].object.name.includes("laptop")) {
-        router.push("electronic-shop/view?modelName=Laptop.FBX&set=2");
+        router.push("electronic-shop/view?modelName=laptop.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("macbook")) {
-        router.push("electronic-shop/view?modelName=Laptop_001.fbx&set=3");
+        router.push("electronic-shop/view?modelName=laptop_001.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
       if (intersects[0].object.name.includes("tv")) {
-        router.push("electronic-shop/view?modelName=MI_SMART_TV.fbx&set=4");
+        router.push("electronic-shop/view?modelName=mi_smart_tv.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }

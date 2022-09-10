@@ -13,8 +13,8 @@ var isMouseDown = false;
 var panoName = "d3.jpg";
 var modelPath_1 = "/models/shoe_only.fbx";
 var modelPath_2 = "/models/shoes.fbx";
-var modelPath_3 = "/models/Vans.FBX";
-var modelPath_4 = "/models/Winter_shoe_size32.fbx";
+var modelPath_3 = "/models/vans.fbx";
+var modelPath_4 = "/models/winter_shoe_size32.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -120,7 +120,7 @@ const ItemListPage = () => {
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Vans";
+          child.name = "vans";
         }
       });
       rot3 = object;
@@ -134,7 +134,7 @@ const ItemListPage = () => {
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Winter_shoe_size32";
+          child.name = "winter_shoe_size32";
         }
       });
       rot4 = object;
@@ -210,13 +210,13 @@ const ItemListPage = () => {
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Vans")) {
-        router.push("shoe-shop/view?modelName=Vans.FBX&set=3");
+      if (intersects[0].object.name.includes("vans")) {
+        router.push("shoe-shop/view?modelName=vans.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("Winter_shoe_size32")) {
-        router.push("shoe-shop/view?modelName=Winter_shoe_size32.fbx&set=4");
+      if (intersects[0].object.name.includes("winter_shoe_size32")) {
+        router.push("shoe-shop/view?modelName=winter_shoe_size32.fbx&set=4");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
     }

@@ -195,7 +195,7 @@ const ItemListPage = () => {
       }
 
       if (intersects[0].object.name.includes("leather_cloth")) {
-        router.push("fashion-shop/view?modelName=leather_cloth.FBX&set=3");
+        router.push("fashion-shop/view?modelName=leather_cloth.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 

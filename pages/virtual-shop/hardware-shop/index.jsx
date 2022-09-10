@@ -13,9 +13,9 @@ var sceneName;
 var isMouseDown = false;
 
 var panoName = "HardwareShop.jpg";
-var modelPath_1 = "/models/Toilet.FBX";
-var modelPath_2 = "/models/SingleBasin.FBX";
-var modelPath_3 = "/models/TOTO.fbx";
+var modelPath_1 = "/models/toilet.fbx";
+var modelPath_2 = "/models/singlebasin.fbx";
+var modelPath_3 = "/models/basin.fbx";
 
 var rot1, rot2, rot3, rot4;
 
@@ -88,12 +88,12 @@ const ItemListPage = () => {
 
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath_1, function (object) {
-      object.scale.set(0.75, 0.75, 0.75);
+      object.scale.set(1.5, 1.5,1.5);
       object.position.set(-150, -200, -350);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "Toilet";
+          child.name = "toilet";
         }
       });
       rot1 = object;
@@ -102,12 +102,12 @@ const ItemListPage = () => {
 
    var loader1 = new FBXLoader(loadingManager);
     loader1.load(modelPath_2, function (object) {
-      object.scale.set(1, 1, 1);
+      object.scale.set(1.5, 1.5, 1.5);
       object.position.set(215, -200, -400);
       // object.rotation.y = -5.62;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "SingleBasin";
+          child.name = "singlebasin";
         }
       });
       rot2 = object;
@@ -116,12 +116,12 @@ const ItemListPage = () => {
 
     var loader2 = new FBXLoader(loadingManager);
     loader2.load(modelPath_3, function (object) {
-      object.scale.set(1.75, 1.75, 1.75);
-      object.position.set(30, -100, -100);
+      object.scale.set(2, 2, 2);
+      object.position.set(30, -100, -300);
       //object.rotation.y=0;
       object.traverse(function (child) {
         if (child.isMesh) {
-          child.name = "TOTO";
+          child.name = "basin";
         }
       });
       rot3 = object;
@@ -184,18 +184,18 @@ const ItemListPage = () => {
     var intersects = raycaster.intersectObjects(scene.children, true);
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
-      if (intersects[0].object.name.includes("Toilet")) {
-        router.push("hardware-shop/view?modelName=Toilet.FBX&set=1");
+      if (intersects[0].object.name.includes("toilet")) {
+        router.push("hardware-shop/view?modelName=toilet.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
-      if (intersects[0].object.name.includes("SingleBasin")) {
-        router.push("hardware-shop/view?modelName=SingleBasin.fbx&set=2");
+      if (intersects[0].object.name.includes("singlebasin")) {
+        router.push("hardware-shop/view?modelName=singlebasin.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 
-      if (intersects[0].object.name.includes("TOTO")) {
-        router.push("hardware-shop/view?modelName=TOTO.FBX&set=3");
+      if (intersects[0].object.name.includes("basin")) {
+        router.push("hardware-shop/view?modelName=basin.fbx&set=3");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 

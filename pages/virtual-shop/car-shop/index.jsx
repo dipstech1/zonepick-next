@@ -205,7 +205,7 @@ const ItemListPage = () => {
       }
 
       if (intersects[0].object.name.includes("Audi")) {
-        router.push("car-shop/view?modelName=audi.FBX&set=2");
+        router.push("car-shop/view?modelName=audi.fbx&set=2");
         // window.location = "mobile-view?modelName=Laptop.FBX&set=2";
       }
 

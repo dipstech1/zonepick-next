@@ -13,9 +13,9 @@ var isMouseDown = false;
 
 var panoName = "d6.jpg";
 var modelName = "Mobile";
-var modelPath_1 = "/models/Mobile.fbx";
+var modelPath_1 = "/models/mobile.fbx";
 var modelPath_2 = "/models/xiami_s12_ultra_white.fbx";
-var modelPath_3 = "/models/Mobile_Phone.fbx";
+var modelPath_3 = "/models/mobile_phone.fbx";
 
 var rot1, rot2, rot3;
 
@@ -183,7 +183,7 @@ const ItemListPage = () => {
     if (intersects && intersects[0]) {
       //alert(intersects[0].object.name);
       if (intersects[0].object.name.includes("Mobile1")) {
-        router.push("mobile-shop/view?modelName=Mobile.fbx&set=1");
+        router.push("mobile-shop/view?modelName=mobile.fbx&set=1");
         // window.location = "mobile-view?modelName=Mobile.fbx&set=1";
       }
 
@@ -193,7 +193,7 @@ const ItemListPage = () => {
       }
 
       if (intersects[0].object.name.includes("Mobile3")) {
-        router.push("mobile-shop/view?modelName=Mobile_Phone.fbx&set=3");
+        router.push("mobile-shop/view?modelName=mobile_phone.fbx&set=3");
       }
     }
   }

@@ -90,10 +90,16 @@ const ItemViewPage = () => {
     var materials = [];
     var loader = new FBXLoader(loadingManager);
     loader.load(modelPath, function (object) {
-      object.scale.set(1, 1, 1);
-      object.position.set(0, -50, 50);
+      if (set==3)
+      {object.scale.set(5, 5, 5);
+      object.position.set(0, -100, 50);
       object.rotation.y = (90 * Math.PI) / 180;
-      
+      }
+      else
+      {object.scale.set(2, 2, 2);
+        object.position.set(0, -150, 50);
+        object.rotation.y = (90 * Math.PI) / 180;
+        }
 
       object.traverse(function (child) {
         if (child.isMesh) {
