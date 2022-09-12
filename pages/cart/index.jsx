@@ -413,7 +413,7 @@ const Cart = () => {
                                 buttonText={"Pay with Crypto"}
                                 btnClass="btn-orange-800"
                               ></CryptoPaymentButton>
-                            )}                            
+                            )}
                           </Col>
                         </Row>
                       </Card.Body>

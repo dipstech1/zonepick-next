@@ -69,7 +69,7 @@ const WishList = () => {
     const sendData = {
       userid: userId,
       recordId: data.productId[0].recordId,
-      ordered_quantity: 1,
+      orderedQuantity: 1,
       purpose: "Purchase",
     };
     const cnf = confirm("Are you sure you want to move to Cart?");
