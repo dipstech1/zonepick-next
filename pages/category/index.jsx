@@ -5,6 +5,9 @@ import { Breadcrumb, Card, Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Layout from "../../components/Layout/layout";
 import axios from "../../utils/axios.interceptor";
+import common from "../../utils/commonService";
+
+
 const Category = () => {
   const router = useRouter();
   const [categoryList, setCategoryList] = useState([]);
@@ -26,7 +29,7 @@ const Category = () => {
   };
 
   const onCategoryClick = (item) => {
-    router.push('/category/'+ item.id)
+    router.push('/category/' + item.id)
   };
 
   return (
@@ -53,7 +56,8 @@ const Category = () => {
                       style={{ cursor: "pointer" }}
                     >
                       <Card.Body>
-                        <div className="d-flex align-items-center justify-content-center fw-bold" style={{ height: 100 }}>
+                        <Card.Img variant="top" src={common.imageUrl + data?.image} style={{ height: 200, maxWidth: "100%" }} />
+                        <div className="d-flex align-items-end justify-content-center fw-bold" style={{ height: 50 }}>
                           {data.categoryName}
                         </div>
                       </Card.Body>
