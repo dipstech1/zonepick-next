@@ -32,3 +32,4 @@ yarn-error.log*
 .vercel
 *.Identifier
 public/images/computer-table.jpg:Zone.Identifier
+public/models/Building.fbx
