@@ -46,13 +46,13 @@ const RewardPage = () => {
   ]
 
   useEffect(() => {
-    const userId = getCookie("userid");
-    setUserId(userId);
-    getOrderedItems(userId, span);
-    getRedeemedItems(userId);
+
+    getOrderedItems(span);
+    getRedeemedItems();
   }, [span]);
 
-  const getOrderedItems = async (userId, span) => {
+  const getOrderedItems = async (span) => {
+    const userId = getCookie("userid");
     try {
       let resp = await axios.post(`purchase/all`, { userid: userId, span: span });
       if (resp.data.data.length > 0) {
@@ -82,7 +82,7 @@ const RewardPage = () => {
           });
         });
 
-        setTotalRewards(total);
+        // setTotalRewards(total);
 
         setOrderHistory(tempData);
 
@@ -102,11 +102,13 @@ const RewardPage = () => {
     }
   };
 
-  const getRedeemedItems = async (userId) => {
+  const getRedeemedItems = async () => {
+    const userId = getCookie("userid");
     try {
       let resp = await axios.get(`profile/${userId}`);
       if (resp.data.length > 0) {
         setRedeemHistory(resp.data[0]?.RewardRedeems);
+        setTotalRewards(resp.data[0].rewardPoints);
       }
     } catch (error) {
       console.log(error);
@@ -115,11 +117,12 @@ const RewardPage = () => {
   };
 
   const onRedeemClick = async (sendData) => {
+    const userId = getCookie("userid");
 
     try {
       let resp = await axios.post(`profile/redeem/${userId}`, sendData);
       if (resp.status === 201) {
-        toast.success(`${formik.values.redeemRewardPoint} Points Redeemed`,
+        toast.success(`Congratulations! ${formik.values.redeemRewardPoint} Points Redeemed`,
           {
             position: "top-right",
             autoClose: 5000,
@@ -130,11 +133,17 @@ const RewardPage = () => {
             theme: "colored",
             transition: Flip,
           });
+        getRedeemedItems();
       }
     } catch (error) {
       console.log(error);
       toast.error("Please Try To Redeem Lesser Points");
     }
+  };
+
+  const onTabChange = () => {
+    getRedeemedItems();
+    getOrderedItems(span);
   };
 
   const group = (arr) => { };
@@ -194,7 +203,7 @@ const RewardPage = () => {
               </div>
             </div>
 
-            <Tabs defaultActiveKey="RewardEarningHistory" className="mb-3 fw-bold nav-fill">
+            <Tabs defaultActiveKey="RewardEarningHistory" onSelect={onTabChange} className="mb-3 fw-bold nav-fill">
               <Tab eventKey="RewardEarningHistory" title={"Reward Earning History"}>
                 <Row className="ms-1 me-1">
                   {/* <Col md={12} className="mb-2 bg-blue-100 pt-1 pb-1 fw-bold" style={{ borderRadius: "5px" }}>
