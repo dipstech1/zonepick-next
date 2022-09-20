@@ -45,6 +45,7 @@ const EditProfile = () => {
       aboutMe: "",
       phone: "",
       userId: "",
+      profileImage: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter Your Name").min(3, "Must be at least 3 characters"),
@@ -91,6 +92,7 @@ const EditProfile = () => {
         formik.setFieldValue("email", resp.data[0].email || "");
         formik.setFieldValue("phone", resp.data[0].phone || "");
         formik.setFieldValue("aboutMe", resp.data[0].aboutMe || "");
+        formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
       }
 
       // console.log(resp.data);
@@ -119,7 +121,8 @@ const EditProfile = () => {
   };
 
   const changePic = (e) => {
-    console.log(e);
+    // console.log(e.target.files[0].name);
+    formik.setFieldValue("profileImage", "profile_pic.png");
   };
 
   return (
@@ -148,6 +151,7 @@ const EditProfile = () => {
                       }}
                       alt="Profile Picture"
                     />
+                    <input type="file" onChange={changePic} />
                   </Col>
                 </Row>
 

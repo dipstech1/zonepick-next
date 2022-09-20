@@ -111,7 +111,7 @@ const FaecetSearch = ({ onSearch, onClearSearch }) => {
     });
     setFilterList(data.filters);
 
-    onSearch({ category: category.categoryId, subcategory: data.value });
+    onSearch({ categoryId: category.categoryId, subcategoryId: data.value });
 
     const temp = [];
 
@@ -140,8 +140,8 @@ const FaecetSearch = ({ onSearch, onClearSearch }) => {
     }
 
     const filter = {
-      category: category.categoryId,
-      subcategory: subcategory.subcategoryId,
+      categoryId: category.categoryId,
+      subcategoryId: subcategory.subcategoryId,
     };
 
     const keys = Object.keys(_optionalField);
