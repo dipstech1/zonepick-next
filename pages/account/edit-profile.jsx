@@ -12,13 +12,24 @@ import Layout from "../../components/Layout/layout";
 import withAuth from "../../components/withAuth";
 import axios from "../../utils/axios.interceptor";
 import common from "../../utils/commonService";
+import * as S3 from "aws-sdk/clients/s3";
 
 const EditProfile = () => {
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
   const [userId, setUserId] = useState(null);
+
+  const [imageLocation, setImageLocation] = useState("");
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [uploadpercent, setUploadpercent] = useState(0);
+
+  const [AWSCredentials, setAWSCredentials] = useState({
+    AccessKeyID: "",
+    SecretAccessKey: "",
+    Region: "",
+    BucketName: "",
+  });
 
   const [userData, setUserData] = useState({
     address1: "",
@@ -76,6 +87,21 @@ const EditProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const GetAWSCredentials = async () => {
+    try {
+      let resp = await axios.get("utilities/aws");
+
+      if (resp.data) {
+        setAWSCredentials(resp.data);
+      }
+
+      //  console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
+
   const getUserData = async (userId) => {
     try {
       let resp = await axios.get(`profile/${userId}`);
@@ -93,6 +119,10 @@ const EditProfile = () => {
         formik.setFieldValue("phone", resp.data[0].phone || "");
         formik.setFieldValue("aboutMe", resp.data[0].aboutMe || "");
         formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
+
+        setImageLocation(common.avatorUrl + resp.data[0].profileImage);
+
+        GetAWSCredentials();
       }
 
       // console.log(resp.data);
@@ -120,9 +150,96 @@ const EditProfile = () => {
     }
   };
 
-  const changePic = (e) => {
-    // console.log(e.target.files[0].name);
-    formik.setFieldValue("profileImage", "profile_pic.png");
+  const getFile = () => {
+    if (document.getElementById("imgload")) {
+      document.getElementById("imgload")?.click();
+    }
+  };
+
+  const onFileChange = async (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let msg = "";
+      const imagefile = event.target.files[0].type;
+      const match = ["image/jpeg", "image/jpg", "image/png"];
+
+      const img = new Image();
+      img.src = window.URL.createObjectURL(event.target.files[0]);
+
+      img.onload = () => {
+        if (!(imagefile === match[0] || imagefile === match[1] || imagefile === match[2])) {
+          alert("Please Select JPG/JPEG/PNG File.");
+        } else {
+          const reader = new FileReader();
+          reader.readAsDataURL(event.target.files[0]);
+          reader.onload = (events) => {
+            setImageLocation(events.target.result);
+          };
+
+          reader.onloadend = async () => {
+            const file = event.target.files[0];
+            const filetypes = file.type.split("/");
+            const data = await uploadFile(file, filetypes[1], file.name);
+
+            if ((data.status = "success")) {
+              setUploadStatus("Complete");
+              setUploadpercent(0)
+              formik.setFieldValue("profileImage", data.fileName);
+              // formik.handleSubmit();
+            }
+          };
+          reader.onerror = () => {
+            console.log(reader.error);
+          };
+        }
+      };
+    }
+  };
+
+  const uploadFile = async (file, filetype) => {
+    return new Promise((resolve, reject) => {
+      const contentType = file.type;
+      const bucket = new S3({
+        accessKeyId: AWSCredentials.AccessKeyID,
+        secretAccessKey: AWSCredentials.SecretAccessKey,
+        region: AWSCredentials.Region,
+      });
+
+      const filename_with_suffix = new Date().valueOf() + "." + filetype;
+      let params = {
+        Bucket: "www.emetacomm.com",
+        Key: "upload_doc/avator/" + filename_with_suffix,
+        Body: file,
+        ACL: "public-read",
+        ContentType: contentType,
+      };
+
+      bucket
+        .upload(params)
+        .on("httpUploadProgress", (evt) => {
+          console.log((evt.loaded / evt.total) * 100);
+          setUploadpercent(((evt.loaded / evt.total) * 100).toFixed(0));
+        })
+        .send((err, data) => {
+          if (err) {
+            console.log("There was an error uploading your file: ", err);
+          }
+        });
+
+      bucket.upload(params, (err, data) => {
+        if (err) {
+          console.log("There was an error uploading your file: ", err);
+
+          reject({
+            status: "error",
+          });
+        }
+
+        resolve({
+          status: "success",
+          fileName: filename_with_suffix,
+        });
+      });
+    });
   };
 
   return (
@@ -143,15 +260,43 @@ const EditProfile = () => {
               <div className="py-3 px-5">
                 <Row className="mt-2">
                   <Col className="text-center">
-                    <img
-                      className="m-auto mr-lg-auto profile_img"
-                      src={common.avatorUrl + userData.profileImage}
-                      onError={(e) => {
-                        e.currentTarget.src = "/img/avator/no-image-icon.jpg";
-                      }}
-                      alt="Profile Picture"
+                    <button type="button" className="btn" onClick={getFile}>
+                      <div className="image-container">
+                        <img
+                          className="m-auto mr-lg-auto profile_img"
+                          src={imageLocation}
+                          onError={(e) => {
+                            e.currentTarget.src = "/img/avator/no-image-icon.jpg";
+                          }}
+                          alt="Profile Picture"
+                        />
+
+                        {uploadStatus !== "" ? (
+                          <>
+                            <div className="bottom-right">
+                              <span className="text-uppercase">{uploadStatus}</span>
+                            </div>
+                          </>
+                        ) : null}
+
+                        {uploadpercent > 0 ? (
+                          <>
+                            <div className="centered">
+                              <span className="text-uppercase">{uploadpercent}</span>
+                            </div>
+                          </>
+                        ) : null}
+                      </div>
+                    </button>
+
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      accept={"image/png,image/jpg,image/jpeg"}
+                      id={"imgload"}
+                      onChange={onFileChange}
+                      hidden={true}
                     />
-                    <input type="file" onChange={changePic} />
                   </Col>
                 </Row>
 
@@ -294,7 +439,7 @@ const EditProfile = () => {
                       </Row>
                       <Form.Group controlId="submitButton" className="float-end mt-3">
                         <Button variant="deep-purple-900" type="submit" style={{ width: 132 }}>
-                          Save
+                          Update
                         </Button>
                       </Form.Group>
                     </Form>
