@@ -67,6 +67,13 @@ const MyAccountLayout = ({
                     </Link>
                   </li>
                   <li className="nav-item">
+                    <Link href={"/nft"}>
+                      <a className={["nav-link", activeLink === 13 ? "active-menu" : null].join(" ")}>
+                        <i className="fa-solid fa-credit-card me-2"></i> My NFT
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
                     <Link href={"/account/address"}>
                       <a className={["nav-link", activeLink === 6 ? "active-menu" : null].join(" ")}>
                         <i className="fa-solid fa-map-location-dot me-2"></i> Address Book
