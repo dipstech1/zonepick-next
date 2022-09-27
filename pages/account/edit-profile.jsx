@@ -57,6 +57,11 @@ const EditProfile = () => {
       phone: "",
       userId: "",
       profileImage: "",
+      rewardWalletAddress: "",
+      solnftWalletAddress: "",
+      ethnftWalletAddress: "",
+      bnbnftWalletAddress: "",
+      ictnftWalletAddress: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter Your Name").min(3, "Must be at least 3 characters"),
@@ -118,8 +123,14 @@ const EditProfile = () => {
         formik.setFieldValue("email", resp.data[0].email || "");
         formik.setFieldValue("phone", resp.data[0].phone || "");
         formik.setFieldValue("aboutMe", resp.data[0].aboutMe || "");
-        formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
 
+        formik.setFieldValue("rewardWalletAddress", resp.data[0].rewardWalletAddress || "");
+        formik.setFieldValue("solnftWalletAddress", resp.data[0].solnftWalletAddress || "");
+        formik.setFieldValue("ethnftWalletAddress", resp.data[0].ethnftWalletAddress || "");
+        formik.setFieldValue("bnbnftWalletAddress", resp.data[0].bnbnftWalletAddress || "");
+        formik.setFieldValue("ictnftWalletAddress", resp.data[0].ictnftWalletAddress || "");
+
+        formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
         setImageLocation(common.avatorUrl + resp.data[0].profileImage);
 
         GetAWSCredentials();
@@ -132,15 +143,19 @@ const EditProfile = () => {
     }
   };
 
-  const updateProfile = async (user) => {
+  const updateProfile = async (user, redirect = true) => {
     user.phone = +user.phone;
 
     try {
       let response = await axios.patch(`profile/${userId}`, user);
 
       if (response.data.acknowledged) {
-        toast.success("Profile Successfully Updated");
-        router.back();
+        if (redirect) {
+          toast.success("Profile Successfully Updated");
+          router.back();
+        } else {
+          toast.success("Profile Image Successfully Updated");
+        }
       } else {
         toast.warning("Fail");
       }
@@ -182,9 +197,24 @@ const EditProfile = () => {
 
             if ((data.status = "success")) {
               setUploadStatus("Complete");
-              setUploadpercent(0)
+              setUploadpercent(0);
               formik.setFieldValue("profileImage", data.fileName);
-              // formik.handleSubmit();
+
+              const sendData = {
+                address1: formik.values.address1,
+                address2: formik.values.address2,
+                address3: formik.values.address3,
+                address4: formik.values.address4,
+                address5: formik.values.address5,
+                email: formik.values.email,
+                name: formik.values.name,
+                aboutMe: formik.values.aboutMe,
+                phone: formik.values.phone,
+                userId: formik.values.userId,
+                profileImage: data.fileName,
+              };
+
+              updateProfile(sendData, false);
             }
           };
           reader.onerror = () => {
@@ -415,6 +445,91 @@ const EditProfile = () => {
                               className={formik.touched.address4 && formik.errors.address4 ? "is-invalid" : ""}
                             />
                             <Form.Control.Feedback type="invalid">{formik.errors.address4}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="rewardWalletAddress">
+                            <Form.Label className="fw-bold">Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="rewardWalletAddress"
+                              placeholder="Enter Reward Wallet Address"
+                              value={formik.values.rewardWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.rewardWalletAddress && formik.errors.rewardWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.rewardWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="solnftWalletAddress">
+                            <Form.Label className="fw-bold">Solana Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="solnftWalletAddress"
+                              placeholder="Enter Solana Wallet Address"
+                              value={formik.values.solnftWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.solnftWalletAddress && formik.errors.solnftWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.solnftWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="ethnftWalletAddress">
+                            <Form.Label className="fw-bold">Ethereum Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="ethnftWalletAddress"
+                              placeholder="Enter Ethereum Wallet Address"
+                              value={formik.values.ethnftWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.ethnftWalletAddress && formik.errors.ethnftWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.ethnftWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="bnbnftWalletAddress">
+                            <Form.Label className="fw-bold">Binance Coin Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="bnbnftWalletAddress"
+                              placeholder="Enter Binance Coin Wallet Address"
+                              value={formik.values.bnbnftWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.bnbnftWalletAddress && formik.errors.bnbnftWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.bnbnftWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="ictnftWalletAddress">
+                            <Form.Label className="fw-bold">ICO Calendar Today Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="ictnftWalletAddress"
+                              placeholder="Enter ICO Calendar Today Wallet Address"
+                              value={formik.values.ictnftWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.ictnftWalletAddress && formik.errors.ictnftWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.ictnftWalletAddress}</Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>

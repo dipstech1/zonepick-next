@@ -14,15 +14,29 @@ import common from "../../../utils/commonService";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import ImageUploader from "../../../components/imageUploader";
+import * as S3 from "aws-sdk/clients/s3";
 
 const EditCategoryPage = () => {
   const router = useRouter();
-  const [image, setImage] = useState("");
+
+  const [imageLocation, setImageLocation] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState();
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [uploadpercent, setUploadpercent] = useState(0);
+
+  const [AWSCredentials, setAWSCredentials] = useState({
+    AccessKeyID: "",
+    SecretAccessKey: "",
+    Region: "",
+    BucketName: "",
+  });
 
   const formik = useFormik({
     initialValues: {
       userid: "",
       categoryName: "",
+      image: "",
       id: "",
     },
     validationSchema: Yup.object({
@@ -41,7 +55,10 @@ const EditCategoryPage = () => {
       const data = JSON.parse(sessionStorage.getItem("category"));
       formik.setFieldValue("categoryName", data.categoryName);
       formik.setFieldValue("id", data.id);
-      setImage(data.image);
+
+      formik.setFieldValue("image", data.image || "");
+      setImageLocation(common.imageUrl + data.image);
+      GetAWSCredentials();
     } else {
       router.push("/admin/category");
     }
@@ -49,7 +66,22 @@ const EditCategoryPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const editCategory = async (category) => {
+  const GetAWSCredentials = async () => {
+    try {
+      let resp = await axios.get("utilities/aws");
+
+      if (resp.data) {
+        setAWSCredentials(resp.data);
+      }
+
+      //  console.log(resp.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Fail");
+    }
+  };
+
+  const editCategory = async (category, redirect = true) => {
     category.userid = getCookie("userid");
     //  console.log(category);
 
@@ -57,8 +89,15 @@ const EditCategoryPage = () => {
       let resp = await axios.post("admin/update-category", category);
 
       if (resp.data.acknowledge) {
-        router.back();
-        toast.success("Category Updated Successfully");
+        if (redirect) {
+          toast.success("Category Updated Successfully");
+          router.back();
+        }
+        else {
+          toast.success("Category Image Successfully Updated");
+        }
+
+       
       } else {
         toast.error("Fail");
       }
@@ -68,13 +107,105 @@ const EditCategoryPage = () => {
     }
   };
 
-  const imageLoaded = (data) => {
-    console.log(data);
-    // setImageData({ ...imageData, productImage: data });
+  const getFile = () => {
+    if (document.getElementById("imgload")) {
+      document.getElementById("imgload")?.click();
+    }
   };
 
-  const onImageChange = () => {
+  const onFileChange = async (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFiles(event.target.files);
 
+      let msg = "";
+      const imagefile = event.target.files[0].type;
+      const match = ["image/jpeg", "image/jpg", "image/png"];
+
+      const img = new Image();
+      img.src = window.URL.createObjectURL(event.target.files[0]);
+
+      img.onload = () => {
+        if (!(imagefile === match[0] || imagefile === match[1] || imagefile === match[2])) {
+          alert("Please Select JPG/JPEG/PNG File.");
+        } else {
+          const reader = new FileReader();
+          reader.readAsDataURL(event.target.files[0]);
+          reader.onload = async (events) => {
+            const file = event.target.files[0];
+            const filetypes = file.type.split("/");
+            const data = await uploadFile(file, filetypes[1], file.name);
+
+            if ((data.status = "success")) {
+              setUploadStatus("Complete");
+              setUploadpercent(0);
+              formik.setFieldValue("image", data.fileName);
+              const sendData = {
+                categoryName: formik.values.categoryName,
+                id: formik.values.id,
+                image: data.fileName,
+              };
+              setImageLocation(events.target.result);
+              editCategory(sendData, false);
+            }
+          };
+
+          reader.onloadend = () => {
+            console.log("XX");
+          };
+          reader.onerror = () => {
+            console.log(reader.error);
+          };
+          setFileName(event.target.files[0].name);
+        }
+      };
+    }
+  };
+
+  const uploadFile = async (file, filetype) => {
+    return new Promise((resolve, reject) => {
+      const contentType = file.type;
+      const bucket = new S3({
+        accessKeyId: AWSCredentials.AccessKeyID,
+        secretAccessKey: AWSCredentials.SecretAccessKey,
+        region: AWSCredentials.Region,
+      });
+
+      const filename_with_suffix = new Date().valueOf() + "." + filetype;
+      let params = {
+        Bucket: "www.emetacomm.com",
+        Key: "upload_doc/images/" + filename_with_suffix,
+        Body: file,
+        ACL: "public-read",
+        ContentType: contentType,
+      };
+
+      bucket
+        .upload(params)
+        .on("httpUploadProgress", (evt) => {
+          console.log((evt.loaded / evt.total) * 100);
+          setUploadpercent(((evt.loaded / evt.total) * 100).toFixed(0));
+        })
+        .send((err, data) => {
+          if (err) {
+            console.log("There was an error uploading your file: ", err);
+          }
+        });
+
+      bucket.upload(params, (err, data) => {
+        if (err) {
+          console.log("There was an error uploading your file: ", err);
+
+          reject({
+            status: "error",
+          });
+        }
+
+        resolve({
+          status: "success",
+          fileName: filename_with_suffix,
+        });
+      });
+    });
   };
 
   return (
@@ -118,7 +249,7 @@ const EditCategoryPage = () => {
                         </Row>
 
                         <Form.Group controlId="submitButton" className="text-center mt-5">
-                          <Button variant="deep-purple-900" type="submit" style={{ width: '120px' }}>
+                          <Button variant="deep-purple-900" type="submit" style={{ width: "120px" }}>
                             Update
                           </Button>
                         </Form.Group>
@@ -128,32 +259,43 @@ const EditCategoryPage = () => {
                 </Tab>
                 <Tab eventKey="image" title="Category Image">
                   <Row>
-                    <Col xs={6} lg={4}>
-                      <div className="uploader-container border border-danger mb-2">
-                        <div className="pe-1 pt-1 pb-1 image-container">
-                          <img src={common.imageUrl + image} alt={"xx"} className="img-responsive-uploader" />
-                          <div className="top-right" >
-                            <i className="fa fa-times"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
                     <Col xs={6} lg={3} className={"uploader-container "}>
-                      <button type="button" className="btn" >
+                      <button type="button" className="btn" onClick={getFile}>
                         <div className="image-container">
                           <img src="/img/browse_ic.svg" alt="" className="img-responsive-uploader" />
-                          <div className="centered text-nowrap">Upload Your Image(s)</div>
+                          <div className="centered text-nowrap">Upload Image</div>
                         </div>
                       </button>
                       <input
                         type="file"
                         className="custom-file-input"
                         accept={"image/png,image/jpg,image/jpeg"}
-                        // id={`img${id}`}
-                        multiple={true}
-                        onChange={onImageChange}
-                      // hidden={true}
+                        id={"imgload"}
+                        onChange={onFileChange}
+                        hidden={true}
                       />
+                    </Col>
+                    <Col>
+                      {imageLocation !== "" ? (
+                        <div className="image-container">
+                          <img src={imageLocation} alt="Images" id="previewing2" style={{ maxHeight: 90 }} />
+                          {uploadStatus !== "" ? (
+                            <>
+                              <div className="top-right">
+                                <span className="text-uppercase">{uploadStatus}</span>
+                              </div>
+                            </>
+                          ) : null}
+
+                          {uploadpercent > 0 ? (
+                            <>
+                              <div className="centered">
+                                <span className="text-uppercase">{uploadpercent}</span>
+                              </div>
+                            </>
+                          ) : null}
+                        </div>
+                      ) : null}{" "}
                     </Col>
                   </Row>
                 </Tab>
@@ -165,4 +307,4 @@ const EditCategoryPage = () => {
     </>
   );
 };
-export default withAuth(EditCategoryPage, ['ADMIN']);
+export default withAuth(EditCategoryPage, ["ADMIN"]);

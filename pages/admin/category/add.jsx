@@ -245,7 +245,7 @@ const AddCategoryPage = () => {
                           <img src="/img/browse_ic.svg" alt="" className="img-responsive-uploader" />
                           <div className="centered text-nowrap">Upload Image</div>
                         </div>
-                      </button>
+                      </button> 
                       <input
                         type="file"
                         className="custom-file-input"

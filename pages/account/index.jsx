@@ -12,7 +12,6 @@ import withAuth from "../../components/withAuth";
 import axios from "../../utils/axios.interceptor";
 import common from "../../utils/commonService";
 
-
 const MyAccount = () => {
   const router = useRouter();
   const [key, setKey] = useState("home");
@@ -35,6 +34,11 @@ const MyAccount = () => {
     avgSellerRating: 0,
     roletype: "",
     profile_image: "1.jpg",
+    rewardWalletAddress: "",
+    solnftWalletAddress: "",
+    ethnftWalletAddress: "",
+    bnbnftWalletAddress: "",
+    ictnftWalletAddress: "",
   });
 
   useEffect(() => {
@@ -78,9 +82,14 @@ const MyAccount = () => {
             {isLoaded ? (
               <Row className="mt-4">
                 <Col md={4} lg={3}>
-                  <img className="m-auto mr-lg-auto profile_img" src={common.avatorUrl + userData.profileImage} alt="Profile Picture"  onError={(e) => {
+                  <img
+                    className="m-auto mr-lg-auto profile_img"
+                    src={common.avatorUrl + userData.profileImage}
+                    alt="Profile Picture"
+                    onError={(e) => {
                       e.currentTarget.src = "/img/avator/no-image-icon.jpg";
-                    }}/>
+                    }}
+                  />
                 </Col>
                 <Col md={8} lg={9}>
                   <Row>
@@ -156,6 +165,35 @@ const MyAccount = () => {
                             }
                           >
                             {userData.aboutMe}
+                          </Tab>
+
+                          <Tab
+                            eventKey="reward"
+                            title={
+                              <span>
+                                <i className="fa fa-medal me-2" /> Reward and NFT
+                              </span>
+                            }
+                          >
+                            <div className="contact mt-2 ms-2">
+                              <div className="d-block">
+                              <i className="fa fa-wallet me-3"></i> {userData.rewardWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/solana.png" width={16} height={16} alt="solana" className="me-3"></img> {userData.solnftWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/ethereum.png" width={16} height={16} alt="ethereum" className="me-3"></img>
+                                {userData.ethnftWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/binance-coin.png" width={16} height={16} alt="binance" className="me-3"></img>
+                                {userData.bnbnftWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/ict.png" width={16} height={16} alt="ict" className="me-3"></img> {userData.ictnftWalletAddress}
+                              </div>
+                            </div>
                           </Tab>
                         </Tabs>
                       </div>
