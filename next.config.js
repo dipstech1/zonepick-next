@@ -2,6 +2,7 @@
 const path = require("path");
 const nextConfig = {
   // reactStrictMode: true,
+  trailingSlash: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
@@ -13,6 +14,7 @@ const nextConfig = {
     currency: "INR",
     lang: "en-IN",
   },
+
  /* exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
