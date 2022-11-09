@@ -91,7 +91,7 @@ const Orders = () => {
                                 <Row>
                                   <Col  lg={3} xl={2}>
                                     <Image
-                                      src={common.imageUrl + data?.productId[0]?.product?.images[0].url}
+                                      src={common.productThumbUrl + data?.productId[0]?.product?.thumbnail}
                                       className="img-responsive-1 w-100"
                                       alt="dd"
                                       style={{ cursor: "pointer" }}

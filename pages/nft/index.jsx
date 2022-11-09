@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Breadcrumb, Button, Card, Col, Row, Tabs, Tab } from "react-bootstrap";
+import { Breadcrumb, Button, Card, Col, Row, Tabs, Tab, Image } from "react-bootstrap";
 import { toast } from "react-toastify";
 import MyAccountLayout from "../../components/Account/myaccount";
 import Layout from "../../components/Layout/layout";
@@ -127,21 +127,22 @@ const MyNft = () => {
                     <MyAccountLayout title="My NFT" activeLink={13}>
                         <div id="editTabs" className="py-3 px-5">
                             <Tabs defaultActiveKey="ethereum" onSelect={(key) => onSelectTab(key)} id="uncontrolled-tab" className="mb-3 nav-fill">
-                                <Tab eventKey="ethereum" title={<span>ETHEREUM <img
-                                    src="images/ethlogo.png"
+                                <Tab eventKey="ethereum" title={<span>ETHEREUM <Image
+                                    src="/images/ethlogo.png"
                                     height="23px"
                                     width="23px"
+                                    alt=""
                                 /></span>} >
                                     <Row>
                                         {backUpPData.length > 0 &&
                                             backUpPData.map((val, idx) => {
                                                 return (
                                                     val.metadata && (
-                                                        <Col key={idx} md={3} className="mb-3">
+                                                        <Col key={idx} lg={3} md={6} className="mb-3">
                                                             <Card>
                                                                 <Card.Body>
                                                                     <a href={`https://testnets.opensea.io/assets/rinkeby/${val?.token_address}/${val?.token_id}`} target="_blank" rel="noopener noreferrer">
-                                                                        <img
+                                                                        <Image
                                                                             className="ic-card-img-top mb-2"
                                                                             src={val?.metadata?.image || val?.metadata[0]?.image}
                                                                             alt="Card image cap"
@@ -156,10 +157,11 @@ const MyNft = () => {
                                                                         </h5>
                                                                         <div className="mb-2">
                                                                             Price:
-                                                                            <img
-                                                                                src="images/ethlogo.png"
+                                                                            <Image
+                                                                                src="/images/ethlogo.png"
                                                                                 height="20px"
                                                                                 width="20px"
+                                                                                alt=""
                                                                             />
                                                                             <span>
                                                                                 {val?.metadata?.NFTPrice ||
@@ -180,20 +182,21 @@ const MyNft = () => {
                                             })}
                                     </Row>
                                 </Tab>
-                                <Tab eventKey="solana" title={<span>SOLANA <img
-                                    src="images/solanalogo.png"
+                                <Tab eventKey="solana" title={<span>SOLANA <Image
+                                    src="/images/solanalogo.png"
                                     height="25px"
                                     width="25px"
+                                    alt=""
                                 /></span>}>
                                     <Row>
                                         {totalNFts.length > 0 &&
                                             totalNFts.map((val, idx) => {
                                                 return (
-                                                    <Col key={idx} md={3} className="mb-3">
+                                                    <Col key={idx} lg={3} md={6} className="mb-3">
                                                         <Card>
                                                             <Card.Body>
                                                                 <a href={`https://solscan.io/token/${val?.mint}?cluster=devnet`} target="_blank" rel="noopener noreferrer">
-                                                                    <img
+                                                                    <Image
                                                                         className="ic-card-img-top mb-2"
                                                                         src={val.metaAPIData.image}
                                                                         alt="Card image cap"
@@ -207,10 +210,11 @@ const MyNft = () => {
                                                                     </h5>
                                                                     <div className="mb-2">
                                                                         Price:
-                                                                        <img
-                                                                            src="images/solanalogo.png"
+                                                                        <Image
+                                                                            src="/images/solanalogo.png"
                                                                             height="20px"
                                                                             width="20px"
+                                                                            alt=""
                                                                         />
                                                                         <span>
                                                                             {val.price}

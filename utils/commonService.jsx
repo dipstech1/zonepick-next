@@ -9,6 +9,7 @@ const imageUrl= 'https://www.emetacomm.com/upload_doc/images/'
 const avatorUrl= 'https://www.emetacomm.com/upload_doc/avator/'
 const arUrl= 'https://www.emetacomm.com/upload_doc/glb/'
 const arUrl_fbx= 'https://www.emetacomm.com/upload_doc/fbx/'
+const productThumbUrl = 'https://www.emetacomm.com/upload_doc/images/product/'
 
 
 const DateFromTimeStamp = (timestamp) => {
@@ -218,6 +219,7 @@ export default {
   getCurrencyWithFormat: getCurrencyWithFormat,
   imageUrl: imageUrl,
   avatorUrl: avatorUrl,
+  productThumbUrl: productThumbUrl,
   arUrl: arUrl,
   arUrl_fbx: arUrl_fbx
 };
