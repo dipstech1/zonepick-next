@@ -684,7 +684,7 @@ const AddProductPage = () => {
                 <Container>
                   <Row>
                     <Col id={'editTabs'}>
-                      <Tabs defaultActiveKey='pimage' id='uncontrolled-tab-example' className='mb-3 nav-fill'>
+                      <Tabs defaultActiveKey='thumbnails' id='uncontrolled-tab-example' className='mb-3 nav-fill'>
                         <Tab eventKey='thumbnails' title={'Product Thumbnails'}>
                           <ImageUpload
                             info={{ type: 'image', url: commonService.productThumbUrl + '1667556172570.png' }}

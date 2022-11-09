@@ -55,7 +55,7 @@ const SellerProductPage = () => {
                       <div className="image-container">
                         <Card.Img
                           variant="top"
-                          src={common.imageUrl + data?.product?.images[0]?.url}
+                          src={common.productThumbUrl + data?.product?.thumbnail}
                           style={{ height: "250px", objectFit: "fill" }}
                         />
                         <div className="top-left ">{data?.purpose}</div>
