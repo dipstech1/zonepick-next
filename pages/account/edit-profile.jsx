@@ -469,11 +469,11 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="solnftWalletAddress">
-                            <Form.Label className="fw-bold">Solana Wallet Address:</Form.Label>
+                            <Form.Label className="fw-bold">Sol NFT Wallet Address:</Form.Label>
                             <Form.Control
                               type="text"
                               name="solnftWalletAddress"
-                              placeholder="Enter Solana Wallet Address"
+                              placeholder="Enter Sol NFT Wallet Address"
                               value={formik.values.solnftWalletAddress}
                               onChange={formik.handleChange}
                               className={formik.touched.solnftWalletAddress && formik.errors.solnftWalletAddress ? "is-invalid" : ""}
@@ -486,11 +486,11 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="ethnftWalletAddress">
-                            <Form.Label className="fw-bold">Ethereum Wallet Address:</Form.Label>
+                            <Form.Label className="fw-bold">Eth NFT Wallet Address:</Form.Label>
                             <Form.Control
                               type="text"
                               name="ethnftWalletAddress"
-                              placeholder="Enter Ethereum Wallet Address"
+                              placeholder="Enter Eth NFT Wallet Address"
                               value={formik.values.ethnftWalletAddress}
                               onChange={formik.handleChange}
                               className={formik.touched.ethnftWalletAddress && formik.errors.ethnftWalletAddress ? "is-invalid" : ""}
@@ -503,11 +503,11 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="bnbnftWalletAddress">
-                            <Form.Label className="fw-bold">Binance Coin Wallet Address:</Form.Label>
+                            <Form.Label className="fw-bold">Bnb NFT Wallet Address:</Form.Label>
                             <Form.Control
                               type="text"
                               name="bnbnftWalletAddress"
-                              placeholder="Enter Binance Coin Wallet Address"
+                              placeholder="Enter Bnb NFT Wallet Address"
                               value={formik.values.bnbnftWalletAddress}
                               onChange={formik.handleChange}
                               className={formik.touched.bnbnftWalletAddress && formik.errors.bnbnftWalletAddress ? "is-invalid" : ""}
@@ -520,11 +520,11 @@ const EditProfile = () => {
                       <Row>
                         <Col>
                           <Form.Group className="mb-2 position-relative" controlId="ictnftWalletAddress">
-                            <Form.Label className="fw-bold">ICO Calendar Today Wallet Address:</Form.Label>
+                            <Form.Label className="fw-bold">Ict NFT Wallet Address:</Form.Label>
                             <Form.Control
                               type="text"
                               name="ictnftWalletAddress"
-                              placeholder="Enter ICO Calendar Today Wallet Address"
+                              placeholder="Enter Ict NFT Wallet Address"
                               value={formik.values.ictnftWalletAddress}
                               onChange={formik.handleChange}
                               className={formik.touched.ictnftWalletAddress && formik.errors.ictnftWalletAddress ? "is-invalid" : ""}
