@@ -62,6 +62,7 @@ const EditProfile = () => {
       ethnftWalletAddress: "",
       bnbnftWalletAddress: "",
       ictnftWalletAddress: "",
+      polygonnftWalletAddress: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter Your Name").min(3, "Must be at least 3 characters"),
@@ -129,6 +130,7 @@ const EditProfile = () => {
         formik.setFieldValue("ethnftWalletAddress", resp.data[0].ethnftWalletAddress || "");
         formik.setFieldValue("bnbnftWalletAddress", resp.data[0].bnbnftWalletAddress || "");
         formik.setFieldValue("ictnftWalletAddress", resp.data[0].ictnftWalletAddress || "");
+        formik.setFieldValue("polygonnftWalletAddress", resp.data[0].polygonnftWalletAddress || "");
 
         formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
         setImageLocation(common.avatorUrl + resp.data[0].profileImage);
@@ -530,6 +532,22 @@ const EditProfile = () => {
                               className={formik.touched.ictnftWalletAddress && formik.errors.ictnftWalletAddress ? "is-invalid" : ""}
                             />
                             <Form.Control.Feedback type="invalid">{formik.errors.ictnftWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="polygonnftWalletAddress">
+                            <Form.Label className="fw-bold">Polygon NFT Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="polygonnftWalletAddress"
+                              placeholder="Enter Polygon NFT Wallet Address"
+                              value={formik.values.polygonnftWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.polygonnftWalletAddress && formik.errors.polygonnftWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.polygonnftWalletAddress}</Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>

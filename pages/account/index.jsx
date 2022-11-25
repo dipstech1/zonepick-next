@@ -177,7 +177,7 @@ const MyAccount = () => {
                           >
                             <div className="contact mt-2 ms-2">
                               <div className="d-block">
-                              <i className="fa fa-wallet me-3"></i> {userData.rewardWalletAddress}
+                                <i className="fa fa-wallet me-3"></i> {userData.rewardWalletAddress}
                               </div>
                               <div className="d-block">
                                 <img src="img/solana.png" width={16} height={16} alt="solana" className="me-3"></img> {userData.solnftWalletAddress}
@@ -192,6 +192,9 @@ const MyAccount = () => {
                               </div>
                               <div className="d-block">
                                 <img src="img/ict.png" width={16} height={16} alt="ict" className="me-3"></img> {userData.ictnftWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/polygon.png" width={16} height={16} alt="polygon" className="me-3"></img> {userData.polygonnftWalletAddress}
                               </div>
                             </div>
                           </Tab>
