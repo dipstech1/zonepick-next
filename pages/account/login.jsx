@@ -58,6 +58,8 @@ export default function Login() {
       setCookies("Cart", data?.cartPending, { maxAge: 60 * 30 });
       setCookies("user_name", data?.profile[0]?.name, { maxAge: 60 * 30 });
       setCookies("user_role", data?.profile[0]?.roletype, { maxAge: 60 * 30 });
+      setCookies("ethnftWalletAddress", data?.profile[0]?.ethnftWalletAddress, { maxAge: 60 * 30 });
+      setCookies("polygonnftWalletAddress", data?.profile[0]?.polygonnftWalletAddress, { maxAge: 60 * 30 });
 
       toast.success("Login Successful");
       router.replace(returnUrl);
@@ -81,7 +83,7 @@ export default function Login() {
                         <Row className="mb-3">
                           <Col className="text-center" >
                             <Link href="/" passHref>
-                              <Image src="/logo/logo.png" alt="Logo" width={120} height={70} style={{cursor:'pointer'}}></Image>
+                              <Image src="/logo/logo.png" alt="Logo" width={120} height={70} style={{ cursor: 'pointer' }}></Image>
                             </Link>
                           </Col>
                         </Row>

@@ -43,7 +43,11 @@ const RewardPage = () => {
       label: "BNB",
       value: "BNB",
     },
-  ]
+    {
+      label: "POLYGON",
+      value: "POLYGON"
+    },
+  ];
 
   useEffect(() => {
 
@@ -202,110 +206,111 @@ const RewardPage = () => {
               <div>
               </div>
             </div>
-
-            <Tabs defaultActiveKey="RewardEarningHistory" onSelect={onTabChange} className="mb-3 fw-bold nav-fill">
-              <Tab eventKey="RewardEarningHistory" title={"Reward Earning History"}>
-                <Row className="ms-1 me-1">
-                  {/* <Col md={12} className="mb-2 bg-blue-100 pt-1 pb-1 fw-bold" style={{ borderRadius: "5px" }}>
+            <div id="editTabs" className="py-3 px-5">
+              <Tabs defaultActiveKey="RewardEarningHistory" onSelect={onTabChange} id="uncontrolled-tab" className="mb-3 nav-fill">
+                <Tab eventKey="RewardEarningHistory" title={"Reward Earning History"}>
+                  <Row className="ms-1 me-1">
+                    {/* <Col md={12} className="mb-2 bg-blue-100 pt-1 pb-1 fw-bold" style={{ borderRadius: "5px" }}>
                     Reward Earning History:
                   </Col> */}
 
-                  {orderHistory.length
-                    ? orderHistory.map((data, i) => {
-                      return (
-                        <Row key={i} >
-                          <Col
-                            md={12}
-                            className="mb-2 ms-2 bg-green-100 pt-1 pb-1 ps-2 fw-bold"
-                            style={{ borderRadius: "5px" }}
-                          >
-                            {data.orderDate}
-                          </Col>
-                          <Col md={12} className="mb-2 ms-3">
-                            {data.order.map((order, j) => {
-                              return (
-                                <Card className="shadow-sm mb-2" key={j}>
-                                  <Card.Body>
-                                    <div className="block mb-1">
-                                      <b>Order Id: </b> {order.transactionId}
-                                    </div>
+                    {orderHistory.length
+                      ? orderHistory.map((data, i) => {
+                        return (
+                          <Row key={i} >
+                            <Col
+                              md={12}
+                              className="mb-2 ms-2 bg-green-100 pt-1 pb-1 ps-2 fw-bold"
+                              style={{ borderRadius: "5px" }}
+                            >
+                              {data.orderDate}
+                            </Col>
+                            <Col md={12} className="mb-2 ms-3">
+                              {data.order.map((order, j) => {
+                                return (
+                                  <Card className="shadow-sm mb-2" key={j}>
+                                    <Card.Body>
+                                      <div className="block mb-1">
+                                        <b>Order Id: </b> {order.transactionId}
+                                      </div>
 
-                                    <div className="inline-block mb-1">
-                                      <span className="me-1">
-                                        <b>Reward Point: </b> {order.purchaseTotalReward}
-                                      </span>
-                                      [
-                                      {order.transactions.map((data, k) => {
-                                        return (
-                                          <span className="inline-block ms-1" key={k}>
-                                            {data.productItemReward} {k + 1 >= order.transactions.length ? null : " + "}
-                                          </span>
-                                        );
-                                      })}
-                                      ]
-                                    </div>
-                                    <div className="block mb-1">
-                                      <b>Order Date: </b> {common.DateFromTimeStamp(order.purchasedAt)}
-                                    </div>
-                                  </Card.Body>
-                                </Card>
-                              );
-                            })}
-                          </Col>
-                        </Row>
-                      );
-                    })
-                    : null}
-                </Row>
-              </Tab>
-              <Tab eventKey="RewardRedeemHistory" title={"Reward Redeem History"}>
-                <Row className="ms-1 me-1">
-                  {/* <Col md={12} className="mb-2 bg-blue-100 pt-1 pb-1 fw-bold" style={{ borderRadius: "5px" }}>
+                                      <div className="inline-block mb-1">
+                                        <span className="me-1">
+                                          <b>Reward Point: </b> {order.purchaseTotalReward}
+                                        </span>
+                                        [
+                                        {order.transactions.map((data, k) => {
+                                          return (
+                                            <span className="inline-block ms-1" key={k}>
+                                              {data.productItemReward} {k + 1 >= order.transactions.length ? null : " + "}
+                                            </span>
+                                          );
+                                        })}
+                                        ]
+                                      </div>
+                                      <div className="block mb-1">
+                                        <b>Order Date: </b> {common.DateFromTimeStamp(order.purchasedAt)}
+                                      </div>
+                                    </Card.Body>
+                                  </Card>
+                                );
+                              })}
+                            </Col>
+                          </Row>
+                        );
+                      })
+                      : null}
+                  </Row>
+                </Tab>
+                <Tab eventKey="RewardRedeemHistory" title={"Reward Redeem History"}>
+                  <Row className="ms-1 me-1">
+                    {/* <Col md={12} className="mb-2 bg-blue-100 pt-1 pb-1 fw-bold" style={{ borderRadius: "5px" }}>
                     Reward Redeem History:
                   </Col> */}
-                  {redeemHistory.length
-                    ? redeemHistory.map((data, i) => {
-                      return (
-                        <Row key={i} >
-                          <Col
-                            md={12}
-                            className="mb-1 bg-green-100 pt-1 pb-1 ps-2 fw-bold"
-                            style={{ borderRadius: "5px" }}
-                          >
-                            {common.DateFromTimeStamp(data.redeemDate)}
-                          </Col>
-                          <Card className="shadow-sm mb-3" >
-                            <Card.Body>
-                              <div className="block mb-1">
-                                <b>Transaction Id: </b> {data.transactionId}
-                              </div>
+                    {redeemHistory.length
+                      ? redeemHistory.map((data, i) => {
+                        return (
+                          <Row key={i} >
+                            <Col
+                              md={12}
+                              className="mb-1 bg-green-100 pt-1 pb-1 ps-2 fw-bold"
+                              style={{ borderRadius: "5px" }}
+                            >
+                              {common.DateFromTimeStamp(data.redeemDate)}
+                            </Col>
+                            <Card className="shadow-sm mb-3" >
+                              <Card.Body>
+                                <div className="block mb-1">
+                                  <b>Transaction Id: </b> {data.transactionId}
+                                </div>
 
-                              <div className="inline-block mb-1">
-                                <span className="me-1">
-                                  <b>Redeem Reward Point: </b> {data.redeemRewardPoint}
-                                </span>
-                              </div>
-                              <div className="block mb-1">
-                                <b>Current Reward Point: </b> {data.currentRewardPoint}
-                              </div>
-                              <div className="block mb-1">
-                                <b>Chain Type: </b> {data.chainType}
-                              </div>
-                              <div className="block mb-1">
-                                <b>Token: </b> {data.token}
-                              </div>
-                              <div className="block mb-1">
-                                <b>To Address: </b> {data.toAddress}
-                              </div>
-                            </Card.Body>
-                          </Card>
-                        </Row>
-                      );
-                    })
-                    : null}
-                </Row>
-              </Tab>
-            </Tabs>
+                                <div className="inline-block mb-1">
+                                  <span className="me-1">
+                                    <b>Redeem Reward Point: </b> {data.redeemRewardPoint}
+                                  </span>
+                                </div>
+                                <div className="block mb-1">
+                                  <b>Current Reward Point: </b> {data.currentRewardPoint}
+                                </div>
+                                <div className="block mb-1">
+                                  <b>Chain Type: </b> {data.chainType}
+                                </div>
+                                <div className="block mb-1">
+                                  <b>Token: </b> {data.token}
+                                </div>
+                                <div className="block mb-1">
+                                  <b>To Address: </b> {data.toAddress}
+                                </div>
+                              </Card.Body>
+                            </Card>
+                          </Row>
+                        );
+                      })
+                      : null}
+                  </Row>
+                </Tab>
+              </Tabs>
+            </div>
           </MyAccountLayout>
         </div>
       </Layout>

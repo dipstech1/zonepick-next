@@ -1,3 +1,4 @@
+import { getCookie } from "cookies-next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Breadcrumb, Button, Card, Col, Row, Tabs, Tab, Image } from "react-bootstrap";
@@ -9,35 +10,37 @@ import axios from "../../utils/axios.interceptor";
 
 const MyNft = () => {
     const [backUpPData, setBackUpPData] = useState([]);
+    const [polygonNftData, setPolygonNftData] = useState([]);
     let [totalNFts, setTotalNFts] = useState([]);
     let [balance, setBalance] = useState({});
     let [mintData, setMintData] = useState([]);
 
     useEffect(() => {
-        getAllAvailableNFTs();
-        getAllAvailableNFTsMetaData();
+        // getAllAvailableNFTsMetaData();
+        getAllEthNftData();
     }, []);
 
-    const getAllAvailableNFTs = async () => {
+    const getAllEthNftData = async () => {
+        const ethnftWalletAddress = getCookie("ethnftWalletAddress");
         try {
-            let resp = await axios.get(
-                "https://deep-index.moralis.io/api/v2/nft/0x2f3df7d1511d79cca159205caf546848e0dd9e7f?chain=rinkeby&format=decimal",
-                {
-                    headers: {
-                        accept: "application/json",
-                        "X-API-Key":
-                            "CM7N6dMbLldEIUX7oVJGrRHmOjaePtGKjb485UKJDjaI9WYwKrkJ6dlsZ6Z3OziA",
-                    },
-                }
-            );
-            if (resp.data) {
-                let { result } = resp.data;
-                result.forEach((item) => {
-                    item.metadata = JSON.parse(item.metadata);
-                });
-                setBackUpPData(result);
+            let resp = await axios.get(`https://vjl5a7qz3c.execute-api.ap-south-1.amazonaws.com/dev/eth-nft-item?ChainType=goerlitestnet&NFTOwnerAddress=${ethnftWalletAddress}`);
+            if (resp.data.length > 0) {
+                setBackUpPData(resp.data);
             }
-            // console.log(getData);
+        } catch (error) {
+            console.log(error);
+            toast.error("Fail");
+        }
+    };
+
+    const getAllPolygonNftData = async () => {
+        const polygonnftWalletAddress = getCookie("polygonnftWalletAddress");
+        try {
+            let resp = await axios.get(`https://vjl5a7qz3c.execute-api.ap-south-1.amazonaws.com/dev/eth-nft-item?ChainType=polygontestnet&NFTOwnerAddress=${polygonnftWalletAddress}`);
+
+            if (resp.data.length > 0) {
+                setPolygonNftData(resp.data);
+            }
         } catch (error) {
             console.log(error);
             toast.error("Fail");
@@ -105,11 +108,13 @@ const MyNft = () => {
 
     const onSelectTab = (key) => {
         if (key === "ethereum") {
-            getAllAvailableNFTs();
+            getAllEthNftData();
         } else if (key === "solana") {
             getAllAvailableNFTsMetaData();
+        } else if (key === "polygon") {
+            getAllPolygonNftData();
         }
-    }
+    };
 
     return (
         <>
@@ -137,47 +142,96 @@ const MyNft = () => {
                                         {backUpPData.length > 0 &&
                                             backUpPData.map((val, idx) => {
                                                 return (
-                                                    val.metadata && (
-                                                        <Col key={idx} lg={3} md={6} className="mb-3">
-                                                            <Card>
-                                                                <Card.Body>
-                                                                    <a href={`https://testnets.opensea.io/assets/rinkeby/${val?.token_address}/${val?.token_id}`} target="_blank" rel="noopener noreferrer">
+                                                    <Col key={idx} lg={3} md={6} className="mb-3">
+                                                        <Card>
+                                                            <Card.Body>
+                                                                <a href={`https://testnets.opensea.io/assets/goerli/${val.DeployedIn}/${val.NFTCode}`} target="_blank" rel="noopener noreferrer">
+                                                                    <Image
+                                                                        className="ic-card-img-top mb-2"
+                                                                        src={val.image}
+                                                                        alt="Card image cap"
+                                                                        height="150px"
+                                                                        width="150px"
+
+                                                                    />
+                                                                </a>
+                                                                <div className="ic-card-body">
+                                                                    <h5 className="ic-card-title">
+                                                                        {val.name}
+                                                                    </h5>
+                                                                    <div className="mb-2">
+                                                                        Price:
                                                                         <Image
-                                                                            className="ic-card-img-top mb-2"
-                                                                            src={val?.metadata?.image || val?.metadata[0]?.image}
-                                                                            alt="Card image cap"
-                                                                            height="150px"
-                                                                            width="150px"
-
+                                                                            src="/images/ethlogo.png"
+                                                                            height="20px"
+                                                                            width="20px"
+                                                                            alt=""
                                                                         />
-                                                                    </a>
-                                                                    <div className="ic-card-body">
-                                                                        <h5 className="ic-card-title">
-                                                                            {val?.metadata?.name || val?.metadata[0]?.name}
-                                                                        </h5>
-                                                                        <div className="mb-2">
-                                                                            Price:
-                                                                            <Image
-                                                                                src="/images/ethlogo.png"
-                                                                                height="20px"
-                                                                                width="20px"
-                                                                                alt=""
-                                                                            />
-                                                                            <span>
-                                                                                {val?.metadata?.NFTPrice ||
-                                                                                    val?.metadata[0]?.NFTPrice ||
-                                                                                    0}
-                                                                            </span>
+                                                                        <span>
+                                                                            {val.NFTPrice}
+                                                                        </span>
 
-                                                                        </div>
                                                                     </div>
-                                                                    <Button variant="deep-purple-900" className="w-100">
-                                                                        Buy now
-                                                                    </Button>
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Col>
-                                                    )
+                                                                </div>
+                                                                <Button variant="deep-purple-900" className="w-100">
+                                                                    Buy now
+                                                                </Button>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </Col>
+                                                );
+                                            })}
+                                    </Row>
+                                </Tab>
+                                <Tab eventKey="polygon" title={<span>POLYGON
+                                    {/* <Image
+                                        src="/images/ethlogo.png"
+                                        height="23px"
+                                        width="23px"
+                                        alt=""
+                                    /> */}
+                                </span>} >
+                                    <Row>
+                                        {polygonNftData.length > 0 &&
+                                            polygonNftData.map((val, idx) => {
+                                                return (
+                                                    <Col key={idx} lg={3} md={6} className="mb-3">
+                                                        <Card>
+                                                            <Card.Body>
+                                                                <a href={`https://testnets.opensea.io/assets/mumbai/${val.DeployedIn}/${val.NFTCode}`} target="_blank" rel="noopener noreferrer">
+                                                                    <Image
+                                                                        className="ic-card-img-top mb-2"
+                                                                        src={val.image}
+                                                                        alt="Card image cap"
+                                                                        height="150px"
+                                                                        width="150px"
+
+                                                                    />
+                                                                </a>
+                                                                <div className="ic-card-body">
+                                                                    <h5 className="ic-card-title">
+                                                                        {val.name}
+                                                                    </h5>
+                                                                    <div className="mb-2">
+                                                                        Price:
+                                                                        <Image
+                                                                            src="/images/ethlogo.png"
+                                                                            height="20px"
+                                                                            width="20px"
+                                                                            alt=""
+                                                                        />
+                                                                        <span>
+                                                                            {val.NFTPrice}
+                                                                        </span>
+
+                                                                    </div>
+                                                                </div>
+                                                                <Button variant="deep-purple-900" className="w-100">
+                                                                    Buy now
+                                                                </Button>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    </Col>
                                                 );
                                             })}
                                     </Row>
