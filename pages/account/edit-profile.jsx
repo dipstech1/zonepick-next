@@ -63,6 +63,11 @@ const EditProfile = () => {
       bnbnftWalletAddress: "",
       ictnftWalletAddress: "",
       polygonnftWalletAddress: "",
+      solRewardAddress: "",
+      ethRewardAddress: "",
+      bnbRewardAddress: "",
+      ictRewardAddress: "",
+      polygonRewardWalletAddress: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Enter Your Name").min(3, "Must be at least 3 characters"),
@@ -131,6 +136,12 @@ const EditProfile = () => {
         formik.setFieldValue("bnbnftWalletAddress", resp.data[0].bnbnftWalletAddress || "");
         formik.setFieldValue("ictnftWalletAddress", resp.data[0].ictnftWalletAddress || "");
         formik.setFieldValue("polygonnftWalletAddress", resp.data[0].polygonnftWalletAddress || "");
+        formik.setFieldValue("solRewardAddress", resp.data[0].solRewardAddress || "");
+        formik.setFieldValue("ethRewardAddress", resp.data[0].ethRewardAddress || "");
+        formik.setFieldValue("bnbRewardAddress", resp.data[0].bnbRewardAddress || "");
+        formik.setFieldValue("ictRewardAddress", resp.data[0].ictRewardAddress || "");
+        formik.setFieldValue("polygonRewardWalletAddress", resp.data[0].polygonRewardWalletAddress || "");
+
 
         formik.setFieldValue("profileImage", resp.data[0].profileImage || "");
         setImageLocation(common.avatorUrl + resp.data[0].profileImage);
@@ -548,6 +559,86 @@ const EditProfile = () => {
                               className={formik.touched.polygonnftWalletAddress && formik.errors.polygonnftWalletAddress ? "is-invalid" : ""}
                             />
                             <Form.Control.Feedback type="invalid">{formik.errors.polygonnftWalletAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="solRewardAddress">
+                            <Form.Label className="fw-bold">Sol Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="solRewardAddress"
+                              placeholder="Enter Sol Reward Wallet Address"
+                              value={formik.values.solRewardAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.solRewardAddress && formik.errors.solRewardAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.solRewardAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="ethRewardAddress">
+                            <Form.Label className="fw-bold">Eth Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="ethRewardAddress"
+                              placeholder="Enter Eth Reward Wallet Address"
+                              value={formik.values.ethRewardAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.ethRewardAddress && formik.errors.ethRewardAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.ethRewardAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="bnbRewardAddress">
+                            <Form.Label className="fw-bold">Bnb Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="bnbRewardAddress"
+                              placeholder="Enter Bnb Reward Wallet Address"
+                              value={formik.values.bnbRewardAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.bnbRewardAddress && formik.errors.bnbRewardAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.bnbRewardAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="ictRewardAddress">
+                            <Form.Label className="fw-bold">Ict Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="ictRewardAddress"
+                              placeholder="Enter Ict Reward Wallet Address"
+                              value={formik.values.ictRewardAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.ictRewardAddress && formik.errors.ictRewardAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.ictRewardAddress}</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-2 position-relative" controlId="polygonRewardWalletAddress">
+                            <Form.Label className="fw-bold">Polygon Reward Wallet Address:</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="polygonRewardWalletAddress"
+                              placeholder="Enter Polygon Reward Wallet Address"
+                              value={formik.values.polygonRewardWalletAddress}
+                              onChange={formik.handleChange}
+                              className={formik.touched.polygonRewardWalletAddress && formik.errors.polygonRewardWalletAddress ? "is-invalid" : ""}
+                            />
+                            <Form.Control.Feedback type="invalid">{formik.errors.polygonRewardWalletAddress}</Form.Control.Feedback>
                           </Form.Group>
                         </Col>
                       </Row>

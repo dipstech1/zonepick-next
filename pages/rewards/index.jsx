@@ -177,6 +177,7 @@ const RewardPage = () => {
                       <Form.Control
                         name="redeemRewardPoint"
                         type="number"
+                        onWheel={(e) => e.target.blur()}
                         placeholder="Enter Points"
                         value={formik.values.redeemRewardPoint}
                         onChange={formik.handleChange}

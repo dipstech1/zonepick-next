@@ -164,21 +164,18 @@ const MyAccount = () => {
                               </span>
                             }
                           >
-                            {userData.aboutMe}
+                            {userData.aboutMe || ""}
                           </Tab>
 
                           <Tab
-                            eventKey="reward"
+                            eventKey="nft"
                             title={
                               <span>
-                                <i className="fa fa-medal me-2" /> Reward and NFT
+                                <i className="fa fa-credit-card me-2" /> NFT
                               </span>
                             }
                           >
                             <div className="contact mt-2 ms-2">
-                              <div className="d-block">
-                                <i className="fa fa-wallet me-3"></i> {userData.rewardWalletAddress}
-                              </div>
                               <div className="d-block">
                                 <img src="img/solana.png" width={16} height={16} alt="solana" className="me-3"></img> {userData.solnftWalletAddress}
                               </div>
@@ -195,6 +192,37 @@ const MyAccount = () => {
                               </div>
                               <div className="d-block">
                                 <img src="img/polygon.png" width={16} height={16} alt="polygon" className="me-3"></img> {userData.polygonnftWalletAddress}
+                              </div>
+                            </div>
+                          </Tab>
+                          <Tab
+                            eventKey="reward"
+                            title={
+                              <span>
+                                <i className="fa fa-medal me-2" />Reward
+                              </span>
+                            }
+                          >
+                            <div className="contact mt-2 ms-2">
+                              <div className="d-block">
+                                <i className="fa fa-wallet me-3"></i> {userData.rewardWalletAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/solana.png" width={16} height={16} alt="solana" className="me-3"></img> {userData.solRewardAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/ethereum.png" width={16} height={16} alt="ethereum" className="me-3"></img>
+                                {userData.ethRewardAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/binance-coin.png" width={16} height={16} alt="binance" className="me-3"></img>
+                                {userData.bnbRewardAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/ict.png" width={16} height={16} alt="ict" className="me-3"></img> {userData.ictRewardAddress}
+                              </div>
+                              <div className="d-block">
+                                <img src="img/polygon.png" width={16} height={16} alt="polygon" className="me-3"></img> {userData.polygonRewardWalletAddress}
                               </div>
                             </div>
                           </Tab>
