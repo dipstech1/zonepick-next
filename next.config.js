@@ -1,21 +1,21 @@
 /** @type {import('next').NextConfig} */
-const path = require("path");
+const path = require('path');
 const nextConfig = {
-  // reactStrictMode: true,
+  reactStrictMode: true,
   trailingSlash: true,
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ["ecom-all-content.s3.ap-south-1.amazonaws.com", "thumbs.dreamstime.com"],
+    domains: ['ecom-all-content.s3.ap-south-1.amazonaws.com', 'thumbs.dreamstime.com'],
   },
   publicRuntimeConfig: {
-    apiUrl: "https://jkv60g7gzg.execute-api.ap-south-1.amazonaws.com/dev/", // development api
-    currency: "INR",
-    lang: "en-IN",
+    apiUrl: 'https://1ncxn28uw6.execute-api.ap-south-1.amazonaws.com/dev/', // development api
+    currency: 'INR',
+    lang: 'en-IN',
   },
 
- /* exportPathMap: async function (
+  /* exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
   ) {
@@ -29,7 +29,6 @@ const nextConfig = {
      // '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },
     }
   }*/
-
 };
 
 module.exports = nextConfig;
